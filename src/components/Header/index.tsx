@@ -1,3 +1,5 @@
+import { SecondaryButton } from "../Buttons/SecondaryButton";
+
 export function Header () {
   return <div className="navbar bg-color-primary">
   <div className="navbar-start">
@@ -12,6 +14,7 @@ export function Header () {
     </ul>
   </div>
   <div className="navbar-end">
-    {/* Ajouter les boutons connexions et s'incrire */}
+    <SecondaryButton text="S'incrire"/>
+    <SecondaryButton text="Connexion"/>
   </div>
 </div> }
