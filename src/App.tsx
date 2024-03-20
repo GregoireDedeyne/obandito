@@ -1,39 +1,25 @@
+// import { Cards } from './components/CardsLogOut';
+// import { CreateAccountForm } from './components/CreateAccountForm';
+// import { Footer } from './components/Footer';
+// import { Header } from './components/HeaderTop';
+// import { LoginForm } from './components/LoginForm';
+// import { NavBar } from './components/HeaderLeftSide';
+// import './styles/App.scss';
+// import { RoleSelectionCard } from './components/RoleSelectionCard';
+// import { AddEventForm } from './components/AddEventForm';
+// import CardsLogIn from './components/CardsLogIn';
 
-import { Cards } from './components/Cards'
-import { CreateAccountForm } from './components/CreateAccountForm'
-import { Footer } from './components/Footer'
-import { Header } from './components/Header'
-<<<<<<< HEAD
-import { LoginForm } from './components/LoginForm'
-=======
-import ImagesLayout from './components/ImagesLayout'
->>>>>>> 74dd1b88fb4263a1c62e089adf23d130411bcb2d
-import { NavBar } from './components/NavBar'
-import './styles/App.scss'
-
-export default function App() {
-  return (
-    <div className='h-screen	' >
-     <Header />
-     <LoginForm onSubmit={""} />
-     {/* <CreateAccountForm onSubmit={""}/> */}
-     {/* <NavBar /> */}
-<<<<<<< HEAD
-     {/* <Cards /> */}
-=======
-
-{/* <ImagesLayout/> */}
->>>>>>> 74dd1b88fb4263a1c62e089adf23d130411bcb2d
-     <Footer />
-
-
-
-
-
-
-
-
-
-    </div>
-  )
-}
+// export default function App() {
+//   return (
+//     <div className="h-screen">
+//       <Header />
+//       {/* <LoginForm onSubmit={""} /> */}
+//       {/* <CreateAccountForm onSubmit={''} /> */}
+//       {/* <NavBar /> */}
+//       {/* <Cards /> */}
+//       {/* <AddEventForm onSubmit={''} /> */}
+//       <CardsLogIn />
+//       <Footer />
+//     </div>
+//   );
+// }

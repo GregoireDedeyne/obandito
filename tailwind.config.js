@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
@@ -13,11 +10,12 @@ export default {
         'color-white': '#ffffff',
         'color-gray_light': '#f6f6f6',
       },
+      backgroundImage: {
+        'fond-one': "url('/src/assets/images/fondOne.png')",
+        'fond-two': "url('/src/assets/images/fondTwo.png')",
+        'fond-three': "url('/src/assets/images/fondThree.png')",
+      },
     },
   },
-  plugins: [require("daisyui")],
-  
-}
-
-
-
+  plugins: [require('daisyui')],
+};
