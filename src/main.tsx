@@ -47,7 +47,7 @@ const router = createBrowserRouter([
       { index: true, element: <HomeLogin /> },
       // {
       //   path: '/band',
-      //   element: <SubscribePage />,
+      //   element: <HomeLogin />,
       // },
     ],
   },

@@ -8,7 +8,7 @@ import { SecondaryButton } from '../Buttons/SecondaryButton';
 
 export function HeaderLeftSide() {
   return (
-    <div className="menu menu-lg w-56 h-4/5 bg-color-primary text-white">
+    <div className="menu menu-lg w-56 h-auto bg-color-primary text-white">
       <h1 className="menu-title text-zinc-500 text-xl"> O'Bandito</h1>
       <nav>
         <ul>
