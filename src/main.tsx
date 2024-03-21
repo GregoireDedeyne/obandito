@@ -11,6 +11,8 @@ import { SubscribePage } from './components/Pages/Subscribe.tsx';
 import { LoginPage } from './components/Pages/Login.tsx';
 import { LogLayout } from './components/Layouts/LogLayout/index.tsx';
 import { HomeLogin } from './components/Pages/HomeLogin.tsx';
+import { SettingProfile } from './components/Pages/SettingProfile.tsx';
+import { SearchProfile } from './components/Pages/SearchProfile.tsx';
 
 const router = createBrowserRouter([
   {
@@ -40,15 +42,19 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '/home',
+    path: '/',
     element: <LogLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <HomeLogin /> },
-      // {
-      //   path: '/band',
-      //   element: <HomeLogin />,
-      // },
+      { path: '/home', element: <HomeLogin /> },
+      {
+        path: '/settings',
+        element: <SettingProfile />,
+      },
+      {
+        path: '/search',
+        element: <SearchProfile />,
+      },
     ],
   },
 ]);
