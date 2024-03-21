@@ -5,10 +5,12 @@ import store from './store/index.ts';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './styles/index.css';
 import ErrorPage from './components/Error/index.tsx';
-import { NotLogLayout } from './components/Layouts/NotLogLayout.tsx';
+import { NotLogLayout } from './components/Layouts/NotLogLayout/NotLogLayout.tsx';
 import { HomeNotLogPage } from './components/Pages/HomeNotLogPage.tsx';
 import { SubscribePage } from './components/Pages/Subscribe.tsx';
 import { LoginPage } from './components/Pages/Login.tsx';
+import { LogLayout } from './components/Layouts/LogLayout/index.tsx';
+import { HomeLogin } from './components/Pages/HomeLogin.tsx';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +36,18 @@ const router = createBrowserRouter([
       //     // console.log(recipe);
       //     return recipe;
       //   },
+      // },
+    ],
+  },
+  {
+    path: '/home',
+    element: <LogLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      { index: true, element: <HomeLogin /> },
+      // {
+      //   path: '/band',
+      //   element: <SubscribePage />,
       // },
     ],
   },
