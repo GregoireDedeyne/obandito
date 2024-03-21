@@ -2,6 +2,10 @@ import { useState } from 'react';
 import { InputField } from '../InputField';
 import { PrimaryButton } from '../Buttons/PrimaryButton';
 import { RoleSelectionCard } from '../RoleSelectionCard';
+import Image from '../../assets/images/bandPict.jpg';
+import Image2 from '../../assets/images/bandPict2.jpg';
+import Image3 from '../../assets/images/orga.jpg';
+import { NavLink } from 'react-router-dom';
 
 export function CreateAccountForm({ onSubmit }) {
   const [formData, setFormData] = useState({});
@@ -25,7 +29,7 @@ export function CreateAccountForm({ onSubmit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col w-full">
+    <form onSubmit={handleSubmit} className="flex flex-col m-5">
       {/* Afficher les cartes de sélection de rôle uniquement si aucun rôle n'est sélectionné */}
       {selectedRole === null && (
         <div className="w-full flex flex-row justify-center		 ">
@@ -34,6 +38,7 @@ export function CreateAccountForm({ onSubmit }) {
               "Dans chaque accord réside une histoire à partager. Ensemble, sur scène, nous peignons des émotions, des rêves et des souvenirs, unissant les cœurs dans une symphonie d'émotion."
             }
             genre={'Groupes'}
+            src={Image2}
             onClick={() => handleRoleSelect('Groupes')} // Passer la fonction de sélection du rôle
           />
 
@@ -41,6 +46,7 @@ export function CreateAccountForm({ onSubmit }) {
             citation={
               "Dans chaque détail logistique, nous tissons les fils de l'expérience musicale. Accueillons chaque artiste comme une étoile dans notre univers, guidant leur lumière vers une nuit d'éclat et de partage."
             }
+            src={Image3}
             genre={'Organisateurs'}
             onClick={() => handleRoleSelect('Organisateurs')} // Passer la fonction de sélection du rôle
           />
@@ -48,49 +54,62 @@ export function CreateAccountForm({ onSubmit }) {
       )}
 
       {selectedRole && (
-        <div className="w-1/4 flex flex-col">
-          {' '}
-          <InputField
-            label="Email"
-            type="email"
-            value={formData.email}
-            placeholder={'Renseigner votre email'}
-            onChange={(e) => handleChange(e, 'email')}
-          />
-          <InputField
-            label="Mot de passe"
-            type="password"
-            value={formData.password}
-            placeholder={'Renseigner votre mot de passe'}
-            onChange={(e) => handleChange(e, 'password')}
-          />
-          <InputField
-            label="Mot de passe"
-            type="password"
-            value={formData.password}
-            placeholder={'Renseigner votre mot de passe'}
-            onChange={(e) => handleChange(e, 'password')}
-          />
-          <InputField
-            label="Ville"
-            type="text"
-            value={formData.town}
-            placeholder={'Renseigner votre ville'}
-            onChange={(e) => handleChange(e, 'town')}
-          />
-          <InputField
-            label="Code postal"
-            type="text"
-            value={formData.zipcode}
-            placeholder={'Renseigner votre code postal'}
-            onChange={(e) => handleChange(e, 'zipcode')}
-          />
-          <p className="text-gray-500">
+        <div className="flex justify-between">
+          <div className="flex flex-col p-28 items-center">
             {' '}
-            En cliquant sur s’inscrire, vous acceptez les conditions générales
-            et Politique de Confidentialité
-          </p>
-          <PrimaryButton text="S'inscrire" />
+            <InputField
+              label="Email"
+              type="email"
+              value={formData.email}
+              placeholder={'Renseigner votre email'}
+              onChange={(e) => handleChange(e, 'email')}
+            />
+            <InputField
+              label="Mot de passe"
+              type="password"
+              value={formData.password}
+              placeholder={'Renseigner votre mot de passe'}
+              onChange={(e) => handleChange(e, 'password')}
+            />
+            <InputField
+              label="Mot de passe"
+              type="password"
+              value={formData.password}
+              placeholder={'Renseigner votre mot de passe'}
+              onChange={(e) => handleChange(e, 'password')}
+            />
+            <InputField
+              label="Ville"
+              type="text"
+              value={formData.town}
+              placeholder={'Renseigner votre ville'}
+              onChange={(e) => handleChange(e, 'town')}
+            />
+            <InputField
+              label="Code postal"
+              type="text"
+              value={formData.zipcode}
+              placeholder={'Renseigner votre code postal'}
+              onChange={(e) => handleChange(e, 'zipcode')}
+            />
+            <p className="text-gray-500">
+              {' '}
+              En cliquant sur s’inscrire, vous acceptez les conditions générales
+              et Politique de Confidentialité
+            </p>
+            <div className="w-1/2 flex justify-center">
+              <PrimaryButton text="S'inscrire" />
+            </div>
+            <nav className="text-gray-500">
+              {' '}
+              Déjà inscrit ? par{' '}
+              <NavLink to="/login" className="link">
+                {' '}
+                ici{' '}
+              </NavLink>
+            </nav>
+          </div>
+          <img className="m-24 mr-64 rounded-2xl" src={Image} />
         </div>
       )}
     </form>

@@ -14,40 +14,7 @@ import {
   EffectCoverflow,
 } from 'swiper/modules';
 
-const data = [
-  {
-    name: 'aaa',
-    url: 'https://www.rollingstone.com/wp-content/uploads/2023/05/6-Ways-To-Build-Your-Brand-as-a-Musician-in-2023.jpg',
-    alt: 'aaa',
-    description: 'description',
-  },
-  {
-    name: 'bbb',
-    url: 'https://media.istockphoto.com/id/1125877063/fr/photo/femme-de-race-mixte-chantant-et-jouant-de-la-guitare.jpg?s=612x612&w=0&k=20&c=u9QiXxCTPMlTUo4jM-1Qo2sagHLDkgTzoMhLKPSXNXM=',
-    alt: 'bbb',
-    description: 'description',
-  },
-  {
-    name: 'bbb',
-    url: 'https://www.rollingstone.com/wp-content/uploads/2023/05/6-Ways-To-Build-Your-Brand-as-a-Musician-in-2023.jpg',
-    alt: 'bbb',
-    description: 'erztytzer eyruyyter ytuyyertuyyrytu yiyrtuyiyrt uyi',
-  },
-  {
-    name: 'bbb',
-    url: 'https://media.istockphoto.com/id/1125877063/fr/photo/femme-de-race-mixte-chantant-et-jouant-de-la-guitare.jpg?s=612x612&w=0&k=20&c=u9QiXxCTPMlTUo4jM-1Qo2sagHLDkgTzoMhLKPSXNXM=',
-    alt: 'bbb',
-    description: 'description',
-  },
-  {
-    name: 'bbb',
-    url: 'https://www.rollingstone.com/wp-content/uploads/2023/05/6-Ways-To-Build-Your-Brand-as-a-Musician-in-2023.jpg',
-    alt: 'bbb',
-    description: 'description',
-  },
-];
-
-export function Cards() {
+export function Cards({ data }) {
   return (
     <>
       <Swiper
@@ -71,13 +38,13 @@ export function Cards() {
         }}
         navigation={true}
         modules={[Autoplay, Pagination, Navigation, EffectCoverflow]}
-        className="mySwiper"
+        className="mySwiper h-96 w-3/4"
       >
         {data.map((card) => (
-          <SwiperSlide>
+          <SwiperSlide className="shadow-sm">
             <Card
-              key={card.url}
-              image={card.url}
+              key={card.image_url}
+              image={card.image_url}
               alt={card.alt}
               name={card.name}
               description={card.description}

@@ -1,0 +1,412 @@
+{
+  "data": {
+    "artists": [
+      {
+        "id": "3",
+        "mail": "Constantin.Giraud54@gmail.com",
+        "name": "Dr Timoléon Lecomte",
+        "image_url": "https://loremflickr.com/640/480?lock=4318376677605376",
+        "address": "3 Quai du Bac",
+        "city": "Cholet",
+        "region": "Corse",
+        "zip_code": 44263,
+        "description": "Facilis nemo ducimus exercitationem ipsa ad.",
+        "style": {
+          "name": "Jazz"
+        }
+      },
+      {
+        "id": "4",
+        "mail": "Adrehilde33@yahoo.fr",
+        "name": "Jocelyne Caron",
+        "image_url": "https://loremflickr.com/640/480?lock=2585478224150528",
+        "address": "8919 Boulevard Dauphine",
+        "city": "La Rochelle",
+        "region": "Basse-Normandie",
+        "zip_code": 91094,
+        "description": "Illum ullam dicta dolorem.",
+        "style": {
+          "name": "Country"
+        }
+      },
+      {
+        "id": "6",
+        "mail": "Paulette.Simon65@yahoo.fr",
+        "name": "Maxence Roux",
+        "image_url": "https://loremflickr.com/640/480?lock=2806423645847552",
+        "address": "9 Avenue Molière",
+        "city": "Saint-Étienne",
+        "region": "Picardie",
+        "zip_code": 49789,
+        "description": "Quidem sequi dolore earum excepturi saepe ad sint.",
+        "style": {
+          "name": "Rock"
+        }
+      },
+      {
+        "id": "7",
+        "mail": "Ulysse_Marty31@yahoo.fr",
+        "name": "Betty Deschamps",
+        "image_url": "https://loremflickr.com/640/480?lock=3587798768549888",
+        "address": "778 Passage de Solférino",
+        "city": "Ivry-sur-Seine",
+        "region": "Picardie",
+        "zip_code": 87467,
+        "description": "Architecto earum eveniet nesciunt dolores aliquid.",
+        "style": {
+          "name": "Reggae"
+        }
+      },
+      {
+        "id": "8",
+        "mail": "Sibylle27@yahoo.fr",
+        "name": "Nadine Baron",
+        "image_url": "https://loremflickr.com/640/480?lock=5225798864732160",
+        "address": "4 Allée de Solférino",
+        "city": "Saint-Paul",
+        "region": "Franche-Comté",
+        "zip_code": 56629,
+        "description": "Minima maxime beatae iure saepe beatae.",
+        "style": {
+          "name": "Pop"
+        }
+      },
+      {
+        "id": "9",
+        "mail": "Abigaelle77@hotmail.fr",
+        "name": "Vianney Marie",
+        "image_url": "https://loremflickr.com/640/480?lock=7833799096270848",
+        "address": "9253 Avenue de Caumartin",
+        "city": "Toulon",
+        "region": "Centre",
+        "zip_code": 87075,
+        "description": "Ullam quis saepe adipisci placeat tenetur fugit quis voluptatibus.",
+        "style": {
+          "name": "Pop"
+        }
+      },
+      {
+        "id": "11",
+        "mail": "Roland_Durand26@gmail.com",
+        "name": "Gaël Gautier",
+        "image_url": "https://loremflickr.com/640/480?lock=3385780909113344",
+        "address": "5611 Quai de la Ferronnerie",
+        "city": "Antony",
+        "region": "Aquitaine",
+        "zip_code": 26643,
+        "description": "Aliquid ad laboriosam occaecati odit voluptatum a cumque.",
+        "style": {
+          "name": "Classique"
+        }
+      },
+      {
+        "id": "13",
+        "mail": "Rene21@yahoo.fr",
+        "name": "Gaud Blanchard",
+        "image_url": "https://loremflickr.com/640/480?lock=2136031629410304",
+        "address": "2441 Rue de Vaugirard",
+        "city": "Orléans",
+        "region": "Picardie",
+        "zip_code": 52743,
+        "description": "Odit cupiditate architecto repellendus.",
+        "style": {
+          "name": "Rock"
+        }
+      },
+      {
+        "id": "15",
+        "mail": "Taurin35@yahoo.fr",
+        "name": "Claude Paris",
+        "image_url": "https://loremflickr.com/640/480?lock=1735423883739136",
+        "address": "840 Allée de la Pompe",
+        "city": "Amiens",
+        "region": "Limousin",
+        "zip_code": 95356,
+        "description": "Enim totam quo similique mollitia quisquam.",
+        "style": {
+          "name": "Métal"
+        }
+      },
+      {
+        "id": "17",
+        "mail": "Athenais15@yahoo.fr",
+        "name": "Dr Clara Rey",
+        "image_url": "https://loremflickr.com/640/480?lock=4749920800079872",
+        "address": "62 Allée Molière",
+        "city": "Rueil-Malmaison",
+        "region": "Bretagne",
+        "zip_code": 15109,
+        "description": "Laborum ipsam dolor quisquam earum sint saepe voluptatum soluta.",
+        "style": {
+          "name": "Blues"
+        }
+      },
+      {
+        "id": "19",
+        "mail": "Longin.Simon@hotmail.fr",
+        "name": "Régine Martin",
+        "image_url": "https://loremflickr.com/640/480?lock=1821185755054080",
+        "address": "24 Avenue de Rivoli",
+        "city": "Antony",
+        "region": "Picardie",
+        "zip_code": 71279,
+        "description": "Dignissimos ab soluta architecto dolore eos necessitatibus quis dignissimos qui.",
+        "style": {
+          "name": "Electronic"
+        }
+      },
+      {
+        "id": "20",
+        "mail": "Jacinthe_Breton16@gmail.com",
+        "name": "Ophélie Jean",
+        "image_url": "https://loremflickr.com/640/480?lock=6763495144030208",
+        "address": "959 Boulevard du Havre",
+        "city": "Valence",
+        "region": "Bretagne",
+        "zip_code": 78854,
+        "description": "Quisquam eligendi sunt ut quisquam officiis rerum ducimus dolores incidunt.",
+        "style": {
+          "name": "Electronic"
+        }
+      },
+      {
+        "id": "21",
+        "mail": "Axeline.Robert52@yahoo.fr",
+        "name": "Adolphie Rey",
+        "image_url": "https://loremflickr.com/640/480?lock=4150202558578688",
+        "address": "2 Avenue de Seine",
+        "city": "Champigny-sur-Marne",
+        "region": "Nord-Pas-de-Calais",
+        "zip_code": 44532,
+        "description": "Tenetur cupiditate odit accusamus deserunt debitis accusantium nobis quod aperiam.",
+        "style": {
+          "name": "Jazz"
+        }
+      },
+      {
+        "id": "23",
+        "mail": "Aminte.Chevalier43@hotmail.fr",
+        "name": "Prof Ernestine Moulin",
+        "image_url": "https://loremflickr.com/640/480?lock=7714831253635072",
+        "address": "89 Passage Saint-Denis",
+        "city": "Beauvais",
+        "region": "Bourgogne",
+        "zip_code": 16510,
+        "description": "Est quasi consequatur dolorum sequi repudiandae hic eum sapiente quibusdam.",
+        "style": {
+          "name": "Rock"
+        }
+      },
+      {
+        "id": "25",
+        "mail": "Maxence.Mathieu@gmail.com",
+        "name": "Héloïse Perrin",
+        "image_url": "https://loremflickr.com/640/480?lock=3837303361372160",
+        "address": "531 Avenue Oberkampf",
+        "city": "Béziers",
+        "region": "Basse-Normandie",
+        "zip_code": 95494,
+        "description": "Provident aut optio nam molestias.",
+        "style": {
+          "name": "Country"
+        }
+      },
+      {
+        "id": "31",
+        "mail": "Audran.Deschamps73@hotmail.fr",
+        "name": "Ariane Gautier",
+        "image_url": "https://loremflickr.com/640/480?lock=6159020123488256",
+        "address": "3 Place d'Argenteuil",
+        "city": "Valence",
+        "region": "Corse",
+        "zip_code": 23626,
+        "description": "Blanditiis esse nihil adipisci expedita nemo.",
+        "style": {
+          "name": "Pop"
+        }
+      },
+      {
+        "id": "34",
+        "mail": "Christian42@yahoo.fr",
+        "name": "Dr Céleste Garcia",
+        "image_url": "https://loremflickr.com/640/480?lock=254549845606400",
+        "address": "465 Avenue Delesseux",
+        "city": "Marseille",
+        "region": "Languedoc-Roussillon",
+        "zip_code": 89825,
+        "description": "Voluptate at soluta sed.",
+        "style": {
+          "name": "Classique"
+        }
+      },
+      {
+        "id": "35",
+        "mail": "Julia_Mercier18@hotmail.fr",
+        "name": "Coraline Robin",
+        "image_url": "https://loremflickr.com/640/480?lock=7005666554150912",
+        "address": "9818 Quai des Rosiers",
+        "city": "Champigny-sur-Marne",
+        "region": "Lorraine",
+        "zip_code": 7698,
+        "description": "Dolore tempora dolorem nam tempore adipisci nulla corrupti odit.",
+        "style": {
+          "name": "Jazz"
+        }
+      },
+      {
+        "id": "37",
+        "mail": "Norbert_Jean@yahoo.fr",
+        "name": "Venceslas Le roux",
+        "image_url": "https://loremflickr.com/640/480?lock=4791106671738880",
+        "address": "49 Voie Saint-Honoré",
+        "city": "Aubervilliers",
+        "region": "Pays de la Loire",
+        "zip_code": 79371,
+        "description": "Facilis sit facilis porro harum perferendis blanditiis.",
+        "style": {
+          "name": "Pop"
+        }
+      },
+      {
+        "id": "38",
+        "mail": "Leon_Gonzalez@hotmail.fr",
+        "name": "Richard Cousin",
+        "image_url": "https://loremflickr.com/640/480?lock=4787812966596608",
+        "address": "8 Voie Delesseux",
+        "city": "Lorient",
+        "region": "Bourgogne",
+        "zip_code": 72971,
+        "description": "Totam reprehenderit nemo repudiandae animi quaerat blanditiis voluptas quam nulla.",
+        "style": {
+          "name": "Hip-Hop"
+        }
+      },
+      {
+        "id": "39",
+        "mail": "Morgane88@hotmail.fr",
+        "name": "Antoine Mathieu",
+        "image_url": "https://loremflickr.com/640/480?lock=8209893691490304",
+        "address": "6 Voie Pastourelle",
+        "city": "Antony",
+        "region": "Île-de-France",
+        "zip_code": 13055,
+        "description": "Occaecati vitae deserunt.",
+        "style": {
+          "name": "Country"
+        }
+      },
+      {
+        "id": "41",
+        "mail": "Adonise.Vasseur@yahoo.fr",
+        "name": "Nathanaël Carre",
+        "image_url": "https://loremflickr.com/640/480?lock=8228082896863232",
+        "address": "933 Avenue Dauphine",
+        "city": "Aix-en-Provence",
+        "region": "Rhône-Alpes",
+        "zip_code": 17088,
+        "description": "Cum aliquam modi soluta dolor reprehenderit natus iusto.",
+        "style": {
+          "name": "Electronic"
+        }
+      },
+      {
+        "id": "42",
+        "mail": "Falba.Blanc@yahoo.fr",
+        "name": "Nathan Dupuis",
+        "image_url": "https://loremflickr.com/640/480?lock=3337952983777280",
+        "address": "56 Passage du Dahomey",
+        "city": "Montreuil",
+        "region": "Alsace",
+        "zip_code": 18447,
+        "description": "Blanditiis amet vitae nemo ab.",
+        "style": {
+          "name": "Classique"
+        }
+      },
+      {
+        "id": "44",
+        "mail": "Leandre.Bernard24@yahoo.fr",
+        "name": "Florian Charles",
+        "image_url": "https://loremflickr.com/640/480?lock=7468672503250944",
+        "address": "2695 Allée Delesseux",
+        "city": "Tourcoing",
+        "region": "Haute-Normandie",
+        "zip_code": 63190,
+        "description": "Dolorem provident id incidunt occaecati nisi.",
+        "style": {
+          "name": "Rock"
+        }
+      },
+      {
+        "id": "45",
+        "mail": "Adelphe34@yahoo.fr",
+        "name": "Joëlle Gerard",
+        "image_url": "https://loremflickr.com/640/480?lock=505465037389824",
+        "address": "48 Boulevard des Lombards",
+        "city": "Levallois-Perret",
+        "region": "Auvergne",
+        "zip_code": 63239,
+        "description": "Expedita dolor hic officiis eligendi deserunt quo.",
+        "style": {
+          "name": "Pop"
+        }
+      },
+      {
+        "id": "46",
+        "mail": "Maxime.Louis96@yahoo.fr",
+        "name": "Alaïs Gautier",
+        "image_url": "https://loremflickr.com/640/480?lock=6210306411855872",
+        "address": "1054 Avenue du Faubourg Saint-Honoré",
+        "city": "Asnières-sur-Seine",
+        "region": "Rhône-Alpes",
+        "zip_code": 58692,
+        "description": "In optio placeat tempora aut hic voluptate illo.",
+        "style": {
+          "name": "Electronic"
+        }
+      },
+      {
+        "id": "48",
+        "mail": "Auxane_Vasseur@yahoo.fr",
+        "name": "Savinien Benoit",
+        "image_url": "https://loremflickr.com/640/480?lock=8166591913000960",
+        "address": "8217 Place Delesseux",
+        "city": "Saint-Pierre",
+        "region": "Provence-Alpes-Côte d'Azur",
+        "zip_code": 95880,
+        "description": "Magni natus voluptatem numquam earum.",
+        "style": {
+          "name": "Classique"
+        }
+      },
+      {
+        "id": "49",
+        "mail": "Adalbald_Bonnet@hotmail.fr",
+        "name": "Laurène Lemaire",
+        "image_url": "https://loremflickr.com/640/480?lock=871649714896896",
+        "address": "1 Quai de Vaugirard",
+        "city": "Roubaix",
+        "region": "Pays de la Loire",
+        "zip_code": 67911,
+        "description": "Facere optio maxime.",
+        "style": {
+          "name": "Jazz"
+        }
+      },
+      {
+        "id": "50",
+        "mail": "Judith_Marie67@gmail.com",
+        "name": "Avigaëlle Blanc",
+        "image_url": "https://loremflickr.com/640/480?lock=6012910050476032",
+        "address": "7 Quai du Dahomey",
+        "city": "Nantes",
+        "region": "Aquitaine",
+        "zip_code": 14131,
+        "description": "Ratione fugiat facere impedit.",
+        "style": {
+          "name": "Country"
+        }
+      }
+    ]
+  }
+}

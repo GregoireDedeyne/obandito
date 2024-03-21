@@ -4,7 +4,7 @@ import { Footer } from '../Footer';
 
 export function NotLogLayout() {
   return (
-    <div className="flex flex-col overflow-auto">
+    <div className="flex flex-col">
       <Header />
       <Outlet />
       <Footer />
