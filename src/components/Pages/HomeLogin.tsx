@@ -2,7 +2,7 @@ import CardsLogIn from '../CardsLogIn';
 
 export function HomeLogin() {
   return (
-    <>
+    <div className="">
       <div className="mt-4 mb-10">
         <div className="mx-4 mb-10">
           <h2 className="text-4xl">Evènement de ma région</h2>
@@ -18,6 +18,6 @@ export function HomeLogin() {
         </div>
         <CardsLogIn />
       </div>
-    </>
+    </div>
   );
 }

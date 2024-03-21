@@ -49,7 +49,7 @@ const router = createBrowserRouter([
       { path: '/home', element: <HomeLogin /> },
       {
         path: '/settings',
-        element: <SettingProfile />,
+        element: <SettingProfile onSubmit={''} />,
       },
       {
         path: '/search',

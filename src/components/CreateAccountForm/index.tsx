@@ -78,19 +78,13 @@ export function CreateAccountForm({ onSubmit }) {
               placeholder={'Renseigner votre mot de passe'}
               onChange={(e) => handleChange(e, 'password')}
             />
+            {/* appel api pour faire un choix dans une boite de selection */}
             <InputField
-              label="Ville"
+              label="Région"
               type="text"
               value={formData.town}
-              placeholder={'Renseigner votre ville'}
+              placeholder={'Renseigner votre région'}
               onChange={(e) => handleChange(e, 'town')}
-            />
-            <InputField
-              label="Code postal"
-              type="text"
-              value={formData.zipcode}
-              placeholder={'Renseigner votre code postal'}
-              onChange={(e) => handleChange(e, 'zipcode')}
             />
             <p className="text-gray-500">
               {' '}
@@ -98,7 +92,7 @@ export function CreateAccountForm({ onSubmit }) {
               et Politique de Confidentialité
             </p>
             <div className="w-1/2 flex justify-center">
-              <PrimaryButton text="S'inscrire" />
+              <PrimaryButton href="/" text="S'inscrire" />
             </div>
             <nav className="text-gray-500">
               {' '}
@@ -109,7 +103,7 @@ export function CreateAccountForm({ onSubmit }) {
               </NavLink>
             </nav>
           </div>
-          <img className="m-24 mr-64 rounded-2xl" src={Image} />
+          <img className="m-24 mr-64 mb-60 rounded-2xl" src={Image} />
         </div>
       )}
     </form>

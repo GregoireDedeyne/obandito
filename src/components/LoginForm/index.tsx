@@ -17,7 +17,10 @@ export function LoginForm({ onSubmit }) {
 
   return (
     <div className="flex justify-between">
-      <form onSubmit={handleSubmit} className="flex flex-col mr-48 ml-48 mt-64">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col mr-48 ml-48 mt-64  items-center"
+      >
         <InputField
           label="Email"
           type="email"
@@ -32,7 +35,7 @@ export function LoginForm({ onSubmit }) {
           placeholder={'Renseigner votre mot de passe'}
           onChange={(e) => handleChange(e, 'password')}
         />
-        <PrimaryButton text="Se connecter" />
+        <PrimaryButton href="/home:id" text="Se connecter" />
         <nav className="text-gray-500">
           {' '}
           Pas encore inscrit ? par{' '}

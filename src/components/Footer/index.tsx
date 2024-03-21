@@ -8,11 +8,11 @@ import {
 
 export function Footer() {
   return (
-    <footer className="footer p-10 bg-slate-900	 text-white h-auto">
+    <footer className="footer p-9 bg-slate-900	 text-white h-auto grid-cols-3 justify-center		">
       <aside>
         <svg
           width="50"
-          height="50"
+          height="63"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
           fillRule="evenodd"
@@ -27,7 +27,7 @@ export function Footer() {
           Service de mise en relation de groupes et d'organisateur depuis 2024{' '}
         </p>
       </aside>
-      <nav>
+      <nav className="flex flex-col w-full items-center">
         <h6 className="footer-title">Social</h6>
         <div className="grid grid-flow-col gap-4">
           <a className="link link-hover">
@@ -44,7 +44,7 @@ export function Footer() {
           </a>
         </div>
       </nav>
-      <nav>
+      <nav className="flex flex-col w-full items-end">
         <h6 className="footer-title">Mentions légales</h6>
         <a className="link link-hover">Conditions d'utilisation</a>
         <a className="link link-hover">Politique de confidentialité</a>

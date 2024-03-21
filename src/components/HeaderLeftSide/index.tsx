@@ -8,27 +8,27 @@ import { SecondaryButton } from '../Buttons/SecondaryButton';
 
 export function HeaderLeftSide() {
   return (
-    <div className="menu menu-lg w-56 h-auto bg-color-primary text-white">
+    <div className="menu menu-lg w-56 h-auto bg-slate-900 text-white">
       <h1 className="menu-title text-zinc-500 text-xl"> O'Bandito</h1>
       <nav>
         <ul>
           <li>
-            <a>
+            <div>
               <FontAwesomeIcon icon={faHome} />{' '}
-              <SecondaryButton text="Accueil" />{' '}
-            </a>
+              <SecondaryButton href="/home" text="Accueil" />{' '}
+            </div>
           </li>
           <li>
-            <a>
+            <div>
               <FontAwesomeIcon icon={faSearch} />{' '}
-              <SecondaryButton text="Recherche" />{' '}
-            </a>
+              <SecondaryButton href="/search" text="Recherche" />{' '}
+            </div>
           </li>
           <li>
-            <a>
+            <div>
               <FontAwesomeIcon icon={faEnvelope} />{' '}
-              <SecondaryButton text="Messagerie" />{' '}
-            </a>
+              <SecondaryButton href="" text="Messagerie" />{' '}
+            </div>
           </li>
         </ul>
       </nav>
