@@ -31,7 +31,7 @@ export function Cards({ data }) {
           stretch: 0,
           depth: 100,
           modifier: 1,
-          slideShadows: true,
+          slideShadows: false,
         }}
         pagination={{
           clickable: true,
@@ -41,7 +41,7 @@ export function Cards({ data }) {
         className="mySwiper h-96 w-3/4"
       >
         {data.map((card) => (
-          <SwiperSlide className="shadow-sm">
+          <SwiperSlide className="">
             <Card
               key={card.image_url}
               image={card.image_url}
