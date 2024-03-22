@@ -27,17 +27,17 @@ export function Cards({ data }) {
           disableOnInteraction: false,
         }}
         coverflowEffect={{
-          rotate: 50,
+          rotate: 0,
           stretch: 0,
-          depth: 100,
-          modifier: 1,
+          depth: 0,
+          modifier: 0,
           slideShadows: false,
         }}
-        pagination={{
-          clickable: true,
-        }}
-        navigation={true}
-        modules={[Autoplay, Pagination, Navigation, EffectCoverflow]}
+        // pagination={{
+        //   clickable: false,
+        // }}
+        navigation={false}
+        modules={[Autoplay, Navigation, EffectCoverflow]}
         className="mySwiper h-96 w-3/4"
       >
         {data.map((card) => (

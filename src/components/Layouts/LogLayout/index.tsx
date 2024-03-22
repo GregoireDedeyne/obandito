@@ -6,7 +6,7 @@ import { PrimaryButton } from '../../Buttons/PrimaryButton';
 
 export function LogLayout() {
   return (
-    <div className="flex flex-col overflow-auto">
+    <div className="flex flex-col overflow-auto container">
       <div className="flex bg-slate-100">
         <HeaderLeftSide />
         <div className="flex flex-col w-screen pt-2 pb-4 px-4 overflow-hidden">
