@@ -58,21 +58,21 @@ export function CreateAccountForm({ onSubmit }) {
           <div className="flex flex-col p-28 items-center">
             {' '}
             <InputField
-              label="Email"
+              label="email"
               type="email"
               value={formData.email}
               placeholder={'Renseigner votre email'}
               onChange={(e) => handleChange(e, 'email')}
             />
             <InputField
-              label="Mot de passe"
+              label="password"
               type="password"
               value={formData.password}
               placeholder={'Renseigner votre mot de passe'}
               onChange={(e) => handleChange(e, 'password')}
             />
             <InputField
-              label="Mot de passe"
+              label="password"
               type="password"
               value={formData.password}
               placeholder={'Renseigner votre mot de passe'}
@@ -80,7 +80,7 @@ export function CreateAccountForm({ onSubmit }) {
             />
             {/* appel api pour faire un choix dans une boite de selection */}
             <InputField
-              label="Région"
+              label="region"
               type="text"
               value={formData.town}
               placeholder={'Renseigner votre région'}
@@ -91,7 +91,7 @@ export function CreateAccountForm({ onSubmit }) {
               En cliquant sur s’inscrire, vous acceptez les conditions générales
               et Politique de Confidentialité
             </p>
-            <div className="w-1/2 flex justify-center">
+            <div className="w-1/2 flex justify-center my-2">
               <PrimaryButton href="/" text="S'inscrire" />
             </div>
             <nav className="text-gray-500">

@@ -22,28 +22,28 @@ export function LoginForm({ onSubmit }) {
         className="flex flex-col mr-48 ml-48 mt-64  items-center"
       >
         <InputField
-          label="Email"
+          label="email"
           type="email"
           value={formData.email}
           placeholder={'Renseigner votre email'}
           onChange={(e) => handleChange(e, 'email')}
         />
         <InputField
-          label="Mot de passe"
+          label="password"
           type="password"
           value={formData.password}
           placeholder={'Renseigner votre mot de passe'}
           onChange={(e) => handleChange(e, 'password')}
         />
-        <PrimaryButton href="/home:id" text="Se connecter" />
-        <nav className="text-gray-500">
-          {' '}
-          Pas encore inscrit ? par{' '}
-          <NavLink to="/subscribe" className="link">
-            {' '}
-            ici{' '}
-          </NavLink>
-        </nav>
+        <div className="my-2 text-center">
+          <PrimaryButton href="/home:id" text="Se connecter" />
+          <nav className="text-gray-500">
+            {`Pas encore inscrit ? par `}
+            <NavLink to="/subscribe" className="link">
+              ici
+            </NavLink>
+          </nav>
+        </div>
       </form>
       <div className="mt-32 ml-48 mr-48 mb-32 ">
         <img className="rounded-2xl w-screen" src={Image} />
