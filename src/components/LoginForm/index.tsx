@@ -4,14 +4,15 @@ import { PrimaryButton } from '../Buttons/PrimaryButton';
 import Image from '../../assets/images/bandPict3.jpg';
 import { NavLink } from 'react-router-dom';
 export function LoginForm({ onSubmit }) {
-  const [formData, setFormData] = useState({});
+  // const [formData, setFormData] = useState({});
 
-  const handleChange = (e, fieldName) => {
-    setFormData({ ...formData, [fieldName]: e.target.value });
-  };
+  // const handleChange = (e, fieldName) => {
+  //   setFormData({ ...formData, [fieldName]: e.target.value });
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(formData);
     onSubmit(formData);
   };
 
@@ -21,20 +22,9 @@ export function LoginForm({ onSubmit }) {
         onSubmit={handleSubmit}
         className="flex flex-col mr-48 ml-48 mt-64  items-center"
       >
-        <InputField
-          label="email"
-          type="email"
-          value={formData.email}
-          placeholder={'Renseigner votre email'}
-          onChange={(e) => handleChange(e, 'email')}
-        />
-        <InputField
-          label="password"
-          type="password"
-          value={formData.password}
-          placeholder={'Renseigner votre mot de passe'}
-          onChange={(e) => handleChange(e, 'password')}
-        />
+        <InputField inputName="email" />
+        <InputField inputName="password" />
+
         <div className="my-2 text-center">
           <PrimaryButton href="/home:id" text="Se connecter" />
           <nav className="text-gray-500">
