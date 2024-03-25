@@ -55,6 +55,8 @@ const [CreateAccount, { data, loading, error }] = useMutation(CREATE_ACCOUNT);
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (loading) return 'Loading'
+    if (error) return error.message
     if (formData.password !== formData.confirmPassword) {
       toast.warn("Les mots de passe ne correspondent pas.");
       return;
