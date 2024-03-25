@@ -1,14 +1,36 @@
 import { useState } from 'react';
 import { InputField } from '../InputField';
-import { PrimaryButton } from '../Buttons/PrimaryButton';
 import { RoleSelectionCard } from '../RoleSelectionCard';
 import Image from '../../assets/images/bandPict.jpg';
 import Image2 from '../../assets/images/bandPict2.jpg';
 import Image3 from '../../assets/images/orga.jpg';
 import { NavLink } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { CREATE_ACCOUNT } from '../../graphQL/actions';
+import { toast } from 'react-toastify';
+import { useNavigate  } from "react-router-dom";
 
-export function CreateAccountForm({ onSubmit }) {
-  const [formData, setFormData] = useState({});
+
+
+export function CreateAccountForm() {
+
+  const navigate = useNavigate();
+
+// Add const for graph QL function with the CREATE_ACCOUNT action
+const [CreateAccount, { data, loading, error }] = useMutation(CREATE_ACCOUNT);
+
+// Add useState to stock data from form
+  const [formData, setFormData] = useState({
+    mail: '',
+    name: '',
+    password: '',
+    confirmPassword : '',
+    region: '',
+    role: ''
+  });
+
+  // console.log(formData);
+  
 
   // Suivie d'état dans un state pour savoir si un rôle a été selectionné
   const [selectedRole, setSelectedRole] = useState(null);
@@ -16,39 +38,51 @@ export function CreateAccountForm({ onSubmit }) {
   // Met à jour l'état du state avec le rôle
   const handleRoleSelect = (role) => {
     setSelectedRole(role);
-    console.log(selectedRole);
+    setFormData(prevState => ({
+      ... prevState, role : role
+    }))
   };
 
+  // function to update state data
   const handleChange = (e, fieldName) => {
-    setFormData({ ...formData, [fieldName]: e.target.value });
+    const updatedFormData = { ...formData, [fieldName]: e.target.value };
+    setFormData(updatedFormData);
   };
 
+  const { confirmPassword, ...formDataWithoutConfirmPassword } = formData;  
+  
+  // function to submit the form and push data with grahQL 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // onSubmit(formData);
-  };
 
+    if (formData.password !== formData.confirmPassword) {
+      toast.warn("Les mots de passe ne correspondent pas.");
+      return;
+    }
+
+    CreateAccount({ variables: { input: formDataWithoutConfirmPassword } });
+    console.log("validé");
+    navigate("/")
+
+  };
+  
   return (
     <form onSubmit={handleSubmit} className="flex flex-col m-5">
       {/* Afficher les cartes de sélection de rôle uniquement si aucun rôle n'est sélectionné */}
       {selectedRole === null && (
         <div className="w-full flex flex-row justify-center		 ">
           <RoleSelectionCard
-            citation={
-              "Dans chaque accord réside une histoire à partager. Ensemble, sur scène, nous peignons des émotions, des rêves et des souvenirs, unissant les cœurs dans une symphonie d'émotion."
-            }
+            
             genre={'Groupes'}
             src={Image2}
-            onClick={() => handleRoleSelect('Groupes')} // Passer la fonction de sélection du rôle
+            onClick={() => handleRoleSelect('Artiste')} // Passer la fonction de sélection du rôle
           />
 
           <RoleSelectionCard
-            citation={
-              "Dans chaque détail logistique, nous tissons les fils de l'expérience musicale. Accueillons chaque artiste comme une étoile dans notre univers, guidant leur lumière vers une nuit d'éclat et de partage."
-            }
+            
             src={Image3}
             genre={'Organisateurs'}
-            onClick={() => handleRoleSelect('Organisateurs')} // Passer la fonction de sélection du rôle
+            onClick={() => handleRoleSelect('Organisateur')} // Passer la fonction de sélection du rôle
           />
         </div>
       )}
@@ -56,19 +90,23 @@ export function CreateAccountForm({ onSubmit }) {
       {selectedRole && (
         <div className="flex justify-between">
           <div className="flex flex-col p-28 items-center">
-            <InputField inputName="name" />
-            <InputField inputName="email" />
-            <InputField inputName="password" />
-            <InputField inputName="password" />
-            <InputField inputName="region" />
+            <InputField inputName="name" value={formData.name} onChange={handleChange}/>
+            <InputField inputName="email" value={formData.mail} onChange={handleChange}/>
+            <InputField inputName="password"value={formData.password} onChange={handleChange} />
+            <InputField inputName="confirmPassword" value={formData.confirmPassword} onChange={handleChange}/>
+            <InputField inputName="region" value={formData.region} onChange={handleChange}/>
 
             <p className="text-gray-500">
               En cliquant sur s’inscrire, vous acceptez les conditions générales
               et Politique de Confidentialité
             </p>
             <div className="w-1/2 flex justify-center my-2">
-              <PrimaryButton href="/" text="S'inscrire" />
-            </div>
+           
+      <button type='submit' className="btn py-2 px-5 rounded-lg bg-slate-900 text-white border-2 border-color-primary transition duration-150 hover:bg-color-secondary hover:text-color-primary hover:border-color-primary hover:border-2">
+        S'inscrire
+      </button>
+             </div>
+
             <nav className="text-gray-500">
               Déjà inscrit ? par
               <NavLink to="/login" className="link">

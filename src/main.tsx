@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import store from './store/index.ts';
+import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './styles/index.css';
 import ErrorPage from './components/Error/index.tsx';
@@ -13,6 +14,13 @@ import { LogLayout } from './components/Layouts/LogLayout/index.tsx';
 import { HomeLogin } from './components/Pages/HomeLogin.tsx';
 import { SettingProfile } from './components/Pages/SettingProfile.tsx';
 import { SearchProfile } from './components/Pages/SearchProfile.tsx';
+
+// Add ApolloClient
+const client = new ApolloClient({
+  uri: 'http://localhost:4000/',
+  cache: new InMemoryCache(),
+});
+
 
 const router = createBrowserRouter([
   {
@@ -46,7 +54,7 @@ const router = createBrowserRouter([
     element: <LogLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { path: '/home', element: <HomeLogin /> },
+      { path: '/home/:id', element: <HomeLogin /> },
       {
         path: '/settings',
         element: <SettingProfile onSubmit={''} />,
@@ -61,8 +69,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
+    <ApolloProvider client={client}>
     <Provider store={store}>
       <RouterProvider router={router} />
     </Provider>
+    </ApolloProvider>
   </React.StrictMode>
 );

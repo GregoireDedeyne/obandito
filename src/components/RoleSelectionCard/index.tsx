@@ -2,7 +2,7 @@
 
 import { CardBody, CardContainer, CardItem } from './CardContainer';
 
-export function RoleSelectionCard({ citation, genre, onClick, src }) {
+export function RoleSelectionCard({ genre, onClick, src }) {
   return (
     <div className="container mx-auto" onClick={onClick}>
       <CardContainer className="inter-var m-5">

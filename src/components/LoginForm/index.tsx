@@ -1,15 +1,34 @@
 import { useState } from 'react';
 import { InputField } from '../InputField';
-import { PrimaryButton } from '../Buttons/PrimaryButton';
 import Image from '../../assets/images/bandPict3.jpg';
 import { NavLink } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { LOGIN_MUTATION } from '../../graphQL/actions';
+import { useNavigate } from 'react-router-dom';
 
 export function LoginForm({ onSubmit }) {
-  const [formData, setFormData] = useState({});
+  const navigate = useNavigate()
+  const [loginMutation, { data, loading, error }] = useMutation(LOGIN_MUTATION);
+
+  const [formData, setFormData] = useState({
+    mail: '',
+    password: '',
+  });
+
+  console.log('data : ', data);
+  console.log('formData : ', formData);
+
+  const handleChange = (e, fieldName) => {
+    const updatedFormData = { ...formData, [fieldName]: e.target.value };
+    setFormData(updatedFormData);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    const { mail, password } = formData;
+    loginMutation({ variables: { mail, password } });
+    navigate(`/home/${data.id}`)
+    // console.log('handleSubmit');
   };
 
   return (
@@ -18,11 +37,24 @@ export function LoginForm({ onSubmit }) {
         onSubmit={handleSubmit}
         className="flex flex-col items-center sm:items-start m-4 w-[300px] lg:w-[500px]"
       >
-        <InputField inputName="email" />
-        <InputField inputName="password" />
+        <InputField
+          inputName="email"
+          value={formData.mail}
+          onChange={(e) => handleChange(e, 'mail')}
+        />
+        <InputField
+          inputName="password"
+          value={formData.password}
+          onChange={(e) => handleChange(e, 'password')}
+        />
 
         <div className="my-2 text-center sm:text-left">
-          <PrimaryButton text="Se connecter" />
+          <button
+            type="submit"
+            className="btn py-2 px-5 rounded-lg bg-slate-900 text-white border-2 border-color-primary transition duration-150 hover:bg-color-secondary hover:text-color-primary hover:border-color-primary hover:border-2"
+          >
+            Se connecter
+          </button>
           <nav className="text-gray-500">
             {`Pas encore inscrit ? par `}
             <NavLink to="/subscribe" className="link">
