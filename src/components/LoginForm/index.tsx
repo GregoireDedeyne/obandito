@@ -3,12 +3,9 @@ import { InputField } from '../InputField';
 import { PrimaryButton } from '../Buttons/PrimaryButton';
 import Image from '../../assets/images/bandPict3.jpg';
 import { NavLink } from 'react-router-dom';
+
 export function LoginForm({ onSubmit }) {
   const [formData, setFormData] = useState({});
-
-  const handleChange = (e, fieldName) => {
-    setFormData({ ...formData, [fieldName]: e.target.value });
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,37 +13,30 @@ export function LoginForm({ onSubmit }) {
   };
 
   return (
-    <div className="flex justify-between">
+    <div className="flex flex-col justify-center items-center sm:flex-row container mx-auto">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col mr-48 ml-48 mt-64  items-center"
+        className="flex flex-col items-center sm:items-start m-4 w-[300px] lg:w-[500px]"
       >
-        <InputField
-          label="Email"
-          type="email"
-          value={formData.email}
-          placeholder={'Renseigner votre email'}
-          onChange={(e) => handleChange(e, 'email')}
-        />
-        <InputField
-          label="Mot de passe"
-          type="password"
-          value={formData.password}
-          placeholder={'Renseigner votre mot de passe'}
-          onChange={(e) => handleChange(e, 'password')}
-        />
-        <PrimaryButton href="/home:id" text="Se connecter" />
-        <nav className="text-gray-500">
-          {' '}
-          Pas encore inscrit ? par{' '}
-          <NavLink to="/subscribe" className="link">
-            {' '}
-            ici{' '}
-          </NavLink>
-        </nav>
+        <InputField inputName="email" />
+        <InputField inputName="password" />
+
+        <div className="my-2 text-center sm:text-left">
+          <PrimaryButton text="Se connecter" />
+          <nav className="text-gray-500">
+            {`Pas encore inscrit ? par `}
+            <NavLink to="/subscribe" className="link">
+              ici
+            </NavLink>
+          </nav>
+        </div>
       </form>
-      <div className="mt-32 ml-48 mr-48 mb-32 ">
-        <img className="rounded-2xl w-screen" src={Image} />
+      <div className="m-4">
+        <img
+          className="rounded-2xl w-[300px] lg:w-[500px]"
+          src={Image}
+          alt="band"
+        />
       </div>
     </div>
   );

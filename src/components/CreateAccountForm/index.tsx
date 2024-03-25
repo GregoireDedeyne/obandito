@@ -56,50 +56,23 @@ export function CreateAccountForm({ onSubmit }) {
       {selectedRole && (
         <div className="flex justify-between">
           <div className="flex flex-col p-28 items-center">
-            {' '}
-            <InputField
-              label="Email"
-              type="email"
-              value={formData.email}
-              placeholder={'Renseigner votre email'}
-              onChange={(e) => handleChange(e, 'email')}
-            />
-            <InputField
-              label="Mot de passe"
-              type="password"
-              value={formData.password}
-              placeholder={'Renseigner votre mot de passe'}
-              onChange={(e) => handleChange(e, 'password')}
-            />
-            <InputField
-              label="Mot de passe"
-              type="password"
-              value={formData.password}
-              placeholder={'Renseigner votre mot de passe'}
-              onChange={(e) => handleChange(e, 'password')}
-            />
-            {/* appel api pour faire un choix dans une boite de selection */}
-            <InputField
-              label="Région"
-              type="text"
-              value={formData.town}
-              placeholder={'Renseigner votre région'}
-              onChange={(e) => handleChange(e, 'town')}
-            />
+            <InputField inputName="name" />
+            <InputField inputName="email" />
+            <InputField inputName="password" />
+            <InputField inputName="password" />
+            <InputField inputName="region" />
+
             <p className="text-gray-500">
-              {' '}
               En cliquant sur s’inscrire, vous acceptez les conditions générales
               et Politique de Confidentialité
             </p>
-            <div className="w-1/2 flex justify-center">
+            <div className="w-1/2 flex justify-center my-2">
               <PrimaryButton href="/" text="S'inscrire" />
             </div>
             <nav className="text-gray-500">
-              {' '}
-              Déjà inscrit ? par{' '}
+              Déjà inscrit ? par
               <NavLink to="/login" className="link">
-                {' '}
-                ici{' '}
+                ici
               </NavLink>
             </nav>
           </div>
