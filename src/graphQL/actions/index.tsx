@@ -11,11 +11,16 @@ export const GET_ORGANIZER = gql`
       address
       city
       region
-      zip_code
+      role {
+        name
+      }
       description
-      youtube_link
+      style {
+        name
+      }
       spotify_link
-      validation
+      youtube_link
+      zip_code
     }
   }
 `;

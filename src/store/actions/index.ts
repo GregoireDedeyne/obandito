@@ -5,7 +5,6 @@ import dataBands from '../../data/dataBands.json';
 const GET_EVENTS = 'GET_EVENTS';
 const GET_BANDS = 'GET_BANDS';
 
-
 export const getEvents = createAction(GET_EVENTS, () => ({
   payload: dataEvents,
 }));
@@ -13,3 +12,8 @@ export const getEvents = createAction(GET_EVENTS, () => ({
 export const getBands = createAction(GET_BANDS, () => ({
   payload: dataBands,
 }));
+
+export const setOrganizer = (organizerData) => ({
+  type: 'SET_ORGANIZER',
+  payload: organizerData,
+});

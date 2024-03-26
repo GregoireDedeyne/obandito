@@ -1,9 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import eventsReducer from './reducer/events';
 import bandsReducer from './reducer/bands';
+import organizerReducer from './reducer/organizer';
 
 const store = configureStore({
-  reducer: { events: eventsReducer, bands: bandsReducer },
+  reducer: {
+    events: eventsReducer,
+    bands: bandsReducer,
+    organizer: organizerReducer,
+  },
   devTools: true,
 });
 
