@@ -5,63 +5,40 @@ import { NavLink } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN_MUTATION } from '../../graphQL/actions';
 import { useNavigate } from 'react-router-dom';
-import * as jose from 'jose'
+import * as jose from 'jose';
 import { TextEncoder } from 'text-encoding';
 
-
-
 export function LoginForm() {
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
   const [loginMutation, { data, loading, error }] = useMutation(LOGIN_MUTATION);
-
-  const [formData, setFormData] = useState({
-    mail: '',
-    password: '',
-  });
-
-  
-  console.log('data : ', data);
-  console.log('formData : ', formData);
+  const [formData, setFormData] = useState({ mail: '', password: '' });
 
   const handleChange = (e, fieldName) => {
     const updatedFormData = { ...formData, [fieldName]: e.target.value };
     setFormData(updatedFormData);
   };
 
-  const handleSubmit =  (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { mail, password } = formData;
-    loginMutation({ variables: { mail, password } });
+    const { data } = await loginMutation({ variables: { mail, password } });
 
-   
-    
-    // console.log(decodedToken);
-    
-    // console.log('handleSubmit');
-  };
-  useEffect(() => {
-    const fetchData = async () => {
-      if (data) {
-        const token = data.login.token;
-        const secret = import.meta.env.VITE_JWT_SECRET;
-        const encoder = new TextEncoder();
-        const key = encoder.encode(secret);
-  
-        try {
-          const decodedToken = await jose.jwtVerify(token, key);
-          console.log(decodedToken);
-          // Faire quelque chose avec le token déchiffré, par exemple naviguer vers une autre page
-          navigate(`/home/${decodedToken.payload.user.id}`);
-        } catch (error) {
-          console.error('Erreur lors du déchiffrement du token :', error);
-        }
+    if (data) {
+      const token = data.login.token;
+      const secret = import.meta.env.VITE_JWT_SECRET;
+      const encoder = new TextEncoder();
+      const key = encoder.encode(secret);
+
+      try {
+        const decodedToken = await jose.jwtVerify(token, key);
+        console.log('decodedToken: ', decodedToken);
+        localStorage.setItem('token', token);
+        navigate(`/home/${decodedToken.payload.user.id}`);
+      } catch (error) {
+        console.error('Erreur lors du déchiffrement du token :', error);
       }
-    };
-  
-    fetchData();
-  }, [data, navigate]);
-
+    }
+  };
 
   return (
     <div className="flex flex-col justify-center items-center sm:flex-row container mx-auto">

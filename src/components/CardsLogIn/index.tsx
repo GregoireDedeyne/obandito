@@ -18,14 +18,14 @@ const data = [
     link: '',
   },
   {
-    name: 'bbb',
+    name: 'b',
     url: 'https://media.istockphoto.com/id/1125877063/fr/photo/femme-de-race-mixte-chantant-et-jouant-de-la-guitare.jpg?s=612x612&w=0&k=20&c=u9QiXxCTPMlTUo4jM-1Qo2sagHLDkgTzoMhLKPSXNXM=',
     alt: 'bbb',
     description: 'description',
     link: '',
   },
   {
-    name: 'bbb',
+    name: 'bb',
     url: 'https://www.rollingstone.com/wp-content/uploads/2023/05/6-Ways-To-Build-Your-Brand-as-a-Musician-in-2023.jpg',
     alt: 'bbb',
     description: 'erztytzer eyruyyter ytuyyertuyyrytu yiyrtuyiyrt uyi',
@@ -39,7 +39,7 @@ const data = [
     link: '',
   },
   {
-    name: 'bbb',
+    name: 'baa',
     url: 'https://www.rollingstone.com/wp-content/uploads/2023/05/6-Ways-To-Build-Your-Brand-as-a-Musician-in-2023.jpg',
     alt: 'bbb',
     description: 'description',
@@ -78,7 +78,7 @@ export default function CardsLogIn() {
         className="mySwiper"
       >
         {data.map((card) => (
-          <SwiperSlide>
+          <SwiperSlide key={data.name}>
             <CardLogIn
               key={card.url}
               image={card.url}
