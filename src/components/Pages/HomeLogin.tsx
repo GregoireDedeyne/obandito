@@ -1,6 +1,10 @@
+import { useParams } from 'react-router-dom';
 import CardsLogIn from '../CardsLogIn';
 
 export function HomeLogin() {
+
+const {id} = useParams()
+
   return (
     <div className="">
       <div className="mt-4 mb-10">

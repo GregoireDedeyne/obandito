@@ -4,21 +4,9 @@ import {
   faKey,
   faUser,
   faGlobe,
-  faArrowAltCircleRight,
 } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
 
 export function InputField({ inputName, value, onChange }) {
-  // const [formData, setFormData] = useState({});
-
-  // const handleChange = (e, fieldName) => {
-  //   const updatedFormData = { ...formData, [fieldName]: e.target.value };
-  //   console.log(updatedFormData);
-  //   setFormData({ ...formData, [fieldName]: e.target.value });
-  // };
-
-
-
   return (
     <>
       {inputName === 'name' && (
@@ -57,7 +45,7 @@ export function InputField({ inputName, value, onChange }) {
           />
         </label>
       )}
-       {inputName === 'password' && (
+      {inputName === 'password' && (
         <label className="input input-bordered flex items-center my-2 w-full">
           <FontAwesomeIcon icon={faKey} className="w-4 h-4 opacity-70" />
           <input
