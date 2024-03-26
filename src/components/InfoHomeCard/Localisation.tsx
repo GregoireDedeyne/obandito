@@ -43,7 +43,7 @@ const locations = [
 export function Localisation() {
   return (
     <div className="hidden xl:flex flex-col justify-between  max-w-[255px]">
-      <div className="flex flex-col px-5 mt-1.5 w-full text-base">
+      <div className="flex flex-col px-5 w-full text-base">
         <h2 className="w-full text-xl font-semibold leading-6 text-neutral-700">
           Lieux
         </h2>

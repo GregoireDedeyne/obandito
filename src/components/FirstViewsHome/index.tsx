@@ -48,7 +48,7 @@ export function FirstViewHome() {
             </div>
           </div>
         </div>
-        <div className="relative px-10 py-8 mt-1.5 bg-white shadow-xl rounded-[66px] max-md:px-5 max-md:max-w-full">
+        <div className="relative px-10 py-8 mt-1.5 bg-white shadow-lg rounded-[66px] max-md:px-5 max-md:max-w-full">
           <div className="flex gap-5 max-md:flex-col max-md:gap-0">
             <div className="flex flex-col w-[55%] max-md:ml-0 max-md:w-full">
               <div className="flex relative grow gap-5 justify-center max-md:flex-wrap max-md:mt-10">

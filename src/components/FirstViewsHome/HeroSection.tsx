@@ -5,8 +5,8 @@ export function HeroSection() {
     <section className="flex justify-center items-center px-16 py-20 text-center max-md:px-5 bg-purple-800">
       <div className="flex flex-col justify-center max-w-full w-[808px]">
         <h1 className="justify-center text-4xl font-bold leading-10 text-white max-md:max-w-full">
-          Sur O'Bandito, trouvez l'artiste/l'événement idéal <br /> pour mettre
-          de la musique dans votre vie !
+          Sur O'Bandito, trouvez l'artiste/l'événement idéal pour mettre de la
+          musique dans votre vie !
         </h1>
         <div className="flex flex-col justify-center self-center mt-14 max-w-full text-xl font-medium leading-7 text-white w-[232px] max-md:mt-10">
           <NavLink to={'/login'}>

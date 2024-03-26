@@ -34,7 +34,7 @@ export function Cards({ data }) {
             spaceBetween: 20,
           },
           1280: {
-            slidesPerView: 3,
+            slidesPerView: 4,
             spaceBetween: 20,
           },
         }}
