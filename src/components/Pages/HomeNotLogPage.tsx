@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
-import { getBands, getEvents } from '../../store/actions';
-import { useAppDispatch, useAppSelector } from '../../store/redux-hook';
+import { useQuery } from '@apollo/client';
 import { Cards } from '../CardsLogOut';
 import { FirstViewHome } from '../FirstViewsHome';
 import { HeroSection } from '../FirstViewsHome/HeroSection';
@@ -8,19 +6,20 @@ import { SecondView } from '../FirstViewsHome/SecondView';
 import { PreFooter } from '../FirstViewsHome/PreFooter';
 import { Faq } from '../FirstViewsHome/Faq';
 import { ThirdView } from '../FirstViewsHome/ThirdView';
+import { GET_HOMEDATA } from '../../graphQL/actions';
+import { useLoaderData } from 'react-router-dom';
 
 export function HomeNotLogPage() {
-  const dispatch = useAppDispatch();
+  // const { data, loading, error } = useQuery(GET_HOMEDATA, {
+  //   variables: { limit: 10, limitEvents: 5 },
+  // });
 
-  useEffect(() => {
-    // Dispatchez l'action getEvents sans données supplémentaires
-    dispatch(getEvents());
-    dispatch(getBands());
-  }, [dispatch]);
-  const events = useAppSelector((state) => state.events.events);
-  const bands = useAppSelector((state) => state.bands.bands);
+  // if (loading) return 'Loading...';
+  // if (error) return `Error! ${error.message}`;
 
-  console.log(bands);
+  const data = useLoaderData();
+
+  console.log(data);
 
   return (
     <>
@@ -37,11 +36,19 @@ export function HomeNotLogPage() {
           </div>
         </div>
 
-        <div className="container mx-auto">
-          <Cards data={events} />
+        <div className="container mx-auto" id="bands">
+          <Cards
+            data={data.randomArtists}
+            title={'Les derniers Artistes disponibles'}
+            link={'/'}
+            subtitle={''}
+          />
         </div>
-        <div className="container mx-auto my-20">
-          <ThirdView />
+        <div className="container mx-auto my-20" id="events">
+          <ThirdView
+            events={data.lastEvents}
+            locations={data.getCountNameEventsByRegion}
+          />
         </div>
         <div className="bg-purple-800">
           <div className="container mx-auto">
@@ -49,7 +56,7 @@ export function HomeNotLogPage() {
           </div>
         </div>
 
-        <div className="container mx-auto">
+        <div className="container mx-auto" id="propos">
           <SecondView />
         </div>
         <div className="bg-slate-200">

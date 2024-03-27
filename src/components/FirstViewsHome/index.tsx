@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-
+import bandPict from '../../assets/images/bandPict.jpg';
 interface ImageProps {
   src: string;
   alt: string;
@@ -41,9 +41,9 @@ export function FirstViewHome() {
             </div>
             <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
               <Image
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/fee00546c6051176f7bbb78ff989eb59d0b6c421c898d211075a02fd32f2eb01?apiKey=877605d91b494696bd5bbaa7fb33442f&"
+                src={bandPict}
                 alt="Featured image"
-                className="w-full aspect-[1.61] max-md:mt-10 max-md:max-w-full"
+                className="w-full aspect-[1.61] max-md:mt-10 max-md:max-w-full rounded-xl"
               />
             </div>
           </div>
@@ -95,7 +95,7 @@ export function FirstViewHome() {
                   <Text className="my-auto text-neutral-600">ou</Text>
                   <NavLink
                     to={'/'}
-                    className="justify-center px-2.5 py-1.5 font-bold text-purple-800 hover:border-b-2 hover:border-purple-800 border-solid leading-[128%] hover:text-rose-500"
+                    className="justify-center px-2.5 py-1.5 font-bold text-purple-800 border-b-2 border-transparent hover:border-b-2 hover:border-purple-800 border-solid leading-[128%] hover:text-rose-500"
                   >
                     Déposer un événement
                   </NavLink>

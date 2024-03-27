@@ -8,19 +8,25 @@ import 'swiper/css/navigation';
 
 // import required modules
 import { Navigation, Scrollbar } from 'swiper/modules';
+import { NavLink } from 'react-router-dom';
 
-export function Cards({ data }) {
+export function Cards({ data, title, subtitle, link }) {
   return (
     <div className="flex flex-col bg-white py-20">
       <div className="flex gap-5 justify-start px-5 w-full max-md:max-w-full my-8 lg:ml-20 sm:ml-0">
         <h2 className="text-xl font-semibold leading-6 text-neutral-700">
-          Les derniers Artistes disponibles
+          {title}
         </h2>
+        {subtitle ? (
+          <h2 className="text-l font-semibold leading-6 text-neutral-700">
+            {subtitle}
+          </h2>
+        ) : null}
       </div>
 
       <Swiper
         spaceBetween={20}
-        centeredSlides={true}
+        centeredSlides={false}
         // slidesPerView={'3'}
         scrollbar={{ hide: true }}
         navigation={false}
@@ -43,12 +49,15 @@ export function Cards({ data }) {
       >
         {data.map((card) => (
           <SwiperSlide className="shadow-sm">
-            <Card
-              key={card.image_url}
-              image={card.image_url}
-              alt={card.alt}
-              name={card.name}
-            />
+            <NavLink to={{ link }}>
+              <Card
+                key={card.image_url}
+                image={card.image_url}
+                alt={card.alt}
+                name={card.name}
+                style={card.style.name}
+              />
+            </NavLink>
           </SwiperSlide>
         ))}
       </Swiper>

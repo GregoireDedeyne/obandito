@@ -6,7 +6,7 @@ export function RoleSelectionCard({ genre, onClick, src }) {
   return (
     <div className="container mx-auto" onClick={onClick}>
       <CardContainer className="inter-var m-5">
-        <CardBody className="bg-gray-50 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border  ">
+        <CardBody className="bg-gray-50 relative group/card  w-auto sm:w-[30rem] h-auto rounded-xl p-6 border  ">
           <CardItem
             translateZ="100"
             rotateX={0}
@@ -25,7 +25,7 @@ export function RoleSelectionCard({ genre, onClick, src }) {
             <CardItem
               translateZ={20}
               translateX={-40}
-              className="px-4 py-2 rounded-xl text-2xl font-normal dark:text-white"
+              className="px-4 py-2 rounded-xl text-2xl font-normal "
             >
               {genre}{' '}
             </CardItem>

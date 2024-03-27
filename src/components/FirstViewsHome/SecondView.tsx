@@ -78,7 +78,7 @@ export function SecondView() {
             {steps.map((step, index) => (
               <Step key={index} {...step} />
             ))}
-            <NavLink to={'/subscribe'}>
+            <NavLink to={'/login'}>
               <button className="justify-center px-7 py-5 mt-14 w-fit text-base font-medium leading-7 text-center text-white bg-rose-500 border border-rose-500 border-solid rounded-[800px] max-md:px-5 max-md:mt-10 hover:bg-purple-800 hover:border-purple-800">
                 Voir tous les évènements/groupes
               </button>

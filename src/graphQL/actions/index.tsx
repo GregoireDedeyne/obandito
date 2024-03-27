@@ -20,6 +20,100 @@ export const GET_ORGANIZER = gql`
   }
 `;
 
+export const GET_HOMEDATA = gql`
+  query RandomBandsQuery($limit: Int, $limitEvents: Int) {
+    randomArtists(limit: $limit) {
+      image_url
+      name
+      style {
+        name
+      }
+    }
+    lastEvents(limit: $limitEvents) {
+      city
+      description
+      image_url
+      name
+      region
+      price
+      date
+      organizer {
+        name
+      }
+    }
+    getCountNameEventsByRegion {
+      event_count
+      region
+    }
+  }
+`;
+
+export const GET_HOMEGENREDATA = gql`
+  query RandomBandsQuery($style: String, $limitEvents: Int) {
+    artistsByStyle(style: $style) {
+      image_url
+      name
+      style {
+        name
+      }
+    }
+    lastEvents(limit: $limitEvents) {
+      city
+      description
+      image_url
+      name
+      region
+      price
+      date
+      organizer {
+        name
+      }
+    }
+
+    getCountNameEventsByRegion {
+      event_count
+      region
+    }
+  }
+`;
+
+export const GET_HOMEREGIONDATA = gql`
+  query RandomBandsQuery($limit: Int, $region: String!) {
+    randomArtists(limit: $limit) {
+      image_url
+      name
+      style {
+        name
+      }
+    }
+    eventByRegion(region: $region) {
+      city
+      date
+      description
+      image_url
+      name
+      organizer {
+        name
+      }
+      price
+      region
+    }
+
+    getCountNameEventsByRegion {
+      event_count
+      region
+    }
+  }
+`;
+
+export const GET_STYLES = gql`
+  query getStyles {
+    styles {
+      name
+    }
+  }
+`;
+
 // Mutation
 export const CREATE_ACCOUNT = gql`
   mutation CreateAccount($input: RegisterUserInput!) {

@@ -7,6 +7,7 @@ import { LOGIN_MUTATION } from '../../graphQL/actions';
 import { useNavigate } from 'react-router-dom';
 import * as jose from 'jose';
 import { TextEncoder } from 'text-encoding';
+import { toast } from 'react-toastify';
 
 export function LoginForm() {
   const navigate = useNavigate();
@@ -21,6 +22,11 @@ export function LoginForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { mail, password } = formData;
+
+    if (!mail || !password) {
+      toast.warn('Veuillez remplir les informations de connexion.');
+      return;
+    }
     const { data } = await loginMutation({ variables: { mail, password } });
 
     if (data) {
@@ -41,7 +47,7 @@ export function LoginForm() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center sm:flex-row container mx-auto">
+    <div className="flex flex-col justify-center items-center sm:flex-row">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center sm:items-start m-4 w-[300px] lg:w-[500px]"

@@ -2,12 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import store from './store/index.ts';
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  gql,
-} from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './styles/index.css';
 import ErrorPage from './components/Error/index.tsx';
@@ -19,6 +14,11 @@ import { LogLayout } from './components/Layouts/LogLayout/index.tsx';
 import { HomeLogin } from './components/Pages/HomeLogin.tsx';
 import { SettingProfile } from './components/Pages/SettingProfile.tsx';
 import { SearchProfile } from './components/Pages/SearchProfile.tsx';
+import {
+  GET_HOMEDATA,
+  GET_HOMEGENREDATA,
+  GET_HOMEREGIONDATA,
+} from './graphQL/actions/index.tsx';
 
 // Add ApolloClient
 const client = new ApolloClient({
@@ -26,13 +26,74 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+const HomeLoader = async () => {
+  const { data } = await client.query({
+    query: GET_HOMEDATA,
+    variables: {
+      limit: 10,
+      limitEvents: 5,
+    },
+  });
+
+  return data;
+};
+
+const RegionLoader = async ({ params }) => {
+  const { region } = params;
+  console.log(region);
+
+  const { data } = await client.query({
+    query: GET_HOMEREGIONDATA,
+    variables: {
+      limit: 10,
+      region: region,
+    },
+  });
+
+  const newData = Object.assign({}, data, { lastEvents: data.eventByRegion });
+  delete newData.eventByRegion;
+
+  return newData;
+};
+
+const GenreLoader = async ({ params }) => {
+  const { genre } = params;
+
+  const { data } = await client.query({
+    query: GET_HOMEGENREDATA,
+    variables: {
+      limitEvents: 5,
+      style: genre,
+    },
+  });
+  const newData = Object.assign({}, data, {
+    randomArtists: data.artistsByStyle,
+  });
+  delete newData.artistsByStyle;
+
+  return newData;
+};
 const router = createBrowserRouter([
   {
     path: '/',
     element: <NotLogLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <HomeNotLogPage /> },
+      {
+        index: true,
+        element: <HomeNotLogPage />,
+        loader: HomeLoader,
+      },
+      {
+        path: '/region/:region',
+        element: <HomeNotLogPage />,
+        loader: RegionLoader,
+      },
+      {
+        path: '/genre/:genre',
+        element: <HomeNotLogPage />,
+        loader: GenreLoader,
+      },
       {
         path: '/subscribe',
         element: <SubscribePage />,
@@ -41,16 +102,6 @@ const router = createBrowserRouter([
         path: '/login',
         element: <LoginPage />,
       },
-      // {
-      //   // j'appel favoris avec la réponse
-      //   path: '/recipe/favorites',
-      //   element: <Favoris />,
-      //   loader: () => {
-      //     const recipe = store.dispatch(favorites());
-      //     // console.log(recipe);
-      //     return recipe;
-      //   },
-      // },
     ],
   },
   {

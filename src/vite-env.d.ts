@@ -1,3 +1,4 @@
 /// <reference types="vite/client" />
 
-VITE_JWT_SECRET= 'klfjlqmkjlmkjsqdflklksdfnlknmksdfnknsdflknknsdflknskdfnmknsdfkn'
+VITE_JWT_SECRET =
+  'klfjlqmkjlmkjsqdflklksdfnlknmksdfnknsdflknknsdflknskdfnmknsdfkn';

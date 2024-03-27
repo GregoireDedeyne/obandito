@@ -10,7 +10,7 @@ export function InputField({ inputName, value, onChange }) {
   return (
     <>
       {inputName === 'name' && (
-        <label className="input input-bordered flex items-center my-2 w-full">
+        <label className="input input-bordered flex items-center my-2 w-full bg-slate-100">
           <FontAwesomeIcon icon={faUser} className="w-4 h-4 opacity-70" />
           <input
             type="text"
@@ -22,7 +22,7 @@ export function InputField({ inputName, value, onChange }) {
         </label>
       )}
       {inputName === 'email' && (
-        <label className="input input-bordered flex items-center my-2 w-full">
+        <label className="input input-bordered flex items-center my-2 w-full bg-slate-100">
           <FontAwesomeIcon icon={faEnvelope} className="w-4 h-4 opacity-70" />
           <input
             type="email"
@@ -34,7 +34,7 @@ export function InputField({ inputName, value, onChange }) {
         </label>
       )}
       {inputName === 'confirmPassword' && (
-        <label className="input input-bordered flex items-center my-2 w-full">
+        <label className="input input-bordered flex items-center my-2 w-full bg-slate-100">
           <FontAwesomeIcon icon={faKey} className="w-4 h-4 opacity-70" />
           <input
             type="password"
@@ -46,7 +46,7 @@ export function InputField({ inputName, value, onChange }) {
         </label>
       )}
       {inputName === 'password' && (
-        <label className="input input-bordered flex items-center my-2 w-full">
+        <label className="input input-bordered flex items-center my-2 w-full bg-slate-100">
           <FontAwesomeIcon icon={faKey} className="w-4 h-4 opacity-70" />
           <input
             type="password"
@@ -58,7 +58,7 @@ export function InputField({ inputName, value, onChange }) {
         </label>
       )}
       {inputName === 'region' && (
-        <label className="input input-bordered flex items-center my-2 w-full">
+        <label className="input input-bordered flex items-center my-2 w-full bg-slate-100">
           <FontAwesomeIcon icon={faGlobe} className="w-4 h-4 opacity-70" />
           <input
             type="text"

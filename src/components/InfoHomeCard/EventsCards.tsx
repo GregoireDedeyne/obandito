@@ -1,28 +1,25 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 interface EventCardProps {
-  imageUrl: string;
-  overlayImageUrl: string;
+  image_url: string;
   title: string;
   description: string;
-  searchTags: string[];
-  platform: string;
-  timeAgo: string;
+  city: string;
+  date: string;
+  region: string;
   price: number;
-  offer: number;
+  organizer: string;
 }
 
 export function EventCard({
-  imageUrl,
-  overlayImageUrl,
+  image_url,
   title,
   description,
-  searchTags,
-  platform,
-  timeAgo,
+  city,
+  date,
+  region,
+  organizer,
   price,
-  offer,
 }: EventCardProps) {
   return (
     <NavLink to={'/'}>
@@ -32,15 +29,9 @@ export function EventCard({
             <div className="flex overflow-hidden relative flex-col grow justify-center items-center rounded-xl aspect-[0.93] w-[195px] max-md:mt-10">
               <img
                 loading="lazy"
-                src={imageUrl}
+                src={image_url}
                 alt=""
                 className="object-cover absolute inset-0 size-full"
-              />
-              <img
-                loading="lazy"
-                src={overlayImageUrl}
-                alt={title}
-                className="w-full aspect-[0.93]"
               />
             </div>
           </div>
@@ -59,28 +50,23 @@ export function EventCard({
                   />
                   <div>Disponible</div>
                   <div>·</div>
-                  <div>Moins de {price} €</div>
+                  <div>Cachet : {price} €</div>
                   <div>·</div>
-                  <div>{offer} offre</div>
+                  <div>{city}</div>
                 </div>
                 <p className="mt-1.5 leading-6 text-neutral-600 max-md:max-w-full">
                   {description}
                 </p>
                 <div className="flex gap-1.5 self-start mt-1.5 text-neutral-600">
-                  <div>Recherche : </div>
-                  {searchTags.map((tag, index) => (
-                    <React.Fragment key={index}>
-                      <div>{tag}</div>
-                      {index < searchTags.length - 1 && (
-                        <div className="text-neutral-600">·</div>
-                      )}
-                    </React.Fragment>
-                  ))}
+                  <div>Recherche sur la région de : </div>
+
+                  <div>{region}</div>
+
                   <div className="text-neutral-600">·</div>
-                  <div>{platform}</div>
+                  <div> {organizer.name}</div>
                 </div>
                 <div className="mt-1.5 text-zinc-500 max-md:max-w-full">
-                  {timeAgo}
+                  {date}
                 </div>
               </div>
             </div>
