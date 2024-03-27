@@ -6,7 +6,9 @@ import CardsLogIn from '../CardsLogIn';
 
 export function SettingProfile({ onSubmit }) {
   const [formData, setFormData] = useState({});
-  const organizer = useSelector((state) => state.organizer.organizer);
+  const role = useSelector(
+    (state) => state.decodedToken.decodedData.payload.user.role
+  );
 
   const handleChange = (e, fieldName) => {
     setFormData({ ...formData, [fieldName]: e.target.value });
@@ -27,7 +29,7 @@ export function SettingProfile({ onSubmit }) {
         />
       </div>
       <h2 className="text-4xl mt-4">Description</h2>
-      <h1>{organizer && organizer.mail}</h1>{' '}
+      <h1>{role}</h1>
       <div className="flex flex-row justify-between items-end my-10 ">
         <form onSubmit={handleSubmit} className="flex flex-row ">
           <div>

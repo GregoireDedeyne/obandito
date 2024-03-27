@@ -7,8 +7,11 @@ import { LOGIN_MUTATION } from '../../graphQL/actions';
 import { useNavigate } from 'react-router-dom';
 import * as jose from 'jose';
 import { TextEncoder } from 'text-encoding';
+import { useDispatch } from 'react-redux';
+import { setDecodedToken } from '../../store/actions/';
 
 export function LoginForm() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loginMutation, { data, loading, error }] = useMutation(LOGIN_MUTATION);
   const [formData, setFormData] = useState({ mail: '', password: '' });
@@ -31,8 +34,10 @@ export function LoginForm() {
 
       try {
         const decodedToken = await jose.jwtVerify(token, key);
+        console.log('token: ', token);
         console.log('decodedToken: ', decodedToken);
-        localStorage.setItem('token', token);
+        // localStorage.setItem('token', token);
+        dispatch(setDecodedToken(decodedToken));
         navigate(`/home/${decodedToken.payload.user.id}`);
       } catch (error) {
         console.error('Erreur lors du déchiffrement du token :', error);

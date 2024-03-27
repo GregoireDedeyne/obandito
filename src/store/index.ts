@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import eventsReducer from './reducer/events';
 import bandsReducer from './reducer/bands';
-import organizerReducer from './reducer/organizer';
+import decodedTokenReducer from './reducer/decodedToken';
 
 const store = configureStore({
   reducer: {
     events: eventsReducer,
     bands: bandsReducer,
-    organizer: organizerReducer,
+    decodedToken: decodedTokenReducer,
   },
   devTools: true,
 });
