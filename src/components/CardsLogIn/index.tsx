@@ -9,45 +9,45 @@ import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import { CardLogIn } from '../CardLogIn';
 
-const data = [
-  {
-    name: 'aaa',
-    url: 'https://www.rollingstone.com/wp-content/uploads/2023/05/6-Ways-To-Build-Your-Brand-as-a-Musician-in-2023.jpg',
-    alt: 'aaa',
-    description: 'description',
-    link: '',
-  },
-  {
-    name: 'b',
-    url: 'https://media.istockphoto.com/id/1125877063/fr/photo/femme-de-race-mixte-chantant-et-jouant-de-la-guitare.jpg?s=612x612&w=0&k=20&c=u9QiXxCTPMlTUo4jM-1Qo2sagHLDkgTzoMhLKPSXNXM=',
-    alt: 'bbb',
-    description: 'description',
-    link: '',
-  },
-  {
-    name: 'bb',
-    url: 'https://www.rollingstone.com/wp-content/uploads/2023/05/6-Ways-To-Build-Your-Brand-as-a-Musician-in-2023.jpg',
-    alt: 'bbb',
-    description: 'erztytzer eyruyyter ytuyyertuyyrytu yiyrtuyiyrt uyi',
-    link: '',
-  },
-  {
-    name: 'bbb',
-    url: 'https://media.istockphoto.com/id/1125877063/fr/photo/femme-de-race-mixte-chantant-et-jouant-de-la-guitare.jpg?s=612x612&w=0&k=20&c=u9QiXxCTPMlTUo4jM-1Qo2sagHLDkgTzoMhLKPSXNXM=',
-    alt: 'bbb',
-    description: 'description',
-    link: '',
-  },
-  {
-    name: 'baa',
-    url: 'https://www.rollingstone.com/wp-content/uploads/2023/05/6-Ways-To-Build-Your-Brand-as-a-Musician-in-2023.jpg',
-    alt: 'bbb',
-    description: 'description',
-    link: '',
-  },
-];
+// const data = [
+//   {
+//     name: 'aaa',
+//     url: 'https://www.rollingstone.com/wp-content/uploads/2023/05/6-Ways-To-Build-Your-Brand-as-a-Musician-in-2023.jpg',
+//     alt: 'aaa',
+//     description: 'description',
+//     link: '',
+//   },
+//   {
+//     name: 'b',
+//     url: 'https://media.istockphoto.com/id/1125877063/fr/photo/femme-de-race-mixte-chantant-et-jouant-de-la-guitare.jpg?s=612x612&w=0&k=20&c=u9QiXxCTPMlTUo4jM-1Qo2sagHLDkgTzoMhLKPSXNXM=',
+//     alt: 'bbb',
+//     description: 'description',
+//     link: '',
+//   },
+//   {
+//     name: 'bb',
+//     url: 'https://www.rollingstone.com/wp-content/uploads/2023/05/6-Ways-To-Build-Your-Brand-as-a-Musician-in-2023.jpg',
+//     alt: 'bbb',
+//     description: 'erztytzer eyruyyter ytuyyertuyyrytu yiyrtuyiyrt uyi',
+//     link: '',
+//   },
+//   {
+//     name: 'bbb',
+//     url: 'https://media.istockphoto.com/id/1125877063/fr/photo/femme-de-race-mixte-chantant-et-jouant-de-la-guitare.jpg?s=612x612&w=0&k=20&c=u9QiXxCTPMlTUo4jM-1Qo2sagHLDkgTzoMhLKPSXNXM=',
+//     alt: 'bbb',
+//     description: 'description',
+//     link: '',
+//   },
+//   {
+//     name: 'baa',
+//     url: 'https://www.rollingstone.com/wp-content/uploads/2023/05/6-Ways-To-Build-Your-Brand-as-a-Musician-in-2023.jpg',
+//     alt: 'bbb',
+//     description: 'description',
+//     link: '',
+//   },
+// ];
 
-export default function CardsLogIn() {
+export default function CardsLogIn({ data }) {
   return (
     <>
       <Swiper
@@ -77,18 +77,18 @@ export default function CardsLogIn() {
         modules={[Pagination]}
         className="mySwiper"
       >
-        {data.map((card) => (
-          <SwiperSlide key={data.name}>
-            <CardLogIn
-              key={card.url}
-              image={card.url}
-              alt={card.alt}
-              name={card.name}
-              description={card.description}
-              link={card.link}
-            />
-          </SwiperSlide>
-        ))}
+        {data &&
+          data.map((card) => (
+            <SwiperSlide key={card.id}>
+              <CardLogIn
+                image={card.image_url}
+                alt={card.alt}
+                name={card.name}
+                description={card.description}
+                link={card.link}
+              />
+            </SwiperSlide>
+          ))}
       </Swiper>
     </>
   );

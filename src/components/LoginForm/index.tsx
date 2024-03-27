@@ -36,7 +36,6 @@ export function LoginForm() {
         const decodedToken = await jose.jwtVerify(token, key);
         console.log('token: ', token);
         console.log('decodedToken: ', decodedToken);
-        // localStorage.setItem('token', token);
         dispatch(setDecodedToken(decodedToken));
         navigate(`/home/${decodedToken.payload.user.id}`);
       } catch (error) {
@@ -46,7 +45,7 @@ export function LoginForm() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center sm:flex-row container mx-auto">
+    <div className="flex flex-col my-10 lg:my-20 justify-center items-center sm:flex-row container mx-auto">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center sm:items-start m-4 w-[300px] lg:w-[500px]"
@@ -63,10 +62,7 @@ export function LoginForm() {
         />
 
         <div className="my-2 text-center sm:text-left">
-          <button
-            type="submit"
-            className="btn py-2 px-5 rounded-lg bg-slate-900 text-white border-2 border-color-primary transition duration-150 hover:bg-color-secondary hover:text-color-primary hover:border-color-primary hover:border-2"
-          >
+          <button type="submit" className="btn-primary">
             Se connecter
           </button>
           <nav className="text-gray-500">

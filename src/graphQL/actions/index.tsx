@@ -25,6 +25,51 @@ export const GET_ORGANIZER = gql`
   }
 `;
 
+export const GET_LASTARTISTS = gql`
+  query LastArtists($limit: Int!) {
+    lastArtists(limit: $limit) {
+      address
+      city
+      name
+      mail
+      role {
+        name
+      }
+      region
+      description
+      image_url
+      zip_code
+      spotify_link
+      style {
+        name
+      }
+      validation
+      youtube_link
+      id
+    }
+  }
+`;
+
+export const GET_EVENTS = gql`
+  query Query {
+    events {
+      id
+      name
+      image_url
+      address
+      city
+      region
+      date
+      zip_code
+      description
+      catering
+      price
+      organizer_id
+      validation
+    }
+  }
+`;
+
 // Mutation
 export const CREATE_ACCOUNT = gql`
   mutation CreateAccount($input: RegisterUserInput!) {

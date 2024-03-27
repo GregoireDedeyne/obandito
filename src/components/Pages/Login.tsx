@@ -2,8 +2,8 @@ import { LoginForm } from '../LoginForm';
 
 export function LoginPage() {
   return (
-    <>
-      <LoginForm  />
-    </>
+    <div className="bg-white">
+      <LoginForm />
+    </div>
   );
 }

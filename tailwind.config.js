@@ -9,6 +9,7 @@ export default {
         'color-black': '#000000',
         'color-white': '#ffffff',
         'color-gray_light': '#f6f6f6',
+        'color-gray_dark': '#212121',
       },
       backgroundImage: {
         'fond-one': "url('/src/assets/images/fondOne.png')",
