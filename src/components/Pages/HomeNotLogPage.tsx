@@ -2,8 +2,12 @@ import { useEffect } from 'react';
 import { getBands, getEvents } from '../../store/actions';
 import { useAppDispatch, useAppSelector } from '../../store/redux-hook';
 import { Cards } from '../CardsLogOut';
-import ImagesLayout from '../ImagesLayout';
-import { InfoHomeCard } from '../InfoHomeCard/InfoHomeCard';
+import { FirstViewHome } from '../FirstViewsHome';
+import { HeroSection } from '../FirstViewsHome/HeroSection';
+import { SecondView } from '../FirstViewsHome/SecondView';
+import { PreFooter } from '../FirstViewsHome/PreFooter';
+import { Faq } from '../FirstViewsHome/Faq';
+import { ThirdView } from '../FirstViewsHome/ThirdView';
 
 export function HomeNotLogPage() {
   const dispatch = useAppDispatch();
@@ -20,55 +24,51 @@ export function HomeNotLogPage() {
 
   return (
     <>
-      <div className="bg-fond-one bg-cover">
-        <div className="h-lvh   container mx-auto">
-          <h1 className="text-white text-7xl mt-48">
-            {' '}
-            FIND THE ONE BE THE ONE
-          </h1>
-        </div>
-      </div>
-      <div className="bg-fond-two bg-cover">
+      <div className="bg-white">
         <div
-          className="h-lvh flex justify-items-center items-center container mx-auto"
-          id="events"
+          className="bg-cover"
+          style={{
+            backgroundImage:
+              "url('https://cdn.builder.io/api/v1/image/assets/TEMP/f78fd4dbe073ea1a52fe2d59039f35efc38106dbb881a1d301e9ddd960269c08?apiKey=877605d91b494696bd5bbaa7fb33442f&')",
+          }}
         >
-          <InfoHomeCard
-            title={'Nos derniers évènements'}
-            description={
-              "Plongez dans un univers où la créativité et le talent s'épanouissent à chaque coin de rue. Pour les organisateurs d'événements, notre plateforme offre une vitrine "
-            }
-          />
-          <Cards data={events} />{' '}
+          <div className="container mx-auto">
+            <FirstViewHome />
+          </div>
         </div>
-      </div>
-      <div className="bg-fond-three bg-cover">
+
+        <div className="container mx-auto">
+          <Cards data={events} />
+        </div>
+        <div className="container mx-auto my-20">
+          <ThirdView />
+        </div>
+        <div className="bg-purple-800">
+          <div className="container mx-auto">
+            <HeroSection />
+          </div>
+        </div>
+
+        <div className="container mx-auto">
+          <SecondView />
+        </div>
+        <div className="bg-slate-200">
+          <div className="container mx-auto">
+            <Faq />
+          </div>
+        </div>
         <div
-          className="h-lvh  flex justify-items-center items-center container mx-auto	"
-          id="bands"
+          className="bg-cover"
+          style={{
+            backgroundImage:
+              "url('https://cdn.builder.io/api/v1/image/assets/TEMP/326e86dddc21d3a161b890cf2121a7bdaca978e0a4be49fe1163221f17a6d598?apiKey=877605d91b494696bd5bbaa7fb33442f&')",
+          }}
         >
-          <Cards data={bands} />{' '}
-          <InfoHomeCard
-            title={'Nos derniers groupes'}
-            description={
-              'Explorez notre sélection de groupes talentueux et découvrez un monde de diversité musicale. Que vous soyez amateur de rock, de pop, de jazz, de hip-hop ou '
-            }
-          />
+          <div className="container mx-auto">
+            <PreFooter />
+          </div>
         </div>
       </div>
-      <div className="bg-slate-900">
-        <div
-          className=" text-white h-48 text-7xl container mx-auto"
-          id="propos"
-        >
-          {' '}
-          <p className="text-center">
-            {' '}
-            Tout à pu être possible grâce à VOUS en 2023
-          </p>
-        </div>
-      </div>
-      <ImagesLayout />
     </>
   );
 }
