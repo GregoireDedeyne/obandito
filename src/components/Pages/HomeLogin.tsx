@@ -11,21 +11,48 @@ export function HomeLogin() {
     (state) => state.decodedToken.decodedData.payload.user.region
   );
 
-  // const token = useSelector((state) => state.token.token);
+  const token = useSelector((state) => state.decodedToken.token);
 
-  // console.log('role :', role);
-
-  const { loading, error, data } = useQuery(GET_LASTARTISTS, {
+  const {
+    loading: artistsLoading,
+    error: artistsError,
+    data: artistsData,
+  } = useQuery(GET_LASTARTISTS, {
     variables: { limit: 10 },
   });
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  const {
+    loading: eventsLoading,
+    error: eventsError,
+    data: eventsData,
+  } = useQuery(GET_EVENTS, {
+    context: {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  });
 
-  const lastArtists = data.lastArtists;
-  const lastArtistsRegion = data.lastArtists.filter(
+  if (artistsLoading || eventsLoading) return <div>Loading...</div>;
+  if (artistsError || eventsError)
+    return (
+      <div>
+        Error: {artistsError ? artistsError.message : eventsError.message}
+      </div>
+    );
+
+  const lastArtists = artistsData.lastArtists;
+  const lastArtistsRegion = artistsData.lastArtists.filter(
     (artist) => artist.region === region
   );
+
+  const lastEvents = eventsData.events;
+  const lastEventsRegion = lastEvents.filter(
+    (event) => event.region === region
+  );
+
+  // console.log('lastEvents:', lastEvents);
+  // console.log('lastEventsRegion:', lastEventsRegion);
 
   return (
     <>
@@ -34,14 +61,16 @@ export function HomeLogin() {
           <div className="mx-4 mb-10">
             <h2 className="text-4xl">
               {role === 'Organisateur'
-                ? 'Groupes de ma région '
+                ? 'Groupes de ma région'
                 : 'Evènements de ma région'}
-
-              {/* <p>Token: {token}</p> */}
             </h2>
             <span className="text-lg">{region}</span>
           </div>
-          <CardsLogIn data={lastArtistsRegion} />
+          <CardsLogIn
+            data={
+              role === 'Organisateur' ? lastArtistsRegion : lastEventsRegion
+            }
+          />
         </div>
 
         <div className="mt-4 mb-10">
@@ -53,7 +82,9 @@ export function HomeLogin() {
             </h2>
             <span className="text-lg">France</span>
           </div>
-          <CardsLogIn data={lastArtists} />
+          <CardsLogIn
+            data={role === 'Organisateur' ? lastArtists : lastEvents}
+          />
         </div>
       </div>
     </>
