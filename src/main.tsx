@@ -19,6 +19,7 @@ import {
   GET_HOMEREGIONDATA,
 } from './graphQL/actions/index.tsx';
 import Profile from './components/Pages/Profile.tsx';
+import { LogLayout } from './components/Layouts/LogLayout/index.tsx';
 
 // Add ApolloClient
 const client = new ApolloClient({
