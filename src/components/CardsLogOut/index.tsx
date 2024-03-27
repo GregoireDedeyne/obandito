@@ -12,11 +12,11 @@ import { Navigation, Scrollbar } from 'swiper/modules';
 export function Cards({ data }) {
   return (
     <div className="flex flex-col bg-white py-20">
-      <div className="flex gap-5 justify-start px-5 w-full max-md:max-w-full my-8 lg:ml-20 sm:ml-0">
+      {/* <div className="flex gap-5 justify-start px-5 w-full max-md:max-w-full my-8 lg:ml-20 sm:ml-0">
         <h2 className="text-xl font-semibold leading-6 text-neutral-700">
           Les derniers Artistes disponibles
         </h2>
-      </div>
+      </div> */}
 
       <Swiper
         spaceBetween={20}

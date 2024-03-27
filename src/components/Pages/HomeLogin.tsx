@@ -2,6 +2,8 @@ import { useSelector } from 'react-redux';
 import CardsLogIn from '../CardsLogIn';
 import { useQuery } from '@apollo/client';
 import { GET_LASTARTISTS, GET_EVENTS } from '../../graphQL/actions';
+import { Cards } from '../CardsLogOut';
+import { NavLink } from 'react-router-dom';
 
 export function HomeLogin() {
   const role = useSelector(
@@ -55,9 +57,9 @@ export function HomeLogin() {
   // console.log('lastEventsRegion:', lastEventsRegion);
 
   return (
-    <>
-      <div>
-        <div className="mt-4 mb-10">
+    <div className="bg-white">
+      <div className="container mx-auto">
+        <div className="my-10">
           <div className="mx-4 mb-10">
             <h2 className="text-4xl">
               {role === 'Organisateur'
@@ -66,14 +68,23 @@ export function HomeLogin() {
             </h2>
             <span className="text-lg">{region}</span>
           </div>
-          <CardsLogIn
+
+          <div className="flex gap-5 justify-start px-5 w-full max-md:max-w-full my-8 lg:ml-20 sm:ml-0">
+            <h2 className="text-xl font-semibold leading-6 text-neutral-700">
+              {role === 'Organisateur'
+                ? 'Groupes de ma région'
+                : 'Evènements de ma région'}
+            </h2>
+          </div>
+
+          <Cards
             data={
               role === 'Organisateur' ? lastArtistsRegion : lastEventsRegion
             }
           />
         </div>
 
-        <div className="mt-4 mb-10">
+        <div className="my-10">
           <div className="mx-4 mb-10">
             <h2 className="text-4xl">
               {role === 'Organisateur'
@@ -82,11 +93,13 @@ export function HomeLogin() {
             </h2>
             <span className="text-lg">France</span>
           </div>
-          <CardsLogIn
-            data={role === 'Organisateur' ? lastArtists : lastEvents}
-          />
+          <Cards data={role === 'Organisateur' ? lastArtists : lastEvents} />
         </div>
       </div>
-    </>
+
+      <NavLink className="btn-primary" to="/profile:id">
+        Mon profil
+      </NavLink>
+    </div>
   );
 }
