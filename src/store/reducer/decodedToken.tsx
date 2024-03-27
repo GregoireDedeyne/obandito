@@ -13,13 +13,16 @@ const initialState = {
     zip_code: '',
     description: '',
   },
+  token: '',
 };
 
 const decodedTokenReducer = createReducer(initialState, (builder) => {
   builder.addCase(setDecodedToken, (state, action) => {
-    console.log("Payload de l'action:", action.payload);
-    state.decodedData = action.payload;
+    console.log("Payload de l'action setDecodedToken:", action.payload);
+    state.decodedData = action.payload.decodedToken;
+    state.token = action.payload.token;
     console.log('state.decodedData:', state.decodedData);
+    console.log('state.token:', state.token);
   });
 });
 

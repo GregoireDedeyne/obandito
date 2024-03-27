@@ -34,9 +34,8 @@ export function LoginForm() {
 
       try {
         const decodedToken = await jose.jwtVerify(token, key);
-        console.log('token: ', token);
-        console.log('decodedToken: ', decodedToken);
-        dispatch(setDecodedToken(decodedToken));
+        dispatch(setDecodedToken(token, decodedToken));
+
         navigate(`/home/${decodedToken.payload.user.id}`);
       } catch (error) {
         console.error('Erreur lors du déchiffrement du token :', error);

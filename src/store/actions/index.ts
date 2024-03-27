@@ -13,10 +13,13 @@ export const getBands = createAction(GET_BANDS, () => ({
   payload: dataBands,
 }));
 
-// export const setOrganizer = (organizerData) => ({
-//   type: 'SET_ORGANIZER',
-//   payload: organizerData,
-// });
+// export const SET_DECODED_TOKEN = 'SET_DECODED_TOKEN';
+// export const setDecodedToken = createAction(SET_DECODED_TOKEN);
 
 export const SET_DECODED_TOKEN = 'SET_DECODED_TOKEN';
-export const setDecodedToken = createAction(SET_DECODED_TOKEN);
+export const setDecodedToken = createAction(
+  SET_DECODED_TOKEN,
+  (token, decodedToken) => ({
+    payload: { token, decodedToken },
+  })
+);
