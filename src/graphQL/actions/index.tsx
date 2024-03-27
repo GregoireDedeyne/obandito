@@ -11,10 +11,60 @@ export const GET_ORGANIZER = gql`
       address
       city
       region
+      role {
+        name
+      }
+      description
+      style {
+        name
+      }
+      spotify_link
+      youtube_link
+      zip_code
+    }
+  }
+`;
+
+export const GET_LASTARTISTS = gql`
+  query LastArtists($limit: Int!) {
+    lastArtists(limit: $limit) {
+      address
+      city
+      name
+      mail
+      role {
+        name
+      }
+      region
+      description
+      image_url
+      zip_code
+      spotify_link
+      style {
+        name
+      }
+      validation
+      youtube_link
+      id
+    }
+  }
+`;
+
+export const GET_EVENTS = gql`
+  query Query {
+    events {
+      id
+      name
+      image_url
+      address
+      city
+      region
+      date
       zip_code
       description
-      youtube_link
-      spotify_link
+      catering
+      price
+      organizer_id
       validation
     }
   }

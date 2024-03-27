@@ -1,3 +1,19 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+.btn-primary {
+  @apply justify-center px-9 py-5 text-white bg-rose-500 border border-rose-500 border-solid leading-[100%] rounded-[48px] max-md:px-5 hover:bg-purple-800 hover:border-purple-800;
+}
+
+.bloc-white {
+  @apply px-6 py-4 my-2 w-full bg-white rounded-xl shadow-lg max-md:pr-5 max-w-full border-2 border-solid border-transparent hover:border-purple-800;
+}
+
+.h1 {
+  @apply text-3xl;
+}
+
+.h2 {
+  @apply text-2xl my-5;
+}

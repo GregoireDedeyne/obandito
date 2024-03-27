@@ -10,7 +10,6 @@ import { NotLogLayout } from './components/Layouts/NotLogLayout/NotLogLayout.tsx
 import { HomeNotLogPage } from './components/Pages/HomeNotLogPage.tsx';
 import { SubscribePage } from './components/Pages/Subscribe.tsx';
 import { LoginPage } from './components/Pages/Login.tsx';
-import { LogLayout } from './components/Layouts/LogLayout/index.tsx';
 import { HomeLogin } from './components/Pages/HomeLogin.tsx';
 import { SettingProfile } from './components/Pages/SettingProfile.tsx';
 import { SearchProfile } from './components/Pages/SearchProfile.tsx';
@@ -19,6 +18,7 @@ import {
   GET_HOMEGENREDATA,
   GET_HOMEREGIONDATA,
 } from './graphQL/actions/index.tsx';
+import Profile from './components/Pages/Profile.tsx';
 
 // Add ApolloClient
 const client = new ApolloClient({
@@ -117,6 +117,10 @@ const router = createBrowserRouter([
       {
         path: '/search',
         element: <SearchProfile />,
+      },
+      {
+        path: '/profile:id',
+        element: <Profile />,
       },
     ],
   },

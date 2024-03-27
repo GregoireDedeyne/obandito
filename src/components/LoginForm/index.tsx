@@ -8,8 +8,11 @@ import { useNavigate } from 'react-router-dom';
 import * as jose from 'jose';
 import { TextEncoder } from 'text-encoding';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { setDecodedToken } from '../../store/actions/';
 
 export function LoginForm() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loginMutation, { data, loading, error }] = useMutation(LOGIN_MUTATION);
   const [formData, setFormData] = useState({ mail: '', password: '' });
@@ -37,8 +40,8 @@ export function LoginForm() {
 
       try {
         const decodedToken = await jose.jwtVerify(token, key);
-        console.log('decodedToken: ', decodedToken);
-        localStorage.setItem('token', token);
+        dispatch(setDecodedToken(token, decodedToken));
+
         navigate(`/home/${decodedToken.payload.user.id}`);
       } catch (error) {
         console.error('Erreur lors du déchiffrement du token :', error);
@@ -64,10 +67,7 @@ export function LoginForm() {
         />
 
         <div className="my-2 text-center sm:text-left">
-          <button
-            type="submit"
-            className="btn py-2 px-5 rounded-lg bg-slate-900 text-white border-2 border-color-primary transition duration-150 hover:bg-color-secondary hover:text-color-primary hover:border-color-primary hover:border-2"
-          >
+          <button type="submit" className="btn-primary">
             Se connecter
           </button>
           <nav className="text-gray-500">
