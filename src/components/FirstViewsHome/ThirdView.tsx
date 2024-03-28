@@ -2,8 +2,11 @@ import { NavLink } from 'react-router-dom';
 import { CallToAction } from '../InfoHomeCard/CallToAction';
 import { EventCard } from '../InfoHomeCard/EventsCards';
 import { Localisation } from '../InfoHomeCard/Localisation';
+import { useAppSelector } from '../../store/redux-hook';
 
 export function ThirdView({ events, locations }) {
+  const islogged = useAppSelector((state) => state.decodedToken.islogged);
+
   return (
     <div className="flex ">
       <Localisation locations={locations} />
@@ -16,7 +19,8 @@ export function ThirdView({ events, locations }) {
             <EventCard key={index} {...event} />
           ))}
         </div>
-        <CallToAction />
+        {islogged === false ? <CallToAction /> : ''}
+
         <NavLink to={'/login'}>
           <button className="justify-center items-center	 w-fit px-16 py-4 mt-3 font-medium text-white bg-rose-500 leading-[175%] rounded-[800px] max-md:px-5 hover:bg-purple-800">
             Voir plus{' '}

@@ -17,7 +17,7 @@ export function NotLogLayout() {
       <div className="sticky top-0 z-10">
         <Header genres={data.styles} />
       </div>
-      <div className="flex-grow">
+      <div className="flex-grow bg-white">
         <Outlet />
       </div>
       <div className="bg-slate-900">

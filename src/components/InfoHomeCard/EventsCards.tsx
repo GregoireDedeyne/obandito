@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import { useAppSelector } from '../../store/redux-hook';
 
 interface EventCardProps {
   image_url: string;
@@ -9,6 +10,7 @@ interface EventCardProps {
   region: string;
   price: number;
   organizer: string;
+  id: number;
 }
 
 export function EventCard({
@@ -20,9 +22,12 @@ export function EventCard({
   region,
   organizer,
   price,
+  id,
 }: EventCardProps) {
+  const islogged = useAppSelector((state) => state.decodedToken.islogged);
+
   return (
-    <NavLink to={'/'}>
+    <NavLink to={islogged === false ? '/login ' : `/event/${id}`}>
       <div className="px-6 py-4 my-2 w-full bg-white rounded-xl shadow-lg max-md:pr-5 max-md:max-w-full border-2 border-solid border-transparent hover:border-purple-800">
         <div className="flex gap-5 max-md:flex-col max-md:gap-0">
           <div className="flex flex-col w-[26%] max-md:ml-0 max-md:w-full">

@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setDecodedToken } from '../actions';
+import { logout, setDecodedToken } from '../actions';
 
 const initialState = {
   decodedData: {
@@ -12,18 +12,27 @@ const initialState = {
     region: '',
     zip_code: '',
     description: '',
+    role: '',
   },
   token: '',
+  islogged: false,
 };
 
 const decodedTokenReducer = createReducer(initialState, (builder) => {
-  builder.addCase(setDecodedToken, (state, action) => {
-    console.log("Payload de l'action setDecodedToken:", action.payload);
-    state.decodedData = action.payload.decodedToken;
-    state.token = action.payload.token;
-    console.log('state.decodedData:', state.decodedData);
-    console.log('state.token:', state.token);
-  });
+  builder
+    .addCase(setDecodedToken, (state, action) => {
+      console.log("Payload de l'action setDecodedToken:", action.payload);
+      state.decodedData = action.payload.decodedToken;
+      state.token = action.payload.token;
+      state.islogged = true;
+      console.log('state.decodedData:', state.decodedData);
+      console.log('state.token:', state.token);
+    })
+    .addCase(logout, (state) => {
+      state.islogged = false;
+      state.decodedData = initialState.decodedData;
+      state.token = '';
+    });
 });
 
 export default decodedTokenReducer;

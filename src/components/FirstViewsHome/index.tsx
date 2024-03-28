@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import bandPict from '../../assets/images/bandPict.jpg';
+import { useAppSelector } from '../../store/redux-hook';
 interface ImageProps {
   src: string;
   alt: string;
@@ -20,6 +21,8 @@ const Text: React.FC<TextProps> = ({ children, className }) => (
 );
 
 export function FirstViewHome() {
+  const islogged = useAppSelector((state) => state.decodedToken.islogged);
+  const role = useAppSelector((state) => state.decodedToken.decodedData.role);
   return (
     <div className="flex flex-col py-px max-md:max-w-full bg-cover">
       <header className="flex overflow-hidden relative flex-col justify-end pt-16 pb-5 w-full min-h-[575px] max-md:px-5 max-md:max-w-full">
@@ -51,8 +54,8 @@ export function FirstViewHome() {
         <div className="relative px-10 py-8 mt-1.5 bg-white shadow-lg rounded-[66px] max-md:px-5 max-md:max-w-full">
           <div className="flex gap-5 max-md:flex-col max-md:gap-0">
             <div className="flex flex-col w-[55%] max-md:ml-0 max-md:w-full">
-              <div className="flex relative grow gap-5 justify-center max-md:flex-wrap max-md:mt-10">
-                <label className="flex flex-1 flex-auto gap-3 px-6 py-3.5 bg-white border-2 border-solid border-neutral-200 rounded-[50px] max-md:pr-5">
+              <div className="flex relative grow gap-5 justify-start max-md:flex-wrap max-md:mt-10">
+                <label className="flex flex-auto gap-3 px-6 py-3.5 bg-white border-2 border-solid border-neutral-200 rounded-[50px] max-md:pr-5">
                   <div className="flex justify-center items-center">
                     <Image
                       src="https://cdn.builder.io/api/v1/image/assets/TEMP/e2d7ea876d6cb2cdb98586f2ac7d9953943e488214007acf3f27fa19c5dec565?apiKey=877605d91b494696bd5bbaa7fb33442f&"
@@ -66,7 +69,7 @@ export function FirstViewHome() {
                   ></input>
                 </label>
 
-                <div className="flex flex-col flex-1 grow shrink-0 justify-center items-between basis-0 w-fit">
+                <div className="flex flex-col flex-1 grow shrink-0 justify-center basis-0 w-fit">
                   <div className="flex gap-3 py-3.5 pr-16 pl-4 bg-white border-2 border-solid border-neutral-200 rounded-[50px] max-md:pr-5">
                     <div className="flex justify-center items-center">
                       <Image
@@ -85,59 +88,91 @@ export function FirstViewHome() {
             </div>
             <div className="flex flex-col ml-5 w-[45%] max-md:ml-0 max-md:w-full">
               <div className="flex relative grow gap-5 justify-end text-base text-center max-md:flex-wrap max-md:mt-10">
-                <NavLink
-                  to={'/'}
-                  className={`justify-center px-9 py-5 text-white bg-rose-500 border border-rose-500 border-solid leading-[100%] rounded-[48px] max-md:px-5 hover:bg-purple-800 hover:border-purple-800`}
-                >
-                  Trouver un artiste
-                </NavLink>
-                <div className="flex gap-5 justify-end self-start mt-3.5">
-                  <Text className="my-auto text-neutral-600">ou</Text>
+                {islogged === false ? (
                   <NavLink
                     to={'/'}
-                    className="justify-center px-2.5 py-1.5 font-bold text-purple-800 border-b-2 border-transparent hover:border-b-2 hover:border-purple-800 border-solid leading-[128%] hover:text-rose-500"
+                    className={`justify-center px-9 py-5 text-white bg-rose-500 border border-rose-500 border-solid leading-[100%] rounded-[48px] max-md:px-5 hover:bg-purple-800 hover:border-purple-800`}
                   >
-                    Déposer un événement
+                    {' '}
+                    Trouver un artiste{' '}
                   </NavLink>
+                ) : islogged === true && role === 'Organisateur' ? (
+                  <button
+                    className={`justify-center px-9 py-5 text-white bg-rose-500 border border-rose-500 border-solid leading-[100%] rounded-[48px] max-md:px-5 hover:bg-purple-800 hover:border-purple-800`}
+                  >
+                    {' '}
+                    Trouver un artiste{' '}
+                  </button>
+                ) : islogged === true && role === 'Artiste' ? (
+                  <button
+                    className={`justify-center px-9 py-5 text-white bg-rose-500 border border-rose-500 border-solid leading-[100%] rounded-[48px] max-md:px-5 hover:bg-purple-800 hover:border-purple-800`}
+                  >
+                    {' '}
+                    Trouver un évènement{' '}
+                  </button>
+                ) : null}
+
+                <div className="flex gap-5 justify-end self-start mt-3.5">
+                  <Text className="my-auto text-neutral-600">ou</Text>
+
+                  {islogged === false ? (
+                    <NavLink
+                      to={'/'}
+                      className="justify-center px-2.5 py-1.5 font-bold text-purple-800 border-b-2 border-transparent hover:border-b-2 hover:border-purple-800 border-solid leading-[128%] hover:text-rose-500"
+                    >
+                      Déposer un événement
+                    </NavLink>
+                  ) : islogged === true && role === 'Organisateur' ? (
+                    <NavLink
+                      to={'/eventcreation'}
+                      className="justify-center px-2.5 py-1.5 font-bold text-purple-800 border-b-2 border-transparent hover:border-b-2 hover:border-purple-800 border-solid leading-[128%] hover:text-rose-500"
+                    >
+                      Déposer un événement
+                    </NavLink>
+                  ) : null}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </header>
-      <div className="flex flex-col justify-center self-center mt-2.5 w-full text-sm leading-4 max-w-[907px] text-neutral-600 max-md:max-w-full">
-        <div className="flex gap-5 items-start pr-20 max-md:flex-wrap max-md:pr-5 justify-between">
-          <div className="flex gap-2.5">
-            <Image
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/2a4f37c2a9e085339d02ca046a7f86d54d057df98cc29708f04988183fad247d?apiKey=877605d91b494696bd5bbaa7fb33442f&"
-              alt="Checkmark icon"
-              className="shrink-0 w-7 aspect-square bg-white"
-            />
-            <Text className="my-auto">Simple et rapide</Text>
-          </div>
-          <div className="flex gap-2.5">
-            <Image
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/1416f10bfee9a7924460fde0c17a264179eae92a1dea82c5118da423fc18edeb?apiKey=877605d91b494696bd5bbaa7fb33442f&"
-              alt="Handshake icon"
-              className="shrink-0 w-7 aspect-square bg-white"
-            />
-            <Text className="my-auto">
-              Une relation entre artistes et organisations
-            </Text>
-          </div>
-          <div className="flex gap-2.5">
-            <Image
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/1416f10bfee9a7924460fde0c17a264179eae92a1dea82c5118da423fc18edeb?apiKey=877605d91b494696bd5bbaa7fb33442f&"
-              alt="Handshake icon"
-              className="shrink-0 w-7 aspect-square bg-white"
-            />
-            <Text className="my-auto">
-              Déjà pleins d'évènements crées grâce à{' '}
-              <span className="text-rose-500">O </span>'bandito
-            </Text>
+      {islogged === false ? (
+        <div className="flex flex-col justify-center self-center mt-2.5 w-full text-sm leading-4 max-w-[907px] text-neutral-600 max-md:max-w-full">
+          <div className="flex gap-5 items-start pr-20 max-md:flex-wrap max-md:pr-5 justify-between">
+            <div className="flex gap-2.5">
+              <Image
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/2a4f37c2a9e085339d02ca046a7f86d54d057df98cc29708f04988183fad247d?apiKey=877605d91b494696bd5bbaa7fb33442f&"
+                alt="Checkmark icon"
+                className="shrink-0 w-7 aspect-square bg-white"
+              />
+              <Text className="my-auto">Simple et rapide</Text>
+            </div>
+            <div className="flex gap-2.5">
+              <Image
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/1416f10bfee9a7924460fde0c17a264179eae92a1dea82c5118da423fc18edeb?apiKey=877605d91b494696bd5bbaa7fb33442f&"
+                alt="Handshake icon"
+                className="shrink-0 w-7 aspect-square bg-white"
+              />
+              <Text className="my-auto">
+                Une relation entre artistes et organisations
+              </Text>
+            </div>
+            <div className="flex gap-2.5">
+              <Image
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/1416f10bfee9a7924460fde0c17a264179eae92a1dea82c5118da423fc18edeb?apiKey=877605d91b494696bd5bbaa7fb33442f&"
+                alt="Handshake icon"
+                className="shrink-0 w-7 aspect-square bg-white"
+              />
+              <Text className="my-auto">
+                Déjà pleins d'évènements crées grâce à{' '}
+                <span className="text-rose-500">O </span>'bandito
+              </Text>
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 }

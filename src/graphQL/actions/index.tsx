@@ -75,6 +75,7 @@ export const GET_HOMEDATA = gql`
     randomArtists(limit: $limit) {
       image_url
       name
+      id
       style {
         name
       }
@@ -83,6 +84,7 @@ export const GET_HOMEDATA = gql`
       city
       description
       image_url
+      id
       name
       region
       price
@@ -103,6 +105,7 @@ export const GET_HOMEGENREDATA = gql`
     artistsByStyle(style: $style) {
       image_url
       name
+      id
       style {
         name
       }
@@ -115,6 +118,7 @@ export const GET_HOMEGENREDATA = gql`
       region
       price
       date
+      id
       organizer {
         name
       }
@@ -132,6 +136,7 @@ export const GET_HOMEREGIONDATA = gql`
     randomArtists(limit: $limit) {
       image_url
       name
+      id
       style {
         name
       }
@@ -139,6 +144,7 @@ export const GET_HOMEREGIONDATA = gql`
     eventByRegion(region: $region) {
       city
       date
+      id
       description
       image_url
       name
