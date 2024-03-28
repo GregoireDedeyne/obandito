@@ -66,7 +66,7 @@ export function FirstViewHome() {
                   ></input>
                 </label>
 
-                <div className="flex flex-col flex-1 grow shrink-0 justify-center basis-0 w-fit">
+                <div className="flex flex-col flex-1 grow shrink-0 justify-center items-between basis-0 w-fit">
                   <div className="flex gap-3 py-3.5 pr-16 pl-4 bg-white border-2 border-solid border-neutral-200 rounded-[50px] max-md:pr-5">
                     <div className="flex justify-center items-center">
                       <Image

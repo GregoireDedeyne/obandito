@@ -8,7 +8,15 @@ interface GenreItemProps {
 const GenreItem: React.FC<GenreItemProps> = ({ genre }) => {
   return (
     <NavLink to={`/genre/${genre}`}>
-      <div className="justify-center px-2.5 py-2 hover:bg-slate-200">
+      <div
+        className="justify-center px-2.5 py-2 hover:bg-slate-200"
+        onClick={() => {
+          const bands = document.getElementById('bands');
+          if (bands) {
+            bands.scrollIntoView({ behavior: 'smooth' });
+          }
+        }}
+      >
         {' '}
         {genre}{' '}
       </div>{' '}
@@ -18,7 +26,7 @@ const GenreItem: React.FC<GenreItemProps> = ({ genre }) => {
 
 export function Header({ genres }) {
   return (
-    <div className="flex flex-col justify-center bg-white">
+    <div className="flex flex-col justify-center bg-white ">
       <header className="flex flex-col md:flex-row gap-5 justify-between self-center pt-3.5 w-full max-w-[1216px]">
         <div className="flex gap-5 justify-between self-start px-5 flex-grow max-w-[50%] md:w-auto">
           <NavLink to={'/'}>

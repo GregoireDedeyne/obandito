@@ -8,7 +8,7 @@ import {
 
 export function Footer() {
   return (
-    <footer className="footer p-9 bg-color-gray_dark text-white h-auto grid-cols-3 justify-center">
+    <footer className="footer p-9 bg-slate-900 text-white h-auto grid-cols-3 justify-center">
       <aside>
         <svg
           width="50"

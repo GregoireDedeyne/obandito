@@ -50,7 +50,7 @@ export function LoginForm() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center sm:flex-row">
+    <div className="flex flex-col justify-center items-center sm:flex-row container mx-auto">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center sm:items-start m-4 w-[300px] lg:w-[500px]"
