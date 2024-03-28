@@ -103,13 +103,6 @@ const router = createBrowserRouter([
         path: '/login',
         element: <LoginPage />,
       },
-    ],
-  },
-  {
-    path: '/',
-    element: <LogLayout />,
-    errorElement: <ErrorPage />,
-    children: [
       { path: '/home/:id', element: <HomeLogin /> },
       {
         path: '/settings',
@@ -120,11 +113,31 @@ const router = createBrowserRouter([
         element: <SearchProfile />,
       },
       {
-        path: '/profile:id',
+        path: '/profile/:id',
         element: <Profile />,
       },
     ],
   },
+  // {
+  //   path: '/',
+  //   element: <LogLayout />,
+  //   errorElement: <ErrorPage />,
+  //   children: [
+  //     { path: '/home/:id', element: <HomeLogin /> },
+  //     {
+  //       path: '/settings',
+  //       element: <SettingProfile onSubmit={''} />,
+  //     },
+  //     {
+  //       path: '/search',
+  //       element: <SearchProfile />,
+  //     },
+  //     {
+  //       path: '/profile:id',
+  //       element: <Profile />,
+  //     },
+  //   ],
+  // },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

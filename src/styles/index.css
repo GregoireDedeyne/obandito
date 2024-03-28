@@ -7,13 +7,13 @@
 }
 
 .bloc-white {
-  @apply px-6 py-4 my-2 w-full bg-white rounded-xl shadow-lg max-md:pr-5 max-w-full border-2 border-solid border-transparent hover:border-purple-800;
+  @apply px-6 py-4 w-full bg-white rounded-xl shadow-lg max-md:pr-5 max-w-full border-2 border-solid border-transparent hover:border-purple-800;
 }
 
-.h1 {
+h1 {
   @apply text-3xl;
 }
 
-.h2 {
+h2 {
   @apply text-2xl my-5;
 }
