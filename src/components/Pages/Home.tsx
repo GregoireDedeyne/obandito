@@ -14,6 +14,8 @@ export function HomeNotLogPage() {
 
   const data = useLoaderData();
 
+  console.log(data);
+
   return (
     <>
       <div className="bg-white">
@@ -33,7 +35,7 @@ export function HomeNotLogPage() {
           <div>
             <div className="container mx-auto" id="bands">
               <Cards
-                data={data.randomArtists}
+                data={data.lastArtists}
                 title={'Les derniers Artistes disponibles'}
                 subtitle={''}
               />

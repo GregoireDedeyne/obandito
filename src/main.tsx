@@ -7,7 +7,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './styles/index.css';
 import ErrorPage from './components/Error/index.tsx';
 import { NotLogLayout } from './components/Layouts/NotLogLayout/NotLogLayout.tsx';
-import { HomeNotLogPage } from './components/Pages/HomeNotLogPage.tsx';
+import { HomeNotLogPage } from './components/Pages/Home.tsx';
 import { SubscribePage } from './components/Pages/Subscribe.tsx';
 import { LoginPage } from './components/Pages/Login.tsx';
 import {

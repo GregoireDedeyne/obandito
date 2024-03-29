@@ -119,6 +119,14 @@ export const GET_HOMEDATA = gql`
         name
       }
     }
+    lastArtists(limit: $limit) {
+      image_url
+      name
+      id
+      style {
+        name
+      }
+    }
     lastEvents(limit: $limitEvents) {
       city
       description
