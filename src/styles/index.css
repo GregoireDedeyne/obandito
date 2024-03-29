@@ -17,3 +17,12 @@ h1 {
 h2 {
   @apply text-2xl my-5;
 }
+
+h1,
+h2,
+h3,
+span,
+p,
+a {
+  color: black;
+}

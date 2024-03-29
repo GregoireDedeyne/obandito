@@ -1,10 +1,10 @@
 import { NavLink, useLoaderData, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faMapMarkerAlt, faStar } from '@fortawesome/free-solid-svg-icons';
 import { useQuery } from '@apollo/client';
 import { GET_ARTISTE, GET_ORGANIZER } from '../../graphQL/actions';
-import { ThirdView } from '../FirstViewsHome/ThirdView';
+import ReactPlayer from 'react-player';
 
 export default function Profile() {
   const token = useSelector((state) => state.decodedToken.token);
@@ -82,7 +82,11 @@ export default function Profile() {
                 {` ${id} évaluations`}
               </span>
               <span>
-                {/* <FontAwesomeIcon icon={faMapMarkerAlt} /> {region}, France */}
+                <FontAwesomeIcon icon={faMapMarkerAlt} />{' '}
+                {role === 'Artiste'
+                  ? data.organizer.region
+                  : data.artist.region}
+                , France
               </span>
             </div>
 
@@ -149,16 +153,16 @@ export default function Profile() {
                       </div>
 
                       <div className="youtube">
-                        <iframe
+                        <ReactPlayer
+                          // url={
+                          //   role === 'Artiste'
+                          //     ? data.organizer.youtube_link
+                          //     : data.artist.youtube_link
+                          // }
+                          url={'https://www.youtube.com/watch?v=0dmS0He_czs'}
                           width="100%"
-                          height="500"
-                          src="https://www.youtube.com/embed/CV-kYMr2Rf0?si=-gbhfGkVAfjwpE8q"
-                          title="YouTube video player"
-                          frameborder="0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                          referrerpolicy="strict-origin-when-cross-origin"
-                          allowfullscreen
-                        ></iframe>
+                          controls={true}
+                        />
                       </div>
                     </div>
 
