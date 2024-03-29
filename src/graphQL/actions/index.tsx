@@ -11,16 +11,31 @@ export const GET_ORGANIZER = gql`
       address
       city
       region
+      zip_code
+      description
+      youtube_link
+      spotify_link
+      validation
       role {
         name
       }
-      description
+      events {
+        id
+        name
+        image_url
+        address
+        city
+        region
+        date
+        zip_code
+        description
+        catering
+        price
+        organizer_id
+      }
       style {
         name
       }
-      spotify_link
-      youtube_link
-      zip_code
     }
   }
 `;

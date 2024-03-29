@@ -19,9 +19,15 @@ export default function Profile() {
   const role = useSelector((state) => state.decodedToken.decodedData.role);
   const { id } = useParams();
   const Id = parseInt(id);
-  console.log(token);
+  // console.log(token);
 
-  console.log(role);
+  // console.log(role);
+
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  const handleTabClick = (index) => {
+    setSelectedTab(index);
+  };
 
   let loading, error, data;
   // console.log('id : ', id, 'role :', role);
@@ -49,7 +55,6 @@ export default function Profile() {
       },
     }));
   }
-  console.log(data);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -59,15 +64,6 @@ export default function Profile() {
     height: 600,
   };
 
-  // ------------------
-  // Dans votre composant JSX
-
-  const [selectedTab, setSelectedTab] = useState(0);
-
-  const handleTabClick = (index) => {
-    setSelectedTab(index);
-  };
-  // ------------------
   return (
     <>
       <div className="bg-white">
@@ -318,18 +314,6 @@ export default function Profile() {
               className="tab-content p-10 bg-color-gray_light"
             >
               Mes évènements
-              {/* <ThirdView
-                events={
-                  role === 'Artiste'
-                    ? data.organizer.events
-                    : data.artist.events
-                }
-                locations={
-                  role === 'Artiste'
-                    ? data.organizer.events.region
-                    : data.artist.events.region
-                }
-              /> */}
               {/* ----- */}
               <div className="px-6 py-4 my-2 w-full bg-white rounded-xl shadow-lg max-md:pr-5 max-md:max-w-full border-2 border-solid border-transparent hover:border-purple-800">
                 <div className="flex gap-5 max-md:flex-col max-md:gap-0">
