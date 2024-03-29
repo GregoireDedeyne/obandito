@@ -1,9 +1,6 @@
-import { NavLink, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { NavLink, useLoaderData, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt, faStar } from '@fortawesome/free-solid-svg-icons';
-import { useQuery } from '@apollo/client';
-import { GET_ARTISTE, GET_ORGANIZER } from '../../graphQL/actions';
 import ReactPlayer from 'react-player';
 import SpotifyPlayer from 'react-spotify-player';
 import {
@@ -15,49 +12,19 @@ import { ThirdView } from '../FirstViewsHome/ThirdView';
 import { useState } from 'react';
 
 export default function Profile() {
-  const token = useSelector((state) => state.decodedToken.token);
-  const role = useSelector((state) => state.decodedToken.decodedData.role);
-  const { id } = useParams();
-  const Id = parseInt(id);
-  // console.log(token);
-
-  // console.log(role);
-
   const [selectedTab, setSelectedTab] = useState(0);
 
   const handleTabClick = (index) => {
     setSelectedTab(index);
   };
 
-  let loading, error, data;
-  // console.log('id : ', id, 'role :', role);
+  const data = useLoaderData();
 
-  if (role === 'Artiste') {
-    ({ loading, error, data } = useQuery(GET_ORGANIZER, {
-      variables: {
-        organizerId: Id,
-      },
-      context: {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    }));
-  } else if (role === 'Organisateur') {
-    ({ loading, error, data } = useQuery(GET_ARTISTE, {
-      variables: {
-        artistId: Id,
-      },
-      context: {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    }));
-  }
+  // console.log('useload data : ', data);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  const role = data.artist?.role?.name || data.organizer?.role?.name;
+
+  // console.log('role: ', role);
 
   const size = {
     width: '100%',
@@ -84,12 +51,12 @@ export default function Profile() {
           <div className="flex justify-between my-5">
             <div className="flex flex-col">
               <h1 className="text-black">
-                {role === 'Artiste' ? data.organizer.name : data.artist.name}
+                {role === 'Artiste' ? data?.artist.name : data?.organizer.name}
               </h1>
               <span>
                 {role === 'Artiste'
-                  ? data.organizer.role.name
-                  : data.artist.role.name}
+                  ? data?.artist.role.name
+                  : data?.organizer.role.name}
               </span>
               <span>
                 <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
@@ -97,13 +64,13 @@ export default function Profile() {
                 <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
                 <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
                 <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
-                {` ${id} évaluations`}
+                {/* {` ${id} évaluations`} */}
               </span>
               <span>
                 <FontAwesomeIcon icon={faMapMarkerAlt} />{' '}
                 {role === 'Artiste'
-                  ? data.organizer.region
-                  : data.artist.region}
+                  ? data?.artist.region
+                  : data?.organizer.region}
                 , France
               </span>
             </div>
@@ -138,12 +105,12 @@ export default function Profile() {
                       <h2 className="text-black">Présentation</h2>
                       <p>
                         {role === 'Artiste'
-                          ? data.organizer.description
-                          : data.artist.description}
+                          ? data.artist.description
+                          : data.organizer.description}
                       </p>
                     </div>
 
-                    {role === 'Organisateur' && (
+                    {role === 'Artiste' && (
                       <div className="bloc-white mb-[50px]">
                         <h2 className="text-black">Musique & clips</h2>
 
@@ -228,8 +195,8 @@ export default function Profile() {
                         <span className="mb-5">ADRESSE</span>
                         <span>
                           {role === 'Artiste'
-                            ? `${data.organizer.zip_code}, ${data.organizer.city}`
-                            : `${data.artist.zip_code}, ${data.artist.city}`}
+                            ? `${data.artist.zip_code}, ${data.artist.city}`
+                            : `${data.organizer.zip_code}, ${data.organizer.city}`}
                         </span>
 
                         <span>France</span>
