@@ -21,12 +21,12 @@ const initialState = {
 const decodedTokenReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(setDecodedToken, (state, action) => {
-      console.log("Payload de l'action setDecodedToken:", action.payload);
+      // console.log("Payload de l'action setDecodedToken:", action.payload);
       state.decodedData = action.payload.decodedToken;
       state.token = action.payload.token;
       state.islogged = true;
-      console.log('state.decodedData:', state.decodedData);
-      console.log('state.token:', state.token);
+      // console.log('state.decodedData:', state.decodedData);
+      // console.log('state.token:', state.token);
     })
     .addCase(logout, (state) => {
       state.islogged = false;

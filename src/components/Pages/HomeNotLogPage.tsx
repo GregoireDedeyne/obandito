@@ -11,11 +11,8 @@ import { useAppSelector } from '../../store/redux-hook';
 export function HomeNotLogPage() {
   const islogged = useAppSelector((state) => state.decodedToken.islogged);
   const role = useAppSelector((state) => state.decodedToken.decodedData.role);
-  console.log(role);
 
   const data = useLoaderData();
-
-  console.log(data);
 
   return (
     <>

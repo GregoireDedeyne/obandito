@@ -1,29 +1,24 @@
 import { NavLink, useLoaderData, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { useQuery } from '@apollo/client';
-import {
-  GET_ARTISTE,
-  GET_EVENTS,
-  GET_ORGANIZER,
-  GET_USER,
-} from '../../graphQL/actions';
+import { GET_ARTISTE, GET_ORGANIZER } from '../../graphQL/actions';
 import { ThirdView } from '../FirstViewsHome/ThirdView';
 
 export default function Profile() {
   const token = useSelector((state) => state.decodedToken.token);
-  const role = useSelector(
-    (state) => state.decodedToken.decodedData.payload.user.role
-  );
+  const role = useSelector((state) => state.decodedToken.decodedData.role);
   const { id } = useParams();
   const Id = parseInt(id);
+  console.log(token);
+
+  console.log(role);
 
   let loading, error, data;
   // console.log('id : ', id, 'role :', role);
 
-  if (role === 'Organisateur') {
+  if (role === 'Artiste') {
     ({ loading, error, data } = useQuery(GET_ORGANIZER, {
       variables: {
         organizerId: Id,
@@ -34,7 +29,7 @@ export default function Profile() {
         },
       },
     }));
-  } else if (role === 'Artiste') {
+  } else if (role === 'Organisateur') {
     ({ loading, error, data } = useQuery(GET_ARTISTE, {
       variables: {
         artistId: Id,
@@ -46,6 +41,7 @@ export default function Profile() {
       },
     }));
   }
+  console.log(data);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -70,14 +66,12 @@ export default function Profile() {
           <div className="flex justify-between my-5">
             <div className="flex flex-col">
               <h1>
-                {role === 'Organisateur'
-                  ? data.organizer.name
-                  : data.artiste.name}
+                {role === 'Artiste' ? data.organizer.name : data.artist.name}
               </h1>
               <span>
-                {role === 'Organisateur'
+                {role === 'Artiste'
                   ? data.organizer.role.name
-                  : data.artiste.role.name}
+                  : data.artist.role.name}
               </span>
               <span>
                 <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
@@ -119,9 +113,9 @@ export default function Profile() {
                     <div className="bloc-white">
                       <h2>Présentation</h2>
                       <p>
-                        {role === 'Organisateur'
+                        {role === 'Artiste'
                           ? data.organizer.description
-                          : data.artiste.description}
+                          : data.artist.description}
                       </p>
                     </div>
 
@@ -143,7 +137,7 @@ export default function Profile() {
 
                         <iframe
                           // style="border-radius:12px"
-                          src="https://open.spotify.com/embed/track/57mq5FOiHSgZxoZWFYC50b?utm_source=generator"
+                          src="https://open.spotify.com/embed/track/2H6CyDfwe4uAswhzbX6OCE?utm_source=generator"
                           width="100%"
                           height="152"
                           frameBorder="0"
@@ -225,9 +219,9 @@ export default function Profile() {
                       <div className="adress flex flex-col">
                         <span className="mb-5">ADRESSE</span>
                         <span>
-                          {role === 'Organisateur'
+                          {role === 'Artiste'
                             ? `${data.organizer.zip_code}, ${data.organizer.city}`
-                            : `${data.artiste.zip_code}, ${data.artiste.city}`}
+                            : `${data.artist.zip_code}, ${data.artist.city}`}
                         </span>
 
                         <span>France</span>
