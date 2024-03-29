@@ -49,12 +49,12 @@ export function Cards({ data, title, subtitle }) {
         {data.map((card) => (
           <SwiperSlide className="shadow-sm">
             <Card
-              key={card.image_url}
-              image={card.image_url}
-              alt={card.alt}
-              name={card.name}
-              // style={card.style.name}
-              id={card.id}
+              key={card?.image_url}
+              image={card?.image_url}
+              alt={card?.alt}
+              name={card?.name}
+              style={card?.style?.name}
+              id={card?.id}
             />
           </SwiperSlide>
         ))}

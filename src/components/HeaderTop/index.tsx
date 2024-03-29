@@ -167,7 +167,7 @@ export function Header({ genres }) {
             </button>
             <div className="avatar ml-2">
               <div className="w-14 rounded-full">
-                <img src={img_irl} />
+                <img src={`${import.meta.env.VITE_BACK_URL}${img_irl}`} />
               </div>
             </div>
           </div>

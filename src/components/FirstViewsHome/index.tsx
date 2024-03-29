@@ -54,36 +54,22 @@ export function FirstViewHome() {
         <div className="relative px-10 py-8 mt-1.5 bg-white shadow-lg rounded-[66px] max-md:px-5 max-md:max-w-full">
           <div className="flex gap-5 max-md:flex-col max-md:gap-0">
             <div className="flex flex-col w-[55%] max-md:ml-0 max-md:w-full">
-              <div className="flex relative grow gap-5 justify-start max-md:flex-wrap max-md:mt-10">
-                <label className="flex flex-auto gap-3 px-6 py-3.5 bg-white border-2 border-solid border-neutral-200 rounded-[50px] max-md:pr-5">
-                  <div className="flex justify-center items-center">
-                    <Image
-                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/e2d7ea876d6cb2cdb98586f2ac7d9953943e488214007acf3f27fa19c5dec565?apiKey=877605d91b494696bd5bbaa7fb33442f&"
-                      alt="Search icon"
-                      className="aspect-square w-[21px]"
+              <div className="flex relative grow gap-5 justify-center max-md:flex-wrap max-md:mt-10">
+                <label className="input input-bordered flex items-center gap-2 w-3/5 bg-white">
+                  <input type="text" className="grow" placeholder="Search" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    className="w-4 h-4 opacity-70"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                      clipRule="evenodd"
                     />
-                  </div>
-                  <input
-                    className="justify-center my-auto text-base text-neutral-500 bg-white w-full"
-                    placeholder='Essayez "Groupe de rock"...'
-                  ></input>
+                  </svg>
                 </label>
-
-                <div className="flex flex-col flex-1 grow shrink-0 justify-center basis-0 w-fit">
-                  <div className="flex gap-3 py-3.5 pr-16 pl-4 bg-white border-2 border-solid border-neutral-200 rounded-[50px] max-md:pr-5">
-                    <div className="flex justify-center items-center">
-                      <Image
-                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/b14a5638afc37f412fa8759f463e759ee33043fd1ccd7a49535b20f423fe44d7?apiKey=877605d91b494696bd5bbaa7fb33442f&"
-                        alt="Location icon"
-                        className="aspect-square w-[21px]"
-                      />
-                    </div>
-                    <input
-                      className="justify-center my-auto text-base text-neutral-500 bg-white w-full"
-                      placeholder="Lieu de l'évènement"
-                    ></input>
-                  </div>
-                </div>
               </div>
             </div>
             <div className="flex flex-col ml-5 w-[45%] max-md:ml-0 max-md:w-full">

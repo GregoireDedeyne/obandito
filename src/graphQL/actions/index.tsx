@@ -111,14 +111,6 @@ export const GET_EVENTS = gql`
 
 export const GET_HOMEDATA = gql`
   query RandomBandsQuery($limit: Int, $limitEvents: Int) {
-    randomArtists(limit: $limit) {
-      image_url
-      name
-      id
-      style {
-        name
-      }
-    }
     lastArtists(limit: $limit) {
       image_url
       name
@@ -180,7 +172,7 @@ export const GET_HOMEGENREDATA = gql`
 
 export const GET_HOMEREGIONDATA = gql`
   query RandomBandsQuery($limit: Int, $region: String!) {
-    randomArtists(limit: $limit) {
+    lastArtists(limit: $limit) {
       image_url
       name
       id
@@ -206,6 +198,39 @@ export const GET_HOMEREGIONDATA = gql`
       event_count
       region
     }
+  }
+`;
+
+export const GET_ONE_EVENT = gql`
+  query GetOneEvent($eventId: Int!) {
+    event(id: $eventId) {
+      description
+      date
+      city
+      catering
+      available
+      id
+      image_url
+      name
+      occupied_slots
+      region
+      price
+      total_slots
+      zip_code
+      address
+      artists {
+        name
+      }
+      organizer {
+        name
+      }
+    }
+  }
+`;
+
+export const POSTULATION_EVENT = gql`
+  mutation PostulationEvent($eventId: Int!) {
+    postulationEvent(eventId: $eventId)
   }
 `;
 

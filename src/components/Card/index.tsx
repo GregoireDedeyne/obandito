@@ -5,12 +5,12 @@ export function Card({ image, alt, name, style, id }) {
   const islogged = useAppSelector((state) => state.decodedToken.islogged);
 
   return (
-    <NavLink to={islogged === false ? '/login ' : `/profile/${id}`}>
+    <NavLink to={islogged === false ? '/login' : `/profile/${id}`}>
       <div className="flex flex-col justify-center bg-white rounded-xl shadow max-w-[302px]">
         <div className="flex justify-end overflow-hidden relative flex-col px-5 pt-20 pb-5 w-full h-4/5 aspect-[0.74]">
           <img
             loading="lazy"
-            src={image}
+            src={`${import.meta.env.VITE_BACK_URL}${image}`}
             alt={alt}
             className="object-cover absolute inset-0 w-full h-full rounded-xl"
           />

@@ -34,7 +34,7 @@ export function EventCard({
             <div className="flex overflow-hidden relative flex-col grow justify-center items-center rounded-xl aspect-[0.93] w-[195px] max-md:mt-10">
               <img
                 loading="lazy"
-                src={image_url}
+                src={`${import.meta.env.VITE_BACK_URL}${image_url}`}
                 alt=""
                 className="object-cover absolute inset-0 size-full"
               />

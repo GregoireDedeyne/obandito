@@ -14,8 +14,10 @@ import {
   GET_HOMEDATA,
   GET_HOMEGENREDATA,
   GET_HOMEREGIONDATA,
+  GET_ONE_EVENT,
 } from './graphQL/actions/index.tsx';
 import Profile from './components/Pages/Profile.tsx';
+import { EventPage } from './components/Pages/Event.tsx';
 
 // Add ApolloClient
 const client = new ApolloClient({
@@ -64,12 +66,33 @@ const GenreLoader = async ({ params }) => {
     },
   });
   const newData = Object.assign({}, data, {
-    randomArtists: data.artistsByStyle,
+    lastArtists: data.artistsByStyle,
   });
   delete newData.artistsByStyle;
 
   return newData;
 };
+
+const EventLoader = async ({ params }) => {
+  const { id } = params;
+  const eventId = parseInt(id);
+  console.log(id);
+
+  const { data } = await client.query({
+    query: GET_ONE_EVENT,
+    variables: {
+      eventId: eventId,
+    },
+    context: {
+      headers: {
+        Authorization: `Bearer ${store.getState().decodedToken.token}`,
+      },
+    },
+  });
+
+  return data;
+};
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -103,6 +126,11 @@ const router = createBrowserRouter([
       {
         path: '/profile/:id',
         element: <Profile />,
+      },
+      {
+        path: '/event/:id',
+        element: <EventPage />,
+        loader: EventLoader,
       },
     ],
   },
