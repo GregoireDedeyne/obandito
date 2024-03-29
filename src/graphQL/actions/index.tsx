@@ -25,6 +25,45 @@ export const GET_ORGANIZER = gql`
   }
 `;
 
+export const GET_ARTISTE = gql`
+  query Artist($artistId: Int!) {
+    artist(id: $artistId) {
+      id
+      mail
+      name
+      image_url
+      address
+      city
+      region
+      zip_code
+      description
+      youtube_link
+      spotify_link
+      validation
+      style {
+        name
+      }
+      role {
+        name
+      }
+      events {
+        id
+        name
+        image_url
+        address
+        city
+        region
+        date
+        zip_code
+        description
+        catering
+        price
+        organizer_id
+      }
+    }
+  }
+`;
+
 export const GET_LASTARTISTS = gql`
   query LastArtists($limit: Int!) {
     lastArtists(limit: $limit) {

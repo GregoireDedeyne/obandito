@@ -15,6 +15,7 @@ import {
   GET_HOMEGENREDATA,
   GET_HOMEREGIONDATA,
 } from './graphQL/actions/index.tsx';
+import Profile from './components/Pages/Profile.tsx';
 
 // Add ApolloClient
 const client = new ApolloClient({
@@ -99,27 +100,12 @@ const router = createBrowserRouter([
         element: <LoginPage />,
       },
       { path: '/home/:id', element: <HomeNotLogPage />, loader: HomeLoader },
+      {
+        path: '/profile/:id',
+        element: <Profile />,
+      },
     ],
   },
-  // {
-  //   path: '/',
-  //   element: <LogLayout />,
-  //   errorElement: <ErrorPage />,
-  //   children: [
-  //     {
-  //       path: '/settings',
-  //       element: <SettingProfile onSubmit={''} />,
-  //     },
-  //     {
-  //       path: '/search',
-  //       element: <SearchProfile />,
-  //     },
-  //     {
-  //       path: '/profile:id',
-  //       element: <Profile />,
-  //     },
-  //   ],
-  // },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
