@@ -7,7 +7,11 @@
 }
 
 .bloc-white {
-  @apply px-6 py-4 w-full bg-white rounded-xl shadow-lg max-md:pr-5 max-w-full border-2 border-solid border-transparent hover:border-purple-800;
+  @apply p-4 w-full bg-white rounded-xl shadow-lg max-md:pr-5 max-w-full border-2 border-solid border-transparent;
+}
+
+.bloc-white-hover {
+  @apply p-4 w-full bg-white rounded-xl shadow-lg max-md:pr-5 max-w-full border-2 border-solid border-transparent hover:border-purple-800;
 }
 
 h1 {
@@ -15,5 +19,9 @@ h1 {
 }
 
 h2 {
-  @apply text-2xl my-5;
+  @apply text-2xl mb-1;
+}
+
+.youtube iframe {
+  border-radius: 0.75rem;
 }

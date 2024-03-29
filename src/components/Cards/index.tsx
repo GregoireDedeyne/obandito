@@ -16,11 +16,11 @@ export function Cards({ data, title, subtitle }) {
         <h2 className="text-xl font-semibold leading-6 text-neutral-700">
           {title}
         </h2>
-        {subtitle ? (
+        {subtitle && (
           <h2 className="text-l font-semibold leading-6 text-neutral-700">
             {subtitle}
           </h2>
-        ) : null}
+        )}
       </div>
 
       <Swiper
