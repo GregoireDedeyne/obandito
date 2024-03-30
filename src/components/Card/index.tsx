@@ -5,7 +5,7 @@ export function Card({ image, alt, name, style, id }) {
   const islogged = useAppSelector((state) => state.decodedToken.islogged);
 
   return (
-    <NavLink to={islogged === false ? '/login' : `/profile/${id}`}>
+    <NavLink to={islogged === false ? '/login' : `/profile/band/${id}`}>
       <div className="flex flex-col justify-center bg-white rounded-xl shadow max-w-[302px]">
         <div className="flex justify-end overflow-hidden relative flex-col px-5 pt-20 pb-5 w-full h-4/5 aspect-[0.74]">
           <img

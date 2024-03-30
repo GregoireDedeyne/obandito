@@ -11,10 +11,12 @@ import { HomeNotLogPage } from './components/Pages/Home.tsx';
 import { SubscribePage } from './components/Pages/Subscribe.tsx';
 import { LoginPage } from './components/Pages/Login.tsx';
 import {
+  GET_ARTISTE,
   GET_HOMEDATA,
   GET_HOMEGENREDATA,
   GET_HOMEREGIONDATA,
   GET_ONE_EVENT,
+  GET_ORGANIZER,
 } from './graphQL/actions/index.tsx';
 import Profile from './components/Pages/Profile.tsx';
 import { EventPage } from './components/Pages/Event.tsx';
@@ -93,6 +95,42 @@ const EventLoader = async ({ params }) => {
   return data;
 };
 
+const ProfileBandLoader = async ({ params }) => {
+  const { id } = params;
+  const artistId = parseInt(id);
+  const { data } = await client.query({
+    query: GET_ARTISTE,
+    variables: {
+      artistId: artistId,
+    },
+    context: {
+      headers: {
+        Authorization: `Bearer ${store.getState().decodedToken.token}`,
+      },
+    },
+  });
+
+  return data;
+};
+
+const ProfileOrganizerLoader = async ({ params }) => {
+  const { id } = params;
+  const organizerId = parseInt(id);
+  const { data } = await client.query({
+    query: GET_ORGANIZER,
+    variables: {
+      organizerId: organizerId,
+    },
+    context: {
+      headers: {
+        Authorization: `Bearer ${store.getState().decodedToken.token}`,
+      },
+    },
+  });
+
+  return data;
+};
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -124,8 +162,14 @@ const router = createBrowserRouter([
       },
       { path: '/home/:id', element: <HomeNotLogPage />, loader: HomeLoader },
       {
-        path: '/profile/:id',
+        path: '/profile/band/:id',
         element: <Profile />,
+        loader: ProfileBandLoader,
+      },
+      {
+        path: '/profile/organizer/:id',
+        element: <Profile />,
+        loader: ProfileOrganizerLoader,
       },
       {
         path: '/event/:id',

@@ -48,7 +48,7 @@ export function HomeNotLogPage() {
         ) : islogged === true && role === 'Organisateur' ? (
           <div className="container mx-auto" id="bands">
             <Cards
-              data={data?.randomArtists}
+              data={data?.lastArtists}
               title={'Les derniers Artistes disponibles'}
               subtitle={''}
             />
