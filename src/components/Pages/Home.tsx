@@ -5,7 +5,7 @@ import { SecondView } from '../FirstViewsHome/SecondView';
 import { PreFooter } from '../FirstViewsHome/PreFooter';
 import { Faq } from '../FirstViewsHome/Faq';
 import { ThirdView } from '../FirstViewsHome/ThirdView';
-import { useLoaderData } from 'react-router-dom';
+import { NavLink, useLoaderData } from 'react-router-dom';
 import { useAppSelector } from '../../store/redux-hook';
 
 export function HomeNotLogPage() {
@@ -26,6 +26,14 @@ export function HomeNotLogPage() {
         >
           <div className="container mx-auto">
             <FirstViewHome />
+            <NavLink to={'/profile/organizer/52'}>
+              {' '}
+              <p> orga </p>{' '}
+            </NavLink>
+            <NavLink to={'/profile/band/48'}>
+              {' '}
+              <p> band </p>{' '}
+            </NavLink>
           </div>
         </div>
 
