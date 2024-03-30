@@ -55,6 +55,7 @@ export default function Profile() {
       },
     }));
   }
+  console.log(data);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
