@@ -68,7 +68,7 @@ export function EventCard({
                   <div>{region}</div>
 
                   <div className="text-neutral-600">·</div>
-                  <div> {organizer.name}</div>
+                  {/* <div> {organizer.name}</div> */}
                 </div>
                 <div className="mt-1.5 text-zinc-500 max-md:max-w-full">
                   {date}
