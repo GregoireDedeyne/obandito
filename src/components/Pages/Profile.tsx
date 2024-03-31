@@ -1,4 +1,4 @@
-import { NavLink, useLoaderData, useParams } from 'react-router-dom';
+import { NavLink, useLoaderData } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt, faStar } from '@fortawesome/free-solid-svg-icons';
 import ReactPlayer from 'react-player';
@@ -20,22 +20,10 @@ export default function Profile() {
 
   const data = useLoaderData();
 
-  // console.log('useload data : ', data);
-
   const role = data.artist?.role?.name || data.organizer?.role?.name;
-
-  console.log('data.organizer?.events ', data.organizer?.events);
-  console.log(
-    'data?.organizer?.events.region ',
-    data?.organizer?.events.region
-  );
-
-  // console.log('role: ', role);
-
-  const size = {
-    width: '100%',
-    height: 600,
-  };
+  const { name, region, description, zip_code, city } =
+    role === 'Artiste' ? data?.artist : data?.organizer;
+  const events = data?.organizer?.events || data?.artist?.events;
 
   return (
     <>
@@ -56,28 +44,17 @@ export default function Profile() {
 
           <div className="flex justify-between my-5">
             <div className="flex flex-col">
-              <h1 className="text-black">
-                {role === 'Artiste' ? data?.artist.name : data?.organizer.name}
-              </h1>
+              <h1 className="text-black">{name}</h1>
+              <span>{role}</span>
               <span>
-                {role === 'Artiste'
-                  ? data?.artist.role.name
-                  : data?.organizer.role.name}
+                <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
+                <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
+                <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
+                <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
+                <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
               </span>
               <span>
-                <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
-                <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
-                <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
-                <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
-                <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
-                {/* {` ${id} évaluations`} */}
-              </span>
-              <span>
-                <FontAwesomeIcon icon={faMapMarkerAlt} />{' '}
-                {role === 'Artiste'
-                  ? data?.artist.region
-                  : data?.organizer.region}
-                , France
+                <FontAwesomeIcon icon={faMapMarkerAlt} /> {region}, France
               </span>
             </div>
 
@@ -109,11 +86,7 @@ export default function Profile() {
                   <div>
                     <div className="bloc-white mb-[50px]">
                       <h2 className="text-black">Présentation</h2>
-                      <p>
-                        {role === 'Artiste'
-                          ? data.artist.description
-                          : data.organizer.description}
-                      </p>
+                      <p>{description}</p>
                     </div>
 
                     {role === 'Artiste' && (
@@ -123,18 +96,13 @@ export default function Profile() {
                         <div className="spotify my-4">
                           <SpotifyPlayer
                             uri="https://open.spotify.com/intl-fr/album/2lGH3ryY5dbDxbPzrhO21F?si=CvJZ9x4ZRc6i_yRs56hHXQ"
-                            size={size}
+                            size={{ width: '100%', height: 600 }}
                           />
                         </div>
 
                         <div className="youtube">
                           <ReactPlayer
-                            // url={
-                            //   role === 'Artiste'
-                            //     ? data.organizer.youtube_link
-                            //     : data.artist.youtube_link
-                            // }
-                            url={'https://www.youtube.com/watch?v=0dmS0He_czs'}
+                            url="https://www.youtube.com/watch?v=0dmS0He_czs"
                             width="100%"
                             height={500}
                             controls={true}
@@ -144,51 +112,18 @@ export default function Profile() {
                     )}
 
                     <div className="bloc-white">
-                      <h2 className="text-black mb-4">Gallerie photos</h2>
+                      <h2 className="text-black mb-4">Galerie photos</h2>
 
                       <div className="grid grid-cols-3 grid-rows-2 gap-4">
-                        <div>
-                          <img
-                            className="object-cover w-full aspect-square"
-                            src="https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg"
-                            alt="Burger"
-                          />
-                        </div>
-                        <div className="col-start-2 row-start-2">
-                          <img
-                            className="object-cover w-full aspect-square"
-                            src="https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg"
-                            alt="Burger"
-                          />
-                        </div>
-                        <div className="col-start-2 row-start-1">
-                          <img
-                            className="object-cover w-full aspect-square"
-                            src="https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg"
-                            alt="Burger"
-                          />
-                        </div>
-                        <div className="col-start-1 row-start-2">
-                          <img
-                            className="object-cover w-full aspect-square"
-                            src="https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg"
-                            alt="Burger"
-                          />
-                        </div>
-                        <div className="col-start-3 row-start-1">
-                          <img
-                            className="object-cover w-full aspect-square"
-                            src="https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg"
-                            alt="Burger"
-                          />
-                        </div>
-                        <div className="row-start-2">
-                          <img
-                            className="object-cover w-full aspect-square"
-                            src="https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg"
-                            alt="Burger"
-                          />
-                        </div>
+                        {[1, 2, 3, 4, 5, 6].map((photo, index) => (
+                          <div key={index}>
+                            <img
+                              className="object-cover w-full aspect-square"
+                              src="https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg"
+                              alt={`Photo ${index}`}
+                            />
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -199,12 +134,7 @@ export default function Profile() {
                       <h2 className="text-black">Coordonnées</h2>
                       <div className="adress flex flex-col">
                         <span className="mb-5">ADRESSE</span>
-                        <span>
-                          {role === 'Artiste'
-                            ? `${data.artist.zip_code}, ${data.artist.city}`
-                            : `${data.organizer.zip_code}, ${data.organizer.city}`}
-                        </span>
-
+                        <span>{`${zip_code}, ${city}`}</span>
                         <span>France</span>
                       </div>
                       <div className="website">
@@ -257,24 +187,7 @@ export default function Profile() {
               </div>
             </div>
 
-            {/* <input
-              type="radio"
-              name="my_tabs_1"
-              role="tab"
-              className="tab"
-              aria-label="Evaluations"
-              checked
-            />
-            <div
-              role="tabpanel"
-              className="tab-content p-10 bg-color-gray_light"
-            >
-              Evaluations
-            </div> */}
-            {/* ---------------------------------------------------------------------------------------------------------------------- */}
-
-            {data?.organizer?.events?.length > 0 ||
-            data?.artist?.events?.length > 0 ? (
+            {events && events.length > 0 && (
               <>
                 <input
                   type="radio"
@@ -289,13 +202,10 @@ export default function Profile() {
                   role="tabpanel"
                   className="tab-content p-10 bg-color-gray_light"
                 >
-                  <ThirdView
-                    events={data?.organizer?.events || data?.artist?.events}
-                    locations={data?.organizer?.events || data?.artist?.events}
-                  />
+                  <ThirdView events={events} locations={events} />
                 </div>
               </>
-            ) : null}
+            )}
           </div>
         </div>
       </div>
