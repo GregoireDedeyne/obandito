@@ -1,6 +1,10 @@
-import { NavLink, useLoaderData } from 'react-router-dom';
+import { NavLink, useLoaderData, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapMarkerAlt, faStar } from '@fortawesome/free-solid-svg-icons';
+import {
+  faMapMarkerAlt,
+  faStar,
+  faPencilAlt,
+} from '@fortawesome/free-solid-svg-icons';
 import ReactPlayer from 'react-player';
 import SpotifyPlayer from 'react-spotify-player';
 import {
@@ -10,9 +14,34 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import { ThirdView } from '../FirstViewsHome/ThirdView';
 import { useState } from 'react';
+import { useAppSelector } from '../../store/redux-hook';
+import { UPDATE_USER } from '../../graphQL/actions';
+import { useMutation } from '@apollo/client';
+import { useDispatch, useSelector } from 'react-redux';
+import { SET_DECODED_TOKEN, setDecodedToken } from '../../store/actions';
+
+interface FormData {
+  name: string;
+  region: string;
+  description: string;
+  zip_code: number;
+  city: string;
+}
 
 export default function Profile() {
+  const [UpdateUser, { loading, error }] = useMutation(UPDATE_USER);
   const [selectedTab, setSelectedTab] = useState(0);
+  const [settings, setSettings] = useState(false);
+
+  // const nameRedux = useSelector((state) => state.decodedToken.decodedData.name);
+
+  // const dispatch = useDispatch();
+
+  const token = useAppSelector((state) => state.decodedToken.token);
+
+  const idredux = useAppSelector((state) => state.decodedToken.decodedData.id);
+  const { id: urlId } = useParams();
+  const settingsId = idredux == urlId;
 
   const handleTabClick = (index) => {
     setSelectedTab(index);
@@ -24,6 +53,40 @@ export default function Profile() {
   const { name, region, description, zip_code, city } =
     role === 'Artiste' ? data?.artist : data?.organizer;
   const events = data?.organizer?.events || data?.artist?.events;
+
+  const [formData, setFormData] = useState<FormData>({
+    name,
+    region,
+    description,
+    zip_code,
+    city,
+  });
+
+  console.log('formData :', formData);
+  console.log('data :', data);
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const { data } = await UpdateUser({
+        variables: {
+          input: {
+            ...formData,
+          },
+        },
+        context: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      });
+      console.log('Données mises à jour avec succès:', data.updateUser);
+      setSettings(false);
+    } catch (error) {
+      console.error('Erreur:', error.message);
+    }
+  };
 
   return (
     <>
@@ -44,8 +107,20 @@ export default function Profile() {
 
           <div className="flex justify-between my-5">
             <div className="flex flex-col">
-              <h1 className="text-black">{name}</h1>
-              <span>{role}</span>
+              {settings ? (
+                <form onSubmit={handleFormSubmit}>
+                  <input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
+                  />
+                  <button type="submit">Enregistrer</button>
+                </form>
+              ) : (
+                <h1 className="text-black">{name}</h1>
+              )}
               <span>
                 <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
                 <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
@@ -54,12 +129,34 @@ export default function Profile() {
                 <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
               </span>
               <span>
-                <FontAwesomeIcon icon={faMapMarkerAlt} /> {region}, France
+                {settings ? (
+                  <form onSubmit={handleFormSubmit}>
+                    <input
+                      type="text"
+                      value={formData.region}
+                      onChange={(e) =>
+                        setFormData({ ...formData, region: e.target.value })
+                      }
+                    />
+                    <button type="submit">Enregistrer</button>
+                  </form>
+                ) : (
+                  <div className="flex items-center">
+                    <FontAwesomeIcon icon={faMapMarkerAlt} />
+                    <span> {region}, France</span>
+                  </div>
+                )}
               </span>
             </div>
 
             <div className="flex flex-col">
               <div className="flex justify-between">
+                {settingsId && (
+                  <FontAwesomeIcon
+                    icon={faPencilAlt}
+                    onClick={() => setSettings(!settings)}
+                  />
+                )}
                 <NavLink className="btn-primary" to="/">
                   Proposer un deal
                 </NavLink>
@@ -86,7 +183,24 @@ export default function Profile() {
                   <div>
                     <div className="bloc-white mb-[50px]">
                       <h2 className="text-black">Présentation</h2>
-                      <p>{description}</p>
+                      {settings ? (
+                        <form onSubmit={handleFormSubmit}>
+                          <textarea
+                            type="text"
+                            value={formData.description}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                description: e.target.value,
+                              })
+                            }
+                            placeholder="Description"
+                          />
+                          <button type="submit">Enregistrer</button>
+                        </form>
+                      ) : (
+                        <p>{description}</p>
+                      )}
                     </div>
 
                     {role === 'Artiste' && (
@@ -94,11 +208,61 @@ export default function Profile() {
                         <h2 className="text-black">Musique & clips</h2>
 
                         <div className="spotify my-4">
+                          {/* {settings ? (
+                            <form onSubmit={handleFormSubmit}>
+                              <input
+                                type="text"
+                                value={formData.spotify_link}
+                                onChange={(e) =>
+                                  setFormData({
+                                    ...formData,
+                                    spotify_link: e.target.value,
+                                  })
+                                }
+                                placeholder="URL Spotify"
+                              />
+                              <button type="submit">Enregistrer</button>
+                            </form>
+                          ) : (
+                            <SpotifyPlayer
+                              uri={data.spotify_link}
+                              size={{ width: '100%', height: 600 }}
+                            />
+                          )} */}
+
                           <SpotifyPlayer
                             uri="https://open.spotify.com/intl-fr/album/2lGH3ryY5dbDxbPzrhO21F?si=CvJZ9x4ZRc6i_yRs56hHXQ"
                             size={{ width: '100%', height: 600 }}
                           />
                         </div>
+                        {/* 
+                        <div className="youtube">
+                          {settings ? (
+                            <form onSubmit={handleFormSubmit}>
+                              <input
+                                type="text"
+                                value={formData.youtube_link}
+                                onChange={(e) =>
+                                  setFormData({
+                                    ...formData,
+                                    youtube_link: e.target.value,
+                                  })
+                                }
+                                placeholder="URL YouTube"
+                              />
+                              <button type="submit">Enregistrer</button>
+                            </form>
+                          ) : (
+                            <div className="youtube">
+                              <ReactPlayer
+                                url={formData.youtube_link} // Utilisez formData.youtube_link ici
+                                width="100%"
+                                height={500}
+                                controls={true}
+                              />
+                            </div>
+                          )}
+                        </div> */}
 
                         <div className="youtube">
                           <ReactPlayer
@@ -134,7 +298,43 @@ export default function Profile() {
                       <h2 className="text-black">Coordonnées</h2>
                       <div className="adress flex flex-col">
                         <span className="mb-5">ADRESSE</span>
-                        <span>{`${zip_code}, ${city}`}</span>
+                        <span>
+                          {settings ? (
+                            <>
+                              <form onSubmit={handleFormSubmit}>
+                                <input
+                                  type="text"
+                                  value={formData.zip_code}
+                                  onChange={(e) =>
+                                    setFormData({
+                                      ...formData,
+                                      zip_code: e.target.value,
+                                    })
+                                  }
+                                  placeholder="Code postal"
+                                />
+                                <button type="submit">Enregistrer</button>
+                              </form>
+                              <form onSubmit={handleFormSubmit}>
+                                <input
+                                  type="text"
+                                  value={formData.city}
+                                  onChange={(e) =>
+                                    setFormData({
+                                      ...formData,
+                                      city: e.target.value,
+                                    })
+                                  }
+                                  placeholder="Ville"
+                                />
+                                <button type="submit">Enregistrer</button>
+                              </form>
+                            </>
+                          ) : (
+                            <span>{`${zip_code}, ${city}`}</span>
+                          )}
+                        </span>
+
                         <span>France</span>
                       </div>
                       <div className="website">
