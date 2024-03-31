@@ -24,6 +24,12 @@ export default function Profile() {
 
   const role = data.artist?.role?.name || data.organizer?.role?.name;
 
+  console.log('data.organizer?.events ', data.organizer?.events);
+  console.log(
+    'data?.organizer?.events.region ',
+    data?.organizer?.events.region
+  );
+
   // console.log('role: ', role);
 
   const size = {
@@ -267,48 +273,29 @@ export default function Profile() {
             </div> */}
             {/* ---------------------------------------------------------------------------------------------------------------------- */}
 
-            <input
-              type="radio"
-              name="my_tabs_1"
-              role="tab"
-              className="tab w-[180px]"
-              aria-label="Evènements"
-              checked={selectedTab === 1}
-              onChange={() => handleTabClick(1)}
-            />
-            <div
-              role="tabpanel"
-              className="tab-content p-10 bg-color-gray_light"
-            >
-              Mes évènements
-              {/* ----- */}
-              <div className="px-6 py-4 my-2 w-full bg-white rounded-xl shadow-lg max-md:pr-5 max-md:max-w-full border-2 border-solid border-transparent hover:border-purple-800">
-                <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-                  <div className="flex flex-col w-[26%] max-md:ml-0 max-md:w-full">
-                    <div className="flex overflow-hidden relative flex-col grow justify-center items-center rounded-xl aspect-[0.93] w-[195px] max-md:mt-10">
-                      <img
-                        loading="lazy"
-                        alt=""
-                        className="object-cover absolute inset-0 size-full"
-                      />
-                    </div>
-                  </div>
-                  <div className="flex flex-col ml-5 w-[74%] max-md:ml-0 max-md:w-full">
-                    <div className="flex flex-col justify-center self-stretch my-auto text-base font-medium leading-6 max-md:mt-10 max-md:max-w-full">
-                      <div className="flex flex-col max-md:max-w-full">
-                        <div className="flex gap-1.5 self-start mt-1.5 text-neutral-600">
-                          <div>Recherche sur la région de : </div>
-
-                          <div className="text-neutral-600">·</div>
-                        </div>
-                        <div className="mt-1.5 text-zinc-500 max-md:max-w-full"></div>
-                      </div>
-                    </div>
-                  </div>
+            {data?.organizer?.events?.length > 0 ||
+            data?.artist?.events?.length > 0 ? (
+              <>
+                <input
+                  type="radio"
+                  name="my_tabs_1"
+                  role="tab"
+                  className="tab w-[180px]"
+                  aria-label="Evènements"
+                  checked={selectedTab === 1}
+                  onChange={() => handleTabClick(1)}
+                />
+                <div
+                  role="tabpanel"
+                  className="tab-content p-10 bg-color-gray_light"
+                >
+                  <ThirdView
+                    events={data?.organizer?.events || data?.artist?.events}
+                    locations={data?.organizer?.events || data?.artist?.events}
+                  />
                 </div>
-              </div>
-              {/* ----- */}
-            </div>
+              </>
+            ) : null}
           </div>
         </div>
       </div>
