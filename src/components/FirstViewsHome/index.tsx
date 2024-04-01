@@ -99,8 +99,11 @@ export function FirstViewHome() {
                 ) : null}
 
                 <div className="flex gap-5 justify-end self-start mt-3.5">
-                  <Text className="my-auto text-neutral-600">ou</Text>
-
+                  {islogged === false ? (
+                    <Text className="my-auto text-neutral-600">ou</Text>
+                  ) : islogged === true && role === 'Organisateur' ? (
+                    <Text className="my-auto text-neutral-600">ou</Text>
+                  ) : null}
                   {islogged === false ? (
                     <NavLink
                       to={'/'}

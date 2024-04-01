@@ -11,6 +11,7 @@ interface EventCardProps {
   price: number;
   organizer: string;
   id: number;
+  available: boolean;
 }
 
 export function EventCard({
@@ -23,6 +24,7 @@ export function EventCard({
   organizer,
   price,
   id,
+  available,
 }: EventCardProps) {
   const islogged = useAppSelector((state) => state.decodedToken.islogged);
 
@@ -47,13 +49,30 @@ export function EventCard({
                   {title}
                 </h3>
                 <div className="flex gap-1.5 self-start mt-1.5 text-neutral-600">
-                  <img
-                    loading="lazy"
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/bac38671888a46129a537a5a178fc1ef9ecfcd735f21eececc50cccff3b67569?apiKey=877605d91b494696bd5bbaa7fb33442f&"
-                    alt=""
-                    className="shrink-0 my-auto w-2.5 aspect-square"
-                  />
-                  <div>Disponible</div>
+                  {available === true ? (
+                    <>
+                      {' '}
+                      <img
+                        loading="lazy"
+                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/bac38671888a46129a537a5a178fc1ef9ecfcd735f21eececc50cccff3b67569?apiKey=877605d91b494696bd5bbaa7fb33442f&"
+                        alt=""
+                        className="shrink-0 my-auto w-2.5 aspect-square"
+                      />
+                      <div>Disponible</div>
+                    </>
+                  ) : (
+                    <>
+                      {' '}
+                      <img
+                        loading="lazy"
+                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/bac38671888a46129a537a5a178fc1ef9ecfcd735f21eececc50cccff3b67569?apiKey=877605d91b494696bd5bbaa7fb33442f&"
+                        alt=""
+                        className="shrink-0 my-auto w-2.5 aspect-square"
+                      />
+                      <div>Non disponible</div>
+                    </>
+                  )}
+
                   <div>·</div>
                   <div>Cachet : {price} €</div>
                   <div>·</div>
@@ -68,7 +87,7 @@ export function EventCard({
                   <div>{region}</div>
 
                   <div className="text-neutral-600">·</div>
-                  {/* <div> {organizer.name}</div> */}
+                  <div> {organizer?.name}</div>
                 </div>
                 <div className="mt-1.5 text-zinc-500 max-md:max-w-full">
                   {date}

@@ -7,12 +7,17 @@ import { Faq } from '../FirstViewsHome/Faq';
 import { ThirdView } from '../FirstViewsHome/ThirdView';
 import { NavLink, useLoaderData } from 'react-router-dom';
 import { useAppSelector } from '../../store/redux-hook';
+import { Card } from '../Card';
+import { CardsWithout } from '../CardsWithout';
 
 export function HomeNotLogPage() {
   const islogged = useAppSelector((state) => state.decodedToken.islogged);
   const role = useAppSelector((state) => state.decodedToken.decodedData.role);
 
   const data = useLoaderData();
+
+  const artists = data.lastArtists;
+  console.log(artists);
 
   return (
     <>
@@ -26,14 +31,6 @@ export function HomeNotLogPage() {
         >
           <div className="container mx-auto">
             <FirstViewHome />
-            <NavLink to={'/profile/organizer/52'}>
-              {' '}
-              <p> orga </p>{' '}
-            </NavLink>
-            <NavLink to={'/profile/band/48'}>
-              {' '}
-              <p> band </p>{' '}
-            </NavLink>
           </div>
         </div>
 
@@ -55,11 +52,16 @@ export function HomeNotLogPage() {
           </div>
         ) : islogged === true && role === 'Organisateur' ? (
           <div className="container mx-auto" id="bands">
-            <Cards
+            <CardsWithout
               data={data?.lastArtists}
               title={'Les derniers Artistes disponibles'}
               subtitle={''}
             />
+            {/* <Cards
+              data={data?.lastArtists}
+              title={'Les derniers Artistes disponibles'}
+              subtitle={''}
+            /> */}
           </div>
         ) : islogged === true && role === 'Artiste' ? (
           <div className="container mx-auto my-20" id="events">

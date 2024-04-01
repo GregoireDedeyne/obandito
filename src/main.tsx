@@ -31,7 +31,7 @@ const HomeLoader = async () => {
   const { data } = await client.query({
     query: GET_HOMEDATA,
     variables: {
-      limit: 10,
+      limit: 9,
       limitEvents: 5,
     },
   });

@@ -82,46 +82,48 @@ export function Header({ genres }) {
               </li>
             </ul>
           </div>
-          <nav className="hidden md:flex gap-4 pr-20 my-auto text-sm font-medium leading-5 text-slate-900">
-            <ul className="menu menu-horizontal px-1 ">
-              <li
-                className="hover:bg-rose-500 hover:text-white rounded-lg "
-                onClick={() => {
-                  const events = document.getElementById('events');
-                  if (events) {
-                    events.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
-              >
-                {' '}
-                <a>Evènements</a>
-              </li>
-              <li
-                className="hover:bg-rose-500 hover:text-white rounded-lg"
-                onClick={() => {
-                  const bands = document.getElementById('bands');
-                  if (bands) {
-                    bands.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
-              >
-                {' '}
-                <a>Groupes</a>{' '}
-              </li>
-              <li
-                className="hover:bg-rose-500 hover:text-white hover:rounded-lg"
-                onClick={() => {
-                  const propos = document.getElementById('propos');
-                  if (propos) {
-                    propos.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
-              >
-                {' '}
-                <a>à propos</a>{' '}
-              </li>
-            </ul>
-          </nav>
+          {islogged === false ? (
+            <nav className="hidden md:flex gap-4 pr-20 my-auto text-sm font-medium leading-5 text-slate-900">
+              <ul className="menu menu-horizontal px-1 ">
+                <li
+                  className="hover:bg-rose-500 hover:text-white rounded-lg "
+                  onClick={() => {
+                    const events = document.getElementById('events');
+                    if (events) {
+                      events.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                >
+                  {' '}
+                  <a>Evènements</a>
+                </li>
+                <li
+                  className="hover:bg-rose-500 hover:text-white rounded-lg"
+                  onClick={() => {
+                    const bands = document.getElementById('bands');
+                    if (bands) {
+                      bands.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                >
+                  {' '}
+                  <a>Groupes</a>{' '}
+                </li>
+                <li
+                  className="hover:bg-rose-500 hover:text-white hover:rounded-lg"
+                  onClick={() => {
+                    const propos = document.getElementById('propos');
+                    if (propos) {
+                      propos.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                >
+                  {' '}
+                  <a>à propos</a>{' '}
+                </li>
+              </ul>
+            </nav>
+          ) : null}
         </div>
         {islogged === false ? (
           <div className="hidden md:flex flex-col md:flex-row justify-center items-center w-full max-w-[50%] md:w-auto">

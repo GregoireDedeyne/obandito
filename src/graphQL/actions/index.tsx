@@ -143,6 +143,7 @@ export const GET_HOMEDATA = gql`
       region
       price
       date
+      available
       organizer {
         name
       }
@@ -173,6 +174,7 @@ export const GET_HOMEGENREDATA = gql`
       price
       date
       id
+      available
       organizer {
         name
       }
@@ -202,6 +204,7 @@ export const GET_HOMEREGIONDATA = gql`
       description
       image_url
       name
+      available
       organizer {
         name
       }
@@ -235,9 +238,17 @@ export const GET_ONE_EVENT = gql`
       address
       artists {
         name
+        id
+        image_url
+        style {
+          name
+        }
       }
       organizer {
         name
+        image_url
+        region
+        id
       }
     }
   }

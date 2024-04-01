@@ -3,10 +3,11 @@ import { useAppSelector } from '../../store/redux-hook';
 
 export function Card({ image, alt, name, style, id }) {
   const islogged = useAppSelector((state) => state.decodedToken.islogged);
+  console.log(image, name, style);
 
   return (
     <NavLink to={islogged === false ? '/login' : `/profile/band/${id}`}>
-      <div className="flex flex-col justify-center bg-white rounded-xl shadow max-w-[302px]">
+      <div className="flex flex-col justify-center bg-white rounded-xl shadow-lg max-w-[302px] border-2 border-solid border-transparent hover:border-purple-800">
         <div className="flex justify-end overflow-hidden relative flex-col px-5 pt-20 pb-5 w-full h-4/5 aspect-[0.74]">
           <img
             loading="lazy"

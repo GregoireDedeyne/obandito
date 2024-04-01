@@ -14,7 +14,7 @@ export default {
       backgroundImage: {
         'fond-one': "url('/src/assets/images/fondOne.png')",
         'fond-two': "url('/src/assets/images/fondTwo.png')",
-        'fond-three': "url('/src/assets/images/fondThree.png')",
+        'fond-three': "url('/src/assets/images/bandPict.jpg')",
       },
     },
   },
