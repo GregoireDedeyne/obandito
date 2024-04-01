@@ -284,3 +284,45 @@ export const LOGIN_MUTATION = gql`
     }
   }
 `;
+
+export const UPDATE_USER = gql`
+  mutation UpdateUser($input: UpdateUserInput!) {
+    updateUser(input: $input) {
+      id
+      mail
+      name
+      image_url
+      address
+      city
+      region
+      zip_code
+      description
+      youtube_link
+      spotify_link
+      validation
+      style {
+        name
+      }
+      role {
+        name
+      }
+      events {
+        id
+        name
+        image_url
+        address
+        city
+        region
+        date
+        zip_code
+        description
+        catering
+        price
+        organizer_id
+        total_slots
+        occupied_slots
+        available
+      }
+    }
+  }
+`;

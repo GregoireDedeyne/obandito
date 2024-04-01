@@ -1,6 +1,10 @@
 import { NavLink, useLoaderData, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapMarkerAlt, faStar } from '@fortawesome/free-solid-svg-icons';
+import {
+  faMapMarkerAlt,
+  faStar,
+  faPencilAlt,
+} from '@fortawesome/free-solid-svg-icons';
 import ReactPlayer from 'react-player';
 import SpotifyPlayer from 'react-spotify-player';
 import {
@@ -10,9 +14,34 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import { ThirdView } from '../FirstViewsHome/ThirdView';
 import { useState } from 'react';
+import { useAppSelector } from '../../store/redux-hook';
+import { UPDATE_USER } from '../../graphQL/actions';
+import { useMutation } from '@apollo/client';
+import { useDispatch, useSelector } from 'react-redux';
+import { SET_DECODED_TOKEN, setDecodedToken } from '../../store/actions';
+
+interface FormData {
+  name: string;
+  region: string;
+  description: string;
+  zip_code: number;
+  city: string;
+}
 
 export default function Profile() {
+  const [UpdateUser, { loading, error }] = useMutation(UPDATE_USER);
   const [selectedTab, setSelectedTab] = useState(0);
+  const [settings, setSettings] = useState(false);
+
+  // const nameRedux = useSelector((state) => state.decodedToken.decodedData.name);
+
+  // const dispatch = useDispatch();
+
+  const token = useAppSelector((state) => state.decodedToken.token);
+
+  const idredux = useAppSelector((state) => state.decodedToken.decodedData.id);
+  const { id: urlId } = useParams();
+  const settingsId = idredux == urlId;
 
   const handleTabClick = (index) => {
     setSelectedTab(index);
@@ -20,21 +49,43 @@ export default function Profile() {
 
   const data = useLoaderData();
 
-  // console.log('useload data : ', data);
-
   const role = data.artist?.role?.name || data.organizer?.role?.name;
+  const { name, region, description, zip_code, city } =
+    role === 'Artiste' ? data?.artist : data?.organizer;
+  const events = data?.organizer?.events || data?.artist?.events;
 
-  console.log('data.organizer?.events ', data.organizer?.events);
-  console.log(
-    'data?.organizer?.events.region ',
-    data?.organizer?.events.region
-  );
+  const [formData, setFormData] = useState<FormData>({
+    name,
+    region,
+    description,
+    zip_code,
+    city,
+  });
 
-  // console.log('role: ', role);
+  console.log('formData :', formData);
+  console.log('data :', data);
 
-  const size = {
-    width: '100%',
-    height: 600,
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const { data } = await UpdateUser({
+        variables: {
+          input: {
+            ...formData,
+          },
+        },
+        context: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      });
+      console.log('Données mises à jour avec succès:', data.updateUser);
+      setSettings(false);
+    } catch (error) {
+      console.error('Erreur:', error.message);
+    }
   };
 
   return (
@@ -56,33 +107,56 @@ export default function Profile() {
 
           <div className="flex justify-between my-5">
             <div className="flex flex-col">
-              <h1 className="text-black">
-                {role === 'Artiste' ? data?.artist.name : data?.organizer.name}
-              </h1>
+              {settings ? (
+                <form onSubmit={handleFormSubmit}>
+                  <input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
+                  />
+                  <button type="submit">Enregistrer</button>
+                </form>
+              ) : (
+                <h1 className="text-black">{name}</h1>
+              )}
               <span>
-                {role === 'Artiste'
-                  ? data?.artist.role.name
-                  : data?.organizer.role.name}
+                <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
+                <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
+                <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
+                <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
+                <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
               </span>
               <span>
-                <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
-                <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
-                <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
-                <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
-                <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
-                {/* {` ${id} évaluations`} */}
-              </span>
-              <span>
-                <FontAwesomeIcon icon={faMapMarkerAlt} />{' '}
-                {role === 'Artiste'
-                  ? data?.artist.region
-                  : data?.organizer.region}
-                , France
+                {settings ? (
+                  <form onSubmit={handleFormSubmit}>
+                    <input
+                      type="text"
+                      value={formData.region}
+                      onChange={(e) =>
+                        setFormData({ ...formData, region: e.target.value })
+                      }
+                    />
+                    <button type="submit">Enregistrer</button>
+                  </form>
+                ) : (
+                  <div className="flex items-center">
+                    <FontAwesomeIcon icon={faMapMarkerAlt} />
+                    <span> {region}, France</span>
+                  </div>
+                )}
               </span>
             </div>
 
             <div className="flex flex-col">
               <div className="flex justify-between">
+                {settingsId && (
+                  <FontAwesomeIcon
+                    icon={faPencilAlt}
+                    onClick={() => setSettings(!settings)}
+                  />
+                )}
                 <NavLink className="btn-primary" to="/">
                   Proposer un deal
                 </NavLink>
@@ -109,11 +183,24 @@ export default function Profile() {
                   <div>
                     <div className="bloc-white mb-[50px]">
                       <h2 className="text-black">Présentation</h2>
-                      <p>
-                        {role === 'Artiste'
-                          ? data.artist.description
-                          : data.organizer.description}
-                      </p>
+                      {settings ? (
+                        <form onSubmit={handleFormSubmit}>
+                          <textarea
+                            type="text"
+                            value={formData.description}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                description: e.target.value,
+                              })
+                            }
+                            placeholder="Description"
+                          />
+                          <button type="submit">Enregistrer</button>
+                        </form>
+                      ) : (
+                        <p>{description}</p>
+                      )}
                     </div>
 
                     {role === 'Artiste' && (
@@ -121,20 +208,65 @@ export default function Profile() {
                         <h2 className="text-black">Musique & clips</h2>
 
                         <div className="spotify my-4">
+                          {/* {settings ? (
+                            <form onSubmit={handleFormSubmit}>
+                              <input
+                                type="text"
+                                value={formData.spotify_link}
+                                onChange={(e) =>
+                                  setFormData({
+                                    ...formData,
+                                    spotify_link: e.target.value,
+                                  })
+                                }
+                                placeholder="URL Spotify"
+                              />
+                              <button type="submit">Enregistrer</button>
+                            </form>
+                          ) : (
+                            <SpotifyPlayer
+                              uri={data.spotify_link}
+                              size={{ width: '100%', height: 600 }}
+                            />
+                          )} */}
+
                           <SpotifyPlayer
                             uri="https://open.spotify.com/intl-fr/album/2lGH3ryY5dbDxbPzrhO21F?si=CvJZ9x4ZRc6i_yRs56hHXQ"
-                            size={size}
+                            size={{ width: '100%', height: 600 }}
                           />
                         </div>
+                        {/* 
+                        <div className="youtube">
+                          {settings ? (
+                            <form onSubmit={handleFormSubmit}>
+                              <input
+                                type="text"
+                                value={formData.youtube_link}
+                                onChange={(e) =>
+                                  setFormData({
+                                    ...formData,
+                                    youtube_link: e.target.value,
+                                  })
+                                }
+                                placeholder="URL YouTube"
+                              />
+                              <button type="submit">Enregistrer</button>
+                            </form>
+                          ) : (
+                            <div className="youtube">
+                              <ReactPlayer
+                                url={formData.youtube_link} // Utilisez formData.youtube_link ici
+                                width="100%"
+                                height={500}
+                                controls={true}
+                              />
+                            </div>
+                          )}
+                        </div> */}
 
                         <div className="youtube">
                           <ReactPlayer
-                            // url={
-                            //   role === 'Artiste'
-                            //     ? data.organizer.youtube_link
-                            //     : data.artist.youtube_link
-                            // }
-                            url={'https://www.youtube.com/watch?v=0dmS0He_czs'}
+                            url="https://www.youtube.com/watch?v=0dmS0He_czs"
                             width="100%"
                             height={500}
                             controls={true}
@@ -144,51 +276,18 @@ export default function Profile() {
                     )}
 
                     <div className="bloc-white">
-                      <h2 className="text-black mb-4">Gallerie photos</h2>
+                      <h2 className="text-black mb-4">Galerie photos</h2>
 
                       <div className="grid grid-cols-3 grid-rows-2 gap-4">
-                        <div>
-                          <img
-                            className="object-cover w-full aspect-square"
-                            src="https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg"
-                            alt="Burger"
-                          />
-                        </div>
-                        <div className="col-start-2 row-start-2">
-                          <img
-                            className="object-cover w-full aspect-square"
-                            src="https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg"
-                            alt="Burger"
-                          />
-                        </div>
-                        <div className="col-start-2 row-start-1">
-                          <img
-                            className="object-cover w-full aspect-square"
-                            src="https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg"
-                            alt="Burger"
-                          />
-                        </div>
-                        <div className="col-start-1 row-start-2">
-                          <img
-                            className="object-cover w-full aspect-square"
-                            src="https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg"
-                            alt="Burger"
-                          />
-                        </div>
-                        <div className="col-start-3 row-start-1">
-                          <img
-                            className="object-cover w-full aspect-square"
-                            src="https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg"
-                            alt="Burger"
-                          />
-                        </div>
-                        <div className="row-start-2">
-                          <img
-                            className="object-cover w-full aspect-square"
-                            src="https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg"
-                            alt="Burger"
-                          />
-                        </div>
+                        {[1, 2, 3, 4, 5, 6].map((photo, index) => (
+                          <div key={index}>
+                            <img
+                              className="object-cover w-full aspect-square"
+                              src="https://daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.jpg"
+                              alt={`Photo ${index}`}
+                            />
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -200,9 +299,40 @@ export default function Profile() {
                       <div className="adress flex flex-col">
                         <span className="mb-5">ADRESSE</span>
                         <span>
-                          {role === 'Artiste'
-                            ? `${data.artist.zip_code}, ${data.artist.city}`
-                            : `${data.organizer.zip_code}, ${data.organizer.city}`}
+                          {settings ? (
+                            <>
+                              <form onSubmit={handleFormSubmit}>
+                                <input
+                                  type="text"
+                                  value={formData.zip_code}
+                                  onChange={(e) =>
+                                    setFormData({
+                                      ...formData,
+                                      zip_code: e.target.value,
+                                    })
+                                  }
+                                  placeholder="Code postal"
+                                />
+                                <button type="submit">Enregistrer</button>
+                              </form>
+                              <form onSubmit={handleFormSubmit}>
+                                <input
+                                  type="text"
+                                  value={formData.city}
+                                  onChange={(e) =>
+                                    setFormData({
+                                      ...formData,
+                                      city: e.target.value,
+                                    })
+                                  }
+                                  placeholder="Ville"
+                                />
+                                <button type="submit">Enregistrer</button>
+                              </form>
+                            </>
+                          ) : (
+                            <span>{`${zip_code}, ${city}`}</span>
+                          )}
                         </span>
 
                         <span>France</span>
@@ -257,24 +387,7 @@ export default function Profile() {
               </div>
             </div>
 
-            {/* <input
-              type="radio"
-              name="my_tabs_1"
-              role="tab"
-              className="tab"
-              aria-label="Evaluations"
-              checked
-            />
-            <div
-              role="tabpanel"
-              className="tab-content p-10 bg-color-gray_light"
-            >
-              Evaluations
-            </div> */}
-            {/* ---------------------------------------------------------------------------------------------------------------------- */}
-
-            {data?.organizer?.events?.length > 0 ||
-            data?.artist?.events?.length > 0 ? (
+            {events && events.length > 0 && (
               <>
                 <input
                   type="radio"
@@ -289,13 +402,10 @@ export default function Profile() {
                   role="tabpanel"
                   className="tab-content p-10 bg-color-gray_light"
                 >
-                  <ThirdView
-                    events={data?.organizer?.events || data?.artist?.events}
-                    locations={data?.organizer?.events || data?.artist?.events}
-                  />
+                  <ThirdView events={events} locations={events} />
                 </div>
               </>
-            ) : null}
+            )}
           </div>
         </div>
       </div>
