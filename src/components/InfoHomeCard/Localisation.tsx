@@ -26,6 +26,11 @@ export function Localisation({ locations }) {
         <h2 className="w-full text-xl font-semibold leading-6 text-neutral-700">
           Lieux
         </h2>
+        <div className="flex gap-3.5 mt-2.5 hover:bg-zinc-300">
+          <div className="flex-auto my-auto leading-6 text-zinc-500">
+            <NavLink to={'/'}> Enlever les filtres </NavLink>{' '}
+          </div>
+        </div>
         {locations.map((location) => (
           <LocationItem
             key={`${location.region}-${location.region}`}
