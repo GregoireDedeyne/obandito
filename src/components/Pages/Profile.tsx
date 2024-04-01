@@ -19,6 +19,7 @@ import { UPDATE_USER } from '../../graphQL/actions';
 import { useMutation } from '@apollo/client';
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_DECODED_TOKEN, setDecodedToken } from '../../store/actions';
+import { EventCard } from '../InfoHomeCard/EventsCards';
 
 interface FormData {
   name: string;
@@ -26,16 +27,15 @@ interface FormData {
   description: string;
   zip_code: number;
   city: string;
+  // spotify_link: string;
+  // youtube_link: string;
+  image_url: string;
 }
 
 export default function Profile() {
   const [UpdateUser, { loading, error }] = useMutation(UPDATE_USER);
   const [selectedTab, setSelectedTab] = useState(0);
   const [settings, setSettings] = useState(false);
-
-  // const nameRedux = useSelector((state) => state.decodedToken.decodedData.name);
-
-  // const dispatch = useDispatch();
 
   const token = useAppSelector((state) => state.decodedToken.token);
 
@@ -60,10 +60,14 @@ export default function Profile() {
     description,
     zip_code,
     city,
+    // spotify_link: '',
+    // youtube_link: '',
+    image_url: '',
   });
 
   console.log('formData :', formData);
   console.log('data :', data);
+  // console.log('data spotify_link :', data.artist.spotify_link);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -100,23 +104,44 @@ export default function Profile() {
         </div>
         <div className="container mx-auto">
           <div className="avatar mt-[-50px]">
-            <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-              <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-            </div>
+            {/* {settings ? (
+              <form onSubmit={handleFormSubmit}>
+                <input
+                  className="input input-bordered flex items-center gap-2 bg-white w-full"
+                  type="file"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                  }}
+                />
+                <button className="text-right w-full" type="submit">
+                  Enregistrer
+                </button>
+              </form>
+            ) : (
+              <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                <img src={data.image_url} alt="Image" />
+              </div>
+            )} */}
           </div>
 
-          <div className="flex justify-between my-5">
+          <div className="flex flex-col md:flex-row justify-between my-5">
             <div className="flex flex-col">
               {settings ? (
                 <form onSubmit={handleFormSubmit}>
-                  <input
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                  />
-                  <button type="submit">Enregistrer</button>
+                  <label className="input input-bordered flex items-center gap-2 bg-white w-full">
+                    Nom :
+                    <input
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
+                      placeholder="Votre nom"
+                    />
+                  </label>
+                  <button className="text-right w-full" type="submit">
+                    Enregistrer
+                  </button>
                 </form>
               ) : (
                 <h1 className="text-black">{name}</h1>
@@ -131,18 +156,24 @@ export default function Profile() {
               <span>
                 {settings ? (
                   <form onSubmit={handleFormSubmit}>
-                    <input
-                      type="text"
-                      value={formData.region}
-                      onChange={(e) =>
-                        setFormData({ ...formData, region: e.target.value })
-                      }
-                    />
-                    <button type="submit">Enregistrer</button>
+                    <label className="input input-bordered flex items-center gap-2 bg-white w-full">
+                      Région :
+                      <input
+                        type="text"
+                        value={formData.region}
+                        onChange={(e) =>
+                          setFormData({ ...formData, region: e.target.value })
+                        }
+                        placeholder="Votre région"
+                      />
+                    </label>
+                    <button className="text-right w-full" type="submit">
+                      Enregistrer
+                    </button>
                   </form>
                 ) : (
                   <div className="flex items-center">
-                    <FontAwesomeIcon icon={faMapMarkerAlt} />
+                    <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-1" />
                     <span> {region}, France</span>
                   </div>
                 )}
@@ -150,16 +181,25 @@ export default function Profile() {
             </div>
 
             <div className="flex flex-col">
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 {settingsId && (
                   <FontAwesomeIcon
                     icon={faPencilAlt}
                     onClick={() => setSettings(!settings)}
+                    style={{ cursor: 'pointer' }}
                   />
                 )}
-                <NavLink className="btn-primary" to="/">
-                  Proposer un deal
-                </NavLink>
+                {role === 'Artiste' && (
+                  <NavLink className="btn-primary ml-0 md:ml-5" to="/">
+                    Proposer un deal
+                  </NavLink>
+                )}
+                {role === 'Organisateur' && (
+                  <div className="flex flex-col text-right">
+                    <span className="text-3xl">{events.length}</span>
+                    <span>évènements</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -182,10 +222,20 @@ export default function Profile() {
                 <div className="col-span-12 md:col-span-8 my-10">
                   <div>
                     <div className="bloc-white mb-[50px]">
-                      <h2 className="text-black">Présentation</h2>
+                      <div className="flex items-center">
+                        <h2 className="text-black">Présentation</h2>
+                        {settingsId && (
+                          <FontAwesomeIcon
+                            icon={faPencilAlt}
+                            onClick={() => setSettings(!settings)}
+                            className="cursor-pointer ml-2"
+                          />
+                        )}
+                      </div>
                       {settings ? (
                         <form onSubmit={handleFormSubmit}>
                           <textarea
+                            className="input input-bordered flex items-center gap-2 bg-white w-full"
                             type="text"
                             value={formData.description}
                             onChange={(e) =>
@@ -196,22 +246,25 @@ export default function Profile() {
                             }
                             placeholder="Description"
                           />
-                          <button type="submit">Enregistrer</button>
+                          <button className="text-right w-full" type="submit">
+                            Enregistrer
+                          </button>
                         </form>
                       ) : (
                         <p>{description}</p>
                       )}
                     </div>
 
-                    {role === 'Artiste' && (
+                    {/* {role === 'Artiste' && (
                       <div className="bloc-white mb-[50px]">
                         <h2 className="text-black">Musique & clips</h2>
 
                         <div className="spotify my-4">
-                          {/* {settings ? (
+                          {settings ? (
                             <form onSubmit={handleFormSubmit}>
                               <input
-                                type="text"
+                                className="input input-bordered flex items-center gap-2 bg-white w-full"
+                                type="url"
                                 value={formData.spotify_link}
                                 onChange={(e) =>
                                   setFormData({
@@ -219,28 +272,26 @@ export default function Profile() {
                                     spotify_link: e.target.value,
                                   })
                                 }
-                                placeholder="URL Spotify"
+                                placeholder="mettre le lien de votre album spotify"
                               />
-                              <button type="submit">Enregistrer</button>
+                                 <button className="text-right w-full" type="submit">
+                            Enregistrer
+                          </button>
                             </form>
                           ) : (
                             <SpotifyPlayer
-                              uri={data.spotify_link}
+                              uri={data.artist.spotify_link}
                               size={{ width: '100%', height: 600 }}
                             />
-                          )} */}
-
-                          <SpotifyPlayer
-                            uri="https://open.spotify.com/intl-fr/album/2lGH3ryY5dbDxbPzrhO21F?si=CvJZ9x4ZRc6i_yRs56hHXQ"
-                            size={{ width: '100%', height: 600 }}
-                          />
+                          )}
                         </div>
-                        {/* 
+
                         <div className="youtube">
                           {settings ? (
                             <form onSubmit={handleFormSubmit}>
                               <input
-                                type="text"
+                                className="input input-bordered flex items-center gap-2 bg-white w-full"
+                                type="url"
                                 value={formData.youtube_link}
                                 onChange={(e) =>
                                   setFormData({
@@ -248,32 +299,25 @@ export default function Profile() {
                                     youtube_link: e.target.value,
                                   })
                                 }
-                                placeholder="URL YouTube"
+                                placeholder="mettre le lien de votre vidéo"
                               />
-                              <button type="submit">Enregistrer</button>
+                                  <button className="text-right w-full" type="submit">
+                            Enregistrer
+                          </button>
                             </form>
                           ) : (
                             <div className="youtube">
                               <ReactPlayer
-                                url={formData.youtube_link} // Utilisez formData.youtube_link ici
+                                url={data.artist.youtube_link}
                                 width="100%"
                                 height={500}
                                 controls={true}
                               />
                             </div>
                           )}
-                        </div> */}
-
-                        <div className="youtube">
-                          <ReactPlayer
-                            url="https://www.youtube.com/watch?v=0dmS0He_czs"
-                            width="100%"
-                            height={500}
-                            controls={true}
-                          />
                         </div>
                       </div>
-                    )}
+                    )} */}
 
                     <div className="bloc-white">
                       <h2 className="text-black mb-4">Galerie photos</h2>
@@ -302,32 +346,48 @@ export default function Profile() {
                           {settings ? (
                             <>
                               <form onSubmit={handleFormSubmit}>
-                                <input
-                                  type="text"
-                                  value={formData.zip_code}
-                                  onChange={(e) =>
-                                    setFormData({
-                                      ...formData,
-                                      zip_code: e.target.value,
-                                    })
-                                  }
-                                  placeholder="Code postal"
-                                />
-                                <button type="submit">Enregistrer</button>
+                                <label className="input input-bordered flex items-center gap-2 bg-white w-full">
+                                  code postal :
+                                  <input
+                                    type="text"
+                                    value={formData.zip_code}
+                                    onChange={(e) =>
+                                      setFormData({
+                                        ...formData,
+                                        zip_code: parseInt(e.target.value, 10),
+                                      })
+                                    }
+                                    placeholder="69333"
+                                  />
+                                </label>
+                                <button
+                                  className="text-right w-full"
+                                  type="submit"
+                                >
+                                  Enregistrer
+                                </button>
                               </form>
                               <form onSubmit={handleFormSubmit}>
-                                <input
-                                  type="text"
-                                  value={formData.city}
-                                  onChange={(e) =>
-                                    setFormData({
-                                      ...formData,
-                                      city: e.target.value,
-                                    })
-                                  }
-                                  placeholder="Ville"
-                                />
-                                <button type="submit">Enregistrer</button>
+                                <label className="input input-bordered flex items-center gap-2 bg-white w-full">
+                                  ville :
+                                  <input
+                                    type="text"
+                                    value={formData.city}
+                                    onChange={(e) =>
+                                      setFormData({
+                                        ...formData,
+                                        city: e.target.value,
+                                      })
+                                    }
+                                    placeholder="Paris"
+                                  />
+                                </label>
+                                <button
+                                  className="text-right w-full"
+                                  type="submit"
+                                >
+                                  Enregistrer
+                                </button>
                               </form>
                             </>
                           ) : (
@@ -337,11 +397,11 @@ export default function Profile() {
 
                         <span>France</span>
                       </div>
-                      <div className="website">
+                      {/* <div className="website">
                         <a href="https://www.youtube.com/">
                           https://www.youtube.com/
                         </a>
-                      </div>
+                      </div> */}
 
                       <div className="my-5">
                         <NavLink
@@ -353,7 +413,7 @@ export default function Profile() {
                       </div>
                     </div>
 
-                    <div className="bloc-white my-10">
+                    {/* <div className="bloc-white my-10">
                       <h2 className="text-center text-black">En savoir plus</h2>
                       <div className="flex justify-center">
                         <span className="mx-2 text-2xl">
@@ -381,7 +441,7 @@ export default function Profile() {
                           </a>
                         </span>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -402,7 +462,9 @@ export default function Profile() {
                   role="tabpanel"
                   className="tab-content p-10 bg-color-gray_light"
                 >
-                  <ThirdView events={events} locations={events} />
+                  {events.map((event, index) => (
+                    <EventCard key={index} {...event} />
+                  ))}
                 </div>
               </>
             )}
