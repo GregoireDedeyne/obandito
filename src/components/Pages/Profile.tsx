@@ -20,6 +20,7 @@ import logo_indeed from '../../assets/images/logo_indeed.png';
 import logo_twitter from '../../assets/images/logo_twitter.png';
 import logo_youtube from '../../assets/images/logo_youtube.png';
 import logo_instagram from '../../assets/images/logo_instagram.png';
+import ContactDetails from '../ContactDetails';
 
 interface FormData {
   name: string;
@@ -114,24 +115,6 @@ export default function Profile() {
                 alt="Image"
               />
             </div>
-            {/* {settings ? (
-              <form onSubmit={handleFormSubmit}>
-                <input
-                  className="input input-bordered flex items-center gap-2 bg-white w-full"
-                  type="file"
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-                  }}
-                />
-                <button className="text-right w-full" type="submit">
-                  Enregistrer
-                </button>
-              </form>
-            ) : (
-              <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                <img src={data.image_url} alt="Image" />
-              </div>
-            )} */}
           </div>
 
           {/* ===================================== */}
@@ -364,31 +347,7 @@ export default function Profile() {
                 </div>
                 <div className="col-span-12 md:col-span-4 my-10">
                   <div>
-                    <div className="bloc-white">
-                      <h2 className="text-black">Coordonnées</h2>
-                      <div className="adress flex flex-col">
-                        <span className="mb-5">ADRESSE</span>
-                        <span>
-                          <span>{`${zip_code}, ${city}`}</span>
-                        </span>
-
-                        <span>France</span>
-                      </div>
-                      <div className="website">
-                        <a href="https://www.youtube.com/">
-                          https://www.youtube.com/
-                        </a>
-                      </div>
-
-                      <div className="my-5">
-                        <NavLink
-                          className="btn-primary block text-center"
-                          to="/"
-                        >
-                          Proposer un deal
-                        </NavLink>
-                      </div>
-                    </div>
+                    <ContactDetails zip_code={zip_code} city={city} />
 
                     <div className="bloc-white my-10">
                       <h2 className="text-center text-black mb-5">
@@ -442,9 +401,192 @@ export default function Profile() {
                   role="tabpanel"
                   className="tab-content p-10 bg-color-gray_light"
                 >
-                  {events.map((event, index) => (
-                    <EventCard key={index} {...event} />
-                  ))}
+                  <div className="grid grid-cols-12 gap-8">
+                    <div className="col-span-12 md:col-span-8 ">
+                      <div className="flex space-x-4 items-center mb-2">
+                        <input
+                          type="radio"
+                          id="option1"
+                          name="options"
+                          className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                        />
+                        <label htmlFor="option1" className="text-gray-700">
+                          Tous
+                        </label>
+
+                        <input
+                          type="radio"
+                          id="option1"
+                          name="options"
+                          className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                        />
+                        <label htmlFor="option2" className="text-gray-700">
+                          Demandes en attentes
+                        </label>
+
+                        <input
+                          type="radio"
+                          id="option1"
+                          name="options"
+                          className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                        />
+                        <label htmlFor="option3" className="text-gray-700">
+                          Demande validées
+                        </label>
+                      </div>
+                      <div className="bloc-white">
+                        <h2>Evènements remportés</h2>
+                        <div>
+                          {events.map((event, index) => (
+                            <EventCard key={index} {...event} />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-span-12 md:col-span-4 ">
+                      <ContactDetails zip_code={zip_code} city={city} />
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {settingsId && role === 'Organisateur' && (
+              <>
+                <input
+                  type="radio"
+                  name="my_tabs_1"
+                  role="tab"
+                  className="tab w-[180px]"
+                  aria-label="Deals"
+                  checked={selectedTab === 1}
+                  onChange={() => handleTabClick(1)}
+                />
+                <div
+                  role="tabpanel"
+                  className="tab-content p-10 bg-color-gray_light"
+                >
+                  <div className="grid grid-cols-12 gap-8">
+                    <div className="col-span-12 md:col-span-8">
+                      <div className="flex space-x-4 items-center mb-2">
+                        <input
+                          type="radio"
+                          id="option1"
+                          name="options"
+                          className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                        />
+                        <label htmlFor="option1" className="text-gray-700">
+                          Tous
+                        </label>
+
+                        <input
+                          type="radio"
+                          id="option1"
+                          name="options"
+                          className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                        />
+                        <label htmlFor="option2" className="text-gray-700">
+                          Deals en attentes
+                        </label>
+
+                        <input
+                          type="radio"
+                          id="option1"
+                          name="options"
+                          className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                        />
+                        <label htmlFor="option3" className="text-gray-700">
+                          Deals validés
+                        </label>
+
+                        <input
+                          type="radio"
+                          id="option4"
+                          name="options"
+                          className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                        />
+                        <label htmlFor="option4" className="text-gray-700">
+                          Deals refusés
+                        </label>
+                      </div>
+
+                      <div className="flex flex-wrap -mx-3">
+                        <div className="flex-none w-full max-w-full px-3">
+                          <div className="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border">
+                            <div className="flex-auto px-0 pt-0 pb-2">
+                              <div className="p-0 overflow-x-auto">
+                                <table className="items-center w-full mb-0 align-top border-gray-200 text-slate-500">
+                                  <thead className="align-bottom">
+                                    <tr>
+                                      <th className="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        Artiste
+                                      </th>
+                                      <th className="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        Evènement
+                                      </th>
+                                      <th className="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        Status
+                                      </th>
+                                      <th className="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"></th>
+                                      <th className="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-slate-400 opacity-70"></th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <div className="flex px-2 py-1">
+                                          <div>
+                                            <img
+                                              src="../assets/img/team-2.jpg"
+                                              className="inline-flex items-center justify-center mr-4 text-sm text-white transition-all duration-200 ease-soft-in-out h-9 w-9 rounded-xl"
+                                              alt="user1"
+                                            />
+                                          </div>
+                                          <div className="flex flex-col justify-center">
+                                            <h6 className="mb-0 text-sm leading-normal">
+                                              John Michael
+                                            </h6>
+                                            <p className="mb-0 text-xs leading-tight text-slate-400">
+                                              john@creative-tim.com
+                                            </p>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <p className="mb-0 text-xs font-semibold leading-tight">
+                                          Manager
+                                        </p>
+                                        <p className="mb-0 text-xs leading-tight text-slate-400">
+                                          Organization
+                                        </p>
+                                      </td>
+                                      <td className="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <span className="bg-gradient-to-tl from-green-600 to-lime-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">
+                                          Online
+                                        </span>
+                                      </td>
+
+                                      <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <a
+                                          href="javascript:;"
+                                          className="text-xs font-semibold leading-tight text-slate-400"
+                                        >
+                                          Edit
+                                        </a>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-span-12 md:col-span-4">
+                      <ContactDetails zip_code={zip_code} city={city} />
+                    </div>
+                  </div>
                 </div>
               </>
             )}
