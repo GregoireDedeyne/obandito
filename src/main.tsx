@@ -51,10 +51,7 @@ const RegionLoader = async ({ params }) => {
     },
   });
 
-  const newData = Object.assign({}, data, { lastEvents: data.eventByRegion });
-  delete newData.eventByRegion;
-
-  return newData;
+  return data;
 };
 
 const GenreLoader = async ({ params }) => {
@@ -67,12 +64,8 @@ const GenreLoader = async ({ params }) => {
       style: genre,
     },
   });
-  const newData = Object.assign({}, data, {
-    lastArtists: data.artistsByStyle,
-  });
-  delete newData.artistsByStyle;
 
-  return newData;
+  return data;
 };
 
 const EventLoader = async ({ params }) => {

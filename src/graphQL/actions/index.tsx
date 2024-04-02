@@ -81,7 +81,7 @@ export const GET_ARTISTE = gql`
 
 export const GET_LASTARTISTS = gql`
   query LastArtists($limit: Int!) {
-    lastArtists(limit: $limit) {
+    artists(limit: $limit) {
       address
       city
       name
@@ -126,7 +126,7 @@ export const GET_EVENTS = gql`
 
 export const GET_HOMEDATA = gql`
   query RandomBandsQuery($limit: Int, $limitEvents: Int) {
-    lastArtists(limit: $limit) {
+    artists(limit: $limit) {
       image_url
       name
       id
@@ -134,7 +134,7 @@ export const GET_HOMEDATA = gql`
         name
       }
     }
-    lastEvents(limit: $limitEvents) {
+    events(limit: $limitEvents) {
       city
       description
       image_url
@@ -157,7 +157,7 @@ export const GET_HOMEDATA = gql`
 
 export const GET_HOMEGENREDATA = gql`
   query RandomBandsQuery($style: String, $limitEvents: Int) {
-    artistsByStyle(style: $style) {
+    artists(style: $style) {
       image_url
       name
       id
@@ -165,7 +165,7 @@ export const GET_HOMEGENREDATA = gql`
         name
       }
     }
-    lastEvents(limit: $limitEvents) {
+    events(limit: $limitEvents) {
       city
       description
       image_url
@@ -189,7 +189,7 @@ export const GET_HOMEGENREDATA = gql`
 
 export const GET_HOMEREGIONDATA = gql`
   query RandomBandsQuery($limit: Int, $region: String!) {
-    lastArtists(limit: $limit) {
+    artists(limit: $limit) {
       image_url
       name
       id
@@ -197,7 +197,7 @@ export const GET_HOMEREGIONDATA = gql`
         name
       }
     }
-    eventByRegion(region: $region) {
+    events(region: $region) {
       city
       date
       id

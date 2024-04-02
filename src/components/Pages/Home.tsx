@@ -16,9 +16,6 @@ export function HomeNotLogPage() {
 
   const data = useLoaderData();
 
-  const artists = data.lastArtists;
-  console.log(artists);
-
   return (
     <>
       <div className="bg-white">
@@ -38,14 +35,14 @@ export function HomeNotLogPage() {
           <div>
             <div className="container mx-auto" id="bands">
               <Cards
-                data={data?.lastArtists}
+                data={data?.artists}
                 title={'Les derniers Artistes disponibles'}
                 subtitle={''}
               />
             </div>
             <div className="container mx-auto my-20" id="events">
               <ThirdView
-                events={data?.lastEvents}
+                events={data?.events}
                 locations={data?.getCountNameEventsByRegion}
               />
             </div>
@@ -53,7 +50,7 @@ export function HomeNotLogPage() {
         ) : islogged === true && role === 'Organisateur' ? (
           <div className="container mx-auto" id="bands">
             <CardsWithout
-              data={data?.lastArtists}
+              data={data?.artists}
               title={'Les derniers Artistes disponibles'}
               subtitle={''}
             />
@@ -66,7 +63,7 @@ export function HomeNotLogPage() {
         ) : islogged === true && role === 'Artiste' ? (
           <div className="container mx-auto my-20" id="events">
             <ThirdView
-              events={data?.lastEvents}
+              events={data?.events}
               locations={data?.getCountNameEventsByRegion}
             />
           </div>
