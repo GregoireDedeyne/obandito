@@ -124,6 +124,37 @@ export const GET_EVENTS = gql`
   }
 `;
 
+export const GET_MOREHOMEDATA = gql`
+  query RandomBandsQuery($limit: Int, $limitEvents: Int) {
+    artists(limit: $limit) {
+      image_url
+      name
+      id
+      style {
+        name
+      }
+    }
+    events(limit: $limitEvents) {
+      city
+      description
+      image_url
+      id
+      name
+      region
+      price
+      date
+      available
+      organizer {
+        name
+      }
+    }
+    getCountNameEventsByRegion {
+      event_count
+      region
+    }
+  }
+`;
+
 export const GET_HOMEDATA = gql`
   query RandomBandsQuery($limit: Int, $limitEvents: Int) {
     artists(limit: $limit) {
@@ -135,6 +166,42 @@ export const GET_HOMEDATA = gql`
       }
     }
     events(limit: $limitEvents) {
+      city
+      description
+      image_url
+      id
+      name
+      region
+      price
+      date
+      available
+      organizer {
+        name
+      }
+    }
+    getCountNameEventsByRegion {
+      event_count
+      region
+    }
+  }
+`;
+
+export const GET_SEARCH_ARTISTSHOMEDATA = gql`
+  query RandomBandsQuery($name: String) {
+    artists(name: $name) {
+      name
+      image_url
+      id
+      style {
+        name
+      }
+    }
+  }
+`;
+
+export const GET_SEARCH_EVENTSHOMEDATA = gql`
+  query RandomBandsQuery($name: String) {
+    events(name: $name) {
       city
       description
       image_url
@@ -273,6 +340,24 @@ export const CREATE_ACCOUNT = gql`
   mutation CreateAccount($input: RegisterUserInput!) {
     register(input: $input) {
       id
+    }
+  }
+`;
+
+export const CREATE_EVENT = gql`
+  mutation Mutation($input: InputAddEvent!) {
+    addEvent(input: $input) {
+      name
+      image_url
+      description
+      date
+      city
+      catering
+      address
+      price
+      region
+      total_slots
+      zip_code
     }
   }
 `;

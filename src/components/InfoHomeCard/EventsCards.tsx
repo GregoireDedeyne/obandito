@@ -3,7 +3,7 @@ import { useAppSelector } from '../../store/redux-hook';
 
 interface EventCardProps {
   image_url: string;
-  title: string;
+  name: string;
   description: string;
   city: string;
   date: string;
@@ -16,7 +16,7 @@ interface EventCardProps {
 
 export function EventCard({
   image_url,
-  title,
+  name,
   description,
   city,
   date,
@@ -46,7 +46,7 @@ export function EventCard({
             <div className="flex flex-col justify-center self-stretch my-auto text-base font-medium leading-6 max-md:mt-10 max-md:max-w-full">
               <div className="flex flex-col max-md:max-w-full">
                 <h3 className="text-xl leading-6 text-slate-900 max-md:max-w-full">
-                  {title}
+                  {name}
                 </h3>
                 <div className="flex gap-1.5 self-start mt-1.5 text-neutral-600">
                   {available === true ? (

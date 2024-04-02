@@ -57,39 +57,43 @@ export function EventPage() {
           className="flex flex-col justify-end pl-5 pb-5 w-full h-[600px] bg-cover bg-center"
           style={{ backgroundImage: `url(${img})` }}
         >
-          <article className="flex flex-col items-start px-5 py-5 bg-white rounded-xl max-w-[476px]">
-            <h1 className="text-4xl font-medium leading-6 text-neutral-700">
-              {eventdata?.event?.name}{' '}
-            </h1>
-            <div className="flex flex-col mt-4 max-w-full text-base leading-6 text-zinc-500 w-[278px]">
-              <div className={`flex gap-1.5`}>
-                <FontAwesomeIcon
-                  icon={faCalendar}
-                  className="shrink-0 my-auto w-4 aspect-square"
-                />
+          <div className="container mx-auto">
+            <article className="flex flex-col items-start px-5 py-5 bg-white rounded-xl max-w-[476px]">
+              <h1 className="text-3xl pb-2 font-medium leading-6 text-neutral-700">
+                {eventdata?.event?.name}{' '}
+              </h1>
+              <div className="flex flex-col mt-4 max-w-full text-base leading-6 text-zinc-500 w-[278px]">
+                <div className={`flex gap-1.5`}>
+                  <FontAwesomeIcon
+                    icon={faCalendar}
+                    className="shrink-0 my-auto w-4 aspect-square"
+                  />
 
-                <div>{eventdata?.event?.date}</div>
+                  <div>{eventdata?.event?.date}</div>
+                </div>
+                <div className={`flex gap-1.5`}>
+                  <FontAwesomeIcon
+                    icon={faMapMarker}
+                    className="shrink-0 my-auto w-4 aspect-square"
+                  />
+                  <div>{eventdata?.event?.city}</div>
+                </div>
+                <div className={`flex gap-1.5 text-rose-500`}>
+                  <FontAwesomeIcon
+                    icon={faMapMarker}
+                    className="shrink-0 my-auto w-4 aspect-square"
+                  />
+                  <NavLink
+                    to={`/profile/organizer/${eventdata?.event?.organizer?.id}`}
+                  >
+                    <div>
+                      Organisé par : {eventdata?.event?.organizer?.name}
+                    </div>
+                  </NavLink>
+                </div>
               </div>
-              <div className={`flex gap-1.5`}>
-                <FontAwesomeIcon
-                  icon={faMapMarker}
-                  className="shrink-0 my-auto w-4 aspect-square"
-                />
-                <div>{eventdata?.event?.city}</div>
-              </div>
-              <div className={`flex gap-1.5 text-rose-500`}>
-                <FontAwesomeIcon
-                  icon={faMapMarker}
-                  className="shrink-0 my-auto w-4 aspect-square"
-                />
-                <NavLink
-                  to={`/profile/organizer/${eventdata?.event?.organizer?.id}`}
-                >
-                  <div>Organisé par : {eventdata?.event?.organizer?.name}</div>
-                </NavLink>
-              </div>
-            </div>
-          </article>
+            </article>
+          </div>
         </div>
         <div className="container mx-auto">
           <div role="tablist" className="tabs tabs-bordered my-10">

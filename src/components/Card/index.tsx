@@ -3,7 +3,6 @@ import { useAppSelector } from '../../store/redux-hook';
 
 export function Card({ image, alt, name, style, id }) {
   const islogged = useAppSelector((state) => state.decodedToken.islogged);
-  console.log(image, name, style);
 
   return (
     <NavLink to={islogged === false ? '/login' : `/profile/band/${id}`}>

@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import bandPict from '../../assets/images/bandPict.jpg';
 import { useAppSelector } from '../../store/redux-hook';
+import { useState } from 'react';
 interface ImageProps {
   src: string;
   alt: string;
@@ -23,6 +24,9 @@ const Text: React.FC<TextProps> = ({ children, className }) => (
 export function FirstViewHome() {
   const islogged = useAppSelector((state) => state.decodedToken.islogged);
   const role = useAppSelector((state) => state.decodedToken.decodedData.role);
+
+  const [searchTerm, setSearchTerm] = useState('');
+
   return (
     <div className="flex flex-col py-px max-md:max-w-full bg-cover">
       <header className="flex overflow-hidden relative flex-col justify-end pt-16 pb-5 w-full min-h-[575px] max-md:px-5 max-md:max-w-full">
@@ -56,7 +60,13 @@ export function FirstViewHome() {
             <div className="flex flex-col w-[55%] max-md:ml-0 max-md:w-full">
               <div className="flex relative grow gap-5 justify-center max-md:flex-wrap max-md:mt-10">
                 <label className="input input-bordered flex items-center gap-2 w-3/5 bg-white">
-                  <input type="text" className="grow" placeholder="Search" />
+                  <input
+                    value={searchTerm}
+                    onChange={(event) => setSearchTerm(event.target.value)}
+                    type="text"
+                    className="grow"
+                    placeholder="Search"
+                  />
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 16"
@@ -83,19 +93,23 @@ export function FirstViewHome() {
                     Trouver un artiste{' '}
                   </NavLink>
                 ) : islogged === true && role === 'Organisateur' ? (
-                  <button
-                    className={`justify-center px-9 py-5 text-white bg-rose-500 border border-rose-500 border-solid leading-[100%] rounded-[48px] max-md:px-5 hover:bg-purple-800 hover:border-purple-800`}
-                  >
-                    {' '}
-                    Trouver un artiste{' '}
-                  </button>
+                  <NavLink to={`/artists/search/${searchTerm}`}>
+                    <button
+                      className={`justify-center px-9 py-5 text-white bg-rose-500 border border-rose-500 border-solid leading-[100%] rounded-[48px] max-md:px-5 hover:bg-purple-800 hover:border-purple-800`}
+                    >
+                      {' '}
+                      Trouver un artiste{' '}
+                    </button>
+                  </NavLink>
                 ) : islogged === true && role === 'Artiste' ? (
-                  <button
-                    className={`justify-center px-9 py-5 text-white bg-rose-500 border border-rose-500 border-solid leading-[100%] rounded-[48px] max-md:px-5 hover:bg-purple-800 hover:border-purple-800`}
-                  >
-                    {' '}
-                    Trouver un évènement{' '}
-                  </button>
+                  <NavLink to={`/events/search/${searchTerm}`}>
+                    <button
+                      className={`justify-center px-9 py-5 text-white bg-rose-500 border border-rose-500 border-solid leading-[100%] rounded-[48px] max-md:px-5 hover:bg-purple-800 hover:border-purple-800`}
+                    >
+                      {' '}
+                      Trouver un évènement{' '}
+                    </button>
+                  </NavLink>
                 ) : null}
 
                 <div className="flex gap-5 justify-end self-start mt-3.5">

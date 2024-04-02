@@ -5,9 +5,8 @@ import { SecondView } from '../FirstViewsHome/SecondView';
 import { PreFooter } from '../FirstViewsHome/PreFooter';
 import { Faq } from '../FirstViewsHome/Faq';
 import { ThirdView } from '../FirstViewsHome/ThirdView';
-import { NavLink, useLoaderData } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import { useAppSelector } from '../../store/redux-hook';
-import { Card } from '../Card';
 import { CardsWithout } from '../CardsWithout';
 
 export function HomeNotLogPage() {

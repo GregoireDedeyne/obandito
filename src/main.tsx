@@ -15,11 +15,15 @@ import {
   GET_HOMEDATA,
   GET_HOMEGENREDATA,
   GET_HOMEREGIONDATA,
+  GET_MOREHOMEDATA,
   GET_ONE_EVENT,
   GET_ORGANIZER,
+  GET_SEARCH_ARTISTSHOMEDATA,
+  GET_SEARCH_EVENTSHOMEDATA,
 } from './graphQL/actions/index.tsx';
 import Profile from './components/Pages/Profile.tsx';
 import { EventPage } from './components/Pages/Event.tsx';
+import { EventFormPage } from './components/Pages/EventForm.tsx';
 
 // Add ApolloClient
 const client = new ApolloClient({
@@ -39,9 +43,50 @@ const HomeLoader = async () => {
   return data;
 };
 
+const EventsSearch = async ({ params }) => {
+  const { searchTerm } = params;
+  console.log(searchTerm);
+
+  const { data } = await client.query({
+    query: GET_SEARCH_EVENTSHOMEDATA,
+    variables: {
+      name: searchTerm,
+    },
+  });
+
+  return data;
+};
+
+const ArtistsSearch = async ({ params }) => {
+  const { searchTerm } = params;
+  console.log(searchTerm);
+
+  const { data } = await client.query({
+    query: GET_SEARCH_ARTISTSHOMEDATA,
+    variables: {
+      name: searchTerm,
+    },
+  });
+
+  return data;
+};
+
+const MoreHomeLoader = async ({ params }) => {
+  const limitEvents = parseInt(params.limitEvents);
+
+  const { data } = await client.query({
+    query: GET_MOREHOMEDATA,
+    variables: {
+      limit: 9,
+      limitEvents: limitEvents,
+    },
+  });
+
+  return data;
+};
+
 const RegionLoader = async ({ params }) => {
   const { region } = params;
-  console.log(region);
 
   const { data } = await client.query({
     query: GET_HOMEREGIONDATA,
@@ -136,6 +181,21 @@ const router = createBrowserRouter([
         loader: HomeLoader,
       },
       {
+        path: '/home/:limitEvents',
+        element: <HomeNotLogPage />,
+        loader: MoreHomeLoader,
+      },
+      {
+        path: 'events/search/:searchTerm',
+        element: <HomeNotLogPage />,
+        loader: EventsSearch,
+      },
+      {
+        path: 'artists/search/:searchTerm',
+        element: <HomeNotLogPage />,
+        loader: ArtistsSearch,
+      },
+      {
         path: '/region/:region',
         element: <HomeNotLogPage />,
         loader: RegionLoader,
@@ -168,6 +228,10 @@ const router = createBrowserRouter([
         path: '/event/:id',
         element: <EventPage />,
         loader: EventLoader,
+      },
+      {
+        path: 'eventcreation',
+        element: <EventFormPage />,
       },
     ],
   },

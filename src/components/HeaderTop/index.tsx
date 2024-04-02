@@ -33,6 +33,7 @@ export function Header({ genres }) {
   const img_irl = useAppSelector(
     (state) => state.decodedToken.decodedData.image_url
   );
+  const id = useAppSelector((state) => state.decodedToken.decodedData.id);
   const role = useAppSelector((state) => state.decodedToken.decodedData.role);
 
   const handleLogout = () => {
@@ -42,8 +43,8 @@ export function Header({ genres }) {
 
   return (
     <div className="flex flex-col justify-center bg-white ">
-      <header className="flex flex-col md:flex-row gap-5 2xl:justify-between self-center pt-3.5 w-full max-w-[1216px]	">
-        <div className="flex gap-5  lg:justify-center justify-between self-start px-5 flex-grow max-w-[100%] xl:max-w-[50%]  md:w-auto w-screen">
+      <header className="flex flex-col md:flex-row gap-5 2xl:justify-between self-center pt-3.5 w-full container">
+        <div className="flex gap-5  justify-between self-start px-5 flex-grow max-w-[100%] xl:max-w-[50%]  md:w-auto w-screen">
           <NavLink to={'/'}>
             <div className="text-2xl font-semibold leading-10 text-purple-800">
               <span className="text-rose-500">O'</span>Bandito
@@ -151,7 +152,11 @@ export function Header({ genres }) {
         ) : (
           <div className="flex justify-center">
             <NavLink
-              to={'/profil/:id'}
+              to={
+                role === 'artiste'
+                  ? `/profile/band/${id}`
+                  : `/profile/organizer/${id}`
+              }
               className={({ isActive }) =>
                 isActive
                   ? 'hidden'
@@ -175,6 +180,7 @@ export function Header({ genres }) {
           </div>
         )}
       </header>
+
       <div className="flex flex-col justify-center pt-3 w-full">
         <div className="w-full bg-purple-800 border border-purple-800 border-solid min-h-[1px]" />
       </div>
@@ -191,17 +197,18 @@ export function Header({ genres }) {
           </div>
         </div>
       ) : islogged === true && role === 'Organisateur' ? (
-        <div className="hidden xl:flex flex-row justify-center items-center w-full text-base leading-6 whitespace-nowrap bg-white border-b border-solid border-zinc-200 text-neutral-500">
-          <div className="flex gap-0 justify-center w-full">
-            <div className="flex gap-5 max-w-[80%]  ">
-              {genres.map((genre, index) => (
-                <GenreItem key={index} genre={genre.name} />
-              ))}
-            </div>
-            <div className="shrink-0 h-[39px] w-[7px]" />
-          </div>
-        </div>
-      ) : islogged === true && role === 'Artiste' ? (
+        ''
+      ) : // <div className="hidden xl:flex flex-row justify-center items-center w-full text-base leading-6 whitespace-nowrap bg-white border-b border-solid border-zinc-200 text-neutral-500">
+      //   <div className="flex gap-0 justify-center w-full">
+      //     <div className="flex gap-5 max-w-[80%]  ">
+      //       {genres.map((genre, index) => (
+      //         <GenreItem key={index} genre={genre.name} />
+      //       ))}
+      //     </div>
+      //     <div className="shrink-0 h-[39px] w-[7px]" />
+      //   </div>
+      // </div>
+      islogged === true && role === 'Artiste' ? (
         ''
       ) : null}
     </div>
