@@ -7,19 +7,19 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import ReactPlayer from 'react-player';
 import SpotifyPlayer from 'react-spotify-player';
-import {
-  faFacebook,
-  faInstagram,
-  faYoutube,
-} from '@fortawesome/free-brands-svg-icons';
-import { ThirdView } from '../FirstViewsHome/ThirdView';
 import { useState } from 'react';
 import { useAppSelector } from '../../store/redux-hook';
 import { UPDATE_USER } from '../../graphQL/actions';
 import { useMutation } from '@apollo/client';
-import { useDispatch, useSelector } from 'react-redux';
-import { SET_DECODED_TOKEN, setDecodedToken } from '../../store/actions';
+
 import { EventCard } from '../InfoHomeCard/EventsCards';
+import SocialMedia from '../SocialMedia';
+
+import logo_facebook from '../../assets/images/logo_facebook.png';
+import logo_indeed from '../../assets/images/logo_indeed.png';
+import logo_twitter from '../../assets/images/logo_twitter.png';
+import logo_youtube from '../../assets/images/logo_youtube.png';
+import logo_instagram from '../../assets/images/logo_instagram.png';
 
 interface FormData {
   name: string;
@@ -29,7 +29,7 @@ interface FormData {
   city: string;
   // spotify_link: string;
   // youtube_link: string;
-  image_url: string;
+  // image_url: string;
 }
 
 export default function Profile() {
@@ -50,9 +50,12 @@ export default function Profile() {
   const data = useLoaderData();
 
   const role = data.artist?.role?.name || data.organizer?.role?.name;
-  const { name, region, description, zip_code, city } =
+  const { name, region, description, zip_code, city, image_url } =
     role === 'Artiste' ? data?.artist : data?.organizer;
   const events = data?.organizer?.events || data?.artist?.events;
+
+  // console.log('image_url', image_url);
+  // console.log('image_url', `${image_url}`);
 
   const [formData, setFormData] = useState<FormData>({
     name,
@@ -62,11 +65,12 @@ export default function Profile() {
     city,
     // spotify_link: '',
     // youtube_link: '',
-    image_url: '',
+    // image_url: '',
   });
 
   console.log('formData :', formData);
   console.log('data :', data);
+
   // console.log('data spotify_link :', data.artist.spotify_link);
 
   const handleFormSubmit = async (e) => {
@@ -104,6 +108,12 @@ export default function Profile() {
         </div>
         <div className="container mx-auto">
           <div className="avatar mt-[-50px]">
+            <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+              <img
+                src={`${import.meta.env.VITE_BACK_URL}${image_url}`}
+                alt="Image"
+              />
+            </div>
             {/* {settings ? (
               <form onSubmit={handleFormSubmit}>
                 <input
@@ -124,28 +134,139 @@ export default function Profile() {
             )} */}
           </div>
 
+          {/* ===================================== */}
+          <dialog id="settings" className="modal">
+            <div className="modal-box bg-color-primary">
+              <h3 className="font-bold text-lg mb-8">Modifier mes données</h3>
+              <form onSubmit={handleFormSubmit} className="modal-backdrop">
+                <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
+                  Nom :
+                  <input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
+                    placeholder="Votre nom"
+                  />
+                </label>
+
+                <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
+                  Région :
+                  <input
+                    type="text"
+                    value={formData.region}
+                    onChange={(e) =>
+                      setFormData({ ...formData, region: e.target.value })
+                    }
+                    placeholder="Votre région"
+                  />
+                </label>
+
+                <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
+                  Description :
+                  <textarea
+                    className="input input-bordered flex items-center gap-2 bg-white w-full pr-0"
+                    type="text"
+                    value={formData.description}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        description: e.target.value,
+                      })
+                    }
+                    placeholder="Description"
+                  />
+                </label>
+
+                <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
+                  code postal :
+                  <input
+                    type="texte"
+                    value={formData.zip_code}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        zip_code: parseInt(e.target.value, 10),
+                      })
+                    }
+                  />
+                </label>
+
+                <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
+                  ville :
+                  <input
+                    type="text"
+                    value={formData.city}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        city: e.target.value,
+                      })
+                    }
+                  />
+                </label>
+
+                {role === 'Artiste' && (
+                  <>
+                    <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
+                      Lien spotify :
+                      <input
+                        type="url"
+                        value={formData.spotify_link}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            spotify_link: e.target.value,
+                          })
+                        }
+                      />
+                    </label>
+
+                    <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
+                      Lien Youtube :
+                      <input
+                        type="url"
+                        value={formData.youtube_link}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            youtube_link: e.target.value,
+                          })
+                        }
+                      />
+                    </label>
+                  </>
+                )}
+
+                <button className="text-right w-full text-white" type="submit">
+                  Enregistrer
+                </button>
+              </form>
+
+              <form method="dialog" className="modal-backdrop">
+                <button className="text-white">close</button>
+              </form>
+            </div>
+          </dialog>
+          {/* ===================================== */}
+
           <div className="flex flex-col md:flex-row justify-between my-5">
             <div className="flex flex-col">
-              {settings ? (
-                <form onSubmit={handleFormSubmit}>
-                  <label className="input input-bordered flex items-center gap-2 bg-white w-full">
-                    Nom :
-                    <input
-                      type="text"
-                      value={formData.name}
-                      onChange={(e) =>
-                        setFormData({ ...formData, name: e.target.value })
-                      }
-                      placeholder="Votre nom"
-                    />
-                  </label>
-                  <button className="text-right w-full" type="submit">
-                    Enregistrer
-                  </button>
-                </form>
-              ) : (
+              <div className="flex items-center">
                 <h1 className="text-black">{name}</h1>
-              )}
+                {settingsId && (
+                  <FontAwesomeIcon
+                    icon={faPencilAlt}
+                    className="ml-3"
+                    onClick={() => {
+                      document.getElementById('settings').showModal();
+                      setSettings(!settings);
+                    }}
+                  />
+                )}
+              </div>
+
               <span>
                 <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
                 <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
@@ -154,41 +275,15 @@ export default function Profile() {
                 <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
               </span>
               <span>
-                {settings ? (
-                  <form onSubmit={handleFormSubmit}>
-                    <label className="input input-bordered flex items-center gap-2 bg-white w-full">
-                      Région :
-                      <input
-                        type="text"
-                        value={formData.region}
-                        onChange={(e) =>
-                          setFormData({ ...formData, region: e.target.value })
-                        }
-                        placeholder="Votre région"
-                      />
-                    </label>
-                    <button className="text-right w-full" type="submit">
-                      Enregistrer
-                    </button>
-                  </form>
-                ) : (
-                  <div className="flex items-center">
-                    <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-1" />
-                    <span> {region}, France</span>
-                  </div>
-                )}
+                <div className="flex items-center">
+                  <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-1" />
+                  <span> {region}, France</span>
+                </div>
               </span>
             </div>
 
             <div className="flex flex-col">
               <div className="flex justify-between items-center">
-                {settingsId && (
-                  <FontAwesomeIcon
-                    icon={faPencilAlt}
-                    onClick={() => setSettings(!settings)}
-                    style={{ cursor: 'pointer' }}
-                  />
-                )}
                 {role === 'Artiste' && (
                   <NavLink className="btn-primary ml-0 md:ml-5" to="/">
                     Proposer un deal
@@ -224,100 +319,31 @@ export default function Profile() {
                     <div className="bloc-white mb-[50px]">
                       <div className="flex items-center">
                         <h2 className="text-black">Présentation</h2>
-                        {settingsId && (
-                          <FontAwesomeIcon
-                            icon={faPencilAlt}
-                            onClick={() => setSettings(!settings)}
-                            className="cursor-pointer ml-2"
-                          />
-                        )}
                       </div>
-                      {settings ? (
-                        <form onSubmit={handleFormSubmit}>
-                          <textarea
-                            className="input input-bordered flex items-center gap-2 bg-white w-full"
-                            type="text"
-                            value={formData.description}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                description: e.target.value,
-                              })
-                            }
-                            placeholder="Description"
-                          />
-                          <button className="text-right w-full" type="submit">
-                            Enregistrer
-                          </button>
-                        </form>
-                      ) : (
-                        <p>{description}</p>
-                      )}
+                      <p>{description}</p>
                     </div>
 
-                    {/* {role === 'Artiste' && (
+                    {role === 'Artiste' && (
                       <div className="bloc-white mb-[50px]">
                         <h2 className="text-black">Musique & clips</h2>
 
                         <div className="spotify my-4">
-                          {settings ? (
-                            <form onSubmit={handleFormSubmit}>
-                              <input
-                                className="input input-bordered flex items-center gap-2 bg-white w-full"
-                                type="url"
-                                value={formData.spotify_link}
-                                onChange={(e) =>
-                                  setFormData({
-                                    ...formData,
-                                    spotify_link: e.target.value,
-                                  })
-                                }
-                                placeholder="mettre le lien de votre album spotify"
-                              />
-                                 <button className="text-right w-full" type="submit">
-                            Enregistrer
-                          </button>
-                            </form>
-                          ) : (
-                            <SpotifyPlayer
-                              uri={data.artist.spotify_link}
-                              size={{ width: '100%', height: 600 }}
-                            />
-                          )}
+                          <SpotifyPlayer
+                            uri={data.artist.spotify_link}
+                            size={{ width: '100%', height: 600 }}
+                          />
                         </div>
 
                         <div className="youtube">
-                          {settings ? (
-                            <form onSubmit={handleFormSubmit}>
-                              <input
-                                className="input input-bordered flex items-center gap-2 bg-white w-full"
-                                type="url"
-                                value={formData.youtube_link}
-                                onChange={(e) =>
-                                  setFormData({
-                                    ...formData,
-                                    youtube_link: e.target.value,
-                                  })
-                                }
-                                placeholder="mettre le lien de votre vidéo"
-                              />
-                                  <button className="text-right w-full" type="submit">
-                            Enregistrer
-                          </button>
-                            </form>
-                          ) : (
-                            <div className="youtube">
-                              <ReactPlayer
-                                url={data.artist.youtube_link}
-                                width="100%"
-                                height={500}
-                                controls={true}
-                              />
-                            </div>
-                          )}
+                          <ReactPlayer
+                            url={data.artist.youtube_link}
+                            width="100%"
+                            height={500}
+                            controls={true}
+                          />
                         </div>
                       </div>
-                    )} */}
+                    )}
 
                     <div className="bloc-white">
                       <h2 className="text-black mb-4">Galerie photos</h2>
@@ -343,65 +369,16 @@ export default function Profile() {
                       <div className="adress flex flex-col">
                         <span className="mb-5">ADRESSE</span>
                         <span>
-                          {settings ? (
-                            <>
-                              <form onSubmit={handleFormSubmit}>
-                                <label className="input input-bordered flex items-center gap-2 bg-white w-full">
-                                  code postal :
-                                  <input
-                                    type="text"
-                                    value={formData.zip_code}
-                                    onChange={(e) =>
-                                      setFormData({
-                                        ...formData,
-                                        zip_code: parseInt(e.target.value, 10),
-                                      })
-                                    }
-                                    placeholder="69333"
-                                  />
-                                </label>
-                                <button
-                                  className="text-right w-full"
-                                  type="submit"
-                                >
-                                  Enregistrer
-                                </button>
-                              </form>
-                              <form onSubmit={handleFormSubmit}>
-                                <label className="input input-bordered flex items-center gap-2 bg-white w-full">
-                                  ville :
-                                  <input
-                                    type="text"
-                                    value={formData.city}
-                                    onChange={(e) =>
-                                      setFormData({
-                                        ...formData,
-                                        city: e.target.value,
-                                      })
-                                    }
-                                    placeholder="Paris"
-                                  />
-                                </label>
-                                <button
-                                  className="text-right w-full"
-                                  type="submit"
-                                >
-                                  Enregistrer
-                                </button>
-                              </form>
-                            </>
-                          ) : (
-                            <span>{`${zip_code}, ${city}`}</span>
-                          )}
+                          <span>{`${zip_code}, ${city}`}</span>
                         </span>
 
                         <span>France</span>
                       </div>
-                      {/* <div className="website">
+                      <div className="website">
                         <a href="https://www.youtube.com/">
                           https://www.youtube.com/
                         </a>
-                      </div> */}
+                      </div>
 
                       <div className="my-5">
                         <NavLink
@@ -413,35 +390,38 @@ export default function Profile() {
                       </div>
                     </div>
 
-                    {/* <div className="bloc-white my-10">
-                      <h2 className="text-center text-black">En savoir plus</h2>
+                    <div className="bloc-white my-10">
+                      <h2 className="text-center text-black mb-5">
+                        En savoir plus
+                      </h2>
                       <div className="flex justify-center">
-                        <span className="mx-2 text-2xl">
-                          <a
-                            href="https://www.npmjs.com/package/react-player"
-                            target="_blank"
-                          >
-                            <FontAwesomeIcon icon={faYoutube} />
-                          </a>
-                        </span>
-                        <span className="mx-2 text-2xl">
-                          <a
-                            href="https://www.npmjs.com/package/react-player"
-                            target="_blank"
-                          >
-                            <FontAwesomeIcon icon={faInstagram} />
-                          </a>
-                        </span>
-                        <span className="mx-2 text-2xl">
-                          <a
-                            href="https://www.npmjs.com/package/react-player"
-                            target="_blank"
-                          >
-                            <FontAwesomeIcon icon={faFacebook} />
-                          </a>
-                        </span>
+                        <SocialMedia
+                          logo={logo_facebook}
+                          link="/"
+                          alt="logo facebook"
+                        />
+                        <SocialMedia
+                          logo={logo_indeed}
+                          link="/"
+                          alt="logo indeed"
+                        />
+                        <SocialMedia
+                          logo={logo_twitter}
+                          link="/"
+                          alt="logo twitter"
+                        />
+                        <SocialMedia
+                          logo={logo_youtube}
+                          link="/"
+                          alt="logo youtube"
+                        />
+                        <SocialMedia
+                          logo={logo_instagram}
+                          link="/"
+                          alt="logo instagram"
+                        />
                       </div>
-                    </div> */}
+                    </div>
                   </div>
                 </div>
               </div>
