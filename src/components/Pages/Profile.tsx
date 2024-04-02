@@ -7,18 +7,20 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import ReactPlayer from 'react-player';
 import SpotifyPlayer from 'react-spotify-player';
-import {
-  faFacebook,
-  faInstagram,
-  faYoutube,
-} from '@fortawesome/free-brands-svg-icons';
-import { ThirdView } from '../FirstViewsHome/ThirdView';
 import { useState } from 'react';
 import { useAppSelector } from '../../store/redux-hook';
 import { UPDATE_USER } from '../../graphQL/actions';
 import { useMutation } from '@apollo/client';
-import { useDispatch, useSelector } from 'react-redux';
-import { SET_DECODED_TOKEN, setDecodedToken } from '../../store/actions';
+
+import { EventCard } from '../InfoHomeCard/EventsCards';
+import SocialMedia from '../SocialMedia';
+
+import logo_facebook from '../../assets/images/logo_facebook.png';
+import logo_indeed from '../../assets/images/logo_indeed.png';
+import logo_twitter from '../../assets/images/logo_twitter.png';
+import logo_youtube from '../../assets/images/logo_youtube.png';
+import logo_instagram from '../../assets/images/logo_instagram.png';
+import ContactDetails from '../ContactDetails';
 
 interface FormData {
   name: string;
@@ -26,16 +28,15 @@ interface FormData {
   description: string;
   zip_code: number;
   city: string;
+  // spotify_link: string;
+  // youtube_link: string;
+  // image_url: string;
 }
 
 export default function Profile() {
   const [UpdateUser, { loading, error }] = useMutation(UPDATE_USER);
   const [selectedTab, setSelectedTab] = useState(0);
   const [settings, setSettings] = useState(false);
-
-  // const nameRedux = useSelector((state) => state.decodedToken.decodedData.name);
-
-  // const dispatch = useDispatch();
 
   const token = useAppSelector((state) => state.decodedToken.token);
 
@@ -50,9 +51,12 @@ export default function Profile() {
   const data = useLoaderData();
 
   const role = data.artist?.role?.name || data.organizer?.role?.name;
-  const { name, region, description, zip_code, city } =
+  const { name, region, description, zip_code, city, image_url } =
     role === 'Artiste' ? data?.artist : data?.organizer;
   const events = data?.organizer?.events || data?.artist?.events;
+
+  // console.log('image_url', image_url);
+  // console.log('image_url', `${image_url}`);
 
   const [formData, setFormData] = useState<FormData>({
     name,
@@ -60,10 +64,15 @@ export default function Profile() {
     description,
     zip_code,
     city,
+    // spotify_link: '',
+    // youtube_link: '',
+    // image_url: '',
   });
 
   console.log('formData :', formData);
   console.log('data :', data);
+
+  // console.log('data spotify_link :', data.artist.spotify_link);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -101,26 +110,146 @@ export default function Profile() {
         <div className="container mx-auto">
           <div className="avatar mt-[-50px]">
             <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-              <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+              <img
+                src={`${import.meta.env.VITE_BACK_URL}${image_url}`}
+                alt="Image"
+              />
             </div>
           </div>
 
-          <div className="flex justify-between my-5">
-            <div className="flex flex-col">
-              {settings ? (
-                <form onSubmit={handleFormSubmit}>
+          {/* ===================================== */}
+          <dialog id="settings" className="modal">
+            <div className="modal-box bg-color-primary">
+              <h3 className="font-bold text-lg mb-8">Modifier mes données</h3>
+              <form onSubmit={handleFormSubmit} className="modal-backdrop">
+                <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
+                  Nom :
                   <input
                     type="text"
                     value={formData.name}
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
+                    placeholder="Votre nom"
                   />
-                  <button type="submit">Enregistrer</button>
-                </form>
-              ) : (
+                </label>
+
+                <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
+                  Région :
+                  <input
+                    type="text"
+                    value={formData.region}
+                    onChange={(e) =>
+                      setFormData({ ...formData, region: e.target.value })
+                    }
+                    placeholder="Votre région"
+                  />
+                </label>
+
+                <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
+                  Description :
+                  <textarea
+                    className="input input-bordered flex items-center gap-2 bg-white w-full pr-0"
+                    type="text"
+                    value={formData.description}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        description: e.target.value,
+                      })
+                    }
+                    placeholder="Description"
+                  />
+                </label>
+
+                <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
+                  code postal :
+                  <input
+                    type="texte"
+                    value={formData.zip_code}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        zip_code: parseInt(e.target.value, 10),
+                      })
+                    }
+                  />
+                </label>
+
+                <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
+                  ville :
+                  <input
+                    type="text"
+                    value={formData.city}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        city: e.target.value,
+                      })
+                    }
+                  />
+                </label>
+
+                {role === 'Artiste' && (
+                  <>
+                    <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
+                      Lien spotify :
+                      <input
+                        type="url"
+                        value={formData.spotify_link}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            spotify_link: e.target.value,
+                          })
+                        }
+                      />
+                    </label>
+
+                    <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
+                      Lien Youtube :
+                      <input
+                        type="url"
+                        value={formData.youtube_link}
+                        onChange={(e) =>
+                          setFormData({
+                            ...formData,
+                            youtube_link: e.target.value,
+                          })
+                        }
+                      />
+                    </label>
+                  </>
+                )}
+
+                <button className="text-right w-full text-white" type="submit">
+                  Enregistrer
+                </button>
+              </form>
+
+              <form method="dialog" className="modal-backdrop">
+                <button className="text-white">close</button>
+              </form>
+            </div>
+          </dialog>
+          {/* ===================================== */}
+
+          <div className="flex flex-col md:flex-row justify-between my-5">
+            <div className="flex flex-col">
+              <div className="flex items-center">
                 <h1 className="text-black">{name}</h1>
-              )}
+                {settingsId && (
+                  <FontAwesomeIcon
+                    icon={faPencilAlt}
+                    className="ml-3"
+                    onClick={() => {
+                      document.getElementById('settings').showModal();
+                      setSettings(!settings);
+                    }}
+                  />
+                )}
+              </div>
+
               <span>
                 <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
                 <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
@@ -129,37 +258,26 @@ export default function Profile() {
                 <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
               </span>
               <span>
-                {settings ? (
-                  <form onSubmit={handleFormSubmit}>
-                    <input
-                      type="text"
-                      value={formData.region}
-                      onChange={(e) =>
-                        setFormData({ ...formData, region: e.target.value })
-                      }
-                    />
-                    <button type="submit">Enregistrer</button>
-                  </form>
-                ) : (
-                  <div className="flex items-center">
-                    <FontAwesomeIcon icon={faMapMarkerAlt} />
-                    <span> {region}, France</span>
-                  </div>
-                )}
+                <div className="flex items-center">
+                  <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-1" />
+                  <span> {region}, France</span>
+                </div>
               </span>
             </div>
 
             <div className="flex flex-col">
-              <div className="flex justify-between">
-                {settingsId && (
-                  <FontAwesomeIcon
-                    icon={faPencilAlt}
-                    onClick={() => setSettings(!settings)}
-                  />
+              <div className="flex justify-between items-center">
+                {role === 'Artiste' && (
+                  <NavLink className="btn-primary ml-0 md:ml-5" to="/">
+                    Proposer un deal
+                  </NavLink>
                 )}
-                <NavLink className="btn-primary" to="/">
-                  Proposer un deal
-                </NavLink>
+                {role === 'Organisateur' && (
+                  <div className="flex flex-col text-right">
+                    <span className="text-3xl">{events.length}</span>
+                    <span>évènements</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -182,25 +300,10 @@ export default function Profile() {
                 <div className="col-span-12 md:col-span-8 my-10">
                   <div>
                     <div className="bloc-white mb-[50px]">
-                      <h2 className="text-black">Présentation</h2>
-                      {settings ? (
-                        <form onSubmit={handleFormSubmit}>
-                          <textarea
-                            type="text"
-                            value={formData.description}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                description: e.target.value,
-                              })
-                            }
-                            placeholder="Description"
-                          />
-                          <button type="submit">Enregistrer</button>
-                        </form>
-                      ) : (
-                        <p>{description}</p>
-                      )}
+                      <div className="flex items-center">
+                        <h2 className="text-black">Présentation</h2>
+                      </div>
+                      <p>{description}</p>
                     </div>
 
                     {role === 'Artiste' && (
@@ -208,65 +311,15 @@ export default function Profile() {
                         <h2 className="text-black">Musique & clips</h2>
 
                         <div className="spotify my-4">
-                          {/* {settings ? (
-                            <form onSubmit={handleFormSubmit}>
-                              <input
-                                type="text"
-                                value={formData.spotify_link}
-                                onChange={(e) =>
-                                  setFormData({
-                                    ...formData,
-                                    spotify_link: e.target.value,
-                                  })
-                                }
-                                placeholder="URL Spotify"
-                              />
-                              <button type="submit">Enregistrer</button>
-                            </form>
-                          ) : (
-                            <SpotifyPlayer
-                              uri={data.spotify_link}
-                              size={{ width: '100%', height: 600 }}
-                            />
-                          )} */}
-
                           <SpotifyPlayer
-                            uri="https://open.spotify.com/intl-fr/album/2lGH3ryY5dbDxbPzrhO21F?si=CvJZ9x4ZRc6i_yRs56hHXQ"
+                            uri={data.artist.spotify_link}
                             size={{ width: '100%', height: 600 }}
                           />
                         </div>
-                        {/* 
-                        <div className="youtube">
-                          {settings ? (
-                            <form onSubmit={handleFormSubmit}>
-                              <input
-                                type="text"
-                                value={formData.youtube_link}
-                                onChange={(e) =>
-                                  setFormData({
-                                    ...formData,
-                                    youtube_link: e.target.value,
-                                  })
-                                }
-                                placeholder="URL YouTube"
-                              />
-                              <button type="submit">Enregistrer</button>
-                            </form>
-                          ) : (
-                            <div className="youtube">
-                              <ReactPlayer
-                                url={formData.youtube_link} // Utilisez formData.youtube_link ici
-                                width="100%"
-                                height={500}
-                                controls={true}
-                              />
-                            </div>
-                          )}
-                        </div> */}
 
                         <div className="youtube">
                           <ReactPlayer
-                            url="https://www.youtube.com/watch?v=0dmS0He_czs"
+                            url={data.artist.youtube_link}
                             width="100%"
                             height={500}
                             controls={true}
@@ -294,92 +347,38 @@ export default function Profile() {
                 </div>
                 <div className="col-span-12 md:col-span-4 my-10">
                   <div>
-                    <div className="bloc-white">
-                      <h2 className="text-black">Coordonnées</h2>
-                      <div className="adress flex flex-col">
-                        <span className="mb-5">ADRESSE</span>
-                        <span>
-                          {settings ? (
-                            <>
-                              <form onSubmit={handleFormSubmit}>
-                                <input
-                                  type="text"
-                                  value={formData.zip_code}
-                                  onChange={(e) =>
-                                    setFormData({
-                                      ...formData,
-                                      zip_code: e.target.value,
-                                    })
-                                  }
-                                  placeholder="Code postal"
-                                />
-                                <button type="submit">Enregistrer</button>
-                              </form>
-                              <form onSubmit={handleFormSubmit}>
-                                <input
-                                  type="text"
-                                  value={formData.city}
-                                  onChange={(e) =>
-                                    setFormData({
-                                      ...formData,
-                                      city: e.target.value,
-                                    })
-                                  }
-                                  placeholder="Ville"
-                                />
-                                <button type="submit">Enregistrer</button>
-                              </form>
-                            </>
-                          ) : (
-                            <span>{`${zip_code}, ${city}`}</span>
-                          )}
-                        </span>
-
-                        <span>France</span>
-                      </div>
-                      <div className="website">
-                        <a href="https://www.youtube.com/">
-                          https://www.youtube.com/
-                        </a>
-                      </div>
-
-                      <div className="my-5">
-                        <NavLink
-                          className="btn-primary block text-center"
-                          to="/"
-                        >
-                          Proposer un deal
-                        </NavLink>
-                      </div>
-                    </div>
+                    <ContactDetails zip_code={zip_code} city={city} />
 
                     <div className="bloc-white my-10">
-                      <h2 className="text-center text-black">En savoir plus</h2>
+                      <h2 className="text-center text-black mb-5">
+                        En savoir plus
+                      </h2>
                       <div className="flex justify-center">
-                        <span className="mx-2 text-2xl">
-                          <a
-                            href="https://www.npmjs.com/package/react-player"
-                            target="_blank"
-                          >
-                            <FontAwesomeIcon icon={faYoutube} />
-                          </a>
-                        </span>
-                        <span className="mx-2 text-2xl">
-                          <a
-                            href="https://www.npmjs.com/package/react-player"
-                            target="_blank"
-                          >
-                            <FontAwesomeIcon icon={faInstagram} />
-                          </a>
-                        </span>
-                        <span className="mx-2 text-2xl">
-                          <a
-                            href="https://www.npmjs.com/package/react-player"
-                            target="_blank"
-                          >
-                            <FontAwesomeIcon icon={faFacebook} />
-                          </a>
-                        </span>
+                        <SocialMedia
+                          logo={logo_facebook}
+                          link="/"
+                          alt="logo facebook"
+                        />
+                        <SocialMedia
+                          logo={logo_indeed}
+                          link="/"
+                          alt="logo indeed"
+                        />
+                        <SocialMedia
+                          logo={logo_twitter}
+                          link="/"
+                          alt="logo twitter"
+                        />
+                        <SocialMedia
+                          logo={logo_youtube}
+                          link="/"
+                          alt="logo youtube"
+                        />
+                        <SocialMedia
+                          logo={logo_instagram}
+                          link="/"
+                          alt="logo instagram"
+                        />
                       </div>
                     </div>
                   </div>
@@ -402,7 +401,192 @@ export default function Profile() {
                   role="tabpanel"
                   className="tab-content p-10 bg-color-gray_light"
                 >
-                  <ThirdView events={events} locations={events} />
+                  <div className="grid grid-cols-12 gap-8">
+                    <div className="col-span-12 md:col-span-8 ">
+                      <div className="flex space-x-4 items-center mb-2">
+                        <input
+                          type="radio"
+                          id="option1"
+                          name="options"
+                          className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                        />
+                        <label htmlFor="option1" className="text-gray-700">
+                          Tous
+                        </label>
+
+                        <input
+                          type="radio"
+                          id="option1"
+                          name="options"
+                          className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                        />
+                        <label htmlFor="option2" className="text-gray-700">
+                          Demandes en attentes
+                        </label>
+
+                        <input
+                          type="radio"
+                          id="option1"
+                          name="options"
+                          className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                        />
+                        <label htmlFor="option3" className="text-gray-700">
+                          Demande validées
+                        </label>
+                      </div>
+                      <div className="bloc-white">
+                        <h2>Evènements remportés</h2>
+                        <div>
+                          {events.map((event, index) => (
+                            <EventCard key={index} {...event} />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-span-12 md:col-span-4 ">
+                      <ContactDetails zip_code={zip_code} city={city} />
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {settingsId && role === 'Organisateur' && (
+              <>
+                <input
+                  type="radio"
+                  name="my_tabs_1"
+                  role="tab"
+                  className="tab w-[180px]"
+                  aria-label="Deals"
+                  checked={selectedTab === 1}
+                  onChange={() => handleTabClick(1)}
+                />
+                <div
+                  role="tabpanel"
+                  className="tab-content p-10 bg-color-gray_light"
+                >
+                  <div className="grid grid-cols-12 gap-8">
+                    <div className="col-span-12 md:col-span-8">
+                      <div className="flex space-x-4 items-center mb-2">
+                        <input
+                          type="radio"
+                          id="option1"
+                          name="options"
+                          className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                        />
+                        <label htmlFor="option1" className="text-gray-700">
+                          Tous
+                        </label>
+
+                        <input
+                          type="radio"
+                          id="option1"
+                          name="options"
+                          className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                        />
+                        <label htmlFor="option2" className="text-gray-700">
+                          Deals en attentes
+                        </label>
+
+                        <input
+                          type="radio"
+                          id="option1"
+                          name="options"
+                          className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                        />
+                        <label htmlFor="option3" className="text-gray-700">
+                          Deals validés
+                        </label>
+
+                        <input
+                          type="radio"
+                          id="option4"
+                          name="options"
+                          className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                        />
+                        <label htmlFor="option4" className="text-gray-700">
+                          Deals refusés
+                        </label>
+                      </div>
+
+                      <div className="flex flex-wrap -mx-3">
+                        <div className="flex-none w-full max-w-full px-3">
+                          <div className="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border">
+                            <div className="flex-auto px-0 pt-0 pb-2">
+                              <div className="p-0 overflow-x-auto">
+                                <table className="items-center w-full mb-0 align-top border-gray-200 text-slate-500">
+                                  <thead className="align-bottom">
+                                    <tr>
+                                      <th className="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        Artiste
+                                      </th>
+                                      <th className="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        Evènement
+                                      </th>
+                                      <th className="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                        Status
+                                      </th>
+                                      <th className="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-gray-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"></th>
+                                      <th className="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-gray-200 border-solid shadow-none tracking-none whitespace-nowrap text-slate-400 opacity-70"></th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <div className="flex px-2 py-1">
+                                          <div>
+                                            <img
+                                              src="../assets/img/team-2.jpg"
+                                              className="inline-flex items-center justify-center mr-4 text-sm text-white transition-all duration-200 ease-soft-in-out h-9 w-9 rounded-xl"
+                                              alt="user1"
+                                            />
+                                          </div>
+                                          <div className="flex flex-col justify-center">
+                                            <h6 className="mb-0 text-sm leading-normal">
+                                              John Michael
+                                            </h6>
+                                            <p className="mb-0 text-xs leading-tight text-slate-400">
+                                              john@creative-tim.com
+                                            </p>
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <p className="mb-0 text-xs font-semibold leading-tight">
+                                          Manager
+                                        </p>
+                                        <p className="mb-0 text-xs leading-tight text-slate-400">
+                                          Organization
+                                        </p>
+                                      </td>
+                                      <td className="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <span className="bg-gradient-to-tl from-green-600 to-lime-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">
+                                          Online
+                                        </span>
+                                      </td>
+
+                                      <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                        <a
+                                          href="javascript:;"
+                                          className="text-xs font-semibold leading-tight text-slate-400"
+                                        >
+                                          Edit
+                                        </a>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-span-12 md:col-span-4">
+                      <ContactDetails zip_code={zip_code} city={city} />
+                    </div>
+                  </div>
                 </div>
               </>
             )}

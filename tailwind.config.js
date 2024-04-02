@@ -6,10 +6,12 @@ export default {
       colors: {
         'color-primary': '#1F1341;',
         'color-secondary': '#B6ECD9',
+        'color-three': '#f43f5e',
         'color-black': '#000000',
         'color-white': '#ffffff',
         'color-gray_light': '#f6f6f6',
         'color-gray_dark': '#212121',
+        // 'text-primary': '#f43f5e',
       },
       backgroundImage: {
         'fond-one': "url('/src/assets/images/fondOne.png')",
