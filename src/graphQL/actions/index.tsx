@@ -32,6 +32,34 @@ export const GET_ORGANIZER = gql`
         catering
         price
         organizer_id
+        total_slots
+        occupied_slots
+        organizer {
+          id
+          mail
+          name
+          image_url
+          address
+          city
+          region
+          zip_code
+          description
+          validation
+        }
+        artists {
+          id
+          mail
+          name
+          image_url
+          address
+          city
+          region
+          zip_code
+          description
+          validation
+        }
+        available
+        finished
       }
       style {
         name
@@ -409,5 +437,19 @@ export const UPDATE_USER = gql`
         available
       }
     }
+  }
+`;
+
+export const HANDLEPOSTULATIONEVENT = gql`
+  mutation HandlePostulationEvent(
+    $artistId: Int!
+    $eventId: Int!
+    $validation: String!
+  ) {
+    handlePostulationEvent(
+      artistId: $artistId
+      eventId: $eventId
+      validation: $validation
+    )
   }
 `;

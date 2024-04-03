@@ -11,6 +11,12 @@ export default {
         'color-white': '#ffffff',
         'color-gray_light': '#f6f6f6',
         'color-gray_dark': '#212121',
+        'color-green-light': '#66BB6A',
+        'color-green-dark': '#2E7D32',
+        'color-red-light': '#FF5252',
+        'color-red-dark': '#C62828',
+        'color-yellow-light': '#FFEB3B',
+        'color-yellow-dark': '#7E5109',
         // 'text-primary': '#f43f5e',
       },
       backgroundImage: {
