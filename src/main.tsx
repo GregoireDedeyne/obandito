@@ -24,10 +24,15 @@ import {
 import Profile from './components/Pages/Profile.tsx';
 import { EventPage } from './components/Pages/Event.tsx';
 import { EventFormPage } from './components/Pages/EventForm.tsx';
+import createUploadLink from 'apollo-upload-client/createUploadLink.mjs';
 
-// Add ApolloClient
-const client = new ApolloClient({
+const uploadLink = createUploadLink({
   uri: 'http://localhost:4000/',
+});
+
+// Ajouter ApolloClient
+const client = new ApolloClient({
+  link: uploadLink,
   cache: new InMemoryCache(),
 });
 
@@ -154,6 +159,8 @@ const ProfileBandLoader = async ({ params }) => {
 const ProfileOrganizerLoader = async ({ params }) => {
   const { id } = params;
   const organizerId = parseInt(id);
+  console.log('je reload');
+
   const { data } = await client.query({
     query: GET_ORGANIZER,
     variables: {

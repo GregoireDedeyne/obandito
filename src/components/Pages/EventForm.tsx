@@ -33,9 +33,9 @@ export function EventFormPage() {
     if (e.target.type === 'checkbox') {
       value = e.target.checked;
     } else if (e.target.type === 'file') {
-      // Récupérez le fichier sélectionné
-      const file = e.target.files[0];
-      value = file ? file.name : '';
+      // Récupérez le fichier sélectionné à rajouter si on veut récupérer que le name du fichier
+      // const file = e.target.files[0];
+      // value = file ? file.name : '';
     } else {
       value = e.target.value;
       // Si le champ est zip_code, assurez-vous qu'il est une chaîne de caractères
@@ -57,6 +57,8 @@ export function EventFormPage() {
     };
     setFormData(updatedFormData);
   };
+
+  console.log(formData);
 
   // function to submit the form and push data with grahQL
   const handleSubmit = (e) => {
