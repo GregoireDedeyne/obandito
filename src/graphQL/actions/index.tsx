@@ -348,7 +348,7 @@ export const CREATE_EVENT = gql`
   mutation Mutation($input: InputAddEvent!) {
     addEvent(input: $input) {
       name
-      image_url
+
       description
       date
       city

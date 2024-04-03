@@ -153,7 +153,7 @@ export function Header({ genres }) {
           <div className="flex justify-center">
             <NavLink
               to={
-                role === 'artiste'
+                role === 'Artiste'
                   ? `/profile/band/${id}`
                   : `/profile/organizer/${id}`
               }
