@@ -52,6 +52,7 @@ export default function Profile() {
   const [idUserStatus, setIdUserStatus] = useState();
   const [idEventStatus, setIdEventStatus] = useState();
   const [radioStatus, setRadioStatus] = useState('tous');
+  const [data, setData] = useState(useLoaderData());
 
   const handleStatusChange = (status) => {
     setRadioStatus(status);
@@ -73,7 +74,9 @@ export default function Profile() {
     setSelectedTab(index);
   };
 
-  const data = useLoaderData();
+  const dataLoad = useLoaderData();
+
+  console.log(data);
 
   const role = data.artist?.role?.name || data.organizer?.role?.name;
   const { name, region, description, zip_code, city, image_url } =
