@@ -2,8 +2,13 @@ import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink } from 'react-router-dom';
 import { Stars } from '../Stars';
+import { PopupEditSettings } from '../PopupEditSettings';
 
-export function ProfilBanner() {
+interface Props {
+  role: string;
+}
+
+export function ProfilBanner({ role }: Props) {
   return (
     <div className="bg-white">
       <div className="flex flex-col py-px w-full h-[300px] bg-cover">
@@ -15,7 +20,7 @@ export function ProfilBanner() {
       </div>
       <div className="container mx-auto">
         <div className="avatar mt-[-50px]">
-          <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+          <div className="w-24 rounded-full ring ring-white ring-offset-base-100 ring-offset-2">
             <img
               src="https://static.vecteezy.com/system/resources/thumbnails/001/799/226/original/live-concert-4k-free-video.jpg"
               alt="Image"
@@ -31,12 +36,19 @@ export function ProfilBanner() {
               <FontAwesomeIcon
                 icon={faPencilAlt}
                 className="ml-3"
-                // onClick={() => {
-                //   document.getElementById('settings').showModal();
-                //   setSettings(!settings);
-                // }}
+                onClick={() => {
+                  document.getElementById('settings').showModal();
+                  // setSettings(!settings);
+                }}
               />
               {/* )} */}
+
+              <PopupEditSettings
+                handleFormSubmit=""
+                formData=""
+                setFormData=""
+                role={role}
+              />
             </div>
 
             <Stars />
@@ -51,20 +63,20 @@ export function ProfilBanner() {
 
           <div className="flex flex-col">
             <div className="flex justify-between items-center">
-              {/* {role === 'Artiste' && ( */}
-              <NavLink className="btn-primary ml-0 md:ml-5" to="/">
-                Proposer un deal
-              </NavLink>
-              {/* )} */}
-              {/* {role === 'Organisateur' && ( */}
-              <div className="flex flex-col text-right">
-                <span className="text-3xl">
-                  {/* {events.length} */}
-                  33
-                </span>
-                <span>évènements</span>
-              </div>
-              {/* )} */}
+              {role === 'Artiste' && (
+                <NavLink className="btn-primary ml-0 md:ml-5" to="/">
+                  Proposer un deal
+                </NavLink>
+              )}
+              {role === 'Organisateur' && (
+                <div className="flex flex-col text-right">
+                  <span className="text-3xl">
+                    {/* {events.length} */}
+                    33
+                  </span>
+                  <span>évènements</span>
+                </div>
+              )}
             </div>
           </div>
         </div>

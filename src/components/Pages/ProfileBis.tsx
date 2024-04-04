@@ -1,36 +1,19 @@
-import { useLoaderData, useParams } from 'react-router-dom';
+import { useState } from 'react';
 import { ProfilBanner } from '../ProfilBanner';
 import { TabsContent } from '../TabsContent';
-import { useQuery } from '@apollo/client';
-import { GET_ORGAEVENT } from '../../graphQL/actions';
-import { useAppSelector } from '../../store/redux-hook';
+import { useLoaderData } from 'react-router-dom';
 
 export default function ProfileBis() {
-  // const data = useLoaderData();
+  const [data, setData] = useState(useLoaderData());
 
-  // console.log(data);
+  //   console.log('data : ', data);
 
-  const token = useAppSelector((state) => state.decodedToken.token);
-
-  const { id } = useParams();
-  console.log(id);
-
-  const { loading, error, data } = useQuery(GET_ORGAEVENT, {
-    variables: { organizerId: parseInt(id) },
-    context: {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    },
-    fetchPolicy: 'network-only',
-  });
-
-  console.log(data);
+  const role = data.artist?.role?.name || data.organizer?.role?.name;
 
   return (
-    <div>
-      <ProfilBanner />
+    <>
+      <ProfilBanner role={role} />
       <TabsContent />
-    </div>
+    </>
   );
 }
