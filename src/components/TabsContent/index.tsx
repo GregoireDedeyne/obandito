@@ -70,7 +70,7 @@ export function TabsContent({ data, id, userId, role }) {
                   <ProfilContentBlock
                     title="Musiques & clips"
                     spotify={data.spotify_link}
-                    youtube={data.spotify_link}
+                    youtube={data.youtube_link}
                     description=""
                   />
                 ) : null}

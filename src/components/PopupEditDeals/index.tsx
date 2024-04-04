@@ -1,8 +1,13 @@
+import { useState } from 'react';
+
 export default function PopupEditDeals({
   handleFormSubmitStatus,
   selectedStatus,
   setSelectedStatus,
 }) {
+  console.log('selectedStatus', selectedStatus);
+  console.log('setSelectedStatus', setSelectedStatus);
+
   return (
     <dialog id="deals" className="modal">
       <div className="modal-box bg-color-primary">

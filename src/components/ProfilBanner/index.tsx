@@ -3,12 +3,54 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink } from 'react-router-dom';
 import { Stars } from '../Stars';
 import { PopupEditSettings } from '../PopupEditSettings';
+import { useState } from 'react';
+import { UPDATE_USER } from '../../graphQL/actions';
+import { useMutation } from '@apollo/client';
 
-interface Props {
-  role: string;
+interface FormData {
+  name: string;
+  region: string;
+  description: string;
+  zip_code: number;
+  city: string;
+  spotify_link: string;
+  youtube_link: string;
 }
+export function ProfilBanner({ role, info, token }) {
+  const [formData, setFormData] = useState<FormData>({
+    name: info.name,
+    region: info.region,
+    description: info.description,
+    zip_code: info.zip_code,
+    city: info.city,
+    spotify_link: info.spotify_link,
+    youtube_link: info.youtube_link,
+  });
 
-export function ProfilBanner({ role, info }) {
+  const [UpdateUser, { loading, error }] = useMutation(UPDATE_USER);
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const { data } = await UpdateUser({
+        variables: {
+          input: {
+            ...formData,
+          },
+        },
+        context: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      });
+      console.log('Données mises à jour avec succès:', data);
+    } catch (error) {
+      console.error('Erreur:', error.message);
+    }
+  };
+
   return (
     <div className="bg-white">
       <div className="flex flex-col py-px w-full h-[300px] bg-cover">
@@ -44,9 +86,9 @@ export function ProfilBanner({ role, info }) {
               {/* )} */}
 
               <PopupEditSettings
-                handleFormSubmit=""
-                formData=""
-                setFormData=""
+                handleFormSubmit={handleFormSubmit}
+                formData={formData}
+                setFormData={setFormData}
                 role={role}
               />
             </div>

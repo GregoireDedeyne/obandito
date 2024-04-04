@@ -95,7 +95,6 @@ export default function Profile() {
     city,
     spotify_link: '',
     youtube_link: '',
-    // image_url: '',
   });
 
   // console.log('formData :', formData);

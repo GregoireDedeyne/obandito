@@ -1,9 +1,42 @@
+import { useState } from 'react';
 import { useAppSelector } from '../../store/redux-hook';
 import PopupEditDeals from '../PopupEditDeals';
+import { HANDLEPOSTULATIONEVENT } from '../../graphQL/actions';
+import { useMutation } from '@apollo/client';
 
 export function ArrayHandleArtistEvent({ events }) {
   const token = useAppSelector((state) => state.decodedToken.token);
-  console.log(events);
+  console.log('events :', events);
+
+  const [selectedStatus, setSelectedStatus] = useState('');
+  const [idUserStatus, setIdUserStatus] = useState();
+  const [idEventStatus, setIdEventStatus] = useState();
+
+  const [HandlePostulationEvent, { loading, error }] = useMutation(
+    HANDLEPOSTULATIONEVENT
+  );
+
+  const handleFormSubmitStatus = async (e) => {
+    e.preventDefault();
+
+    try {
+      const { data } = await HandlePostulationEvent({
+        variables: {
+          artistId: idUserStatus,
+          validation: selectedStatus,
+          eventId: idEventStatus,
+        },
+        context: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      });
+      console.log('Status à jour avec succès:', data);
+    } catch (error) {
+      console.error('Erreur:', error.message);
+    }
+  };
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -42,7 +75,7 @@ export function ArrayHandleArtistEvent({ events }) {
                       {artist?.name}
                     </div>
                     <div className="font-normal text-gray-500 break-all">
-                      {artist?.mail}{' '}
+                      {artist?.mail}
                     </div>
                   </div>
                 </th>
@@ -50,27 +83,31 @@ export function ArrayHandleArtistEvent({ events }) {
                 <td className="px-6 py-4">
                   <div className="flex items-center">
                     <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div>
-                    Validé
+                    {artist.validation}
                   </div>
                 </td>
                 <td className="px-6 py-4 text-center">
-                  <a
-                    href="#"
+                  <span
                     className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    onClick={() => {
+                      document.getElementById('deals').showModal();
+                      setIdUserStatus(parseInt(artist.id));
+                      setIdEventStatus(parseInt(event.id));
+                    }}
                   >
                     Edit
-                  </a>
+                  </span>
                 </td>
               </tr>
             ))
           )}
         </tbody>
       </table>
-      {/* <PopupEditDeals
+      <PopupEditDeals
         handleFormSubmitStatus={handleFormSubmitStatus}
         selectedStatus={selectedStatus}
         setSelectedStatus={setSelectedStatus}
-      /> */}
+      />
     </div>
   );
 }
