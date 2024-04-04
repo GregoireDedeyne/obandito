@@ -7,6 +7,8 @@ import { useAppSelector } from '../../store/redux-hook';
 export default function ProfileBis() {
   const [data, setData] = useState(useLoaderData());
 
+  const token = useAppSelector((state) => state.decodedToken.token);
+
   const { id } = useParams();
   const userId = useAppSelector((state) => state.decodedToken.decodedData.id);
   console.log('data : ', data.organizer);
@@ -14,9 +16,12 @@ export default function ProfileBis() {
   const role = data.artist?.role?.name || data.organizer?.role?.name;
   const info = data?.artist || data?.organizer;
 
+  console.log('info : ', info);
+  console.log('info.name : ', info.name);
+
   return (
     <>
-      <ProfilBanner role={role} info={info} />
+      <ProfilBanner role={role} info={info} token={token} />
       <TabsContent data={info} id={id} userId={userId} role={role} />
     </>
   );

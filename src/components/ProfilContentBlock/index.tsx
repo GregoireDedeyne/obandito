@@ -1,5 +1,6 @@
 import ReactPlayer from 'react-player';
 import SpotifyPlayer from 'react-spotify-player';
+
 export default function ProfilContentBlock({
   title,
   spotify,
