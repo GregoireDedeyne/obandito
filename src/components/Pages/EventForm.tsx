@@ -1,5 +1,5 @@
+import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { CREATE_EVENT } from '../../graphQL/actions';
@@ -8,296 +8,207 @@ import { useAppSelector } from '../../store/redux-hook';
 export function EventFormPage() {
   const navigate = useNavigate();
   const token = useAppSelector((state) => state.decodedToken.token);
-  // Add const for graph QL function with the CREATE_ACCOUNT action
-  const [CreateEvent, { data, loading, error }] = useMutation(CREATE_EVENT);
 
-  // Add useState to stock data from form
-  const [formData, setFormData] = useState({
-    address: null,
-    catering: false,
-    city: null,
-    date: '',
-    image_url: null,
-    description: null,
-    name: '',
-    price: 0,
-    region: '',
-    total_slots: 0,
-    zip_code: null,
+  const [createEvent, { loading, error }] = useMutation(CREATE_EVENT, {
+    onCompleted: () => {
+      toast.success('Événement créé avec succès !');
+      navigate('/');
+    },
+    onError: (err) => {
+      toast.error(`Erreur lors de la création de l'événement: ${err.message}`);
+    },
   });
 
-  // function to update state data
-  const handleChange = (e, fieldName) => {
-    let value;
+  const [formData, setFormData] = useState({
+    name: 'test',
+    image_url: null,
+    address: '',
+    city: '',
+    date: '2024-05-05',
+    description: '',
+    price: 1,
+    region: 'test',
+    total_slots: 1,
+    zip_code: '17000',
+    catering: false,
+  });
 
-    if (e.target.type === 'checkbox') {
-      value = e.target.checked;
-    } else if (e.target.type === 'file') {
-      // Récupérez le fichier sélectionné à rajouter si on veut récupérer que le name du fichier
-      // const file = e.target.files[0];
-      // value = file ? file.name : '';
-    } else {
-      value = e.target.value;
-      // Si le champ est zip_code, assurez-vous qu'il est une chaîne de caractères
-      if (fieldName === 'date' && !isNaN(value)) {
-        value = value.toString();
-      }
-      if (fieldName === 'zip_code' && !isNaN(value)) {
-        value = value.toString();
-      }
-      // Si la valeur est un nombre, parsez-la en entier
-      else if (!isNaN(value)) {
-        value = parseInt(value, 10);
-      }
-    }
+  const handleChange = (e) => {
+    const { name, value, type, checked, files } = e.target;
 
-    const updatedFormData = {
-      ...formData,
-      [fieldName]: value,
-    };
-    setFormData(updatedFormData);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]:
+        type === 'file' ? files[0] : type === 'checkbox' ? checked : value,
+    }));
+    console.log('formData', formData);
   };
 
-  console.log(formData);
-
-  // function to submit the form and push data with grahQL
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Vérifie si des champs obligatoires sont vides
-    const requiredFields = [
-      'address',
-      'catering',
-      'city',
-      'date',
-      // 'image_url',
-      'name',
-      'price',
-      'region',
-      'total_slots',
-      'zip_code',
-    ];
-    const isEmptyField = requiredFields.some((field) => formData[field] === '');
+    console.log('formDat', formData);
 
+    const isEmptyField = Object.values(formData).some((value) => value === '');
+    console.log('isEmptyField', isEmptyField);
     if (isEmptyField) {
-      toast.warn('Veuillez remplir tous les champs.');
+      toast.warn('Veuillez remplir tous les champs requis.');
       return;
     }
 
-    if (loading) return 'Loading';
-    if (error) return error.message;
+    if (loading) return toast.info('Création en cours...');
 
-    CreateEvent({
-      variables: { input: formData },
+    const input = {
+      ...formData,
+      price: Number(formData.price),
+      total_slots: Number(formData.total_slots),
+    };
+    console.log('input', input);
+
+    createEvent({
+      variables: { input },
       context: {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       },
     });
-    console.log(' Event validé');
-    navigate('/');
   };
+
+  if (error)
+    return <p>Erreur lors de la création de l'événement: {error.message}</p>;
 
   return (
     <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden md:max-w-lg">
-      <div className="md:flex">
-        <div className="w-full p-3">
-          <h2 className="text-2xl font-semibold text-center text-gray-800 mb-4">
-            Création d'Événement
-          </h2>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label
-                htmlFor="name"
-                className="block text-gray-700 text-sm font-semibold mb-2"
-              >
-                Nom:
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                onChange={(e) => handleChange(e, 'name')}
-                required
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
-              />
-            </div>
+      <div className="w-full p-3">
+        <h2 className="text-2xl font-semibold text-center text-gray-800 mb-4">
+          Création d'Événement
+        </h2>
+        <form onSubmit={handleSubmit}>
+          {/* Les champs du formulaire ici */}
+          <FormInput
+            label="Nom"
+            name="name"
+            value={formData.name}
+            handleChange={handleChange}
+            required
+          />
+          <FormInput
+            label="URL de l'image"
+            name="image_url"
+            type="file"
+            handleChange={handleChange}
+          />
+          <FormInput
+            label="Adresse"
+            name="address"
+            handleChange={handleChange}
+          />
+          <FormInput label="Ville" name="city" handleChange={handleChange} />
+          <FormInput
+            label="Région"
+            name="region"
+            value={formData.region}
+            handleChange={handleChange}
+            required
+          />
+          <FormInput
+            label="Date"
+            name="date"
+            type="date"
+            value={formData.date}
+            handleChange={handleChange}
+            required
+          />
+          <FormInput
+            label="Code Postal"
+            name="zip_code"
+            handleChange={handleChange}
+          />
+          <FormInput
+            label="Description"
+            name="description"
+            type="textarea"
+            handleChange={handleChange}
+          />
+          <FormInput
+            label="Restauration"
+            name="catering"
+            type="checkbox"
+            checked={formData.catering}
+            handleChange={handleChange}
+          />
+          <FormInput
+            label="Prix"
+            name="price"
+            type="number"
+            min="0"
+            value={formData.price.toString()}
+            handleChange={handleChange}
+          />
+          <FormInput
+            label="Nombre total de places"
+            name="total_slots"
+            type="number"
+            min="1"
+            value={formData.total_slots.toString()}
+            handleChange={handleChange}
+            required
+          />
 
-            <div className="mb-4">
-              <label
-                htmlFor="image_url"
-                className="block text-gray-700 text-sm font-semibold mb-2"
-              >
-                URL de l'image:
-              </label>
-              <input
-                type="file"
-                id="image_url"
-                name="image_url"
-                onChange={(e) => handleChange(e, 'image_url')}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label
-                htmlFor="address"
-                className="block text-gray-700 text-sm font-semibold mb-2"
-              >
-                Adresse:
-              </label>
-              <input
-                type="text"
-                id="address"
-                name="address"
-                onChange={(e) => handleChange(e, 'address')}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label
-                htmlFor="city"
-                className="block text-gray-700 text-sm font-semibold mb-2"
-              >
-                Ville:
-              </label>
-              <input
-                type="text"
-                id="city"
-                onChange={(e) => handleChange(e, 'city')}
-                name="city"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label
-                htmlFor="region"
-                className="block text-gray-700 text-sm font-semibold mb-2"
-              >
-                Région:
-              </label>
-              <input
-                type="text"
-                id="region"
-                name="region"
-                onChange={(e) => handleChange(e, 'region')}
-                required
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label
-                htmlFor="date"
-                className="block text-gray-700 text-sm font-semibold mb-2"
-              >
-                Date:
-              </label>
-              <input
-                type="date"
-                id="date"
-                name="date"
-                onChange={(e) => handleChange(e, 'date')}
-                required
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label
-                htmlFor="zip_code"
-                className="block text-gray-700 text-sm font-semibold mb-2"
-              >
-                Code Postal:
-              </label>
-              <input
-                type="text"
-                id="zip_code"
-                name="zip_code"
-                onChange={(e) => handleChange(e, 'zip_code')}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label
-                htmlFor="description"
-                className="block text-gray-700 text-sm font-semibold mb-2"
-              >
-                Description:
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                onChange={(e) => handleChange(e, 'description')}
-                rows="3"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
-              ></textarea>
-            </div>
-
-            <div className="mb-4">
-              <label htmlFor="catering" className="inline-flex items-center ">
-                <input
-                  type="checkbox"
-                  id="catering"
-                  name="catering"
-                  onChange={(e) => handleChange(e, 'catering')}
-                  className="form-checkbox h-5 w-5 text-blue-600  "
-                />
-                <span className="ml-2 text-gray-700 text-sm font-semibold ">
-                  Restauration
-                </span>
-              </label>
-            </div>
-
-            <div className="mb-4">
-              <label
-                htmlFor="price"
-                className="block text-gray-700 text-sm font-semibold mb-2"
-              >
-                Prix:
-              </label>
-              <input
-                type="number"
-                id="price"
-                name="price"
-                onChange={(e) => handleChange(e, 'price')}
-                min="0"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label
-                htmlFor="total_slots"
-                className="block text-gray-700 text-sm font-semibold mb-2"
-              >
-                Nombre total de places:
-              </label>
-              <input
-                type="number"
-                id="total_slots"
-                name="total_slots"
-                onChange={(e) => handleChange(e, 'total_slots')}
-                required
-                min="1"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
-              />
-            </div>
-
-            <div className="flex items-center justify-between">
-              <button
-                type="submit"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              >
-                Créer Événement
-              </button>
-            </div>
-          </form>
-        </div>
+          <div className="flex items-center justify-between">
+            <button
+              type="submit"
+              disabled={loading}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Créer Événement
+            </button>
+          </div>
+        </form>
       </div>
+    </div>
+  );
+}
+
+function FormInput({
+  label,
+  type = 'text',
+  name,
+  value,
+  handleChange,
+  required,
+  checked,
+  min,
+}) {
+  return (
+    <div className="mb-4">
+      <label
+        htmlFor={name}
+        className="block text-gray-700 text-sm font-semibold mb-2"
+      >
+        {label}:
+      </label>
+      {type === 'textarea' ? (
+        <textarea
+          id={name}
+          name={name}
+          onChange={handleChange}
+          rows="3"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+        ></textarea>
+      ) : (
+        <input
+          type={type}
+          id={name}
+          name={name}
+          value={value}
+          checked={checked}
+          onChange={handleChange}
+          required={required}
+          min={min}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+        />
+      )}
     </div>
   );
 }

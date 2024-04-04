@@ -12,7 +12,7 @@ import { CardsWithout } from '../CardsWithout';
 export function HomeNotLogPage() {
   const islogged = useAppSelector((state) => state.decodedToken.islogged);
   const role = useAppSelector((state) => state.decodedToken.decodedData.role);
-
+  localStorage.setItem('isLogged', islogged);
   const data = useLoaderData();
 
   return (

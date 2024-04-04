@@ -41,6 +41,7 @@ export function LoginForm() {
       try {
         const decodedToken = await jose.jwtVerify(token, key);
         dispatch(setDecodedToken(token, decodedToken.payload.user));
+        localStorage.setItem('token', token);
 
         navigate(`/home/${decodedToken.payload.user.id}`);
       } catch (error) {
