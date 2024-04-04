@@ -1,13 +1,19 @@
+import { useState } from 'react';
 import { ProfilBanner } from '../ProfilBanner';
 import { TabsContent } from '../TabsContent';
-import { ArrayHandleArtistEvent } from '../ArrayHandleArtistEvent';
+import { useLoaderData } from 'react-router-dom';
 
 export default function ProfileBis() {
+  const [data, setData] = useState(useLoaderData());
+
+  //   console.log('data : ', data);
+
+  const role = data.artist?.role?.name || data.organizer?.role?.name;
+
   return (
-    <div>
-      <ProfilBanner />
+    <>
+      <ProfilBanner role={role} />
       <TabsContent />
-      <ArrayHandleArtistEvent />
-    </div>
+    </>
   );
 }

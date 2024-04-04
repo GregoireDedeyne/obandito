@@ -115,7 +115,7 @@ export function PopupEditSettings({
         </form>
 
         <form method="dialog" className="modal-backdrop">
-          <button className="text-white">close</button>
+          <button className="text-white">Fermer</button>
         </form>
       </div>
     </dialog>
