@@ -25,6 +25,7 @@ import Profile from './components/Pages/Profile.tsx';
 import { EventPage } from './components/Pages/Event.tsx';
 import { EventFormPage } from './components/Pages/EventForm.tsx';
 import createUploadLink from 'apollo-upload-client/createUploadLink.mjs';
+import ProfileBis from './components/Pages/ProfileBis.tsx';
 
 const uploadLink = createUploadLink({
   uri: 'http://localhost:4000/graphql/',
@@ -224,12 +225,12 @@ const router = createBrowserRouter([
       { path: '/home/:id', element: <HomeNotLogPage />, loader: HomeLoader },
       {
         path: '/profile/band/:id',
-        element: <Profile />,
+        element: <ProfileBis />,
         loader: ProfileBandLoader,
       },
       {
         path: '/profile/organizer/:id',
-        element: <Profile />,
+        element: <ProfileBis />,
         loader: ProfileOrganizerLoader,
       },
       {
