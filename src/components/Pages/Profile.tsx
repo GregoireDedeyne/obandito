@@ -7,9 +7,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import ReactPlayer from 'react-player';
 import SpotifyPlayer from 'react-spotify-player';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../store/redux-hook';
-import { UPDATE_USER } from '../../graphQL/actions';
+import {
+  GET_ORGANIZER,
+  HANDLEPOSTULATIONEVENT,
+  UPDATE_USER,
+} from '../../graphQL/actions';
 import { useMutation } from '@apollo/client';
 
 import { EventCard } from '../InfoHomeCard/EventsCards';
@@ -28,15 +32,36 @@ interface FormData {
   description: string;
   zip_code: number;
   city: string;
-  // spotify_link: string;
-  // youtube_link: string;
+  spotify_link: string;
+  youtube_link: string;
   // image_url: string;
 }
 
 export default function Profile() {
-  const [UpdateUser, { loading, error }] = useMutation(UPDATE_USER);
+  const [UpdateUser, { loading: updateUserLoading, error: updateUserError }] =
+    useMutation(UPDATE_USER);
+
+  const [
+    HandlePostulationEvent,
+    { loading: handlePostulationLoading, error: handlePostulationError },
+  ] = useMutation(HANDLEPOSTULATIONEVENT);
+
   const [selectedTab, setSelectedTab] = useState(0);
   const [settings, setSettings] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState('');
+  const [idUserStatus, setIdUserStatus] = useState();
+  const [idEventStatus, setIdEventStatus] = useState();
+  const [radioStatus, setRadioStatus] = useState('tous');
+
+  const handleStatusChange = (status) => {
+    setRadioStatus(status);
+  };
+
+  console.log('selectedStatus :', selectedStatus);
+  // console.log('setSelectedStatus :', setSelectedStatus);
+  console.log('idUserStatus :', idUserStatus);
+  // console.log('setIdUserStatus :', setIdUserStatus);
+  console.log('idEventStatus :', idEventStatus);
 
   const token = useAppSelector((state) => state.decodedToken.token);
 
@@ -55,8 +80,7 @@ export default function Profile() {
     role === 'Artiste' ? data?.artist : data?.organizer;
   const events = data?.organizer?.events || data?.artist?.events;
 
-  // console.log('image_url', image_url);
-  // console.log('image_url', `${image_url}`);
+  // console.log('data.organizer.events', data.organizer.events);
 
   const [formData, setFormData] = useState<FormData>({
     name,
@@ -64,15 +88,37 @@ export default function Profile() {
     description,
     zip_code,
     city,
-    // spotify_link: '',
-    // youtube_link: '',
+    spotify_link: '',
+    youtube_link: '',
     // image_url: '',
   });
 
-  console.log('formData :', formData);
-  console.log('data :', data);
+  // console.log('formData :', formData);
+  // console.log('data :', data);
 
   // console.log('data spotify_link :', data.artist.spotify_link);
+
+  const handleFormSubmitStatus = async (e) => {
+    e.preventDefault();
+
+    try {
+      const { data } = await HandlePostulationEvent({
+        variables: {
+          artistId: idUserStatus,
+          validation: selectedStatus,
+          eventId: idEventStatus,
+        },
+        context: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      });
+      console.log('Status à jour avec succès:', data);
+    } catch (error) {
+      console.error('Erreur:', error.message);
+    }
+  };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -90,7 +136,7 @@ export default function Profile() {
           },
         },
       });
-      console.log('Données mises à jour avec succès:', data.updateUser);
+      console.log('Données mises à jour avec succès:', data);
       setSettings(false);
     } catch (error) {
       console.error('Erreur:', error.message);
@@ -385,7 +431,6 @@ export default function Profile() {
                 </div>
               </div>
             </div>
-
             {events && events.length > 0 && (
               <>
                 <input
@@ -450,9 +495,37 @@ export default function Profile() {
                 </div>
               </>
             )}
-
             {settingsId && role === 'Organisateur' && (
               <>
+                <dialog id="deals" className="modal">
+                  <div className="modal-box bg-color-primary">
+                    <h3 className="font-bold text-lg mb-8">
+                      Modifier le statut
+                    </h3>
+                    <form onSubmit={handleFormSubmitStatus}>
+                      <select
+                        className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 rounded shadow leading-tight focus:outline-none focus:border-gray-500 text-black"
+                        value={selectedStatus}
+                        onChange={(e) => setSelectedStatus(e.target.value)}
+                      >
+                        <option value="pending">pending</option>
+                        <option value="validated">validated</option>
+                        <option value="refused">refused</option>
+                      </select>
+                      <button
+                        className="text-right w-full text-white"
+                        type="submit"
+                      >
+                        Enregistrer
+                      </button>
+                    </form>
+
+                    <form method="dialog" className="modal-backdrop">
+                      <button className="text-white">close</button>
+                    </form>
+                  </div>
+                </dialog>
+
                 <input
                   type="radio"
                   name="my_tabs_1"
@@ -473,6 +546,8 @@ export default function Profile() {
                           type="radio"
                           id="option1"
                           name="options"
+                          checked={radioStatus === 'tous'}
+                          onChange={() => handleStatusChange('tous')}
                           className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
                         />
                         <label htmlFor="option1" className="text-gray-700">
@@ -481,8 +556,10 @@ export default function Profile() {
 
                         <input
                           type="radio"
-                          id="option1"
+                          id="option2"
                           name="options"
+                          checked={radioStatus === 'pending'}
+                          onChange={() => handleStatusChange('pending')}
                           className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
                         />
                         <label htmlFor="option2" className="text-gray-700">
@@ -491,8 +568,10 @@ export default function Profile() {
 
                         <input
                           type="radio"
-                          id="option1"
+                          id="option3"
                           name="options"
+                          checked={radioStatus === 'validated'}
+                          onChange={() => handleStatusChange('validated')}
                           className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
                         />
                         <label htmlFor="option3" className="text-gray-700">
@@ -503,12 +582,16 @@ export default function Profile() {
                           type="radio"
                           id="option4"
                           name="options"
+                          checked={radioStatus === 'refused'}
+                          onChange={() => handleStatusChange('refused')}
                           className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
                         />
                         <label htmlFor="option4" className="text-gray-700">
                           Deals refusés
                         </label>
                       </div>
+
+                      {/* ===================================== */}
 
                       <div className="flex flex-wrap -mx-3">
                         <div className="flex-none w-full max-w-full px-3">
@@ -532,49 +615,103 @@ export default function Profile() {
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    <tr>
-                                      <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                        <div className="flex px-2 py-1">
-                                          <div>
-                                            <img
-                                              src="../assets/img/team-2.jpg"
-                                              className="inline-flex items-center justify-center mr-4 text-sm text-white transition-all duration-200 ease-soft-in-out h-9 w-9 rounded-xl"
-                                              alt="user1"
-                                            />
-                                          </div>
-                                          <div className="flex flex-col justify-center">
-                                            <h6 className="mb-0 text-sm leading-normal">
-                                              John Michael
-                                            </h6>
-                                            <p className="mb-0 text-xs leading-tight text-slate-400">
-                                              john@creative-tim.com
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </td>
-                                      <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                        <p className="mb-0 text-xs font-semibold leading-tight">
-                                          Manager
-                                        </p>
-                                        <p className="mb-0 text-xs leading-tight text-slate-400">
-                                          Organization
-                                        </p>
-                                      </td>
-                                      <td className="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                        <span className="bg-gradient-to-tl from-green-600 to-lime-400 px-2.5 text-xs rounded-1.8 py-1.4 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">
-                                          Online
-                                        </span>
-                                      </td>
+                                    {data.organizer.events.map((event, i) =>
+                                      event.artists.map((artist) => {
+                                        // console.log('event :', event);
+                                        // console.log('artist :', artist);
+                                        // console.log('event.id :', event.id);
+                                        // console.log(
+                                        //   'event.artists.id :',
+                                        //   event.artists.id
+                                        // );
+                                        if (
+                                          radioStatus === 'tous' ||
+                                          (radioStatus === 'pending' &&
+                                            artist.validation === 'pending') ||
+                                          (radioStatus === 'validated' &&
+                                            artist.validation ===
+                                              'validated') ||
+                                          (radioStatus === 'refused' &&
+                                            artist.validation === 'refused')
+                                        ) {
+                                          return (
+                                            <tr
+                                              key={`${event.id}${artist.name}${i}`}
+                                            >
+                                              <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                <div className="flex px-2 py-1">
+                                                  <div className="flex flex-col justify-center">
+                                                    <div className="flex items-center">
+                                                      <div className="h-16 w-16 mr-2">
+                                                        <img
+                                                          className="rounded-full"
+                                                          src={`${import.meta.env.VITE_BACK_URL}${artist.image_url}`}
+                                                          alt=""
+                                                        />
+                                                      </div>
+                                                      <div className="flex flex-col">
+                                                        <h6 className="mb-0 text-sm leading-normal">
+                                                          {artist.name}
+                                                        </h6>
+                                                        <p className="mb-0 text-xs leading-tight text-slate-400">
+                                                          {artist.mail}
+                                                        </p>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </td>
+                                              <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                <p className="mb-0 text-xs font-semibold leading-tight">
+                                                  {event.name}
+                                                </p>
+                                                <p className="mb-0 text-xs font-semibold leading-tight">
+                                                  {event.region}
+                                                </p>
+                                              </td>
 
-                                      <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                        <a
-                                          href="javascript:;"
-                                          className="text-xs font-semibold leading-tight text-slate-400"
-                                        >
-                                          Edit
-                                        </a>
-                                      </td>
-                                    </tr>
+                                              <td className="p-2 text-sm leading-normal text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                <p
+                                                  className={`p-2.5 text-xs rounded-full inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none ${
+                                                    artist.validation ===
+                                                    'pending'
+                                                      ? 'bg-color-yellow-light text-color-yellow-dark'
+                                                      : artist.validation ===
+                                                          'validated'
+                                                        ? 'bg-color-green-light text-color-green-dark'
+                                                        : artist.validation ===
+                                                            'refused'
+                                                          ? 'bg-color-red-light text-color-red-dark'
+                                                          : ''
+                                                  }`}
+                                                >
+                                                  {artist.validation}
+                                                </p>
+                                              </td>
+
+                                              <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                                <span
+                                                  className="cursor-pointer text-xs font-semibold leading-tight text-slate-400"
+                                                  onClick={() => {
+                                                    document
+                                                      .getElementById('deals')
+                                                      .showModal();
+                                                    setIdUserStatus(
+                                                      parseInt(artist.id, 10)
+                                                    );
+                                                    setIdEventStatus(
+                                                      parseInt(event.id, 10)
+                                                    );
+                                                  }}
+                                                >
+                                                  Edit
+                                                </span>
+                                              </td>
+                                            </tr>
+                                          );
+                                        }
+                                      })
+                                    )}
                                   </tbody>
                                 </table>
                               </div>

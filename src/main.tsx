@@ -27,7 +27,7 @@ import { EventFormPage } from './components/Pages/EventForm.tsx';
 import createUploadLink from 'apollo-upload-client/createUploadLink.mjs';
 
 const uploadLink = createUploadLink({
-  uri: 'http://localhost:4000/',
+  uri: 'http://localhost:4000/graphql/',
 });
 
 // Ajouter ApolloClient
