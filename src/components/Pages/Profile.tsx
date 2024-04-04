@@ -25,6 +25,8 @@ import logo_twitter from '../../assets/images/logo_twitter.png';
 import logo_youtube from '../../assets/images/logo_youtube.png';
 import logo_instagram from '../../assets/images/logo_instagram.png';
 import ContactDetails from '../ContactDetails';
+import PopupEditDeals from '../PopupEditDeals';
+import { PopupEditSettings } from '../PopupEditSettings';
 
 interface FormData {
   name: string;
@@ -74,7 +76,7 @@ export default function Profile() {
     setSelectedTab(index);
   };
 
-  const dataLoad = useLoaderData();
+  // const dataLoad = useLoaderData();
 
   console.log(data);
 
@@ -152,7 +154,7 @@ export default function Profile() {
         <div className="flex flex-col py-px w-full h-[300px] bg-cover">
           <img
             src="https://static.vecteezy.com/system/resources/thumbnails/001/799/226/original/live-concert-4k-free-video.jpg"
-            alt=""
+            alt="banner"
             className="object-cover w-full h-full"
           />
         </div>
@@ -166,124 +168,15 @@ export default function Profile() {
             </div>
           </div>
 
-          {/* ===================================== */}
-          <dialog id="settings" className="modal">
-            <div className="modal-box bg-color-primary">
-              <h3 className="font-bold text-lg mb-8">Modifier mes données</h3>
-              <form onSubmit={handleFormSubmit} className="modal-backdrop">
-                <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-                  Nom :
-                  <input
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                    placeholder="Votre nom"
-                  />
-                </label>
-
-                <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-                  Région :
-                  <input
-                    type="text"
-                    value={formData.region}
-                    onChange={(e) =>
-                      setFormData({ ...formData, region: e.target.value })
-                    }
-                    placeholder="Votre région"
-                  />
-                </label>
-
-                <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-                  Description :
-                  <textarea
-                    className="input input-bordered flex items-center gap-2 bg-white w-full pr-0"
-                    type="text"
-                    value={formData.description}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        description: e.target.value,
-                      })
-                    }
-                    placeholder="Description"
-                  />
-                </label>
-
-                <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-                  code postal :
-                  <input
-                    type="texte"
-                    value={formData.zip_code}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        zip_code: parseInt(e.target.value, 10),
-                      })
-                    }
-                  />
-                </label>
-
-                <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-                  ville :
-                  <input
-                    type="text"
-                    value={formData.city}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        city: e.target.value,
-                      })
-                    }
-                  />
-                </label>
-
-                {role === 'Artiste' && (
-                  <>
-                    <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-                      Lien spotify :
-                      <input
-                        type="url"
-                        value={formData.spotify_link}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            spotify_link: e.target.value,
-                          })
-                        }
-                      />
-                    </label>
-
-                    <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-                      Lien Youtube :
-                      <input
-                        type="url"
-                        value={formData.youtube_link}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            youtube_link: e.target.value,
-                          })
-                        }
-                      />
-                    </label>
-                  </>
-                )}
-
-                <button className="text-right w-full text-white" type="submit">
-                  Enregistrer
-                </button>
-              </form>
-
-              <form method="dialog" className="modal-backdrop">
-                <button className="text-white">close</button>
-              </form>
-            </div>
-          </dialog>
+          <PopupEditSettings
+            handleFormSubmit={handleFormSubmit}
+            formData={formData}
+            setFormData={setFormData}
+            role={role}
+          />
           {/* ===================================== */}
 
-          <div className="flex flex-col md:flex-row justify-between my-5">
+          {/* <div className="flex flex-col md:flex-row justify-between my-5">
             <div className="flex flex-col">
               <div className="flex items-center">
                 <h1 className="text-black">{name}</h1>
@@ -329,7 +222,7 @@ export default function Profile() {
                 )}
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div role="tablist" className="tabs tabs-bordered my-10">
             <input
@@ -377,7 +270,7 @@ export default function Profile() {
                       </div>
                     )}
 
-                    <div className="bloc-white">
+                    {/* <div className="bloc-white">
                       <h2 className="text-black mb-4">Galerie photos</h2>
 
                       <div className="grid grid-cols-3 grid-rows-2 gap-4">
@@ -391,7 +284,7 @@ export default function Profile() {
                           </div>
                         ))}
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 <div className="col-span-12 md:col-span-4 my-10">
@@ -500,7 +393,7 @@ export default function Profile() {
             )}
             {settingsId && role === 'Organisateur' && (
               <>
-                <dialog id="deals" className="modal">
+                {/* <dialog id="deals" className="modal">
                   <div className="modal-box bg-color-primary">
                     <h3 className="font-bold text-lg mb-8">
                       Modifier le statut
@@ -527,7 +420,13 @@ export default function Profile() {
                       <button className="text-white">close</button>
                     </form>
                   </div>
-                </dialog>
+                </dialog> */}
+
+                <PopupEditDeals
+                  handleFormSubmitStatus={handleFormSubmitStatus}
+                  selectedStatus={selectedStatus}
+                  setSelectedStatus={setSelectedStatus}
+                />
 
                 <input
                   type="radio"
@@ -596,7 +495,7 @@ export default function Profile() {
 
                       {/* ===================================== */}
 
-                      <div className="flex flex-wrap -mx-3">
+                      {/* <div className="flex flex-wrap -mx-3">
                         <div className="flex-none w-full max-w-full px-3">
                           <div className="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border">
                             <div className="flex-auto px-0 pt-0 pb-2">
@@ -723,7 +622,7 @@ export default function Profile() {
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                     <div className="col-span-12 md:col-span-4">
                       <ContactDetails zip_code={zip_code} city={city} />
