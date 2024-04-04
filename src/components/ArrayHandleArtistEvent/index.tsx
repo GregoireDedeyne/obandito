@@ -8,7 +8,7 @@ export function ArrayHandleArtistEvent({ events }) {
   const token = useAppSelector((state) => state.decodedToken.token);
   console.log('events :', events);
 
-  const [selectedStatus, setSelectedStatus] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('pending');
   const [idUserStatus, setIdUserStatus] = useState();
   const [idEventStatus, setIdEventStatus] = useState();
 
@@ -82,8 +82,22 @@ export function ArrayHandleArtistEvent({ events }) {
                 <td className="px-6 py-4">{event.name}</td>
                 <td className="px-6 py-4">
                   <div className="flex items-center">
-                    <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div>
-                    {artist.validation}
+                    {artist.validation === 'validated' ? (
+                      <>
+                        <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div>
+                        <div>Validé</div>
+                      </>
+                    ) : artist.validation === 'pending' ? (
+                      <>
+                        <div className="h-2.5 w-2.5 rounded-full bg-orange-500 me-2"></div>
+                        <div>En attente</div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div>
+                        <div>Refusé</div>
+                      </>
+                    )}
                   </div>
                 </td>
                 <td className="px-6 py-4 text-center">

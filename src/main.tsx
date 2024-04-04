@@ -171,7 +171,7 @@ const ProfileOrganizerLoader = async ({ params }) => {
         Authorization: `Bearer ${store.getState().decodedToken.token}`,
       },
     },
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'no-cache',
   });
 
   return data;
