@@ -1,11 +1,11 @@
 import { NavLink } from 'react-router-dom';
 
-export default function ContactDetails({ zip_code, city }) {
+export default function ContactDetails({ zip_code, city, adress }) {
   return (
     <div className="bloc-white">
       <h2 className="text-black">Coordonnées</h2>
       <div className="adress flex flex-col">
-        <span className="mb-5">ADRESSE</span>
+        <span className="mb-5"> {adress}</span>
         <span>
           <span>{`${zip_code}, ${city}`}</span>
         </span>

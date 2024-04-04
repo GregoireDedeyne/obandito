@@ -8,8 +8,9 @@ import SocialMedia from '../SocialMedia';
 import { ArrayHandleArtistEvent } from '../ArrayHandleArtistEvent';
 import ProfilContentBlock from '../ProfilContentBlock';
 import { useState } from 'react';
+import { EventCard } from '../InfoHomeCard/EventsCards';
 
-export function TabsContent() {
+export function TabsContent({ data, id, userId, role }) {
   const [selectedTab, setSelectedTab] = useState(0);
 
   const handleTabClick = (i: number) => {
@@ -28,26 +29,29 @@ export function TabsContent() {
           checked={selectedTab === 0}
           onChange={() => handleTabClick(0)}
         />
+        {data.events && data.events.length > 0 && (
+          <input
+            type="radio"
+            name="my_tabs_1"
+            role="tab"
+            className="tab"
+            aria-label="Evènements"
+            checked={selectedTab === 1}
+            onChange={() => handleTabClick(1)}
+          />
+        )}
 
-        <input
-          type="radio"
-          name="my_tabs_1"
-          role="tab"
-          className="tab"
-          aria-label="Evènements"
-          checked={selectedTab === 1}
-          onChange={() => handleTabClick(1)}
-        />
-
-        <input
-          type="radio"
-          name="my_tabs_1"
-          role="tab"
-          className="tab"
-          aria-label="Deals"
-          checked={selectedTab === 2}
-          onChange={() => handleTabClick(2)}
-        />
+        {userId && role === 'Organisateur' && (
+          <input
+            type="radio"
+            name="my_tabs_1"
+            role="tab"
+            className="tab"
+            aria-label="Deals"
+            checked={selectedTab === 2}
+            onChange={() => handleTabClick(2)}
+          />
+        )}
       </div>
 
       <div className="bg-color-gray_light">
@@ -60,12 +64,16 @@ export function TabsContent() {
                   title="Présentation"
                   spotify=""
                   youtube=""
+                  description={data.description}
                 />
-                <ProfilContentBlock
-                  title="Musiques & clips"
-                  spotify="https://open.spotify.com/playlist/37i9dQZF1DZ06evO26xkaI?si=2f470c74f0d04b0a"
-                  youtube="https://www.youtube.com/watch?v=jGhnP-k4nR0"
-                />
+                {role === 'Artiste' ? (
+                  <ProfilContentBlock
+                    title="Musiques & clips"
+                    spotify={data.spotify_link}
+                    youtube={data.spotify_link}
+                    description=""
+                  />
+                ) : null}
               </>
             )}
 
@@ -106,9 +114,9 @@ export function TabsContent() {
                 <div className="bloc-white">
                   <h2>Evènements remportés</h2>
                   <div>
-                    {/* {events.map((event, index) => (
-                    <EventCard key={index} {...event} />
-                  ))} */}
+                    {data.events.map((event, index) => (
+                      <EventCard key={index} {...event} />
+                    ))}
                   </div>
                 </div>
               </>
@@ -157,7 +165,7 @@ export function TabsContent() {
                     Deals refusés
                   </label>
                 </div>
-                <ArrayHandleArtistEvent />
+                <ArrayHandleArtistEvent events={data.events} />
               </>
             )}
           </div>
@@ -165,7 +173,11 @@ export function TabsContent() {
           {/* grid right */}
           <div className="col-span-12 md:col-span-4 my-10">
             <div>
-              <ContactDetails zip_code="code" city="city" />
+              <ContactDetails
+                zip_code={data.zip_code}
+                city={data.city}
+                adress={data.adress}
+              />
 
               <div className="bloc-white my-10">
                 <h2 className="text-center text-black mb-5">En savoir plus</h2>

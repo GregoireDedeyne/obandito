@@ -1,13 +1,18 @@
 import ReactPlayer from 'react-player';
 import SpotifyPlayer from 'react-spotify-player';
-export default function ProfilContentBlock({ title, spotify, youtube }) {
+export default function ProfilContentBlock({
+  title,
+  spotify,
+  youtube,
+  description,
+}) {
   if (title === 'Présentation') {
     return (
       <div className="bloc-white mb-[50px]">
         <div className="flex items-center">
           <h2 className="text-black">{title}</h2>
         </div>
-        <p>Ma description</p>
+        <p>{description}</p>
       </div>
     );
   } else if (title === 'Musiques & clips') {

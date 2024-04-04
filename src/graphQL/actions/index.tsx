@@ -13,6 +13,9 @@ export const GET_ORGANIZER = gql`
       region
       zip_code
       description
+      role {
+        name
+      }
       events {
         id
         name
@@ -50,20 +53,6 @@ export const GET_ORGANIZER = gql`
   }
 `;
 
-export const GET_ORGAEVENT = gql`
-  query Event($organizerId: Int!) {
-    organizer(id: $organizerId) {
-      events {
-        artists {
-          validation
-          id
-        }
-        id
-      }
-    }
-  }
-`;
-
 export const GET_ARTISTE = gql`
   query Artist($artistId: Int!) {
     artist(id: $artistId) {
@@ -79,6 +68,9 @@ export const GET_ARTISTE = gql`
       youtube_link
       spotify_link
       validation
+      role {
+        name
+      }
       style {
         name
       }
