@@ -13,12 +13,6 @@ export const GET_ORGANIZER = gql`
       region
       zip_code
       description
-      youtube_link
-      spotify_link
-      validation
-      role {
-        name
-      }
       events {
         id
         name
@@ -34,18 +28,6 @@ export const GET_ORGANIZER = gql`
         organizer_id
         total_slots
         occupied_slots
-        organizer {
-          id
-          mail
-          name
-          image_url
-          address
-          city
-          region
-          zip_code
-          description
-          validation
-        }
         artists {
           id
           mail
@@ -57,12 +39,26 @@ export const GET_ORGANIZER = gql`
           zip_code
           description
           validation
+          style {
+            name
+          }
         }
         available
         finished
       }
-      style {
-        name
+    }
+  }
+`;
+
+export const GET_ORGAEVENT = gql`
+  query Event($organizerId: Int!) {
+    organizer(id: $organizerId) {
+      events {
+        artists {
+          validation
+          id
+        }
+        id
       }
     }
   }
@@ -84,9 +80,6 @@ export const GET_ARTISTE = gql`
       spotify_link
       validation
       style {
-        name
-      }
-      role {
         name
       }
       events {
@@ -114,9 +107,6 @@ export const GET_LASTARTISTS = gql`
       city
       name
       mail
-      role {
-        name
-      }
       region
       description
       image_url
@@ -349,12 +339,6 @@ export const GET_ONE_EVENT = gql`
   }
 `;
 
-export const POSTULATION_EVENT = gql`
-  mutation PostulationEvent($eventId: Int!) {
-    postulationEvent(eventId: $eventId)
-  }
-`;
-
 export const GET_STYLES = gql`
   query getStyles {
     styles {
@@ -372,6 +356,11 @@ export const CREATE_ACCOUNT = gql`
   }
 `;
 
+export const POSTULATION_EVENT = gql`
+  mutation PostulationEvent($eventId: Int!) {
+    postulationEvent(eventId: $eventId)
+  }
+`;
 export const CREATE_EVENT = gql`
   mutation Mutation($input: InputAddEvent!) {
     addEvent(input: $input) {
@@ -416,9 +405,7 @@ export const UPDATE_USER = gql`
       style {
         name
       }
-      role {
-        name
-      }
+
       events {
         id
         name

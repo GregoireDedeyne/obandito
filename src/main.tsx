@@ -21,7 +21,6 @@ import {
   GET_SEARCH_ARTISTSHOMEDATA,
   GET_SEARCH_EVENTSHOMEDATA,
 } from './graphQL/actions/index.tsx';
-import Profile from './components/Pages/Profile.tsx';
 import { EventPage } from './components/Pages/Event.tsx';
 import { EventFormPage } from './components/Pages/EventForm.tsx';
 import createUploadLink from 'apollo-upload-client/createUploadLink.mjs';
