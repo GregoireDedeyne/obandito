@@ -49,7 +49,7 @@ export function Cards({ data, title, subtitle }) {
         {data.map((card) => (
           <SwiperSlide className="shadow-sm">
             <Card
-              key={card?.image_url}
+              key={card?.id}
               image={card?.image_url}
               alt={card?.alt}
               name={card?.name}

@@ -58,11 +58,11 @@ export default function Profile() {
     setRadioStatus(status);
   };
 
-  console.log('selectedStatus :', selectedStatus);
+  // console.log('selectedStatus :', selectedStatus);
   // console.log('setSelectedStatus :', setSelectedStatus);
-  console.log('idUserStatus :', idUserStatus);
+  // console.log('idUserStatus :', idUserStatus);
   // console.log('setIdUserStatus :', setIdUserStatus);
-  console.log('idEventStatus :', idEventStatus);
+  // console.log('idEventStatus :', idEventStatus);
 
   const token = useAppSelector((state) => state.decodedToken.token);
 
@@ -627,6 +627,8 @@ export default function Profile() {
                                         //   'event.artists.id :',
                                         //   event.artists.id
                                         // );
+                                        console.log(artist.validation);
+
                                         if (
                                           radioStatus === 'tous' ||
                                           (radioStatus === 'pending' &&
