@@ -12,6 +12,7 @@ interface EventCardProps {
   organizer: { name: string };
   id: number;
   available: boolean;
+  validation: string;
 }
 
 export function EventCard({
@@ -25,8 +26,10 @@ export function EventCard({
   price,
   id,
   available,
+  validation,
 }: EventCardProps) {
   const islogged = useAppSelector((state) => state.decodedToken.islogged);
+  console.log(available);
 
   return (
     <NavLink to={islogged === false ? '/login ' : `/event/${id}`}>
@@ -70,6 +73,22 @@ export function EventCard({
                       <div>Non disponible</div>
                     </>
                   )}
+
+                  {validation === 'validated' ? (
+                    <div className="flex items-center">
+                      <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2">
+                        {' '}
+                      </div>
+                      <div> Validé </div>
+                    </div>
+                  ) : validation === 'pending' ? (
+                    <div className="flex items-center">
+                      <div className="h-2.5 w-2.5 rounded-full bg-orange-500 me-2">
+                        {' '}
+                      </div>
+                      <div> En attente de validation </div>
+                    </div>
+                  ) : null}
 
                   <div>·</div>
                   <div>Cachet : {price} €</div>

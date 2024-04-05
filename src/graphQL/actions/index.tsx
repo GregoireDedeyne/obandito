@@ -67,7 +67,7 @@ export const GET_ARTISTE = gql`
       description
       youtube_link
       spotify_link
-      validation
+
       role {
         name
       }
@@ -87,6 +87,8 @@ export const GET_ARTISTE = gql`
         catering
         price
         organizer_id
+        validation
+        available
       }
     }
   }

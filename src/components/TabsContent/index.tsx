@@ -43,6 +43,8 @@ export function TabsContent({ data, id, userId, role }: TabsContentProps) {
     setSelectedTab(i);
   };
 
+  console.log(data.events);
+
   return (
     <>
       <div role="tablist" className="tabs-bordered container mx-auto">
@@ -162,7 +164,21 @@ export function TabsContent({ data, id, userId, role }: TabsContentProps) {
                     <div className="bloc-white">
                       <h2>Evènements remportés</h2>
                       <div>
-                        {data.events.map((event, index) =>
+                        {data.events
+                          .filter((event) => {
+                            if (radioStatus === 'pending') {
+                              return event.validation === 'pending';
+                            } else if (radioStatus === 'validated') {
+                              return event.validation === 'validated';
+                            } else {
+                              return true; // Afficher tous les événements si l'option "Tous" est sélectionnée
+                            }
+                          })
+                          .map((event, index) => (
+                            <EventCard key={index} {...event} />
+                          ))}
+
+                        {/* {data.events.map((event, index) =>
                           event.artists.map(
                             (artist, artistIndex) =>
                               (artist.validation === radioStatus ||
@@ -182,18 +198,7 @@ export function TabsContent({ data, id, userId, role }: TabsContentProps) {
                                 </div>
                               )
                           )
-                        )}
-
-                        {/* {data.events.map((event, index) =>
-                        event.artists.map((artist, artistIndex) => (
-                          <div
-                            key={`${index}-${artistIndex}`}
-                            className="flex items-center"
-                          >
-                            <EventCard key={index} {...event} />
-                          </div>
-                        ))
-                      )} */}
+                        )} */}
                       </div>
                     </div>
                   </>

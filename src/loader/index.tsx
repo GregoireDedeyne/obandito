@@ -138,6 +138,7 @@ export const ProfileBandLoader = async ({ params }) => {
         Authorization: `Bearer ${store.getState().decodedToken.token}`,
       },
     },
+    fetchPolicy: 'no-cache',
   });
 
   return data;
