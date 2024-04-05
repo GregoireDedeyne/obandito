@@ -10,8 +10,34 @@ import ProfilContentBlock from '../ProfilContentBlock';
 import { useState } from 'react';
 import { EventCard } from '../InfoHomeCard/EventsCards';
 
-export function TabsContent({ data, id, userId, role }) {
-  const [selectedTab, setSelectedTab] = useState(0);
+interface Event {
+  id: number;
+  artists: Artist[];
+}
+
+interface Artist {
+  id: number;
+  validation: string;
+}
+
+interface TabsContentProps {
+  data: {
+    description: string;
+    spotify_link: string;
+    youtube_link: string;
+    events: Event[];
+    zip_code: string;
+    city: string;
+    adress: string;
+  };
+  id: number;
+  userId: number;
+  role: string;
+}
+
+export function TabsContent({ data, id, userId, role }: TabsContentProps) {
+  const [selectedTab, setSelectedTab] = useState<number>(0);
+  const [radioStatus, setRadioStatus] = useState<string>('tous');
 
   const handleTabClick = (i: number) => {
     setSelectedTab(i);
@@ -79,46 +105,99 @@ export function TabsContent({ data, id, userId, role }) {
 
             {selectedTab === 1 && (
               <>
-                <div className="flex space-x-4 items-center mb-2">
-                  <input
-                    type="radio"
-                    id="option1"
-                    name="options"
-                    className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
-                  />
-                  <label htmlFor="option1" className="text-gray-700">
-                    Tous
-                  </label>
-
-                  <input
-                    type="radio"
-                    id="option2"
-                    name="options"
-                    className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
-                  />
-                  <label htmlFor="option2" className="text-gray-700">
-                    Demandes en attente
-                  </label>
-
-                  <input
-                    type="radio"
-                    id="option3"
-                    name="options"
-                    className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
-                  />
-                  <label htmlFor="option3" className="text-gray-700">
-                    Demandes validées
-                  </label>
-                </div>
-
-                <div className="bloc-white">
-                  <h2>Evènements remportés</h2>
-                  <div>
-                    {data.events.map((event, index) => (
-                      <EventCard key={index} {...event} />
-                    ))}
+                {role === 'Organisateur' && (
+                  <div className="bloc-white">
+                    <h2>Mes Evènements</h2>
+                    <div>
+                      {data.events.map((event, index) => (
+                        <EventCard key={index} {...event} />
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
+
+                {role === 'Artiste' && (
+                  <>
+                    <div className="flex space-x-4 items-center mb-2">
+                      <input
+                        type="radio"
+                        id="option1"
+                        name="options"
+                        value="tous"
+                        className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                        checked={radioStatus === 'tous'}
+                        onChange={(e) => setRadioStatus(e.target.value)}
+                      />
+                      <label htmlFor="option1" className="text-gray-700">
+                        Tous
+                      </label>
+
+                      <input
+                        type="radio"
+                        id="option2"
+                        name="options"
+                        value="pending"
+                        className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                        checked={radioStatus === 'pending'}
+                        onChange={(e) => setRadioStatus(e.target.value)}
+                      />
+                      <label htmlFor="option2" className="text-gray-700">
+                        Demandes en attente
+                      </label>
+
+                      <input
+                        type="radio"
+                        id="option3"
+                        name="options"
+                        value="validated"
+                        className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                        checked={radioStatus === 'validated'}
+                        onChange={(e) => setRadioStatus(e.target.value)}
+                      />
+                      <label htmlFor="option3" className="text-gray-700">
+                        Demandes validées
+                      </label>
+                    </div>
+
+                    <div className="bloc-white">
+                      <h2>Evènements remportés</h2>
+                      <div>
+                        {data.events.map((event, index) =>
+                          event.artists.map(
+                            (artist, artistIndex) =>
+                              (artist.validation === radioStatus ||
+                                radioStatus === 'tous') && (
+                                <div
+                                  key={`${index}-${artistIndex}`}
+                                  className="flex items-center"
+                                >
+                                  {artist.validation === 'validated' ? (
+                                    <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div>
+                                  ) : artist.validation === 'pending' ? (
+                                    <div className="h-2.5 w-2.5 rounded-full bg-orange-500 me-2"></div>
+                                  ) : (
+                                    <div className="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div>
+                                  )}
+                                  <EventCard key={index} {...event} />
+                                </div>
+                              )
+                          )
+                        )}
+
+                        {/* {data.events.map((event, index) =>
+                        event.artists.map((artist, artistIndex) => (
+                          <div
+                            key={`${index}-${artistIndex}`}
+                            className="flex items-center"
+                          >
+                            <EventCard key={index} {...event} />
+                          </div>
+                        ))
+                      )} */}
+                      </div>
+                    </div>
+                  </>
+                )}
               </>
             )}
 
@@ -130,6 +209,9 @@ export function TabsContent({ data, id, userId, role }) {
                     id="option1"
                     name="options"
                     className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                    value="tous"
+                    checked={radioStatus === 'tous'}
+                    onChange={(e) => setRadioStatus(e.target.value)}
                   />
                   <label htmlFor="option1" className="text-gray-700">
                     Tous
@@ -140,6 +222,9 @@ export function TabsContent({ data, id, userId, role }) {
                     id="option2"
                     name="options"
                     className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                    value="pending"
+                    checked={radioStatus === 'pending'}
+                    onChange={(e) => setRadioStatus(e.target.value)}
                   />
                   <label htmlFor="option2" className="text-gray-700">
                     Deals en attentes
@@ -150,6 +235,9 @@ export function TabsContent({ data, id, userId, role }) {
                     id="option3"
                     name="options"
                     className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                    value="validated"
+                    checked={radioStatus === 'validated'}
+                    onChange={(e) => setRadioStatus(e.target.value)}
                   />
                   <label htmlFor="option3" className="text-gray-700">
                     Deals validés
@@ -160,12 +248,18 @@ export function TabsContent({ data, id, userId, role }) {
                     id="option4"
                     name="options"
                     className="h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                    value="refused"
+                    checked={radioStatus === 'refused'}
+                    onChange={(e) => setRadioStatus(e.target.value)}
                   />
                   <label htmlFor="option4" className="text-gray-700">
                     Deals refusés
                   </label>
                 </div>
-                <ArrayHandleArtistEvent events={data.events} />
+                <ArrayHandleArtistEvent
+                  events={data.events}
+                  radioStatus={radioStatus}
+                />
               </>
             )}
           </div>

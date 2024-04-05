@@ -9,7 +9,7 @@ interface EventCardProps {
   date: string;
   region: string;
   price: number;
-  organizer: string;
+  organizer: { name: string };
   id: number;
   available: boolean;
 }
@@ -51,7 +51,6 @@ export function EventCard({
                 <div className="flex gap-1.5 self-start mt-1.5 text-neutral-600">
                   {available === true ? (
                     <>
-                      {' '}
                       <img
                         loading="lazy"
                         src="https://cdn.builder.io/api/v1/image/assets/TEMP/bac38671888a46129a537a5a178fc1ef9ecfcd735f21eececc50cccff3b67569?apiKey=877605d91b494696bd5bbaa7fb33442f&"
@@ -62,7 +61,6 @@ export function EventCard({
                     </>
                   ) : (
                     <>
-                      {' '}
                       <img
                         loading="lazy"
                         src="https://cdn.builder.io/api/v1/image/assets/TEMP/bac38671888a46129a537a5a178fc1ef9ecfcd735f21eececc50cccff3b67569?apiKey=877605d91b494696bd5bbaa7fb33442f&"
