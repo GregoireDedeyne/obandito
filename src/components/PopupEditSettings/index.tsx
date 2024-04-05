@@ -1,3 +1,6 @@
+import { useMutation } from '@apollo/client';
+import { useState } from 'react';
+
 export function PopupEditSettings({
   handleFormSubmit,
   formData,
@@ -9,6 +12,17 @@ export function PopupEditSettings({
       <div className="modal-box bg-color-primary">
         <h3 className="font-bold text-lg mb-8">Modifier mes données</h3>
         <form onSubmit={handleFormSubmit} className="modal-backdrop">
+          <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
+            Image :
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) =>
+                setFormData({ ...formData, image_url: e.target.files[0] })
+              }
+            />
+          </label>
+
           <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
             Nom :
             <input
