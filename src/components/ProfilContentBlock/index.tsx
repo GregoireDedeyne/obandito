@@ -1,12 +1,19 @@
 import ReactPlayer from 'react-player';
 import SpotifyPlayer from 'react-spotify-player';
 
+interface ProfilContentBlockProps {
+  title: string;
+  spotify?: string;
+  youtube?: string;
+  description?: string;
+}
+
 export default function ProfilContentBlock({
   title,
   spotify,
   youtube,
   description,
-}) {
+}: ProfilContentBlockProps) {
   if (title === 'Présentation') {
     return (
       <div className="bloc-white mb-[50px]">
@@ -23,9 +30,21 @@ export default function ProfilContentBlock({
           <h2 className="text-black">{title}</h2>
         </div>
         <div className="my-4">
-          <SpotifyPlayer uri={spotify} size={{ width: '100%', height: 600 }} />
+          {spotify && (
+            <SpotifyPlayer
+              uri={spotify}
+              size={{ width: '100%', height: 600 }}
+            />
+          )}
         </div>
-        <ReactPlayer url={youtube} width="100%" height={500} controls={true} />
+        {youtube && (
+          <ReactPlayer
+            url={youtube}
+            width="100%"
+            height={500}
+            controls={true}
+          />
+        )}
       </div>
     );
   }

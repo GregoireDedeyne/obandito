@@ -3,8 +3,8 @@ export default function PopupEditDeals({
   selectedStatus,
   setSelectedStatus,
 }) {
-  console.log('selectedStatus', selectedStatus);
-  console.log('setSelectedStatus', setSelectedStatus);
+  // console.log('selectedStatus', selectedStatus);
+  // console.log('setSelectedStatus', setSelectedStatus);
 
   return (
     <dialog id="deals" className="modal">

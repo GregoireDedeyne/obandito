@@ -11,13 +11,9 @@ export default function ProfileBis() {
 
   const { id } = useParams();
   const userId = useAppSelector((state) => state.decodedToken.decodedData.id);
-  // console.log('data : ', data.organizer);
 
   const role = data.artist?.role?.name || data.organizer?.role?.name;
   const info = data?.artist || data?.organizer;
-
-  // console.log('info : ', info);
-  // console.log('info.name : ', info.name);
 
   return (
     <>
