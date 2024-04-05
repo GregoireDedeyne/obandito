@@ -3,6 +3,7 @@ import { useAppSelector } from '../../store/redux-hook';
 import PopupEditDeals from '../PopupEditDeals';
 import { HANDLEPOSTULATIONEVENT } from '../../graphQL/actions';
 import { useMutation } from '@apollo/client';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export function ArrayHandleArtistEvent({ events }) {
   const token = useAppSelector((state) => state.decodedToken.token);
@@ -15,6 +16,9 @@ export function ArrayHandleArtistEvent({ events }) {
   const [HandlePostulationEvent, { loading, error }] = useMutation(
     HANDLEPOSTULATIONEVENT
   );
+  const location = useLocation();
+
+  const navigate = useNavigate();
 
   const handleFormSubmitStatus = async (e) => {
     e.preventDefault();
@@ -32,6 +36,8 @@ export function ArrayHandleArtistEvent({ events }) {
           },
         },
       });
+      document.getElementById('deals').close();
+      navigate(`${location.pathname}`);
       console.log('Status à jour avec succès:', data);
     } catch (error) {
       console.error('Erreur:', error.message);
