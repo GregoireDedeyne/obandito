@@ -211,6 +211,24 @@ export function TabsContent({ data, idSettings, role }: TabsContentProps) {
                               )}
                             </div>
                           ))}
+
+                        {!idSettings && (
+                          <div>
+                            {data.events.map((event, index) =>
+                              event.validation === 'validated' ? (
+                                <div key={index} className="flex items-center">
+                                  <EventCard
+                                    key={index}
+                                    {...event}
+                                    validated={event.validation}
+                                  />
+                                </div>
+                              ) : (
+                                ''
+                              )
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </>
