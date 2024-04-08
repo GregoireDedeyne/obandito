@@ -3,7 +3,7 @@ import { ToastContainer } from 'react-toastify';
 
 export function LoginPage() {
   return (
-    <div className="bg-white h-full">
+    <div className="bg-white h-[40rem] justify-items-center	content-center">
       <div className="mx-auto container justify-items-center	content-center	">
         <ToastContainer />
         <LoginForm />

@@ -46,11 +46,11 @@ export function NotLogLayout() {
   console.log(data.styles);
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-full">
       <div className="sticky top-0 z-10">
         <Header genres={data.styles} />
       </div>
-      <div className="flex-grow bg-white">
+      <div className=" bg-white h-full">
         <Outlet />
       </div>
       <div className="bg-slate-900">

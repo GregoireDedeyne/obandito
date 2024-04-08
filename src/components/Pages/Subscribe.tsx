@@ -4,7 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export function SubscribePage() {
   return (
-    <div className="bg-white h-full">
+    <div className="bg-white h-[40rem]">
       <ToastContainer />
       <CreateAccountForm />
     </div>

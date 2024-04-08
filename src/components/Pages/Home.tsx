@@ -33,11 +33,15 @@ export function HomeNotLogPage() {
         {islogged === false ? (
           <div>
             <div className="container mx-auto" id="bands">
-              <Cards
-                data={data?.artists}
-                title={'Les derniers Artistes disponibles'}
-                subtitle={''}
-              />
+              {data?.artists.length > 0 ? (
+                <Cards
+                  data={data.artists}
+                  title={'Les derniers Artistes disponibles'}
+                  subtitle={''}
+                />
+              ) : (
+                <div className="text-center p-2 m-5">Pas de groupe trouvé</div>
+              )}
             </div>
             <div className="container mx-auto my-20" id="events">
               <ThirdView
@@ -48,16 +52,15 @@ export function HomeNotLogPage() {
           </div>
         ) : islogged === true && role === 'Organisateur' ? (
           <div className="container mx-auto" id="bands">
-            <CardsWithout
-              data={data?.artists}
-              title={'Les derniers Artistes disponibles'}
-              subtitle={''}
-            />
-            {/* <Cards
-              data={data?.lastArtists}
-              title={'Les derniers Artistes disponibles'}
-              subtitle={''}
-            /> */}
+            {data?.artists.length > 0 ? (
+              <CardsWithout
+                data={data.artists}
+                title={'Les derniers Artistes disponibles'}
+                subtitle={''}
+              />
+            ) : (
+              <div>Pas de groupe trouvé</div>
+            )}
           </div>
         ) : islogged === true && role === 'Artiste' ? (
           <div className="container mx-auto my-20" id="events">
