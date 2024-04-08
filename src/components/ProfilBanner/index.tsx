@@ -22,7 +22,12 @@ interface ProfilBannerProps {
   token: string;
 }
 
-export function ProfilBanner({ role, info, token }: ProfilBannerProps) {
+export function ProfilBanner({
+  role,
+  info,
+  token,
+  idSettings,
+}: ProfilBannerProps) {
   const [UpdateUser, { loading, error }] = useMutation(UPDATE_USER);
 
   const [formData, setFormData] = useState({
@@ -35,6 +40,8 @@ export function ProfilBanner({ role, info, token }: ProfilBannerProps) {
     youtube_link: info.youtube_link,
     image_url: info.image_url,
   });
+
+  // console.log('formData', formData);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -74,16 +81,15 @@ export function ProfilBanner({ role, info, token }: ProfilBannerProps) {
           <div className="flex flex-col">
             <div className="flex items-center">
               <h1 className="text-black">{info.name}</h1>
-              {/* {settingsId && ( */}
-              <FontAwesomeIcon
-                icon={faPencilAlt}
-                className="ml-3"
-                onClick={() => {
-                  document.getElementById('settings').showModal();
-                  // setSettings(!settings);
-                }}
-              />
-              {/* )} */}
+              {idSettings && (
+                <FontAwesomeIcon
+                  icon={faPencilAlt}
+                  className="ml-3 cursor-pointer"
+                  onClick={() => {
+                    document.getElementById('settings').showModal();
+                  }}
+                />
+              )}
 
               <PopupEditSettings
                 handleFormSubmit={handleFormSubmit}

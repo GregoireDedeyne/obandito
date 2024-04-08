@@ -7,6 +7,7 @@ export function PopupEditSettings({
   setFormData,
   role,
 }) {
+  console.log('formData2', formData);
   return (
     <dialog id="settings" className="modal">
       <div className="modal-box bg-color-primary">
@@ -17,9 +18,12 @@ export function PopupEditSettings({
             <input
               type="file"
               accept="image/*"
-              onChange={(e) =>
-                setFormData({ ...formData, image_url: e.target.files[0] })
-              }
+              onChange={(e) => {
+                const file = e.target.files[0];
+                if (file) {
+                  setFormData({ ...formData, image_url: file });
+                }
+              }}
             />
           </label>
 

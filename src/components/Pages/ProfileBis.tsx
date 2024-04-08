@@ -11,14 +11,20 @@ export default function ProfileBis() {
 
   const { id } = useParams();
   const userId = useAppSelector((state) => state.decodedToken.decodedData.id);
+  const idSettings = parseInt(id) === userId;
 
   const role = data.artist?.role?.name || data.organizer?.role?.name;
   const info = data?.artist || data?.organizer;
 
   return (
     <>
-      <ProfilBanner role={role} info={info} token={token} />
-      <TabsContent data={info} id={id} userId={userId} role={role} />
+      <ProfilBanner
+        role={role}
+        info={info}
+        token={token}
+        idSettings={idSettings}
+      />
+      <TabsContent data={info} idSettings={idSettings} role={role} />
     </>
   );
 }

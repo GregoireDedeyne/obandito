@@ -1,6 +1,18 @@
 import { NavLink } from 'react-router-dom';
 
-export default function ContactDetails({ zip_code, city, adress }) {
+interface ContactDetailsProps {
+  zip_code: string;
+  city: string;
+  adress: string;
+  role: string;
+}
+
+export default function ContactDetails({
+  zip_code,
+  city,
+  adress,
+  role,
+}: ContactDetailsProps) {
   return (
     <div className="bloc-white">
       <h2 className="text-black">Coordonnées</h2>
@@ -20,11 +32,14 @@ export default function ContactDetails({ zip_code, city, adress }) {
       <NavLink className="btn-secondary block text-center" to="/">
         Envoyer un message privé
       </NavLink>
-      <div className="my-1">
-        <NavLink className="btn-primary block text-center" to="/">
-          Proposer un deal
-        </NavLink>
-      </div>
+
+      {role === 'Organisateur' && (
+        <div className="my-1">
+          <NavLink className="btn-primary block text-center" to="/">
+            Proposer un deal
+          </NavLink>
+        </div>
+      )}
     </div>
   );
 }

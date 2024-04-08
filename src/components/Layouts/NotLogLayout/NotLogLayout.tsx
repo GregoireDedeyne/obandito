@@ -10,8 +10,6 @@ export function NotLogLayout() {
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
 
-  console.log(data.styles);
-
   return (
     <div className="flex flex-col h-screen">
       <div className="sticky top-0 z-10">
