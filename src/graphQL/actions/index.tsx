@@ -88,6 +88,7 @@ export const GET_ARTISTE = gql`
         city
         region
         date
+        validation
         zip_code
         description
         catering
@@ -95,6 +96,20 @@ export const GET_ARTISTE = gql`
         organizer_id
         validation
         available
+        artists {
+          id
+          mail
+          name
+          image_url
+          address
+          city
+          region
+          zip_code
+          description
+          youtube_link
+          spotify_link
+          validation
+        }
       }
     }
   }
@@ -429,6 +444,7 @@ export const UPDATE_USER = gql`
         organizer_id
         total_slots
         occupied_slots
+        validation
         available
       }
     }

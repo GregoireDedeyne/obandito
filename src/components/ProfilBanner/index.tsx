@@ -7,17 +7,30 @@ import { useState } from 'react';
 import { UPDATE_USER } from '../../graphQL/actions';
 import { useMutation } from '@apollo/client';
 
-interface FormData {
-  name: string;
-  region: string;
-  description: string;
-  zip_code: number;
-  city: string;
-  spotify_link: string;
-  youtube_link: string;
+interface ProfilBannerProps {
+  role: string;
+  info: {
+    name: string;
+    region: string;
+    description: string;
+    zip_code: number;
+    city: string;
+    spotify_link: string;
+    youtube_link: string;
+    image_url: string;
+  };
+  token: string;
 }
-export function ProfilBanner({ role, info, token, regions }) {
-  const [formData, setFormData] = useState<FormData>({
+
+export function ProfilBanner({
+  role,
+  info,
+  token,
+  idSettings,
+}: ProfilBannerProps) {
+  const [UpdateUser, { loading, error }] = useMutation(UPDATE_USER);
+
+  const [formData, setFormData] = useState({
     name: info.name,
     region: info.region,
     description: info.description,
@@ -25,26 +38,20 @@ export function ProfilBanner({ role, info, token, regions }) {
     city: info.city,
     spotify_link: info.spotify_link,
     youtube_link: info.youtube_link,
+    image_url: info.image_url,
   });
 
-  const [UpdateUser, { loading, error }] = useMutation(UPDATE_USER);
+  // console.log('formData', formData);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const { data } = await UpdateUser({
-        variables: {
-          input: {
-            ...formData,
-          },
-        },
-        context: {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
+        variables: { input: { ...formData } },
+        context: { headers: { Authorization: `Bearer ${token}` } },
       });
+
       console.log('Données mises à jour avec succès:', data);
     } catch (error) {
       console.error('Erreur:', error.message);
@@ -74,16 +81,15 @@ export function ProfilBanner({ role, info, token, regions }) {
           <div className="flex flex-col">
             <div className="flex items-center">
               <h1 className="text-black">{info.name}</h1>
-              {/* {settingsId && ( */}
-              <FontAwesomeIcon
-                icon={faPencilAlt}
-                className="ml-3"
-                onClick={() => {
-                  document.getElementById('settings').showModal();
-                  // setSettings(!settings);
-                }}
-              />
-              {/* )} */}
+              {idSettings && (
+                <FontAwesomeIcon
+                  icon={faPencilAlt}
+                  className="ml-3 cursor-pointer"
+                  onClick={() => {
+                    document.getElementById('settings').showModal();
+                  }}
+                />
+              )}
 
               <PopupEditSettings
                 handleFormSubmit={handleFormSubmit}

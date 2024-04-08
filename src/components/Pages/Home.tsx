@@ -25,9 +25,9 @@ export function HomeNotLogPage() {
               "url('https://cdn.builder.io/api/v1/image/assets/TEMP/f78fd4dbe073ea1a52fe2d59039f35efc38106dbb881a1d301e9ddd960269c08?apiKey=877605d91b494696bd5bbaa7fb33442f&')",
           }}
         >
-          <div className="container mx-auto">
-            <FirstViewHome />
-          </div>
+          {/* <div className="container mx-auto"> */}
+          <FirstViewHome />
+          {/* </div> */}
         </div>
 
         {islogged === false ? (

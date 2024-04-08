@@ -47,9 +47,8 @@ export function Cards({ data, title, subtitle }) {
         className="mySwiper h-4/5 w-4/5 "
       >
         {data.map((card) => (
-          <SwiperSlide className="shadow-sm">
+          <SwiperSlide className="shadow-sm" key={card?.id}>
             <Card
-              key={card?.id}
               image={card?.image_url}
               alt={card?.alt}
               name={card?.name}

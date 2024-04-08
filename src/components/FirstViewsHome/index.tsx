@@ -31,7 +31,7 @@ export function FirstViewHome() {
     setSearchTerm('');
   };
   return (
-    <div className="flex flex-col py-px max-md:max-w-full bg-cover">
+    <div className="flex flex-col py-px max-md:max-w-full bg-cover container mx-auto">
       <header className="flex overflow-hidden relative flex-col justify-end pt-16 pb-5 w-full min-h-[575px] max-md:px-5 max-md:max-w-full">
         <div className="relative pb-8 max-md:max-w-full">
           <div className="flex gap-5 max-md:flex-col max-md:gap-0">
@@ -89,7 +89,7 @@ export function FirstViewHome() {
               <div className="flex relative grow gap-5 justify-end text-base text-center max-md:flex-wrap max-md:mt-10">
                 {islogged === false ? (
                   <NavLink
-                    to={'/'}
+                    to={'/login'}
                     className={`justify-center px-9 py-5 text-white bg-rose-500 border border-rose-500 border-solid leading-[100%] rounded-[48px] max-md:px-5 hover:bg-purple-800 hover:border-purple-800`}
                   >
                     {' '}
@@ -125,7 +125,7 @@ export function FirstViewHome() {
                   ) : null}
                   {islogged === false ? (
                     <NavLink
-                      to={'/'}
+                      to={'/login'}
                       className="justify-center px-2.5 py-1.5 font-bold text-purple-800 border-b-2 border-transparent hover:border-b-2 hover:border-purple-800 border-solid leading-[128%] hover:text-rose-500"
                     >
                       Déposer un événement
