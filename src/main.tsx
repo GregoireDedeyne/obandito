@@ -25,6 +25,7 @@ import {
   ProfileBandLoader,
   ProfileOrganizerLoader,
   RegionLoader,
+  RegionSelectLoader,
 } from './loader/index.tsx';
 
 const uploadLink = createUploadLink({
@@ -76,6 +77,7 @@ const router = createBrowserRouter([
       {
         path: '/subscribe',
         element: <SubscribePage />,
+        loader: RegionSelectLoader,
       },
       {
         path: '/login',

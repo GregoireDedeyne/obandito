@@ -27,6 +27,9 @@ export function FirstViewHome() {
 
   const [searchTerm, setSearchTerm] = useState('');
 
+  const handleSearch = () => {
+    setSearchTerm('');
+  };
   return (
     <div className="flex flex-col py-px max-md:max-w-full bg-cover">
       <header className="flex overflow-hidden relative flex-col justify-end pt-16 pb-5 w-full min-h-[575px] max-md:px-5 max-md:max-w-full">
@@ -95,6 +98,7 @@ export function FirstViewHome() {
                 ) : islogged === true && role === 'Organisateur' ? (
                   <NavLink to={`/artists/search/${searchTerm}`}>
                     <button
+                      onClick={handleSearch}
                       className={`justify-center px-9 py-5 text-white bg-rose-500 border border-rose-500 border-solid leading-[100%] rounded-[48px] max-md:px-5 hover:bg-purple-800 hover:border-purple-800`}
                     >
                       {' '}
@@ -104,6 +108,7 @@ export function FirstViewHome() {
                 ) : islogged === true && role === 'Artiste' ? (
                   <NavLink to={`/events/search/${searchTerm}`}>
                     <button
+                      onClick={handleSearch}
                       className={`justify-center px-9 py-5 text-white bg-rose-500 border border-rose-500 border-solid leading-[100%] rounded-[48px] max-md:px-5 hover:bg-purple-800 hover:border-purple-800`}
                     >
                       {' '}

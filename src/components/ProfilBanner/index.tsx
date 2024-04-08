@@ -16,7 +16,7 @@ interface FormData {
   spotify_link: string;
   youtube_link: string;
 }
-export function ProfilBanner({ role, info, token }) {
+export function ProfilBanner({ role, info, token, regions }) {
   const [formData, setFormData] = useState<FormData>({
     name: info.name,
     region: info.region,
@@ -90,6 +90,7 @@ export function ProfilBanner({ role, info, token }) {
                 formData={formData}
                 setFormData={setFormData}
                 role={role}
+                regions={regions}
               />
             </div>
 

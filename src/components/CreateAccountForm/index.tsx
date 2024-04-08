@@ -4,13 +4,16 @@ import { RoleSelectionCard } from '../RoleSelectionCard';
 import Image from '../../assets/images/bandPict.jpg';
 import Image2 from '../../assets/images/bandPict2.jpg';
 import Image3 from '../../assets/images/orga.jpg';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLoaderData } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { CREATE_ACCOUNT } from '../../graphQL/actions';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 export function CreateAccountForm() {
+  const datas = useLoaderData();
+  const regions = datas.regions;
+
   const navigate = useNavigate();
 
   // Add const for graph QL function with the CREATE_ACCOUNT action
@@ -121,11 +124,22 @@ export function CreateAccountForm() {
               value={formData.confirmPassword}
               onChange={handleChange}
             />
-            <InputField
+
+            <select
+              className="select select-bordered w-full max-w-xsflex items-center my-2  bg-slate-100"
               inputName="region"
               value={formData.region}
               onChange={handleChange}
-            />
+            >
+              <option value="" disabled selected>
+                Choississez votre région
+              </option>
+              {regions.map((region) => (
+                <option key={region.nom} value={region.nom}>
+                  {region.nom}
+                </option>
+              ))}
+            </select>
 
             <p className="text-gray-500">
               En cliquant sur s’inscrire, vous acceptez les conditions générales

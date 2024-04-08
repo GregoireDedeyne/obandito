@@ -3,6 +3,7 @@ export function PopupEditSettings({
   formData,
   setFormData,
   role,
+  regions,
 }) {
   return (
     <dialog id="settings" className="modal">
@@ -22,19 +23,28 @@ export function PopupEditSettings({
           </label>
 
           <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-            Région :
-            <input
-              type="text"
+            Région
+            <select
+              className="select select-bordered w-full max-w-xsflex items-center my-2  bg-slate-100"
+              inputName="region"
               value={formData.region}
               onChange={(e) =>
                 setFormData({ ...formData, region: e.target.value })
               }
-              placeholder="Votre région"
-            />
+            >
+              <option value="" disabled selected>
+                Choississez votre région
+              </option>
+              {regions.map((region) => (
+                <option key={region.nom} value={region.nom}>
+                  {region.nom}
+                </option>
+              ))}
+            </select>
           </label>
 
           <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-            Description :
+            Description
             <textarea
               className="input input-bordered flex items-center gap-2 bg-white w-full pr-0"
               type="text"

@@ -38,6 +38,8 @@ export function Header({ genres }) {
 
   const handleLogout = () => {
     dispatch(logout());
+    localStorage.removeItem('token');
+
     navigate('/', { replace: true });
   };
 

@@ -41,14 +41,14 @@ export function Localisation({ locations }) {
 
       {islogged === false ? (
         <div className="flex flex-col justify-center w-full">
-          <div className="flex flex-col w-full">
+          <div className="flex flex-col w-full mt-5">
             <div className="flex flex-col w-full">
               <section className="flex flex-col justify-center w-full">
                 <div className="flex flex-col px-5 w-full">
                   <div className="w-full text-xl font-semibold leading-6 text-neutral-700">
                     Lorem ipsum dolor sit{' '}
                   </div>
-                  <div className="mt-1 w-full text-base leading-6 text-neutral-600">
+                  <div className="w-full text-base leading-6 text-neutral-600 mt-3">
                     Corem ipsum dolor sit amet, consectetur adipiscing elit.
                     Nunc vulputate libero et velit interdum, ac aliquet odio
                     mattis.

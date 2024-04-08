@@ -7,6 +7,7 @@ import {
   GET_MOREHOMEDATA,
   GET_ONE_EVENT,
   GET_ORGANIZER,
+  GET_REGION,
   GET_SEARCH_ARTISTSHOMEDATA,
   GET_SEARCH_EVENTSHOMEDATA,
 } from '../graphQL/actions/index.tsx';
@@ -120,6 +121,14 @@ export const EventLoader = async ({ params }) => {
         Authorization: `Bearer ${store.getState().decodedToken.token}`,
       },
     },
+  });
+
+  return data;
+};
+
+export const RegionSelectLoader = async () => {
+  const { data } = await client.query({
+    query: GET_REGION,
   });
 
   return data;

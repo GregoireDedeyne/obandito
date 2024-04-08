@@ -14,10 +14,13 @@ export default function ProfileBis() {
 
   const role = data.artist?.role?.name || data.organizer?.role?.name;
   const info = data?.artist || data?.organizer;
+  const regions = data?.regions;
+
+  console.log(info);
 
   return (
     <>
-      <ProfilBanner role={role} info={info} token={token} />
+      <ProfilBanner role={role} info={info} token={token} regions={regions} />
       <TabsContent data={info} id={id} userId={userId} role={role} />
     </>
   );

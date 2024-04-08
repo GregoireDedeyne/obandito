@@ -3,6 +3,9 @@ import { gql } from '@apollo/client';
 // Query
 export const GET_ORGANIZER = gql`
   query Organizer($organizerId: Int!) {
+    regions {
+      nom
+    }
     organizer(id: $organizerId) {
       id
       mail
@@ -55,6 +58,9 @@ export const GET_ORGANIZER = gql`
 
 export const GET_ARTISTE = gql`
   query Artist($artistId: Int!) {
+    regions {
+      nom
+    }
     artist(id: $artistId) {
       id
       mail
@@ -90,6 +96,14 @@ export const GET_ARTISTE = gql`
         validation
         available
       }
+    }
+  }
+`;
+
+export const GET_REGION = gql`
+  query Regions {
+    regions {
+      nom
     }
   }
 `;
