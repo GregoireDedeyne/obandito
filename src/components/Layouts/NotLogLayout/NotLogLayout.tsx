@@ -8,6 +8,7 @@ import * as jose from 'jose';
 import { TextEncoder } from 'text-encoding';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+
 export function NotLogLayout() {
   const { data, loading, error } = useQuery(GET_STYLES);
 
@@ -41,6 +42,8 @@ export function NotLogLayout() {
 
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
+
+  console.log(data.styles);
 
   return (
     <div className="flex flex-col h-screen">

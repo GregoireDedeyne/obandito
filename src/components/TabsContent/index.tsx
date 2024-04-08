@@ -193,7 +193,7 @@ export function TabsContent({ data, idSettings, role }: TabsContentProps) {
                     <div className="bloc-white">
                       <h2>Evènements remportés</h2>
                       <div>
-                        {data.events
+                        {/* {data.events
                           .filter((event) => {
                             if (radioStatus === 'pending') {
                               return event.validation === 'pending';
@@ -205,9 +205,9 @@ export function TabsContent({ data, idSettings, role }: TabsContentProps) {
                           })
                           .map((event, index) => (
                             <EventCard key={index} {...event} />
-                          ))}
+                          ))} */}
 
-                        {/* {idSettings &&
+                        {idSettings &&
                           data.events.map((event, index) => (
                             <div key={index} className="flex items-center">
                               {radioStatus === 'tous' ||

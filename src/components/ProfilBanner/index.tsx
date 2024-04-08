@@ -27,6 +27,7 @@ export function ProfilBanner({
   info,
   token,
   idSettings,
+  regions,
 }: ProfilBannerProps) {
   const [UpdateUser, { loading, error }] = useMutation(UPDATE_USER);
 
