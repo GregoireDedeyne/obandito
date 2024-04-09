@@ -1,6 +1,6 @@
 import { faMapMarkerAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { Stars } from '../Stars';
 import { PopupEditSettings } from '../PopupEditSettings';
 import { useState } from 'react';
@@ -44,7 +44,7 @@ export function ProfilBanner({
     youtube_link: info.youtube_link,
     image_url: null,
   });
-
+  const location = useLocation();
   // console.log('formData', formData);
 
   const handleFormSubmit = async (e) => {
@@ -63,6 +63,7 @@ export function ProfilBanner({
 
       console.log('Données mises à jour avec succès:', data);
       document.getElementById('settings').close();
+      window.location.href = location.pathname;
     } catch (error) {
       console.error('Erreur:', error.message);
     }

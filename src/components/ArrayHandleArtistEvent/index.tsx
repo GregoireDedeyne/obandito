@@ -60,7 +60,9 @@ export function ArrayHandleArtistEvent({
         },
       });
       document.getElementById('deals').close();
-      navigate(`${location.pathname}`);
+
+      window.location.href = location.pathname;
+
       console.log('Status à jour avec succès:', data);
     } catch (error) {
       console.error('Erreur:', error.message);

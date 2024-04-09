@@ -16,7 +16,7 @@ export function CardsWithout({ data, title, subtitle }) {
 
       <div className="flex flex-wrap bg-white py-20 bloc-white pb-5">
         {data.map((card) => (
-          <div className="w-[33%] py-5" key={card?.id}>
+          <div className="w-[25%] py-5 " key={card?.id}>
             <Card
               image={card?.image_url}
               alt={card?.alt}
