@@ -3,7 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import { InputField } from '../InputField';
 import Image from '../../assets/images/bandPict3.jpg';
-import { NavLink } from 'react-router-dom';
+import { NavLink, redirect } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN_MUTATION } from '../../graphQL/actions';
 import { useNavigate } from 'react-router-dom';

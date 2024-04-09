@@ -14,6 +14,7 @@ import {
 import createUploadLink from 'apollo-upload-client/createUploadLink.mjs';
 
 const token = localStorage.getItem('token');
+console.log(token);
 
 const uploadLink = createUploadLink({
   uri: 'http://localhost:4000/graphql/',
