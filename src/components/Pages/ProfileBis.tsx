@@ -20,7 +20,7 @@ export default function ProfileBis() {
   console.log(info);
 
   return (
-    <div>
+    <div className="w-full">
       <ProfilBanner
         role={role}
         info={info}

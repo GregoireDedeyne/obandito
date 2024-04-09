@@ -55,7 +55,7 @@ export function EventPage() {
 
   return (
     <>
-      <div className="bg-white">
+      <div className="bg-white w-full">
         <div
           className="flex flex-col justify-end pl-5 pb-5 w-full h-[600px] bg-cover bg-center"
           style={{ backgroundImage: `url(${img})` }}
