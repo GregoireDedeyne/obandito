@@ -20,7 +20,7 @@ export default function ProfileBis() {
   console.log(info);
 
   return (
-    <>
+    <div>
       <ProfilBanner
         role={role}
         info={info}
@@ -29,6 +29,6 @@ export default function ProfileBis() {
         idSettings={idSettings}
       />
       <TabsContent data={info} idSettings={idSettings} role={role} />
-    </>
+    </div>
   );
 }
