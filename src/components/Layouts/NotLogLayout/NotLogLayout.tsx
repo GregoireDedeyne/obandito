@@ -1,5 +1,6 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Header } from '../../HeaderTop';
+import Example from '../../HeaderTop/test';
 import { Footer } from '../../Footer';
 import { useQuery } from '@apollo/client';
 import { GET_STYLES } from '../../../graphQL/actions';
