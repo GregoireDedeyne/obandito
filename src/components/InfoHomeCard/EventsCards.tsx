@@ -42,7 +42,7 @@ export function EventCard({
               loading="lazy"
               src={`${import.meta.env.VITE_BACK_URL}${image_url}`}
               alt=""
-              className="object-cover w-full h-full"
+              className="object-cover w-full h-full rounded-xl"
             />
           </div>
           <div className="flex flex-col ml-0 lg:ml-5 mt-4 lg:mt-0 w-full">
