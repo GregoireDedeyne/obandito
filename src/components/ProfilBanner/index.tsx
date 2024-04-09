@@ -18,7 +18,7 @@ interface ProfilBannerProps {
     city: string;
     spotify_link: string;
     youtube_link: string;
-    image_url: string;
+    image_url: URL;
   };
   token: string;
 }
@@ -40,7 +40,7 @@ export function ProfilBanner({
     city: info.city,
     spotify_link: info.spotify_link,
     youtube_link: info.youtube_link,
-    image_url: info.image_url,
+    image_url: null,
   });
 
   // console.log('formData', formData);
@@ -49,12 +49,18 @@ export function ProfilBanner({
     e.preventDefault();
 
     try {
+      // Filtrer les propriétés null dans formData
+      const filteredData = Object.fromEntries(
+        Object.entries(formData).filter(([key, value]) => value !== null)
+      );
+
       const { data } = await UpdateUser({
-        variables: { input: { ...formData } },
+        variables: { input: { ...filteredData } },
         context: { headers: { Authorization: `Bearer ${token}` } },
       });
 
       console.log('Données mises à jour avec succès:', data);
+      document.getElementById('settings').close();
     } catch (error) {
       console.error('Erreur:', error.message);
     }
