@@ -46,7 +46,10 @@ export function Faq() {
   ];
 
   return (
-    <section className="flex flex-col justify-center px-4 py-20 bg-slate-200">
+    <section
+      className="flex flex-col justify-center px-4 py-20 bg-slate-200"
+      id="propos"
+    >
       <h1 className="justify-center self-center text-3xl font-bold leading-9 text-center text-purple-800 max-md:max-w-full">
         Questions fréquemment posées sur{' '}
         <span className="text-rose-500">O'</span>

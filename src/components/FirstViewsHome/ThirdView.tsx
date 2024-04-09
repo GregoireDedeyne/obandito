@@ -16,7 +16,7 @@ export function ThirdView({ events, locations }) {
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center" id="events">
       <Localisation locations={locations} />
       <div className="flex flex-col  max-w-[825px] items-center xl:ml-48 lg:mt-0">
         <h2 className="w-full text-xl font-semibold leading-6 text-neutral-700 max-md:max-w-full">

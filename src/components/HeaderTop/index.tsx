@@ -40,11 +40,11 @@ export function Header({ genres }) {
     navigate('/', { replace: true });
   };
   return (
-    <div>
+    <>
       <Disclosure as="nav" className="bg-white shadow">
-        {({ open }) => (
+        {({ open, close }) => (
           <>
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto container px-4 sm:px-6 lg:px-8">
               <div className="flex  items-center h-16 justify-between">
                 <div className="flex items-baseline">
                   <div className="flex flex-shrink-0 items-center">
@@ -58,39 +58,24 @@ export function Header({ genres }) {
                   </div>
                   <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                     {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
-                    <nav
-                      onClick={() => {
-                        const events = document.getElementById('events');
-                        if (events) {
-                          events.scrollIntoView({ behavior: 'smooth' });
-                        }
-                      }}
+                    <NavLink
+                      to={'/#events'}
                       className="inline-flex items-center h-fit hover:bg-rose-500 rounded-md p-3 py-2 text-sm font-medium cursor-pointer hover:text-white text-gray-900"
                     >
                       Évenements
-                    </nav>
-                    <a
-                      onClick={() => {
-                        const bands = document.getElementById('bands');
-                        if (bands) {
-                          bands.scrollIntoView({ behavior: 'smooth' });
-                        }
-                      }}
+                    </NavLink>
+                    <NavLink
+                      to={'/#bands'}
                       className="inline-flex items-center h-fit hover:bg-rose-500 rounded-md px-3 py-2 text-sm font-medium cursor-pointer hover:text-white text-gray-900"
                     >
                       Groupes
-                    </a>
-                    <a
-                      onClick={() => {
-                        const propos = document.getElementById('propos');
-                        if (propos) {
-                          propos.scrollIntoView({ behavior: 'smooth' });
-                        }
-                      }}
+                    </NavLink>
+                    <NavLink
+                      to={'/#propos'}
                       className="inline-flex items-center h-fit hover:bg-rose-500 rounded-md p-3 py-2 text-sm font-medium cursor-pointer hover:text-white text-gray-900"
                     >
                       À propos
-                    </a>
+                    </NavLink>
                   </div>
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:items-center">
@@ -170,12 +155,14 @@ export function Header({ genres }) {
                       >
                         M'inscrire
                       </NavLink>
-                      <NavLink
-                        className="justify-center self-center px-5 py-2 text-sm hover:text-rose-500 text-slate-900"
-                        to={'/login'}
-                      >
-                        Connexion
-                      </NavLink>
+                      <Disclosure.Button>
+                        <NavLink
+                          className="justify-center self-center px-5 py-2 text-sm hover:text-rose-500 text-slate-900"
+                          to={'/login'}
+                        >
+                          Connexion
+                        </NavLink>
+                      </Disclosure.Button>
                     </>
                   )}
                 </div>
@@ -197,38 +184,54 @@ export function Header({ genres }) {
               <div className="space-y-1 pb-3 pt-2 text-black">
                 {/* Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" */}
                 <Disclosure.Button
-                  as="a"
-                  href="#"
-                  className="block border-l-4 hover:border-l-rose-500 hover:rose-indigo-500 hover:bg-rose-50 py-2 pl-3 pr-4 text-base font-medium hover:text-rose-700"
+                  onClick={() => {
+                    const events = document.getElementById('events');
+                    if (events) {
+                      events.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                  className=" border-l-4 w-full flex hover:border-l-rose-500 hover:rose-indigo-500 hover:bg-rose-50 py-2 pl-3 pr-4 text-base font-medium hover:text-rose-700"
                 >
                   Évenements
                 </Disclosure.Button>
                 <Disclosure.Button
-                  as="a"
-                  href="#"
-                  className="block border-l-4 hover:border-l-rose-500 hover:rose-indigo-500 hover:bg-rose-50 py-2 pl-3 pr-4 text-base font-medium hover:text-rose-700"
+                  onClick={() => {
+                    const bands = document.getElementById('bands');
+                    if (bands) {
+                      bands.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                  className=" border-l-4 w-full flex hover:border-l-rose-500 hover:rose-indigo-500 hover:bg-rose-50 py-2 pl-3 pr-4 text-base font-medium hover:text-rose-700"
                 >
                   Groupes
                 </Disclosure.Button>
                 <Disclosure.Button
-                  as="a"
-                  href="#"
-                  className="block border-l-4 hover:border-l-rose-500 hover:rose-indigo-500 hover:bg-rose-50 py-2 pl-3 pr-4 text-base font-medium hover:text-rose-700"
+                  onClick={() => {
+                    const propos = document.getElementById('propos');
+                    if (propos) {
+                      propos.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                  className=" border-l-4 w-full flex hover:border-l-rose-500 hover:rose-indigo-500 hover:bg-rose-50 py-2 pl-3 pr-4 text-base font-medium hover:text-rose-700"
                 >
                   À propos
                 </Disclosure.Button>
                 {islogged === false && (
                   <>
-                    <Disclosure.Button
-                      as="a"
-                      href="#"
-                      className="block border-l-4 hover:border-l-rose-500 hover:rose-indigo-500 hover:bg-rose-50 py-2 pl-3 pr-4 text-base font-medium hover:text-rose-700"
+                    <NavLink
+                      to="/subscribe"
+                      className="block border-l-4 hover:border-l-rose-500 hover:bg-rose-50 py-2 pl-3 pr-4 text-base font-medium hover:text-rose-700"
+                      onClick={() => close()}
                     >
-                      <NavLink to={'/subscribe'}>Inscription</NavLink>
-                    </Disclosure.Button>
-                    <Disclosure.Button className="block border-l-4 hover:border-l-rose-500 hover:rose-indigo-500 hover:bg-rose-50 py-2 pl-3 pr-4 text-base font-medium hover:text-rose-700">
-                      <NavLink to={'/login'}>Connexion</NavLink>
-                    </Disclosure.Button>
+                      Inscription
+                    </NavLink>
+                    <NavLink
+                      to="/login"
+                      className="block border-l-4 hover:border-l-rose-500 hover:bg-rose-50 py-2 pl-3 pr-4 text-base font-medium hover:text-rose-700"
+                      onClick={() => close()}
+                    >
+                      Connexion
+                    </NavLink>
                   </>
                 )}
               </div>
@@ -260,16 +263,11 @@ export function Header({ genres }) {
                           : `/profile/organizer/${id}`
                       }
                     >
-                      <Disclosure.Button
-                        as="a"
-                        href="#"
-                        className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
-                      >
+                      <Disclosure.Button className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800">
                         Mon Profil
                       </Disclosure.Button>
                     </NavLink>
                     <Disclosure.Button
-                      as="a"
                       onClick={handleLogout}
                       className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 cursor-pointer"
                     >
@@ -308,6 +306,6 @@ export function Header({ genres }) {
       islogged === true && role === 'Artiste' ? (
         ''
       ) : null}
-    </div>
+    </>
   );
 }
