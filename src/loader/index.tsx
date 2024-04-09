@@ -12,7 +12,9 @@ import {
   GET_SEARCH_EVENTSHOMEDATA,
 } from '../graphQL/actions/index.tsx';
 import createUploadLink from 'apollo-upload-client/createUploadLink.mjs';
-import store from '../store/index.ts';
+
+const token = localStorage.getItem('token');
+console.log(token);
 
 const uploadLink = createUploadLink({
   uri: 'http://localhost:4000/graphql/',
@@ -118,7 +120,7 @@ export const EventLoader = async ({ params }) => {
     },
     context: {
       headers: {
-        Authorization: `Bearer ${store.getState().decodedToken.token}`,
+        Authorization: `Bearer ${token}`,
       },
     },
   });
@@ -144,7 +146,7 @@ export const ProfileBandLoader = async ({ params }) => {
     },
     context: {
       headers: {
-        Authorization: `Bearer ${store.getState().decodedToken.token}`,
+        Authorization: `Bearer ${token}`,
       },
     },
     fetchPolicy: 'no-cache',
@@ -166,7 +168,7 @@ export const ProfileOrganizerLoader = async ({ params }) => {
     },
     context: {
       headers: {
-        Authorization: `Bearer ${store.getState().decodedToken.token}`,
+        Authorization: `Bearer ${token}`,
       },
     },
     fetchPolicy: 'no-cache',

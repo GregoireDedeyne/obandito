@@ -14,6 +14,7 @@ interface ProfilBannerProps {
     name: string;
     region: string;
     description: string;
+    address: string;
     zip_code: number;
     city: string;
     spotify_link: string;
@@ -36,6 +37,7 @@ export function ProfilBanner({
     name: info.name,
     region: info.region,
     description: info.description,
+    address: info.address,
     zip_code: info.zip_code,
     city: info.city,
     spotify_link: info.spotify_link,

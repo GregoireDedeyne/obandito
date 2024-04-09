@@ -5,9 +5,8 @@ export function CardsEvent({ data }) {
     <>
       <div className="flex flex-wrap bg-white py-20 bloc-white pb-5">
         {data.map((card) => (
-          <div className="w-[50%] py-5 ">
+          <div className="w-[50%] py-5" key={card?.image_url}>
             <Card
-              key={card?.image_url}
               image={card?.image_url}
               alt={card?.alt}
               name={card?.name}

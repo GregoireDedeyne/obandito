@@ -15,37 +15,59 @@ export default function ProfilContentBlock({
   description,
 }: ProfilContentBlockProps) {
   if (title === 'Présentation') {
-    return (
-      <div className="bloc-white mb-[50px]">
-        <div className="flex items-center">
-          <h2 className="text-black">{title}</h2>
+    if (description) {
+      return (
+        <div className="bloc-white mb-[50px]">
+          <div className="flex items-center">
+            <h2 className="text-black">{title}</h2>
+          </div>
+          <p>{description}</p>
         </div>
-        <p>{description}</p>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="bloc-white mb-[50px]">
+          <div className="flex items-center">
+            <h2 className="text-black">{title}</h2>
+          </div>
+          <p>Il n'y a pas de description.</p>
+        </div>
+      );
+    }
   } else if (title === 'Musiques & clips') {
-    return (
-      <div className="bloc-white mb-[50px]">
-        <div className="flex items-center">
-          <h2 className="text-black">{title}</h2>
-        </div>
-        <div className="my-4">
-          {spotify && (
-            <SpotifyPlayer
-              uri={spotify}
-              size={{ width: '100%', height: 600 }}
+    if (spotify || youtube) {
+      return (
+        <div className="bloc-white mb-[50px]">
+          <div className="flex items-center">
+            <h2 className="text-black">{title}</h2>
+          </div>
+          <div className="my-4">
+            {spotify && (
+              <SpotifyPlayer
+                uri={spotify}
+                size={{ width: '100%', height: 600 }}
+              />
+            )}
+          </div>
+          {youtube && (
+            <ReactPlayer
+              url={youtube}
+              width="100%"
+              height={500}
+              controls={true}
             />
           )}
         </div>
-        {youtube && (
-          <ReactPlayer
-            url={youtube}
-            width="100%"
-            height={500}
-            controls={true}
-          />
-        )}
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="bloc-white mb-[50px]">
+          <div className="flex items-center">
+            <h2 className="text-black">{title}</h2>
+          </div>
+          <span>L'artiste n'a pas partagé de musique</span>
+        </div>
+      );
+    }
   }
 }

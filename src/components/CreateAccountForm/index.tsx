@@ -127,7 +127,7 @@ export function CreateAccountForm() {
               className="select select-bordered w-full max-w-xsflex items-center my-2  bg-slate-100"
               inputName="region"
               value={formData.region}
-              onChange={handleChange}
+              onChange={(e) => handleChange(e, 'region')}
             >
               <option value="" disabled selected>
                 Choississez votre région
