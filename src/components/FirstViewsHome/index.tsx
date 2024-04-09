@@ -146,7 +146,7 @@ export function FirstViewHome() {
       </header>
       {islogged === false ? (
         <div className="flex flex-col justify-center self-center mt-2.5 w-full text-sm leading-4 max-w-[907px] text-neutral-600 max-md:max-w-full">
-          <div className="flex gap-5 items-start pr-20 max-md:flex-wrap max-md:pr-5 justify-between">
+          <div className="flex gap-5 items-start max-md:flex-wrap max-md:pr-5 justify-between">
             <div className="flex gap-2.5">
               <Image
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/2a4f37c2a9e085339d02ca046a7f86d54d057df98cc29708f04988183fad247d?apiKey=877605d91b494696bd5bbaa7fb33442f&"
