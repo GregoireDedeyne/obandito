@@ -45,7 +45,7 @@ export function Header({ genres }) {
 
   return (
     <div className="flex flex-col justify-center bg-white ">
-      <header className="flex flex-col md:flex-row gap-5 2xl:justify-between self-center pt-3.5 w-full container ">
+      <header className="flex flex-col md:flex-row gap-5 justify-between self-center pt-3.5 w-full container ">
         <div className="flex gap-5  justify-between self-start px-5 flex-grow max-w-[100%] xl:max-w-[50%]  md:w-auto w-screen ">
           <NavLink to={'/'}>
             <div className="text-2xl font-semibold leading-10 text-purple-800 pt-1 ">
@@ -86,7 +86,7 @@ export function Header({ genres }) {
             </ul>
           </div>
           {islogged === false ? (
-            <nav className="hidden md:flex gap-4 pr-20 my-auto text-sm font-medium leading-5 text-slate-900">
+            <nav className="hidden md:flex gap-4 pr-20 my-auto text-sm font-medium leading-5 text-slate-900 ">
               <ul className="menu menu-horizontal px-1 ">
                 <li
                   className="hover:bg-rose-500 hover:text-white rounded-lg "
@@ -98,7 +98,7 @@ export function Header({ genres }) {
                   }}
                 >
                   {' '}
-                  <a>Evènements</a>
+                  <a className="text-[10px] lg:text-sm">Evènements</a>
                 </li>
                 <li
                   className="hover:bg-rose-500 hover:text-white rounded-lg"
@@ -110,7 +110,7 @@ export function Header({ genres }) {
                   }}
                 >
                   {' '}
-                  <a>Groupes</a>{' '}
+                  <a className="text-[10px] lg:text-sm">Groupes</a>{' '}
                 </li>
                 <li
                   className="hover:bg-rose-500 hover:text-white hover:rounded-lg"
@@ -122,7 +122,7 @@ export function Header({ genres }) {
                   }}
                 >
                   {' '}
-                  <a>à propos</a>{' '}
+                  <a className="text-[10px] lg:text-sm">à propos</a>{' '}
                 </li>
               </ul>
             </nav>

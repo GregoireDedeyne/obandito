@@ -46,12 +46,15 @@ export function Localisation({ locations }) {
               <section className="flex flex-col justify-center w-full">
                 <div className="flex flex-col px-5 w-full">
                   <div className="w-full text-xl font-semibold leading-6 text-neutral-700">
-                    Lorem ipsum dolor sit{' '}
+                    Un évènement dans votre région ?{' '}
                   </div>
                   <div className="w-full text-base leading-6 text-neutral-600 mt-3">
-                    Corem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nunc vulputate libero et velit interdum, ac aliquet odio
-                    mattis.
+                    Bienvenue dans notre plateforme de mise en relation
+                    artistique, où la passion et la créativité se rencontrent
+                    pour façonner des expériences inoubliables. Nous sommes
+                    fiers de faciliter les connexions entre les talents
+                    émergents de notre région et les organisateurs d'événements
+                    à la recherche d'actes uniques et inspirants
                   </div>
                 </div>{' '}
               </section>

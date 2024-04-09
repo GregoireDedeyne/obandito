@@ -16,7 +16,7 @@ export function ThirdView({ events, locations }) {
   };
 
   return (
-    <div className="flex ">
+    <div className="flex justify-center">
       <Localisation locations={locations} />
       <div className="flex flex-col  max-w-[825px] items-center xl:ml-48 lg:mt-0">
         <h2 className="w-full text-xl font-semibold leading-6 text-neutral-700 max-md:max-w-full">
@@ -27,14 +27,18 @@ export function ThirdView({ events, locations }) {
         </div>
         {islogged === false ? <CallToAction /> : ''}
 
-        <NavLink to={`/home/${limitEvents}`}>
-          <button
-            onClick={incrementLimitEvents}
-            className="justify-center items-center	 w-fit px-16 py-4 mt-3 font-medium text-white bg-rose-500 leading-[175%] rounded-[800px] max-md:px-5 hover:bg-purple-800"
-          >
-            Voir plus{' '}
-          </button>
-        </NavLink>
+        {islogged === false ? (
+          <NavLink to={`/home/${limitEvents}`}>
+            <button
+              onClick={incrementLimitEvents}
+              className="justify-center items-center	 w-fit px-16 py-4 mt-3 font-medium text-white bg-rose-500 leading-[175%] rounded-[800px] max-md:px-5 hover:bg-purple-800"
+            >
+              Voir plus{' '}
+            </button>
+          </NavLink>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );
