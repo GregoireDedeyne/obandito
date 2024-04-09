@@ -8,10 +8,10 @@ export function PopupEditSettings({
   role,
   regions,
 }) {
-  console.log('formData2', formData);
+  // console.log('formData2', formData);
   return (
     <dialog id="settings" className="modal">
-      <div className="modal-box bg-color-primary">
+      <div className="modal-box bg-color-primary relative">
         <h3 className="font-bold text-lg mb-8">Modifier mes données</h3>
         <form onSubmit={handleFormSubmit} className="modal-backdrop">
           <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
@@ -21,15 +21,13 @@ export function PopupEditSettings({
               accept="image/*"
               onChange={(e) => {
                 const file = e.target.files[0];
-                if (file) {
-                  setFormData({ ...formData, image_url: file });
-                }
+                setFormData({ ...formData, image_url: file });
               }}
             />
           </label>
 
-          <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-            Nom :
+          <label className="input input-bordered flex items-center bg-white text-black w-full mb-5">
+            <span>Nom :</span>
             <input
               type="text"
               value={formData.name}
@@ -41,7 +39,7 @@ export function PopupEditSettings({
           </label>
 
           <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-            Région
+            <span>Région :</span>
             <select
               className="select select-bordered w-full max-w-xsflex items-center my-2  bg-slate-100"
               inputName="region"
@@ -143,7 +141,7 @@ export function PopupEditSettings({
         </form>
 
         <form method="dialog" className="modal-backdrop">
-          <button className="text-white">Fermer</button>
+          <button className="text-white absolute top-7 right-7">Fermer</button>
         </form>
       </div>
     </dialog>
