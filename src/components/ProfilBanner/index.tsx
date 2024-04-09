@@ -6,6 +6,7 @@ import { PopupEditSettings } from '../PopupEditSettings';
 import { useState } from 'react';
 import { UPDATE_USER } from '../../graphQL/actions';
 import { useMutation } from '@apollo/client';
+import banner from '../../assets/images/banner-profile.svg';
 
 interface ProfilBannerProps {
   role: string;
@@ -62,11 +63,7 @@ export function ProfilBanner({
   return (
     <div className="bg-white">
       <div className="flex flex-col py-px w-full h-[300px] bg-cover">
-        <img
-          src={`${import.meta.env.VITE_BACK_URL}${info.image_url}`}
-          alt="banner"
-          className="object-cover w-full h-full"
-        />
+        <img src={banner} alt="banner" className="object-cover w-full h-full" />
       </div>
       <div className="container mx-auto">
         <div className="avatar mt-[-50px]">
@@ -74,6 +71,7 @@ export function ProfilBanner({
             <img
               src={`${import.meta.env.VITE_BACK_URL}${info.image_url}`}
               alt="Image"
+              className="object-fit"
             />
           </div>
         </div>

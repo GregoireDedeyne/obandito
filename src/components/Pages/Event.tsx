@@ -3,16 +3,16 @@ import { NavLink, useLoaderData } from 'react-router-dom';
 import { POSTULATION_EVENT } from '../../graphQL/actions';
 import { useAppSelector } from '../../store/redux-hook';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendar, faMapMarker } from '@fortawesome/free-solid-svg-icons';
 import {
-  faFacebook,
-  faInstagram,
-  faYoutube,
-} from '@fortawesome/free-brands-svg-icons';
+  faCalendar,
+  faMapMarker,
+  faUser,
+} from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { Card } from '../Card';
 import { CardsWithout } from '../CardsWithout';
 import { CardsEvent } from '../CardsEvent';
+import SocialMediaGroup from '../SocialMediaGroup';
 
 export function EventPage() {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -22,6 +22,9 @@ export function EventPage() {
   };
 
   const token = useAppSelector((state) => state.decodedToken.token);
+  const role = useAppSelector((state) => state.decodedToken.decodedData.role);
+
+  // console.log('role', role);
 
   const [PostulationEvent, { data, loading, error }] =
     useMutation(POSTULATION_EVENT);
@@ -42,13 +45,13 @@ export function EventPage() {
       },
     });
 
-    console.log("j'ai postulé");
+    // console.log("j'ai postulé");
   };
 
   const img = `${import.meta.env.VITE_BACK_URL}${eventdata.event.image_url}`;
   const artists = eventdata.event.artists;
 
-  console.log(artists);
+  console.log('artists', artists);
 
   return (
     <>
@@ -78,16 +81,19 @@ export function EventPage() {
                   />
                   <div>{eventdata?.event?.city}</div>
                 </div>
-                <div className={`flex gap-1.5 text-rose-500`}>
+                <div className={`flex gap-1.5`}>
                   <FontAwesomeIcon
-                    icon={faMapMarker}
+                    icon={faUser}
                     className="shrink-0 my-auto w-4 aspect-square"
                   />
                   <NavLink
                     to={`/profile/organizer/${eventdata?.event?.organizer?.id}`}
                   >
                     <div>
-                      Organisé par : {eventdata?.event?.organizer?.name}
+                      Organisé par :{' '}
+                      <span className="text-rose-500">
+                        {eventdata?.event?.organizer?.name}
+                      </span>
                     </div>
                   </NavLink>
                 </div>
@@ -118,11 +124,15 @@ export function EventPage() {
                       <p> {eventdata?.event?.description}</p>
                     </div>
 
-                    <div className="bloc-white flex flex-col">
-                      <h2 className="text-black mb-4">Les Artistes présents</h2>
+                    {artists.length != 0 && (
+                      <div className="bloc-white flex flex-col">
+                        <h2 className="text-black mb-4">
+                          Les Artistes présents
+                        </h2>
 
-                      <CardsEvent data={artists} />
-                    </div>
+                        <CardsEvent data={artists} />
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="col-span-12 md:col-span-4 my-10">
@@ -153,44 +163,23 @@ export function EventPage() {
                         </a>
                       </div>
 
-                      <div className="my-5">
-                        <button
-                          className="btn-primary block text-center w-full"
-                          onClick={handleSubmit}
-                        >
-                          Postuler{' '}
-                        </button>
-                      </div>
+                      {role == 'Artiste' && (
+                        <div className="my-5">
+                          <button
+                            className="btn-primary block text-center w-full"
+                            onClick={handleSubmit}
+                          >
+                            Postuler{' '}
+                          </button>
+                        </div>
+                      )}
                     </div>
 
                     <div className="bloc-white my-10">
-                      <h2 className="text-center text-black">En savoir plus</h2>
-                      <div className="flex justify-center">
-                        <span className="mx-2 text-2xl">
-                          <a
-                            href="https://www.npmjs.com/package/react-player"
-                            target="_blank"
-                          >
-                            <FontAwesomeIcon icon={faYoutube} />
-                          </a>
-                        </span>
-                        <span className="mx-2 text-2xl">
-                          <a
-                            href="https://www.npmjs.com/package/react-player"
-                            target="_blank"
-                          >
-                            <FontAwesomeIcon icon={faInstagram} />
-                          </a>
-                        </span>
-                        <span className="mx-2 text-2xl">
-                          <a
-                            href="https://www.npmjs.com/package/react-player"
-                            target="_blank"
-                          >
-                            <FontAwesomeIcon icon={faFacebook} />
-                          </a>
-                        </span>
-                      </div>
+                      <h2 className="text-center text-black mb-3">
+                        En savoir plus
+                      </h2>
+                      <SocialMediaGroup />
                     </div>
                   </div>
                 </div>

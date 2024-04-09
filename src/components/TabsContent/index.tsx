@@ -1,14 +1,9 @@
-import logo_facebook from '../../assets/images/logo_facebook.png';
-import logo_indeed from '../../assets/images/logo_indeed.png';
-import logo_twitter from '../../assets/images/logo_twitter.png';
-import logo_youtube from '../../assets/images/logo_youtube.png';
-import logo_instagram from '../../assets/images/logo_instagram.png';
 import ContactDetails from '../ContactDetails';
-import SocialMedia from '../SocialMedia';
 import { ArrayHandleArtistEvent } from '../ArrayHandleArtistEvent';
 import ProfilContentBlock from '../ProfilContentBlock';
 import { useState } from 'react';
 import { EventCard } from '../InfoHomeCard/EventsCards';
+import SocialMediaGroup from '../SocialMediaGroup';
 
 interface Event {
   id: number;
@@ -44,7 +39,7 @@ export function TabsContent({ data, idSettings, role }: TabsContentProps) {
     setSelectedTab(i);
   };
 
-  console.log(data.events);
+  // console.log(data.events);
 
   return (
     <>
@@ -335,33 +330,12 @@ export function TabsContent({ data, idSettings, role }: TabsContentProps) {
                 city={data.city}
                 adress={data.adress}
                 role={data.role}
+                idSettings={idSettings}
               />
 
               <div className="bloc-white my-10">
-                <h2 className="text-center text-black mb-5">En savoir plus</h2>
-                <div className="flex justify-center">
-                  <SocialMedia
-                    logo={logo_facebook}
-                    link="/"
-                    alt="logo facebook"
-                  />
-                  <SocialMedia logo={logo_indeed} link="/" alt="logo indeed" />
-                  <SocialMedia
-                    logo={logo_twitter}
-                    link="/"
-                    alt="logo twitter"
-                  />
-                  <SocialMedia
-                    logo={logo_youtube}
-                    link="/"
-                    alt="logo youtube"
-                  />
-                  <SocialMedia
-                    logo={logo_instagram}
-                    link="/"
-                    alt="logo instagram"
-                  />
-                </div>
+                <h2 className="text-center text-black mb-3">En savoir plus</h2>
+                <SocialMediaGroup />
               </div>
             </div>
           </div>
