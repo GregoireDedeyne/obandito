@@ -48,7 +48,7 @@ export function PopupEditSettings({
                 setFormData({ ...formData, region: e.target.value })
               }
             >
-              <option value="" disabled selected>
+              <option value="" disabled>
                 Choississez votre région
               </option>
               {regions.map((region) => (
@@ -72,6 +72,20 @@ export function PopupEditSettings({
                 })
               }
               placeholder="Description"
+            />
+          </label>
+
+          <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
+            Adresse :
+            <input
+              type="text"
+              value={formData.address}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  address: e.target.value,
+                })
+              }
             />
           </label>
 
