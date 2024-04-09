@@ -4,7 +4,7 @@ import { CardBody, CardContainer, CardItem } from './CardContainer';
 
 export function RoleSelectionCard({ genre, onClick, src }) {
   return (
-    <div className="container mx-auto" onClick={onClick}>
+    <div className="container mx-auto cursor-pointer" onClick={onClick}>
       <CardContainer className="inter-var m-5">
         <CardBody className="bg-gray-50 relative group/card  w-auto sm:w-[30rem] h-auto rounded-xl p-6 border  ">
           <CardItem
@@ -27,7 +27,7 @@ export function RoleSelectionCard({ genre, onClick, src }) {
               translateX={-40}
               className="px-4 py-2 rounded-xl text-2xl font-normal "
             >
-              {genre}{' '}
+              {genre}
             </CardItem>
           </div>
         </CardBody>

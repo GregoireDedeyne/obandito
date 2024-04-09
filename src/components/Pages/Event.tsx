@@ -51,8 +51,6 @@ export function EventPage() {
   const img = `${import.meta.env.VITE_BACK_URL}${eventdata.event.image_url}`;
   const artists = eventdata.event.artists;
 
-  console.log('artists', artists);
-
   return (
     <>
       <div className="bg-white w-full">

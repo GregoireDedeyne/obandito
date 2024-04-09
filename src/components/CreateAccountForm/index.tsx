@@ -29,8 +29,6 @@ export function CreateAccountForm() {
     role: '',
   });
 
-  // console.log(formData);
-
   // Suivie d'état dans un state pour savoir si un rôle a été selectionné
   const [selectedRole, setSelectedRole] = useState(null);
 
