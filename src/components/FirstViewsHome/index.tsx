@@ -38,9 +38,9 @@ export function FirstViewHome() {
             <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
               <div className="flex relative flex-col justify-center grow mt-16 text-5xl font-medium max-md:mt-10 max-md:max-w-full max-md:text-4xl">
                 <Text className="mr-5 leading-[55px] text-zinc-800 max-md:mr-2.5 max-md:max-w-full max-md:text-4xl max-md:leading-[54px]">
-                  Artistes et Organisations étaient faits pour se{' '}
+                  Artistes et Organisations étaient faits pour se
                 </Text>
-                <Text className="justify-center	 h-20 self-start px-8 pt-2.5 pb-2 mt-3.5 whitespace-nowrap bg-rose-500 leading-[100%] rounded-[50px] text-neutral-100 max-md:px-5 max-md:text-4xl">
+                <Text className="justify-center self-start px-8 pb-2 mt-4  bg-rose-500 leading-[100%] rounded-[50px] text-neutral-100 max-md:px-5 max-md:text-4xl">
                   rencontrer
                 </Text>
                 <Text className="mt-14 text-xl leading-6 text-neutral-600 max-md:mt-10 max-md:max-w-full">
