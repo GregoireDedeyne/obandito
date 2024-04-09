@@ -129,6 +129,7 @@ export function Header({ genres }) {
                           <Menu.Item>
                             {({ active }) => (
                               <NavLink
+                                reloadDocument
                                 to={
                                   role === 'Artiste'
                                     ? `/profile/band/${id}`
@@ -149,7 +150,7 @@ export function Header({ genres }) {
                                 onClick={handleLogout}
                                 className={classNames(
                                   active ? 'bg-gray-100' : '',
-                                  'block px-4 py-2 text-sm text-black'
+                                  'block px-4 py-2 text-sm text-black cursor-pointer'
                                 )}
                               >
                                 Déconnexion
@@ -252,6 +253,7 @@ export function Header({ genres }) {
                   </div>
                   <div className="mt-3 space-y-1">
                     <NavLink
+                      reloadDocument
                       to={
                         role === 'Artiste'
                           ? `/profile/band/${id}`
@@ -269,7 +271,7 @@ export function Header({ genres }) {
                     <Disclosure.Button
                       as="a"
                       onClick={handleLogout}
-                      className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
+                      className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 cursor-pointer"
                     >
                       Déconnexion
                     </Disclosure.Button>
