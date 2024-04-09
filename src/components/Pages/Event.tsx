@@ -81,7 +81,7 @@ export function EventPage() {
                   />
                   <div>{eventdata?.event?.city}</div>
                 </div>
-                <div className={`flex gap-1.5`}>
+                <div className={`flex gap-1.5 w-96`}>
                   <FontAwesomeIcon
                     icon={faUser}
                     className="shrink-0 my-auto w-4 aspect-square"
