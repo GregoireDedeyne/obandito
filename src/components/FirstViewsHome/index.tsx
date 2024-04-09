@@ -61,8 +61,8 @@ export function FirstViewHome() {
         <div className="relative px-10 py-8 mt-1.5 bg-white shadow-lg rounded-[66px] max-md:px-5 max-md:max-w-full">
           <div className="flex gap-5 max-md:flex-col max-md:gap-0">
             <div className="flex flex-col w-[55%] max-md:ml-0 max-md:w-full">
-              <div className="flex relative grow gap-5 justify-center max-md:flex-wrap max-md:mt-10">
-                <label className="input input-bordered flex items-center gap-2 w-3/5 bg-white">
+              <div className="flex relative grow gap-5 justify-center max-md:flex-wrap max-md:mt-10 items-center	">
+                <label className="input input-bordered flex items-center gap-2 w-3/5 bg-white ">
                   <input
                     value={searchTerm}
                     onChange={(event) => setSearchTerm(event.target.value)}
@@ -85,8 +85,8 @@ export function FirstViewHome() {
                 </label>
               </div>
             </div>
-            <div className="flex flex-col ml-5 w-[45%] max-md:ml-0 max-md:w-full">
-              <div className="flex relative grow gap-5 justify-end text-base text-center max-md:flex-wrap max-md:mt-10">
+            <div className="flex flex-col ml-5 w-[45%] max-md:ml-0 max-md:w-full ">
+              <div className="flex relative grow gap-5  text-base text-center max-md:flex-wrap max-md:mt-10 justify-center md:justify-end 	">
                 {islogged === false ? (
                   <NavLink
                     to={'/login'}
@@ -117,7 +117,7 @@ export function FirstViewHome() {
                   </NavLink>
                 ) : null}
 
-                <div className="flex gap-5 justify-end self-start mt-3.5">
+                <div className="flex gap-5 justify-end self-start mt-2">
                   {islogged === false ? (
                     <Text className="my-auto text-neutral-600">ou</Text>
                   ) : islogged === true && role === 'Organisateur' ? (
@@ -126,14 +126,14 @@ export function FirstViewHome() {
                   {islogged === false ? (
                     <NavLink
                       to={'/login'}
-                      className="justify-center px-2.5 py-1.5 font-bold text-purple-800 border-b-2 border-transparent hover:border-b-2 hover:border-purple-800 border-solid leading-[128%] hover:text-rose-500"
+                      className="justify-center px-2.5 py-1.5 mt-1 font-bold text-purple-800 border-b-2 border-transparent hover:border-b-2 hover:border-purple-800 border-solid leading-[128%] hover:text-rose-500"
                     >
                       Déposer un événement
                     </NavLink>
                   ) : islogged === true && role === 'Organisateur' ? (
                     <NavLink
                       to={'/eventcreation'}
-                      className="justify-center px-2.5 py-1.5 font-bold text-purple-800 border-b-2 border-transparent hover:border-b-2 hover:border-purple-800 border-solid leading-[128%] hover:text-rose-500"
+                      className="justify-center px-2.5 py-1.5 mt-1 font-bold text-purple-800 border-b-2 border-transparent hover:border-b-2 hover:border-purple-800 border-solid leading-[128%] hover:text-rose-500"
                     >
                       Déposer un événement
                     </NavLink>
@@ -146,7 +146,7 @@ export function FirstViewHome() {
       </header>
       {islogged === false ? (
         <div className="flex flex-col justify-center self-center mt-2.5 w-full text-sm leading-4 max-w-[907px] text-neutral-600 max-md:max-w-full">
-          <div className="flex gap-5 items-start pr-20 max-md:flex-wrap max-md:pr-5 justify-between">
+          <div className="flex gap-5 items-start lg:flex-wrap max-md:pr-5 justify-between flex-col lg:flex-row">
             <div className="flex gap-2.5">
               <Image
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/2a4f37c2a9e085339d02ca046a7f86d54d057df98cc29708f04988183fad247d?apiKey=877605d91b494696bd5bbaa7fb33442f&"
