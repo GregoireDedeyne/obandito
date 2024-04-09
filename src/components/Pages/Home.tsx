@@ -5,19 +5,29 @@ import { SecondView } from '../FirstViewsHome/SecondView';
 import { PreFooter } from '../FirstViewsHome/PreFooter';
 import { Faq } from '../FirstViewsHome/Faq';
 import { ThirdView } from '../FirstViewsHome/ThirdView';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useLocation } from 'react-router-dom';
 import { useAppSelector } from '../../store/redux-hook';
 import { CardsWithout } from '../CardsWithout';
+import { useEffect } from 'react';
 
 export function HomeNotLogPage() {
   const islogged = useAppSelector((state) => state.decodedToken.islogged);
   const role = useAppSelector((state) => state.decodedToken.decodedData.role);
-  localStorage.setItem('isLogged', islogged);
   const data = useLoaderData();
+  const location = useLocation();
 
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location]);
   return (
     <>
-      <div className="bg-white w-full">
+      <div className="bg-white w-full" id="bands">
         <div
           className="bg-cover"
           style={{

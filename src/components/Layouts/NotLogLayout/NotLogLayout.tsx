@@ -1,13 +1,12 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Header } from '../../HeaderTop';
-import Example from '../../HeaderTop/test';
 import { Footer } from '../../Footer';
 import { useQuery } from '@apollo/client';
 import { GET_STYLES } from '../../../graphQL/actions';
 import { setDecodedToken } from '../../../store/actions';
 import * as jose from 'jose';
 import { TextEncoder } from 'text-encoding';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 export function NotLogLayout() {
