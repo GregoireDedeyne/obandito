@@ -168,7 +168,7 @@ export function SubscribePage() {
                       <p className="mt-4 mb-0 leading-normal text-sm">
                         Déjà un compte ?{' '}
                         <NavLink
-                          to="/sign-in" // Assurez-vous que le chemin est correct selon votre structure de route.
+                          to="/login" // Assurez-vous que le chemin est correct selon votre structure de route.
                           className="font-bold text-slate-700"
                         >
                           Cliquer ici

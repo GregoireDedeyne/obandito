@@ -109,13 +109,13 @@ export function LoginPage() {
               </div>
               <div className="p-6 px-1 pt-0 text-center bg-transparent border-t-0 border-t-solid rounded-b-2xl lg:px-2">
                 <p className="mx-auto mb-6 leading-normal text-sm">
-                  Déjà un compte ?
-                  <a
-                    href="../pages/sign-up.html"
+                  Pas un compte ?
+                  <NavLink
+                    to="/subscribe"
                     className="relative z-10 font-semibold text-transparent bg-gradient-to-tl from-blue-600 to-cyan-400 bg-clip-text ml-4"
                   >
-                    Connecte-toi
-                  </a>
+                    Inscrit-toi
+                  </NavLink>
                 </p>
               </div>
             </div>
