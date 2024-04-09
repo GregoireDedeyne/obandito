@@ -182,7 +182,7 @@ export function SubscribePage() {
           </div>
         </div>
         {selectedRole === null && (
-          <div className="flex ">
+          <div className="sm:flex ">
             <RoleSelectionCard
               genre={'Groupes'}
               src={Image2}
