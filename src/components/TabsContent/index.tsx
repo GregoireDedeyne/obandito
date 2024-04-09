@@ -328,7 +328,7 @@ export function TabsContent({ data, idSettings, role }: TabsContentProps) {
               <ContactDetails
                 zip_code={data?.zip_code}
                 city={data.city}
-                adress={data.adress}
+                address={data.address}
                 role={data.role}
                 idSettings={idSettings}
               />

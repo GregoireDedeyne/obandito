@@ -3,25 +3,30 @@ import { NavLink } from 'react-router-dom';
 interface ContactDetailsProps {
   zip_code: string;
   city: string;
-  adress: string;
+  address: string;
   role: string;
+  idSettings: number;
 }
 
 export default function ContactDetails({
   zip_code,
   city,
-  adress,
+  address,
   role,
   idSettings,
 }: ContactDetailsProps) {
+  console.log('zip_code', zip_code);
+  console.log('city', city);
+
   return (
     <div className="bloc-white">
       <h2 className="text-black">Coordonnées</h2>
       <div className="adress flex flex-col">
-        <span className="mb-5"> {adress}</span>
-        <span>
+        {address ? <span> {address}</span> : ''}
+
+        {zip_code !== null && city !== null && (
           <span>{`${zip_code}, ${city}`}</span>
-        </span>
+        )}
 
         <span>France</span>
       </div>
