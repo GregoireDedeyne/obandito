@@ -10,7 +10,6 @@ import { NotLogLayout } from './components/Layouts/NotLogLayout/NotLogLayout.tsx
 import { HomeNotLogPage } from './components/Pages/Home.tsx';
 import { SubscribePage } from './components/Pages/Subscribe.tsx';
 import { LoginPage } from './components/Pages/Login.tsx';
-
 import { EventPage } from './components/Pages/Event.tsx';
 import { EventFormPage } from './components/Pages/EventForm.tsx';
 import createUploadLink from 'apollo-upload-client/createUploadLink.mjs';

@@ -6,7 +6,7 @@ import { GET_STYLES } from '../../../graphQL/actions';
 import { setDecodedToken } from '../../../store/actions';
 import * as jose from 'jose';
 import { TextEncoder } from 'text-encoding';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 export function NotLogLayout() {
