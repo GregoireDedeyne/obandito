@@ -17,7 +17,7 @@ export function HomeNotLogPage() {
 
   return (
     <>
-      <div className="bg-white">
+      <div className="bg-white w-full">
         <div
           className="bg-cover"
           style={{
