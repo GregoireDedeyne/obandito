@@ -149,6 +149,7 @@ export const ProfileBandLoader = async ({ params }) => {
     },
     fetchPolicy: 'no-cache',
   });
+  console.log("j'ai reload");
 
   return data;
 };

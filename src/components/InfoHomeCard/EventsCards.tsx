@@ -29,7 +29,6 @@ export function EventCard({
   validated,
 }: EventCardProps) {
   const islogged = useAppSelector((state) => state.decodedToken.islogged);
-  console.log(available);
 
   return (
     <NavLink

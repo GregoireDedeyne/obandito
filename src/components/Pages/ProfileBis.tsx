@@ -17,8 +17,6 @@ export default function ProfileBis() {
   const info = data?.artist || data?.organizer;
   const regions = data?.regions;
 
-  console.log(info);
-
   return (
     <div className="w-full">
       <ProfilBanner
