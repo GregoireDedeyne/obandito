@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { CREATE_EVENT } from '../../graphQL/actions';
 import { useAppSelector } from '../../store/redux-hook';
 
@@ -13,9 +13,6 @@ export function EventFormPage() {
     onCompleted: () => {
       toast.success('Événement créé avec succès !');
       navigate('/');
-    },
-    onError: (err) => {
-      toast.error(`Erreur lors de la création de l'événement: ${err.message}`);
     },
   });
 
@@ -46,7 +43,7 @@ export function EventFormPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('formDat', formData);
+    // console.log('formDat', formData);
 
     const isEmptyField = Object.values(formData).some((value) => value === '');
     console.log('isEmptyField', isEmptyField);
@@ -72,13 +69,17 @@ export function EventFormPage() {
         },
       },
     });
+    navigate('/');
+    toast.success('Événement créé avec succès !');
   };
 
   if (error)
-    return <p>Erreur lors de la création de l'événement: {error.message}</p>;
+    toast.error(`Erreur lors de la création de l'événement: ${error.message}`);
 
   return (
     <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden md:max-w-lg">
+      <ToastContainer />
+
       <div className="w-full p-3">
         <h2 className="text-2xl font-semibold text-center text-gray-800 mb-4">
           Création d'Événement
@@ -135,7 +136,7 @@ export function EventFormPage() {
             <label className="label cursor-pointer">
               <span className="label-text">Restauration</span>
               <input
-                handleChange={handleChange}
+                onChange={handleChange}
                 name="catering"
                 type="checkbox"
                 defaultChecked

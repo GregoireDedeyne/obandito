@@ -33,6 +33,7 @@ export const HomeLoader = async () => {
       limit: 9,
       limitEvents: 5,
     },
+    fetchPolicy: 'no-cache',
   });
 
   return data;
@@ -47,6 +48,7 @@ export const EventsSearch = async ({ params }) => {
     variables: {
       name: searchTerm,
     },
+    fetchPolicy: 'no-cache',
   });
 
   return data;
@@ -61,6 +63,7 @@ export const ArtistsSearch = async ({ params }) => {
     variables: {
       name: searchTerm,
     },
+    fetchPolicy: 'no-cache',
   });
 
   return data;
@@ -75,6 +78,7 @@ export const MoreHomeLoader = async ({ params }) => {
       limit: 9,
       limitEvents: limitEvents,
     },
+    fetchPolicy: 'no-cache',
   });
 
   return data;
@@ -89,6 +93,7 @@ export const RegionLoader = async ({ params }) => {
       limit: 10,
       region: region,
     },
+    fetchPolicy: 'no-cache',
   });
 
   return data;
@@ -103,6 +108,7 @@ export const GenreLoader = async ({ params }) => {
       limitEvents: 5,
       style: genre,
     },
+    fetchPolicy: 'no-cache',
   });
 
   return data;
@@ -123,6 +129,7 @@ export const EventLoader = async ({ params }) => {
         Authorization: `Bearer ${token}`,
       },
     },
+    fetchPolicy: 'no-cache',
   });
   console.log('dataloader :', data);
   return data;
@@ -131,6 +138,7 @@ export const EventLoader = async ({ params }) => {
 export const RegionSelectLoader = async () => {
   const { data } = await client.query({
     query: GET_REGION,
+    fetchPolicy: 'no-cache',
   });
 
   return data;
