@@ -31,7 +31,12 @@ interface TabsContentProps {
   role: string;
 }
 
-export function TabsContent({ data, idSettings, role }: TabsContentProps) {
+export function TabsContent({
+  data,
+  idSettings,
+  role,
+  rolelogin,
+}: TabsContentProps) {
   const [selectedTab, setSelectedTab] = useState<number>(0);
   const [radioStatus, setRadioStatus] = useState<string>('tous');
 
@@ -331,6 +336,7 @@ export function TabsContent({ data, idSettings, role }: TabsContentProps) {
                 address={data.address}
                 role={data.role}
                 idSettings={idSettings}
+                rolelogin={rolelogin}
               />
 
               <div className="bloc-white my-10">

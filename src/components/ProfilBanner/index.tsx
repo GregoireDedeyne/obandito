@@ -30,6 +30,7 @@ export function ProfilBanner({
   token,
   idSettings,
   regions,
+  rolelogin,
 }: ProfilBannerProps) {
   const [UpdateUser, { loading, error }] = useMutation(UPDATE_USER);
 
@@ -120,11 +121,13 @@ export function ProfilBanner({
 
           <div className="flex flex-col">
             <div className="flex justify-between items-center">
-              {role === 'Artiste' ? (
+              {role === 'Artiste' && rolelogin !== 'Artiste' && !idSettings && (
                 <NavLink className="btn-primary ml-0 md:ml-5" to="/">
                   Proposer un deal
                 </NavLink>
-              ) : (
+              )}
+
+              {role === 'Organisateur' && (
                 <div className="flex flex-col text-right">
                   <span className="text-3xl">{info.events.length}</span>
                   <span>évènements</span>
