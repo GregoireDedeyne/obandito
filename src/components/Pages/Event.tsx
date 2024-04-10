@@ -68,9 +68,11 @@ export function EventPage(): EventProps {
     city: eventdata.event.city,
     date: eventdata.event.date,
     total_slots: eventdata.event.total_slots,
-    price: Number(eventdata.event.price),
+    price: eventdata.event.price,
     image_url: null,
   });
+
+  console.log('formData:', formData);
 
   const handleSubmit = async () => {
     try {
@@ -96,8 +98,32 @@ export function EventPage(): EventProps {
     }
   };
 
+  const requireFields = () => {
+    const requiredFields = [
+      'name',
+      'description',
+      'address',
+      'zip_code',
+      'city',
+      'date',
+      'total_slots',
+      'price',
+    ];
+    const missingFields = requiredFields.filter((field) => !formData[field]);
+
+    if (missingFields.length > 0) {
+      toast.error(
+        `Veuillez saisir tous les champs obligatoires : ${missingFields.join(', ')}`
+      );
+      return false;
+    }
+    return true;
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+
+    if (!requireFields()) return;
 
     try {
       const id = eventdata.event.id;
@@ -117,8 +143,10 @@ export function EventPage(): EventProps {
       console.log('Données mises à jour avec succès:', data);
       document.getElementById('event').close();
       window.location.href = location.pathname;
+      toast.warn("Vous avez bien modifié à l'évènement");
     } catch (error) {
       console.error('Erreur:', error.message);
+      toast.error(`Une erreur s'est produite. ${error.message}`);
     }
   };
 
