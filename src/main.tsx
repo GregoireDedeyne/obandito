@@ -28,7 +28,7 @@ import {
 } from './loader/index.tsx';
 
 const uploadLink = createUploadLink({
-  uri: 'http://localhost:4000/graphql/',
+  uri: `${import.meta.env.VITE_BACK_URL}graphql`,
 });
 
 // Ajouter ApolloClient

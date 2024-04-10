@@ -130,13 +130,21 @@ export function EventFormPage() {
             type="textarea"
             handleChange={handleChange}
           />
-          <FormInput
-            label="Restauration"
-            name="catering"
-            type="checkbox"
-            checked={formData.catering}
-            handleChange={handleChange}
-          />
+
+          <div className="form-control">
+            <label className="label cursor-pointer">
+              <span className="label-text">Restauration</span>
+              <input
+                handleChange={handleChange}
+                name="catering"
+                type="checkbox"
+                defaultChecked
+                className="checkbox"
+                value={formData.catering}
+              />
+            </label>
+          </div>
+
           <FormInput
             label="Prix"
             name="price"
