@@ -44,7 +44,7 @@ export function PopupEditEvent({
             <span>Région</span>
             <select
               className="select select-bordered w-full max-w-xsflex items-center my-2  bg-slate-100 w-[80%]"
-              inputName="region"
+              name="region"
               value={formData.region}
               onChange={(e) =>
                 setFormData({ ...formData, region: e.target.value })
@@ -183,7 +183,7 @@ export function PopupEditEvent({
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  price: e.target.value,
+                  price: parseInt(e.target.value),
                 })
               }
             />
