@@ -27,6 +27,11 @@ export function FirstViewHome() {
 
   const [searchTerm, setSearchTerm] = useState('');
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log('Recherche effectuée:', searchTerm);
+  };
+
   const handleSearch = () => {
     setSearchTerm('');
   };
@@ -58,9 +63,12 @@ export function FirstViewHome() {
             </div>
           </div>
         </div>
-        <div className="relative px-10 py-8 mt-1.5 bg-white shadow-lg rounded-[66px] max-md:px-5 max-md:max-w-full">
+        <form
+          onSubmit={handleSubmit}
+          className="relative px-10 py-8 mt-1.5 bg-white shadow-lg rounded-[66px] max-md:px-5 max-md:max-w-full"
+        >
           <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-            <div className="flex flex-col w-[55%] max-md:ml-0 max-md:w-full">
+            <div className="flex w-[55%] max-md:ml-0 max-md:w-full">
               <div className="flex relative grow gap-5 justify-center max-md:flex-wrap max-md:mt-10 items-center	">
                 <label className="input input-bordered flex items-center gap-2 w-3/5 bg-white ">
                   <input
@@ -84,8 +92,17 @@ export function FirstViewHome() {
                   </svg>
                 </label>
               </div>
+              {islogged === true ? (
+                <p className="flex self-center">
+                  {' '}
+                  <NavLink to="/">Enlever tous les filtres </NavLink>
+                </p>
+              ) : null}
             </div>
-            <div className="flex flex-col ml-5 w-[45%] max-md:ml-0 max-md:w-full ">
+            <form
+              className="flex flex-col ml-5 w-[45%] max-md:ml-0 max-md:w-full "
+              onSubmit={handleSubmit}
+            >
               <div className="flex relative grow gap-5  text-base text-center max-md:flex-wrap max-md:mt-10 justify-center md:justify-end 	">
                 {islogged === false ? (
                   <NavLink
@@ -140,9 +157,9 @@ export function FirstViewHome() {
                   ) : null}
                 </div>
               </div>
-            </div>
+            </form>
           </div>
-        </div>
+        </form>
       </header>
       {islogged === false ? (
         <div className="flex flex-col justify-center self-center mt-2.5 w-full text-sm leading-4 max-w-[907px] text-neutral-600 max-md:max-w-full">

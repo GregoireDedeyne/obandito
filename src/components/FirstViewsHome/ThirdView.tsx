@@ -16,16 +16,20 @@ export function ThirdView({ events, locations }) {
   };
 
   return (
-    <div className="flex justify-center" id="events">
+    <div className="flex justify-center lg:justify-between" id="events">
       <Localisation locations={locations} />
-      <div className="flex flex-col  max-w-[825px] items-center xl:ml-48 lg:mt-0">
+      <div className="flex flex-col  max-w-[825px] items-center xl:ml-48 lg:mt-0 lg:mr-[15rem]">
         <h2 className="w-full text-xl font-semibold leading-6 text-neutral-700 max-md:max-w-full">
           Les événements à venir
         </h2>
         <div className="flex flex-col mt-7 w-full max-w-[825px] ">
-          {events?.map((event, index) => <EventCard key={index} {...event} />)}
+          {events.length === 0 ? (
+            <p className="w-[40rem] pr-10">Aucun événement trouvé.</p>
+          ) : (
+            events.map((event, index) => <EventCard key={index} {...event} />)
+          )}
         </div>
-        {islogged === false ? <CallToAction /> : ''}
+        {islogged === false && events.length === 0 ? <CallToAction /> : null}
 
         {islogged === false ? (
           <NavLink to={`/home/${limitEvents}`}>
