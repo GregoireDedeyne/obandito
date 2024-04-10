@@ -329,6 +329,9 @@ export const GET_HOMEREGIONDATA = gql`
 
 export const GET_ONE_EVENT = gql`
   query GetOneEvent($eventId: Int!) {
+    regions {
+      nom
+    }
     event(id: $eventId) {
       description
       date
@@ -463,5 +466,29 @@ export const HANDLEPOSTULATIONEVENT = gql`
       eventId: $eventId
       validation: $validation
     )
+  }
+`;
+
+export const UPDATE_EVENT = gql`
+  mutation UpdateEvent($input: InputModifyEvent!) {
+    updateEvent(input: $input) {
+      id
+      name
+      image_url
+      address
+      city
+      region
+      date
+      zip_code
+      description
+      catering
+      price
+      organizer_id
+      total_slots
+      occupied_slots
+      validation
+      available
+      finished
+    }
   }
 `;

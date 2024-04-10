@@ -124,7 +124,7 @@ export const EventLoader = async ({ params }) => {
       },
     },
   });
-
+  console.log('dataloader :', data);
   return data;
 };
 

@@ -1,4 +1,6 @@
 import { useMutation } from '@apollo/client';
+import { NavLink, useLoaderData } from 'react-router-dom';
+import { POSTULATION_EVENT, UPDATE_EVENT } from '../../graphQL/actions';
 import { NavLink, useLoaderData, useLocation } from 'react-router-dom';
 import { POSTULATION_EVENT } from '../../graphQL/actions';
 import { useAppSelector } from '../../store/redux-hook';
@@ -6,14 +8,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCalendar,
   faMapMarker,
+  faPencilAlt,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { CardsEvent } from '../CardsEvent';
 import SocialMediaGroup from '../SocialMediaGroup';
+import { PopupEditEvent } from '../PopupEditEvent';
+
+interface FormData {
+  name: string;
+  description: string;
+  address: string;
+  zip_code: string;
+  city: string;
+  date: string;
+  total_slots: number;
+  price: number;
+  image_url: URL;
+}
 import { toast, ToastContainer } from 'react-toastify';
 
-export function EventPage() {
+export function EventPage(): EventProps {
   const [selectedTab, setSelectedTab] = useState(0);
 
   const handleTabClick = (index) => {
@@ -23,10 +39,16 @@ export function EventPage() {
   const location = useLocation();
   const token = useAppSelector((state) => state.decodedToken.token);
   const role = useAppSelector((state) => state.decodedToken.decodedData.role);
+  const idToken = useAppSelector((state) => state.decodedToken.decodedData.id);
   const id = useAppSelector((state) => state.decodedToken.decodedData.id);
 
-  // console.log('role', role);
+  const [
+    PostulationEvent,
+    { data, loading: postulationLoading, error: postulationError },
+  ] = useMutation(POSTULATION_EVENT);
 
+  const [UpdateEvent, { loading: updateLoading, error: updateError }] =
+    useMutation(UPDATE_EVENT);
   const [PostulationEvent, { data, loading, error }] = useMutation(
     POSTULATION_EVENT,
     {
@@ -37,6 +59,24 @@ export function EventPage() {
   );
 
   const eventdata = useLoaderData();
+
+  const idOrga = eventdata.event.organizer.id;
+  const idSettings = idToken === parseInt(idOrga);
+
+  const regions = eventdata.regions;
+
+  const [formData, setFormData] = useState<FormData>({
+    name: eventdata.event.name,
+    description: eventdata.event.description,
+    region: eventdata.event.region,
+    address: eventdata.event.address,
+    zip_code: eventdata.event.zip_code,
+    city: eventdata.event.city,
+    date: eventdata.event.date,
+    total_slots: eventdata.event.total_slots,
+    price: Number(eventdata.event.price),
+    image_url: null,
+  });
   const postulation = eventdata.event.artist_postulation;
 
   const result = postulation.includes(id.toString());
@@ -48,11 +88,23 @@ export function EventPage() {
   console.log(result);
 
   const handleSubmit = async () => {
+    const id = eventdata.event.id;
+    const eventId = parseInt(id);
+    // console.log(id);
     try {
       const id = eventdata.event.id;
       const eventId = parseInt(id);
       console.log(id);
 
+    await PostulationEvent({
+      variables: { eventId: eventId },
+      context: {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    });
+  };
       await PostulationEvent({
         variables: { eventId: eventId },
         context: {
@@ -62,6 +114,30 @@ export function EventPage() {
         },
       });
 
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const id = eventdata.event.id;
+      const eventId = parseInt(id);
+
+      const formDataWithId = { ...formData, id: eventId };
+
+      const filteredData = Object.fromEntries(
+        Object.entries(formDataWithId).filter(([key, value]) => value !== null)
+      );
+
+      const { data } = await UpdateEvent({
+        variables: { input: { ...filteredData } },
+        context: { headers: { Authorization: `Bearer ${token}` } },
+      });
+
+      console.log('Données mises à jour avec succès:', data);
+      document.getElementById('event').close();
+      window.location.href = location.pathname;
+    } catch (error) {
+      console.error('Erreur:', error.message);
+    }
       toast.warn("Vous avez bien postulé à l'évènement");
       window.location.href = location.pathname;
     } catch (error) {
@@ -87,9 +163,28 @@ export function EventPage() {
         >
           <div className="container mx-auto">
             <article className="flex flex-col items-start px-5 py-5 bg-white rounded-xl max-w-[476px]">
-              <h1 className="text-3xl pb-2 font-medium leading-6 text-neutral-700">
-                {eventdata?.event?.name}{' '}
-              </h1>
+              <div className="flex items-center">
+                <h1 className="text-3xl pb-2 font-medium leading-6 text-neutral-700">
+                  {eventdata?.event?.name}{' '}
+                </h1>
+                {idSettings && (
+                  <FontAwesomeIcon
+                    icon={faPencilAlt}
+                    className="ml-3 cursor-pointer"
+                    onClick={() => {
+                      document.getElementById('event').showModal();
+                    }}
+                  />
+                )}
+              </div>
+
+              <PopupEditEvent
+                handleFormSubmit={handleFormSubmit}
+                formData={formData}
+                setFormData={setFormData}
+                regions={regions}
+              />
+
               <div className="flex flex-col mt-4 max-w-full text-base leading-6 text-zinc-500 w-[278px]">
                 <div className={`flex gap-1.5`}>
                   <FontAwesomeIcon

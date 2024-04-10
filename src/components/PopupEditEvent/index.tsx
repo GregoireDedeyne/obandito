@@ -1,16 +1,14 @@
 import { useMutation } from '@apollo/client';
 import { useState } from 'react';
 
-export function PopupEditSettings({
+export function PopupEditEvent({
   handleFormSubmit,
   formData,
   setFormData,
-  role,
   regions,
 }) {
-  // console.log('formData2', formData);
   return (
-    <dialog id="settings" className="modal">
+    <dialog id="event" className="modal">
       <div className="modal-box bg-color-primary relative">
         <h3 className="font-bold text-lg mb-8">Modifier mes données</h3>
         <form onSubmit={handleFormSubmit} className="modal-backdrop">
@@ -26,9 +24,13 @@ export function PopupEditSettings({
             />
           </label>
 
-          <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
+          <label
+            className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5"
+            htmlFor="name"
+          >
             <span>Nom</span>
             <input
+              name="name"
               type="text"
               value={formData.name}
               onChange={(e) =>
@@ -59,11 +61,15 @@ export function PopupEditSettings({
             </select>
           </label>
 
-          <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
+          <label
+            className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5"
+            htmlFor="description"
+          >
             Description
             <textarea
               className="input input-bordered flex items-center gap-2 bg-white w-full pr-0"
               type="text"
+              name="description"
               value={formData.description}
               onChange={(e) =>
                 setFormData({
@@ -75,9 +81,13 @@ export function PopupEditSettings({
             />
           </label>
 
-          <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
+          <label
+            className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5"
+            htmlFor="address"
+          >
             Adresse
             <input
+              name="address"
               type="text"
               value={formData.address}
               onChange={(e) =>
@@ -89,23 +99,13 @@ export function PopupEditSettings({
             />
           </label>
 
-          <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-            code postal
-            <input
-              type="texte"
-              value={formData.zip_code}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  zip_code: parseInt(e.target.value, 10),
-                })
-              }
-            />
-          </label>
-
-          <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
+          <label
+            className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5"
+            htmlFor="city"
+          >
             ville
             <input
+              name="city"
               type="text"
               value={formData.city}
               onChange={(e) =>
@@ -117,37 +117,77 @@ export function PopupEditSettings({
             />
           </label>
 
-          {role === 'Artiste' && (
-            <>
-              <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-                Lien spotify
-                <input
-                  type="url"
-                  value={formData.spotify_link}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      spotify_link: e.target.value,
-                    })
-                  }
-                />
-              </label>
+          <label
+            className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5"
+            htmlFor="zip"
+          >
+            code postal
+            <input
+              name="zip"
+              type="texte"
+              value={formData.zip_code}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  zip_code: e.target.value,
+                })
+              }
+            />
+          </label>
 
-              <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-                Lien Youtube
-                <input
-                  type="url"
-                  value={formData.youtube_link}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      youtube_link: e.target.value,
-                    })
-                  }
-                />
-              </label>
-            </>
-          )}
+          <label
+            className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5"
+            htmlFor="date"
+          >
+            date
+            <input
+              name="date"
+              type="date"
+              value={formData.date}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  date: e.target.value,
+                })
+              }
+            />
+          </label>
+
+          <label
+            className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5"
+            htmlFor="total_slots"
+          >
+            total_slots
+            <input
+              name="total_slots"
+              type="number"
+              value={formData.total_slots}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  total_slots: parseInt(e.target.value),
+                })
+              }
+            />
+          </label>
+
+          <label
+            className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5"
+            htmlFor="price"
+          >
+            prix
+            <input
+              name="price"
+              type="number"
+              value={formData.price}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  price: e.target.value,
+                })
+              }
+            />
+          </label>
 
           <button className="text-right w-full text-white" type="submit">
             Enregistrer
