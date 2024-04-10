@@ -14,6 +14,7 @@ export default function ContactDetails({
   address,
   role,
   idSettings,
+  rolelogin,
 }: ContactDetailsProps) {
   console.log('zip_code', zip_code);
   console.log('city', city);
@@ -35,18 +36,17 @@ export default function ContactDetails({
         <a href="https://www.youtube.com/">https://www.youtube.com/</a>
       </div>
 
-      {!idSettings && (
-        <NavLink className="btn-secondary block text-center" to="/">
-          Envoyer un message privé
-        </NavLink>
-      )}
-
-      {role === 'Organisateur' && (
-        <div className="my-1">
-          <NavLink className="btn-primary block text-center" to="/">
-            Proposer un deal
+      {!idSettings && rolelogin === 'Organisateur' && (
+        <>
+          <NavLink className="btn-secondary block text-center" to="/">
+            Envoyer un message privé
           </NavLink>
-        </div>
+          <div className="my-1">
+            <NavLink className="btn-primary block text-center" to="/">
+              Proposer un deal
+            </NavLink>
+          </div>
+        </>
       )}
     </div>
   );

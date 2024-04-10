@@ -11,9 +11,13 @@ export default function ProfileBis() {
 
   const { id } = useParams();
   const userId = useAppSelector((state) => state.decodedToken.decodedData.id);
+  const rolelogin = useAppSelector(
+    (state) => state.decodedToken.decodedData.role
+  );
   const idSettings = parseInt(id) === userId;
 
   const role = data.artist?.role?.name || data.organizer?.role?.name;
+
   const info = data?.artist || data?.organizer;
   const regions = data?.regions;
 
@@ -27,8 +31,14 @@ export default function ProfileBis() {
         token={token}
         regions={regions}
         idSettings={idSettings}
+        rolelogin={rolelogin}
       />
-      <TabsContent data={info} idSettings={idSettings} role={role} />
+      <TabsContent
+        data={info}
+        idSettings={idSettings}
+        role={role}
+        rolelogin={rolelogin}
+      />
     </div>
   );
 }
