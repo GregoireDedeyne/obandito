@@ -21,7 +21,14 @@ export function SubscribePage() {
   const navigate = useNavigate();
 
   // Add const for graph QL function with the CREATE_ACCOUNT action
-  const [CreateAccount, { data, loading, error }] = useMutation(CREATE_ACCOUNT);
+  const [CreateAccount, { data, loading, error }] = useMutation(
+    CREATE_ACCOUNT,
+    {
+      onError: (error) => {
+        toast.warn(error.message); // show error with toastify
+      },
+    }
+  );
 
   // Add useState to stock data from form
   const [formData, setFormData] = useState({

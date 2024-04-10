@@ -1,12 +1,9 @@
-import { LoginForm } from '../LoginForm';
 import { ToastContainer } from 'react-toastify';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { InputField } from '../InputField';
-import Image from '../../assets/images/bandPict3.jpg';
-import { NavLink, redirect } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN_MUTATION } from '../../graphQL/actions';
-import { useNavigate } from 'react-router-dom';
 import * as jose from 'jose';
 import { TextEncoder } from 'text-encoding';
 import { toast } from 'react-toastify';
@@ -16,8 +13,14 @@ import imgSide from '../../assets/images/curved6.jpg';
 
 export function LoginPage() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [loginMutation, { data, loading, error }] = useMutation(LOGIN_MUTATION);
+  const [loginMutation, { data, loading, error }] = useMutation(
+    LOGIN_MUTATION,
+    {
+      onError: (error) => {
+        toast.warn(error.message); // Afficher l'erreur avec react-toastify
+      },
+    }
+  );
   const [formData, setFormData] = useState({ mail: '', password: '' });
 
   const handleChange = (e, fieldName) => {
@@ -46,7 +49,7 @@ export function LoginPage() {
         dispatch(setDecodedToken(token, decodedToken.payload.user));
         localStorage.setItem('token', token);
 
-        navigate(`/home/${decodedToken.payload.user.id}`);
+        window.location.href = `/home/${decodedToken.payload.user.id}`;
       } catch (error) {
         console.error('Erreur lors du déchiffrement du token :', error);
       }

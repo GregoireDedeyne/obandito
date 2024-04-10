@@ -48,13 +48,15 @@ export function Cards({ data, title, subtitle }) {
       >
         {data.map((card) => (
           <SwiperSlide className="shadow-sm" key={card?.id}>
-            <Card
-              image={card?.image_url}
-              alt={card?.alt}
-              name={card?.name}
-              style={card?.style?.name}
-              id={card?.id}
-            />
+            <div className="max-w-[302px]">
+              <Card
+                image={card?.image_url}
+                alt={card?.alt}
+                name={card?.name}
+                style={card?.style?.name}
+                id={card?.id}
+              />
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>

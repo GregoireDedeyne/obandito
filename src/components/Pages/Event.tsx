@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { NavLink, useLoaderData } from 'react-router-dom';
+import { NavLink, useLoaderData, useLocation } from 'react-router-dom';
 import { POSTULATION_EVENT } from '../../graphQL/actions';
 import { useAppSelector } from '../../store/redux-hook';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,10 +9,9 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
-import { Card } from '../Card';
-import { CardsWithout } from '../CardsWithout';
 import { CardsEvent } from '../CardsEvent';
 import SocialMediaGroup from '../SocialMediaGroup';
+import { toast, ToastContainer } from 'react-toastify';
 
 export function EventPage() {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -21,31 +20,57 @@ export function EventPage() {
     setSelectedTab(index);
   };
 
+  const location = useLocation();
   const token = useAppSelector((state) => state.decodedToken.token);
   const role = useAppSelector((state) => state.decodedToken.decodedData.role);
+  const id = useAppSelector((state) => state.decodedToken.decodedData.id);
 
   // console.log('role', role);
 
-  const [PostulationEvent, { data, loading, error }] =
-    useMutation(POSTULATION_EVENT);
+  const [PostulationEvent, { data, loading, error }] = useMutation(
+    POSTULATION_EVENT,
+    {
+      onError: (error) => {
+        toast.warn(error.message); // Afficher l'erreur avec react-toastify
+      },
+    }
+  );
 
   const eventdata = useLoaderData();
+  const postulation = eventdata.event.artist_postulation;
+
+  const result = postulation.includes(id.toString());
+
+  console.log(id);
+
+  console.log(postulation);
+
+  console.log(result);
 
   const handleSubmit = async () => {
-    const id = eventdata.event.id;
-    const eventId = parseInt(id);
-    console.log(id);
+    try {
+      const id = eventdata.event.id;
+      const eventId = parseInt(id);
+      console.log(id);
 
-    await PostulationEvent({
-      variables: { eventId: eventId },
-      context: {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      await PostulationEvent({
+        variables: { eventId: eventId },
+        context: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      },
-    });
+      });
 
-    // console.log("j'ai postulé");
+      toast.warn("Vous avez bien postulé à l'évènement");
+      window.location.href = location.pathname;
+    } catch (error) {
+      // Gérer l'erreur ici
+      console.error('Erreur lors de la soumission du formulaire:', error);
+      toast.error(
+        "Une erreur s'est produite lors de la postulation à l'évènement. Veuillez réessayer plus tard."
+      );
+    }
   };
 
   const img = `${import.meta.env.VITE_BACK_URL}${eventdata.event.image_url}`;
@@ -54,6 +79,8 @@ export function EventPage() {
   return (
     <>
       <div className="bg-white w-full">
+        <ToastContainer />
+
         <div
           className="flex flex-col justify-end pl-5 pb-5 w-full h-[600px] bg-cover bg-center"
           style={{ backgroundImage: `url(${img})` }}
@@ -161,16 +188,25 @@ export function EventPage() {
                         </a>
                       </div>
 
-                      {role == 'Artiste' && (
+                      {role === 'Artiste' && result === false ? (
                         <div className="my-5">
                           <button
                             className="btn-primary block text-center w-full"
                             onClick={handleSubmit}
                           >
-                            Postuler{' '}
+                            Postuler
                           </button>
                         </div>
-                      )}
+                      ) : role === 'Artiste' && result === true ? (
+                        <div className="my-5">
+                          <button
+                            className="btn-primary block text-center w-full"
+                            disabled
+                          >
+                            Vous avez déjà postulé
+                          </button>
+                        </div>
+                      ) : null}
                     </div>
 
                     <div className="bloc-white my-10">

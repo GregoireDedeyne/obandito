@@ -339,6 +339,7 @@ export const GET_ONE_EVENT = gql`
       image_url
       name
       occupied_slots
+      artist_postulation
       region
       price
       total_slots
