@@ -280,6 +280,7 @@ export function Header({ genres }) {
           </>
         )}
       </Disclosure>
+      <div className="w-full h-[1px] bg-purple-500"></div>
       {islogged === false ? (
         <div className="hidden xl:flex flex-row justify-center items-center w-full text-base leading-6 whitespace-nowrap bg-white border-b border-solid border-zinc-200 text-neutral-500">
           <div className="flex gap-0 justify-center w-full">
@@ -306,7 +307,6 @@ export function Header({ genres }) {
       islogged === true && role === 'Artiste' ? (
         ''
       ) : null}
-      <div className="w-full h-[1px] bg-purple-500"></div>
     </>
   );
 }
