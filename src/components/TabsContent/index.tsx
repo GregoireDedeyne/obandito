@@ -78,7 +78,7 @@ export function TabsContent({ data, idSettings, role }: TabsContentProps) {
         )}
       </div>
 
-      <div className="bg-color-gray_light">
+      <div className="bg-color-gray_light flex-1">
         <div className="grid grid-cols-12 md:gap-8 container mx-auto">
           {/* grid left */}
           <div className="col-span-12 md:col-span-8 my-10">

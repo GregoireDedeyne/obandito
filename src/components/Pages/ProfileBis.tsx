@@ -20,7 +20,7 @@ export default function ProfileBis() {
   // console.log('regions : ', regions);
 
   return (
-    <div className="w-full">
+    <div className="w-full flex flex-col">
       <ProfilBanner
         role={role}
         info={info}
