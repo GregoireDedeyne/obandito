@@ -306,6 +306,7 @@ export function Header({ genres }) {
       islogged === true && role === 'Artiste' ? (
         ''
       ) : null}
+      <div className="w-full h-[1px] bg-purple-500"></div>
     </>
   );
 }
