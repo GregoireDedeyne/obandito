@@ -70,7 +70,7 @@ export function EventPage(): EventProps {
   const handleSubmit = async () => {
     const id = eventdata.event.id;
     const eventId = parseInt(id);
-    console.log(id);
+    // console.log(id);
 
     await PostulationEvent({
       variables: { eventId: eventId },
@@ -120,18 +120,20 @@ export function EventPage(): EventProps {
         >
           <div className="container mx-auto">
             <article className="flex flex-col items-start px-5 py-5 bg-white rounded-xl max-w-[476px]">
-              <h1 className="text-3xl pb-2 font-medium leading-6 text-neutral-700">
-                {eventdata?.event?.name}{' '}
-              </h1>
-              {idSettings && (
-                <FontAwesomeIcon
-                  icon={faPencilAlt}
-                  className="ml-3 cursor-pointer"
-                  onClick={() => {
-                    document.getElementById('event').showModal();
-                  }}
-                />
-              )}
+              <div className="flex items-center">
+                <h1 className="text-3xl pb-2 font-medium leading-6 text-neutral-700">
+                  {eventdata?.event?.name}{' '}
+                </h1>
+                {idSettings && (
+                  <FontAwesomeIcon
+                    icon={faPencilAlt}
+                    className="ml-3 cursor-pointer"
+                    onClick={() => {
+                      document.getElementById('event').showModal();
+                    }}
+                  />
+                )}
+              </div>
 
               <PopupEditEvent
                 handleFormSubmit={handleFormSubmit}
