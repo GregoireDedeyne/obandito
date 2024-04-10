@@ -1,8 +1,6 @@
 import { useMutation } from '@apollo/client';
-import { NavLink, useLoaderData } from 'react-router-dom';
 import { POSTULATION_EVENT, UPDATE_EVENT } from '../../graphQL/actions';
 import { NavLink, useLoaderData, useLocation } from 'react-router-dom';
-import { POSTULATION_EVENT } from '../../graphQL/actions';
 import { useAppSelector } from '../../store/redux-hook';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -42,13 +40,9 @@ export function EventPage(): EventProps {
   const idToken = useAppSelector((state) => state.decodedToken.decodedData.id);
   const id = useAppSelector((state) => state.decodedToken.decodedData.id);
 
-  const [
-    PostulationEvent,
-    { data, loading: postulationLoading, error: postulationError },
-  ] = useMutation(POSTULATION_EVENT);
-
   const [UpdateEvent, { loading: updateLoading, error: updateError }] =
     useMutation(UPDATE_EVENT);
+
   const [PostulationEvent, { data, loading, error }] = useMutation(
     POSTULATION_EVENT,
     {
@@ -59,11 +53,11 @@ export function EventPage(): EventProps {
   );
 
   const eventdata = useLoaderData();
-
   const idOrga = eventdata.event.organizer.id;
   const idSettings = idToken === parseInt(idOrga);
-
   const regions = eventdata.regions;
+  const postulation = eventdata.event.artist_postulation;
+  const result = postulation.includes(id.toString());
 
   const [formData, setFormData] = useState<FormData>({
     name: eventdata.event.name,
@@ -77,34 +71,12 @@ export function EventPage(): EventProps {
     price: Number(eventdata.event.price),
     image_url: null,
   });
-  const postulation = eventdata.event.artist_postulation;
-
-  const result = postulation.includes(id.toString());
-
-  console.log(id);
-
-  console.log(postulation);
-
-  console.log(result);
 
   const handleSubmit = async () => {
-    const id = eventdata.event.id;
-    const eventId = parseInt(id);
-    // console.log(id);
     try {
       const id = eventdata.event.id;
       const eventId = parseInt(id);
-      console.log(id);
 
-    await PostulationEvent({
-      variables: { eventId: eventId },
-      context: {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    });
-  };
       await PostulationEvent({
         variables: { eventId: eventId },
         context: {
@@ -113,6 +85,16 @@ export function EventPage(): EventProps {
           },
         },
       });
+      toast.warn("Vous avez bien postulé à l'évènement");
+      window.location.href = location.pathname;
+    } catch (error) {
+      // Gérer l'erreur ici
+      console.error('Erreur lors de la soumission du formulaire:', error);
+      toast.error(
+        "Une erreur s'est produite lors de la postulation à l'évènement. Veuillez réessayer plus tard."
+      );
+    }
+  };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -137,15 +119,6 @@ export function EventPage(): EventProps {
       window.location.href = location.pathname;
     } catch (error) {
       console.error('Erreur:', error.message);
-    }
-      toast.warn("Vous avez bien postulé à l'évènement");
-      window.location.href = location.pathname;
-    } catch (error) {
-      // Gérer l'erreur ici
-      console.error('Erreur lors de la soumission du formulaire:', error);
-      toast.error(
-        "Une erreur s'est produite lors de la postulation à l'évènement. Veuillez réessayer plus tard."
-      );
     }
   };
 
