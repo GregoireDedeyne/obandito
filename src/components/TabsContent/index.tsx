@@ -11,6 +11,7 @@ interface Event {
   validation: string;
   id: number;
   artists: Artist[];
+  name: string;
 }
 
 interface Artist {
@@ -136,7 +137,6 @@ export function TabsContent({
                       {data.events.map((event, index) => (
                         <EventCard
                           image_url={''}
-                          name={''}
                           description={''}
                           city={''}
                           date={''}
@@ -239,7 +239,6 @@ export function TabsContent({
                                 event.validation === 'refused') ? (
                                 <EventCard
                                   image_url={''}
-                                  name={''}
                                   description={''}
                                   city={''}
                                   date={''}
@@ -266,7 +265,6 @@ export function TabsContent({
                                 <div key={index} className="flex items-center">
                                   <EventCard
                                     image_url={''}
-                                    name={''}
                                     description={''}
                                     city={''}
                                     date={''}

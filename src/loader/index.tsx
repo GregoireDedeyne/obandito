@@ -39,7 +39,11 @@ export const HomeLoader = async () => {
   return data;
 };
 
-export const EventsSearch = async ({ params }) => {
+export const EventsSearch: any = async ({
+  params,
+}: {
+  params: { searchTerm: string };
+}) => {
   const { searchTerm } = params;
   console.log(searchTerm);
 
@@ -54,7 +58,11 @@ export const EventsSearch = async ({ params }) => {
   return data;
 };
 
-export const ArtistsSearch = async ({ params }) => {
+export const ArtistsSearch: any = async ({
+  params,
+}: {
+  params: { searchTerm: string };
+}) => {
   const { searchTerm } = params;
   console.log(searchTerm);
 
@@ -69,7 +77,13 @@ export const ArtistsSearch = async ({ params }) => {
   return data;
 };
 
-export const MoreHomeLoader = async ({ params }) => {
+export const MoreHomeLoader: any = async ({
+  params,
+}: {
+  params: {
+    limitEvents: string;
+  };
+}) => {
   const limitEvents = parseInt(params.limitEvents);
 
   const { data } = await client.query({
@@ -84,7 +98,13 @@ export const MoreHomeLoader = async ({ params }) => {
   return data;
 };
 
-export const RegionLoader = async ({ params }) => {
+export const RegionLoader: any = async ({
+  params,
+}: {
+  params: {
+    region: string;
+  };
+}) => {
   const { region } = params;
 
   const { data } = await client.query({
@@ -99,7 +119,13 @@ export const RegionLoader = async ({ params }) => {
   return data;
 };
 
-export const GenreLoader = async ({ params }) => {
+export const GenreLoader: any = async ({
+  params,
+}: {
+  params: {
+    genre: string;
+  };
+}) => {
   const { genre } = params;
 
   const { data } = await client.query({
@@ -114,7 +140,13 @@ export const GenreLoader = async ({ params }) => {
   return data;
 };
 
-export const EventLoader = async ({ params }) => {
+export const EventLoader: any = async ({
+  params,
+}: {
+  params: {
+    id: string;
+  };
+}) => {
   const { id } = params;
   const eventId = parseInt(id);
   console.log(id);
@@ -144,7 +176,13 @@ export const RegionSelectLoader = async () => {
   return data;
 };
 
-export const ProfileBandLoader = async ({ params }) => {
+export const ProfileBandLoader: any = async ({
+  params,
+}: {
+  params: {
+    id: string;
+  };
+}) => {
   const { id } = params;
   const artistId = parseInt(id);
   const { data } = await client.query({
@@ -164,7 +202,13 @@ export const ProfileBandLoader = async ({ params }) => {
   return data;
 };
 
-export const ProfileOrganizerLoader = async ({ params }) => {
+export const ProfileOrganizerLoader: any = async ({
+  params,
+}: {
+  params: {
+    id: string;
+  };
+}) => {
   const { id } = params;
   const organizerId = parseInt(id);
   console.log('je reload');

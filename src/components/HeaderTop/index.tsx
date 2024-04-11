@@ -7,6 +7,11 @@ import { logout } from '../../store/actions';
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
+
+interface GenreItemProps {
+  genre: string;
+}
+
 const GenreItem: React.FC<GenreItemProps> = ({ genre }) => {
   return (
     <NavLink to={`/genre/${genre}`}>
@@ -24,7 +29,8 @@ const GenreItem: React.FC<GenreItemProps> = ({ genre }) => {
     </NavLink>
   );
 };
-export function Header({ genres }) {
+
+export function Header({ genres }: { genres: [] }) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
