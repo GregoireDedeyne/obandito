@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { CREATE_EVENT } from '../../graphQL/actions';
 import { useAppSelector } from '../../store/redux-hook';
@@ -24,7 +24,7 @@ export function EventFormPage() {
     date: '2024-05-05',
     description: '',
     price: 1,
-    region: 'test',
+    region: '',
     total_slots: 1,
     zip_code: '17000',
     catering: false,
@@ -76,6 +76,8 @@ export function EventFormPage() {
   if (error)
     toast.error(`Erreur lors de la création de l'événement: ${error.message}`);
 
+  const data = useLoaderData();
+
   return (
     <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden md:max-w-lg">
       <ToastContainer />
@@ -105,13 +107,28 @@ export function EventFormPage() {
             handleChange={handleChange}
           />
           <FormInput label="Ville" name="city" handleChange={handleChange} />
-          <FormInput
-            label="Région"
-            name="region"
-            value={formData.region}
-            handleChange={handleChange}
-            required
-          />
+
+          <div className="flex flex-col mb-2">
+            <label className="text-black mb-2" htmlFor="region">
+              Région:
+            </label>
+            <select
+              className="select select-bordered w-full max-w-xs bg-slate-100"
+              name="region"
+              value={formData.region}
+              onChange={handleChange}
+            >
+              <option value="" disabled>
+                Choisissez votre région
+              </option>
+              {data.regions.map((region) => (
+                <option key={region.nom} value={region.nom}>
+                  {region.nom}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <FormInput
             label="Date"
             name="date"
