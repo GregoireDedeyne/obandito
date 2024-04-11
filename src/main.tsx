@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import store from './store/index.ts';
+import { store, persistor } from './store/index.ts';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './styles/index.css';
@@ -26,6 +26,8 @@ import {
   RegionLoader,
   RegionSelectLoader,
 } from './loader/index.tsx';
+
+import { PersistGate } from 'redux-persist/integration/react';
 
 const uploadLink = createUploadLink({
   uri: `${import.meta.env.VITE_BACK_URL}graphql`,
@@ -110,7 +112,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <Provider store={store}>
-        <RouterProvider router={router} />
+        <PersistGate loading={null} persistor={persistor}>
+          <RouterProvider router={router} />
+        </PersistGate>
       </Provider>
     </ApolloProvider>
   </React.StrictMode>

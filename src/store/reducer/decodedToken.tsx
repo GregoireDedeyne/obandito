@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { logout, setDecodedToken, updateToken } from '../actions';
+import { logout, setDecodedToken, setSelectedTab } from '../actions';
 
 const initialState = {
   decodedData: {
@@ -16,25 +16,24 @@ const initialState = {
   },
   token: '',
   islogged: false,
+  selectedTab: 0,
 };
 
 const decodedTokenReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(setDecodedToken, (state, action) => {
-      // console.log("Payload de l'action setDecodedToken:", action.payload);
       state.decodedData = action.payload.decodedToken;
       state.token = action.payload.token;
       state.islogged = true;
-      // console.log('state.decodedData:', state.decodedData);
-      // console.log('state.token:', state.token);
     })
     .addCase(logout, (state) => {
       state.islogged = false;
       state.decodedData = initialState.decodedData;
       state.token = '';
     })
-    .addCase(updateToken, (state, action) => {
-      state.decodedData.image_url = action.payload.newImg;
+
+    .addCase(setSelectedTab, (state, action) => {
+      state.selectedTab = action.payload;
     });
 });
 

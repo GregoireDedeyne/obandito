@@ -1,5 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
 const LOGOUT = 'LOGOUT';
+export const SET_SELECTED_TAB = 'SET_SELECTED_TAB';
 
 export const logout = createAction(LOGOUT);
 
@@ -12,8 +13,6 @@ export const setDecodedToken = createAction(
   })
 );
 
-const UPDATE_TOKEN = 'UPDATE_TOKEN';
-
-export const updateToken = createAction(UPDATE_TOKEN, (newImg) => ({
-  payload: { newImg },
+export const setSelectedTab = createAction(SET_SELECTED_TAB, (selectedTab) => ({
+  payload: selectedTab,
 }));
