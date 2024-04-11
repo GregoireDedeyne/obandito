@@ -1,11 +1,14 @@
+interface PopupEditDealsProps {
+  handleFormSubmitStatus: (event: React.FormEvent<HTMLFormElement>) => void;
+  selectedStatus: string;
+  setSelectedStatus: React.Dispatch<React.SetStateAction<string>>;
+}
+
 export default function PopupEditDeals({
   handleFormSubmitStatus,
   selectedStatus,
   setSelectedStatus,
-}) {
-  // console.log('selectedStatus', selectedStatus);
-  // console.log('setSelectedStatus', setSelectedStatus);
-
+}: PopupEditDealsProps) {
   return (
     <dialog id="deals" className="modal">
       <div className="modal-box bg-color-primary">

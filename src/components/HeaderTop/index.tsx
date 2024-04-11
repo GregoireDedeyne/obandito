@@ -13,7 +13,7 @@ interface GenreItemProps {
   genre: string;
 }
 
-const GenreItem: React.FC<GenreItemProps> = ({ genre }) => {
+const GenreItem = ({ genre }: GenreItemProps) => {
   return (
     <NavLink to={`/genre/${genre}`}>
       <div
@@ -35,7 +35,9 @@ export function Header({ genres }: { genres: [] }) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const islogged = useAppSelector((state) => state.decodedToken.islogged);
+  const islogged: boolean = useAppSelector(
+    (state) => state.decodedToken.islogged
+  );
   const { id, image_url, name, role, mail } = useAppSelector(
     (state) => state.decodedToken.decodedData
   );

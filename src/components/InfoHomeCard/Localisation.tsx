@@ -1,12 +1,16 @@
 import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../store/redux-hook';
 
-interface LocationItemProps {
+interface Location {
   region: string;
   event_count: number;
 }
 
-const LocationItem: React.FC<LocationItemProps> = ({ region, event_count }) => (
+interface LocalisationProps {
+  locations: Location[];
+}
+
+const LocationItem = ({ region, event_count }: Location) => (
   <NavLink to={`/region/${region}`}>
     <div className="flex gap-3.5 mt-2.5 hover:bg-zinc-300">
       <div className="flex-auto my-auto leading-6 text-zinc-500">
@@ -17,8 +21,10 @@ const LocationItem: React.FC<LocationItemProps> = ({ region, event_count }) => (
   </NavLink>
 );
 
-export function Localisation({ locations }) {
-  const islogged = useAppSelector((state) => state.decodedToken.islogged);
+export function Localisation({ locations }: LocalisationProps) {
+  const islogged: boolean = useAppSelector(
+    (state) => state.decodedToken.islogged
+  );
 
   return (
     <div className="hidden xl:flex flex-col justify-between  max-w-[255px]">

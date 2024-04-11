@@ -1,12 +1,47 @@
 import { useMutation } from '@apollo/client';
 import { useState } from 'react';
 
+interface Region {
+  nom: string;
+}
+
+interface PopupEditEventProps {
+  handleFormSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  formData: {
+    image_url: File | null;
+    name: string;
+    region: string;
+    description: string;
+    address: string;
+    city: string;
+    zip_code: number;
+    date: Date;
+    total_slots: number;
+    price: number;
+  };
+  setFormData: React.Dispatch<
+    React.SetStateAction<{
+      image_url: File | null;
+      name: string;
+      region: string;
+      description: string;
+      address: string;
+      city: string;
+      zip_code: number;
+      date: Date;
+      total_slots: number;
+      price: number;
+    }>
+  >;
+  regions: Region[];
+}
+
 export function PopupEditEvent({
   handleFormSubmit,
   formData,
   setFormData,
   regions,
-}) {
+}: PopupEditEventProps) {
   return (
     <dialog id="event" className="modal">
       <div className="modal-box bg-color-primary relative">

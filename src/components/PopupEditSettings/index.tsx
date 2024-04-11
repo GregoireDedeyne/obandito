@@ -1,10 +1,34 @@
+interface Region {
+  nom: string;
+}
+
+interface FormData {
+  image_url: File | null;
+  name: string;
+  region: string;
+  description: string;
+  address: string;
+  city: string;
+  zip_code: number;
+  spotify_link?: string;
+  youtube_link?: string;
+}
+
+interface PopupEditSettingsProps {
+  handleFormSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  formData: FormData;
+  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+  role: string;
+  regions: Region[];
+}
+
 export function PopupEditSettings({
   handleFormSubmit,
   formData,
   setFormData,
   role,
   regions,
-}) {
+}: PopupEditSettingsProps) {
   // console.log('formData2', formData);
   return (
     <dialog id="settings" className="modal">

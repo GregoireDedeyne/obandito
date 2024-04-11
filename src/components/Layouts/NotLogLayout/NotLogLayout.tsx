@@ -4,8 +4,16 @@ import { Footer } from '../../Footer';
 import { useQuery } from '@apollo/client';
 import { GET_STYLES } from '../../../graphQL/actions';
 
+interface Style {
+  name: string;
+}
+
+interface GetStylesData {
+  styles: Style[];
+}
+
 export function NotLogLayout() {
-  const { data, loading, error } = useQuery(GET_STYLES);
+  const { data, loading, error } = useQuery<GetStylesData>(GET_STYLES);
 
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;

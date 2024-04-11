@@ -11,7 +11,9 @@ interface CardProps {
 }
 
 export function Card({ image, alt, name, style, id }: CardProps) {
-  const islogged = useAppSelector((state) => state.decodedToken.islogged);
+  const islogged: boolean = useAppSelector(
+    (state) => state.decodedToken.islogged
+  );
 
   return (
     <NavLink
