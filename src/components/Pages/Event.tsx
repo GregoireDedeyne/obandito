@@ -26,6 +26,7 @@ interface FormData {
   image_url: URL;
 }
 import { toast, ToastContainer } from 'react-toastify';
+import { handleImg } from '../../utils/handleImg';
 
 export function EventPage(): EventProps {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -150,7 +151,7 @@ export function EventPage(): EventProps {
     }
   };
 
-  const img = `${import.meta.env.VITE_BACK_URL}${eventdata.event.image_url}`;
+  const img = handleImg(eventdata.event.image_url);
   const artists = eventdata.event.artists;
 
   return (

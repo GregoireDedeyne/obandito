@@ -4,6 +4,7 @@ import PopupEditDeals from '../PopupEditDeals';
 import { HANDLEPOSTULATIONEVENT } from '../../graphQL/actions';
 import { useMutation } from '@apollo/client';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { handleImg } from '../../utils/handleImg';
 
 interface Artist {
   image: string | undefined;
@@ -119,7 +120,7 @@ export function ArrayHandleArtistEvent({
                     <th scope="row" className="flex px-6 py-4 text-gray-900">
                       <img
                         className="hidden sm:block w-16 h-16 rounded-full object-cover"
-                        src={`${import.meta.env.VITE_BACK_URL}${artist?.image_url}`}
+                        src={handleImg(artist?.image_url)}
                         alt={artist?.image}
                       />
                       <div className="ps-3">

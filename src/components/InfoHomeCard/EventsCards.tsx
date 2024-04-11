@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../store/redux-hook';
+import { handleImg } from '../../utils/handleImg';
 
 interface EventCardProps {
   image_url: string;
@@ -40,7 +41,7 @@ export function EventCard({
           <div className="overflow-hidden relative flex-shrink-0 w-full lg:w-72 aspect-w-16 aspect-h-9 lg:w-80">
             <img
               loading="lazy"
-              src={`${import.meta.env.VITE_BACK_URL}${image_url}`}
+              src={handleImg(image_url)}
               alt=""
               className="object-cover w-full h-full rounded-xl"
             />

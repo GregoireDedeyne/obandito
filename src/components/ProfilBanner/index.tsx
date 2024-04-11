@@ -9,6 +9,7 @@ import { useMutation } from '@apollo/client';
 import banner from '../../assets/images/banner-profile.svg';
 import { useAppDispatch } from '../../store/redux-hook';
 import { updateToken } from '../../store/actions';
+import { handleImg } from '../../utils/handleImg';
 
 interface ProfilBannerProps {
   role: string;
@@ -98,7 +99,7 @@ export function ProfilBanner({
         <div className="avatar mt-[-50px]">
           <div className="w-24 rounded-full ring ring-white ring-offset-base-100 ring-offset-2">
             <img
-              src={`${import.meta.env.VITE_BACK_URL}${info.image_url}`}
+              src={handleImg(info.image_url)}
               alt="Image"
               className="object-fit"
             />
