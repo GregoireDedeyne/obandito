@@ -31,6 +31,7 @@ const decodedTokenReducer = createReducer(initialState, (builder) => {
       state.decodedData = initialState.decodedData;
       state.token = '';
     })
+
     .addCase(setSelectedTab, (state, action) => {
       state.selectedTab = action.payload;
     });

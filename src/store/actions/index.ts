@@ -4,7 +4,8 @@ export const SET_SELECTED_TAB = 'SET_SELECTED_TAB';
 
 export const logout = createAction(LOGOUT);
 
-export const SET_DECODED_TOKEN = 'SET_DECODED_TOKEN';
+const SET_DECODED_TOKEN = 'SET_DECODED_TOKEN';
+
 export const setDecodedToken = createAction(
   SET_DECODED_TOKEN,
   (token, decodedToken) => ({

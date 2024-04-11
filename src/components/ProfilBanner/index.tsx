@@ -7,6 +7,8 @@ import { useState } from 'react';
 import { UPDATE_USER } from '../../graphQL/actions';
 import { useMutation } from '@apollo/client';
 import banner from '../../assets/images/banner-profile.svg';
+import { useAppDispatch } from '../../store/redux-hook';
+import { updateToken } from '../../store/actions';
 
 interface ProfilBannerProps {
   role: string;
