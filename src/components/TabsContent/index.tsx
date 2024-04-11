@@ -1,14 +1,14 @@
 import ContactDetails from '../ContactDetails';
 import { ArrayHandleArtistEvent } from '../ArrayHandleArtistEvent';
 import ProfilContentBlock from '../ProfilContentBlock';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { EventCard } from '../InfoHomeCard/EventsCards';
 import SocialMediaGroup from '../SocialMediaGroup';
 import { setSelectedTab } from '../../store/actions';
 import { useAppDispatch, useAppSelector } from '../../store/redux-hook';
-import { useDispatch } from 'react-redux';
 
 interface Event {
+  validation: string;
   id: number;
   artists: Artist[];
 }
@@ -20,6 +20,7 @@ interface Artist {
 
 interface TabsContentProps {
   data: {
+    address: string;
     description: string;
     spotify_link: string;
     youtube_link: string;
@@ -32,6 +33,8 @@ interface TabsContentProps {
   id: number;
   userId: number;
   role: string;
+  idSettings: boolean;
+  rolelogin: string;
 }
 
 export function TabsContent({
@@ -40,8 +43,6 @@ export function TabsContent({
   role,
   rolelogin,
 }: TabsContentProps) {
-  // const [selectedTab, setSelectedTab] = useState<number>(0);
-  // selectedTab;
   setSelectedTab;
   const [radioStatus, setRadioStatus] = useState<string>('tous');
 
@@ -52,10 +53,6 @@ export function TabsContent({
   };
 
   const selectedTab = useAppSelector((state) => state.decodedToken.selectedTab);
-
-  // useEffect(() => {
-  //   dispatch(setSelectedTab(3));
-  // }, [data]);
 
   return (
     <>
@@ -137,7 +134,22 @@ export function TabsContent({
                     <h2>Mes Evènements</h2>
                     <div>
                       {data.events.map((event, index) => (
-                        <EventCard key={index} {...event} />
+                        <EventCard
+                          image_url={''}
+                          name={''}
+                          description={''}
+                          city={''}
+                          date={''}
+                          region={''}
+                          price={0}
+                          organizer={{
+                            name: '',
+                          }}
+                          available={false}
+                          validated={''}
+                          key={index}
+                          {...event}
+                        />
                       ))}
                     </div>
                   </div>
@@ -215,20 +227,6 @@ export function TabsContent({
                     <div className="bloc-white">
                       <h2>Evènements remportés</h2>
                       <div>
-                        {/* {data.events
-                          .filter((event) => {
-                            if (radioStatus === 'pending') {
-                              return event.validation === 'pending';
-                            } else if (radioStatus === 'validated') {
-                              return event.validation === 'validated';
-                            } else {
-                              return true; // Afficher tous les événements si l'option "Tous" est sélectionnée
-                            }
-                          })
-                          .map((event, index) => (
-                            <EventCard key={index} {...event} />
-                          ))} */}
-
                         {idSettings &&
                           data.events.map((event, index) => (
                             <div key={index} className="flex items-center">
@@ -240,6 +238,17 @@ export function TabsContent({
                               (radioStatus === 'refused' &&
                                 event.validation === 'refused') ? (
                                 <EventCard
+                                  image_url={''}
+                                  name={''}
+                                  description={''}
+                                  city={''}
+                                  date={''}
+                                  region={''}
+                                  price={0}
+                                  organizer={{
+                                    name: '',
+                                  }}
+                                  available={false}
                                   key={index}
                                   {...event}
                                   validated={event.validation}
@@ -256,6 +265,17 @@ export function TabsContent({
                               event.validation === 'validated' ? (
                                 <div key={index} className="flex items-center">
                                   <EventCard
+                                    image_url={''}
+                                    name={''}
+                                    description={''}
+                                    city={''}
+                                    date={''}
+                                    region={''}
+                                    price={0}
+                                    organizer={{
+                                      name: '',
+                                    }}
+                                    available={false}
                                     key={index}
                                     {...event}
                                     validated={event.validation}

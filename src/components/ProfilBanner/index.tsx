@@ -13,6 +13,7 @@ import { updateToken } from '../../store/actions';
 interface ProfilBannerProps {
   role: string;
   info: {
+    events: any;
     name: string;
     region: string;
     description: string;
@@ -24,6 +25,9 @@ interface ProfilBannerProps {
     image_url: URL;
   };
   token: string;
+  idSettings: boolean;
+  regions: [];
+  rolelogin: string;
 }
 
 export function ProfilBanner({
@@ -34,7 +38,7 @@ export function ProfilBanner({
   regions,
   rolelogin,
 }: ProfilBannerProps) {
-  const [UpdateUser, { loading, error }] = useMutation(UPDATE_USER);
+  const [UpdateUser] = useMutation(UPDATE_USER);
 
   const [formData, setFormData] = useState({
     name: info.name,
@@ -48,9 +52,10 @@ export function ProfilBanner({
     image_url: null,
   });
   const location = useLocation();
-  // console.log('formData', formData);
 
-  const handleFormSubmit = async (e) => {
+  const dispatch = useAppDispatch();
+
+  const handleFormSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     try {
@@ -63,12 +68,24 @@ export function ProfilBanner({
         variables: { input: { ...filteredData } },
         context: { headers: { Authorization: `Bearer ${token}` } },
       });
+      dispatch(updateToken(data.updateUser.image_url));
 
       console.log('Données mises à jour avec succès:', data);
-      document.getElementById('settings').close();
+      const settingsModal = document.getElementById(
+        'settings'
+      ) as HTMLDialogElement | null;
+      if (settingsModal) {
+        settingsModal.close();
+      } else {
+        console.error("L'élément avec l'ID \"settings\" n'a pas été trouvé.");
+      }
       window.location.href = location.pathname;
     } catch (error) {
-      console.error('Erreur:', error.message);
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        console.error("Une erreur inattendue s'est produite");
+      }
     }
   };
 
@@ -97,7 +114,16 @@ export function ProfilBanner({
                   icon={faPencilAlt}
                   className="ml-3 cursor-pointer"
                   onClick={() => {
-                    document.getElementById('settings').showModal();
+                    const settingsModal = document.getElementById(
+                      'settings'
+                    ) as HTMLDialogElement | null;
+                    if (settingsModal) {
+                      settingsModal.showModal();
+                    } else {
+                      console.error(
+                        "L'élément avec l'ID \"settings\" n'a pas été trouvé."
+                      );
+                    }
                   }}
                 />
               )}

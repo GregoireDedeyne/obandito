@@ -4,10 +4,9 @@ import PopupEditDeals from '../PopupEditDeals';
 import { HANDLEPOSTULATIONEVENT } from '../../graphQL/actions';
 import { useMutation } from '@apollo/client';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { setSelectedTab } from '../../store/actions';
-import { useDispatch } from 'react-redux';
 
 interface Artist {
+  image: string | undefined;
   id: string;
   validation: string;
   image_url: string;
@@ -29,20 +28,19 @@ interface ArrayHandleArtistEventProps {
 export function ArrayHandleArtistEvent({
   events,
   radioStatus,
-  selectedTab,
 }: ArrayHandleArtistEventProps) {
   const token = useAppSelector((state) => state.decodedToken.token);
 
   const [selectedStatus, setSelectedStatus] = useState('pending');
-  const [idUserStatus, setIdUserStatus] = useState();
-  const [idEventStatus, setIdEventStatus] = useState();
-
-  const [HandlePostulationEvent, { loading, error }] = useMutation(
-    HANDLEPOSTULATIONEVENT
+  const [idUserStatus, setIdUserStatus] = useState<number | undefined>(
+    undefined
   );
-  const location = useLocation();
+  const [idEventStatus, setIdEventStatus] = useState<number | undefined>(
+    undefined
+  );
 
-  const navigate = useNavigate();
+  const [HandlePostulationEvent] = useMutation(HANDLEPOSTULATIONEVENT);
+  const location = useLocation();
 
   const handleFormSubmitStatus = async (
     e: React.FormEvent<HTMLFormElement>
@@ -63,12 +61,23 @@ export function ArrayHandleArtistEvent({
         },
       });
 
-      document.getElementById('deals').close();
+      const dealsModal = document.getElementById(
+        'deals'
+      ) as HTMLDialogElement | null;
+      if (dealsModal) {
+        dealsModal.close();
+      } else {
+        console.error("L'élément avec l'ID \"deals\" n'a pas été trouvé.");
+      }
       window.location.href = location.pathname;
 
       console.log('Status à jour avec succès:', data);
     } catch (error) {
-      console.error('Erreur:', error.message);
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        console.error("Une erreur inattendue s'est produite");
+      }
     }
   };
 
@@ -147,7 +156,16 @@ export function ArrayHandleArtistEvent({
                       <span
                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"
                         onClick={() => {
-                          document.getElementById('deals').showModal();
+                          const dealsModal = document.getElementById(
+                            'deals'
+                          ) as HTMLDialogElement | null;
+                          if (dealsModal) {
+                            dealsModal.showModal();
+                          } else {
+                            console.error(
+                              "L'élément avec l'ID \"deals\" n'a pas été trouvé."
+                            );
+                          }
                           setIdUserStatus(parseInt(artist.id));
                           setIdEventStatus(parseInt(event.id));
                         }}

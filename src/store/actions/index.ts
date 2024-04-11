@@ -16,3 +16,9 @@ export const setDecodedToken = createAction(
 export const setSelectedTab = createAction(SET_SELECTED_TAB, (selectedTab) => ({
   payload: selectedTab,
 }));
+
+const UPDATE_TOKEN = 'UPDATE_TOKEN';
+
+export const updateToken = createAction(UPDATE_TOKEN, (newImg) => ({
+  payload: { newImg },
+}));

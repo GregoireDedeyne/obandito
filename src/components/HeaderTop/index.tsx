@@ -1,10 +1,10 @@
 import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/redux-hook';
 import { logout } from '../../store/actions';
-function classNames(...classes) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 const GenreItem: React.FC<GenreItemProps> = ({ genre }) => {
@@ -79,14 +79,6 @@ export function Header({ genres }) {
                   </div>
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:items-center">
-                  {/* <button
-                    type="button"
-                    className="relative rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                  >
-                    <span className="absolute -inset-1.5" />
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button> */}
                   {/* Profile dropdown */}
                   {islogged === true ? (
                     <Menu as="div" className="relative ml-3">
@@ -285,7 +277,7 @@ export function Header({ genres }) {
         <div className="hidden xl:flex flex-row justify-center items-center w-full text-base leading-6 whitespace-nowrap bg-white border-b border-solid border-zinc-200 text-neutral-500">
           <div className="flex gap-0 justify-center w-full">
             <div className="flex gap-5 max-w-[80%]  ">
-              {genres.map((genre, index) => (
+              {genres.map((genre: { name: any }, index: any) => (
                 <GenreItem key={index} genre={genre.name} />
               ))}
             </div>
@@ -294,17 +286,7 @@ export function Header({ genres }) {
         </div>
       ) : islogged === true && role === 'Organisateur' ? (
         ''
-      ) : // <div className="hidden xl:flex flex-row justify-center items-center w-full text-base leading-6 whitespace-nowrap bg-white border-b border-solid border-zinc-200 text-neutral-500">
-      //   <div className="flex gap-0 justify-center w-full">
-      //     <div className="flex gap-5 max-w-[80%]  ">
-      //       {genres.map((genre, index) => (
-      //         <GenreItem key={index} genre={genre.name} />
-      //       ))}
-      //     </div>
-      //     <div className="shrink-0 h-[39px] w-[7px]" />
-      //   </div>
-      // </div>
-      islogged === true && role === 'Artiste' ? (
+      ) : islogged === true && role === 'Artiste' ? (
         ''
       ) : null}
     </>

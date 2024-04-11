@@ -5,7 +5,8 @@ interface ContactDetailsProps {
   city: string;
   address: string;
   role: string;
-  idSettings: number;
+  idSettings: boolean;
+  rolelogin: string;
 }
 
 export default function ContactDetails({

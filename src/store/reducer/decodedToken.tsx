@@ -1,5 +1,10 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { logout, setDecodedToken, setSelectedTab } from '../actions';
+import {
+  logout,
+  setDecodedToken,
+  setSelectedTab,
+  updateToken,
+} from '../actions';
 
 const initialState = {
   decodedData: {
@@ -34,6 +39,9 @@ const decodedTokenReducer = createReducer(initialState, (builder) => {
 
     .addCase(setSelectedTab, (state, action) => {
       state.selectedTab = action.payload;
+    })
+    .addCase(updateToken, (state, action) => {
+      state.decodedData.image_url = action.payload.newImg;
     });
 });
 
