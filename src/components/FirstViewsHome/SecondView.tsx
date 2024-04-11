@@ -7,12 +7,12 @@ interface StepProps {
   isHighlighted?: boolean;
 }
 
-const Step: React.FC<StepProps> = ({
+const Step = ({
   imageSrc,
   stepNumber,
   description,
   isHighlighted = false,
-}) => (
+}: StepProps) => (
   <div className="flex gap-4 mt-5 max-md:flex-wrap mb-10">
     <img
       src={imageSrc}

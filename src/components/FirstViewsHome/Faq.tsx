@@ -3,7 +3,7 @@ interface AccordionItemProps {
   answer: string;
 }
 
-const AccordionItem: React.FC<AccordionItemProps> = ({ title, answer }) => {
+const AccordionItem = ({ title, answer }: AccordionItemProps) => {
   return (
     <div className="flex flex-col flex-1 grow shrink-0 justify-center p-px bg-white rounded-xl border border-solid basis-0 border-black border-opacity-10 w-fit max-md:max-w-full">
       <div className="flex flex-col gap-5 justify-center px-5 py-6 rounded-xl border-b border-solid border-zinc-100 max-md:flex-wrap max-md:max-w-full">

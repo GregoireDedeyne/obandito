@@ -6,7 +6,16 @@ import {
   faGlobe,
 } from '@fortawesome/free-solid-svg-icons';
 
-export function InputField({ inputName, value, onChange }) {
+interface InputFieldProps {
+  inputName: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>, inputName: string) => void;
+  label: string;
+  type: string;
+  placeholder: string;
+}
+
+export function InputField({ inputName, value, onChange }: InputFieldProps) {
   return (
     <>
       {inputName === 'name' && (

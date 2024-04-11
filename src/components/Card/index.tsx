@@ -2,12 +2,20 @@ import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../store/redux-hook';
 import { handleImg } from '../../utils/handleImg';
 
-export function Card({ image, alt, name, style, id }) {
+interface CardProps {
+  image: URL | string;
+  alt: string;
+  name: string;
+  style: string;
+  id: number;
+}
+
+export function Card({ image, alt, name, style, id }: CardProps) {
   const islogged = useAppSelector((state) => state.decodedToken.islogged);
 
   return (
     <NavLink
-      className={''}
+      className=""
       to={islogged === false ? '/login' : `/profile/band/${id}`}
     >
       <div className="flex-col justify-center bg-white rounded-xl shadow-lg min-w-[302px] border-2 border-solid border-transparent hover:border-purple-800">

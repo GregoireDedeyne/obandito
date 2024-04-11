@@ -1,6 +1,20 @@
 import { Card } from '../Card';
 
-export function CardsWithout({ data, title, subtitle }) {
+interface CardData {
+  image_url: string;
+  alt: string;
+  name: string;
+  id: number;
+  style: { name: string };
+}
+
+interface CardsWithoutProps {
+  data: CardData[];
+  title: string;
+  subtitle: string;
+}
+
+export function CardsWithout({ data, title, subtitle }: CardsWithoutProps) {
   return (
     <>
       <div className="flex justify-start px-5 w-full max-md:max-w-full my-8  sm:ml-0 bloc-white">

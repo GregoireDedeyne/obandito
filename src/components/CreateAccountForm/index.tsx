@@ -10,9 +10,22 @@ import { CREATE_ACCOUNT } from '../../graphQL/actions';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
+interface FormData {
+  mail: string;
+  name: string;
+  password: string;
+  confirmPassword: string;
+  region: string;
+  role: string;
+}
+
+interface Region {
+  nom: string;
+}
+
 export function CreateAccountForm() {
   const datas = useLoaderData();
-  const regions = datas.regions;
+  const regions: Region[] = datas.regions;
 
   const navigate = useNavigate();
 
@@ -20,7 +33,7 @@ export function CreateAccountForm() {
   const [CreateAccount, { data, loading, error }] = useMutation(CREATE_ACCOUNT);
 
   // Add useState to stock data from form
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     mail: '',
     name: '',
     password: '',
@@ -33,7 +46,7 @@ export function CreateAccountForm() {
   const [selectedRole, setSelectedRole] = useState(null);
 
   // Met à jour l'état du state avec le rôle
-  const handleRoleSelect = (role) => {
+  const handleRoleSelect = (role: string) => {
     setSelectedRole(role);
     setFormData((prevState) => ({
       ...prevState,
@@ -42,7 +55,10 @@ export function CreateAccountForm() {
   };
 
   // function to update state data
-  const handleChange = (e, fieldName) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    fieldName: string
+  ) => {
     const updatedFormData = { ...formData, [fieldName]: e.target.value };
     setFormData(updatedFormData);
   };
@@ -50,7 +66,7 @@ export function CreateAccountForm() {
   const { confirmPassword, ...formDataWithoutConfirmPassword } = formData;
 
   // function to submit the form and push data with grahQL
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Vérifie si des champs obligatoires sont vides
     const requiredFields = [
@@ -82,7 +98,6 @@ export function CreateAccountForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col">
-      {/* Afficher les cartes de sélection de rôle uniquement si aucun rôle n'est sélectionné */}
       {selectedRole === null && (
         <div className="w-full flex flex-row ">
           <RoleSelectionCard

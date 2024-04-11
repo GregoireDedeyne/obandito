@@ -5,8 +5,37 @@ import { Localisation } from '../InfoHomeCard/Localisation';
 import { useAppSelector } from '../../store/redux-hook';
 import { useState } from 'react';
 
-export function ThirdView({ events, locations }) {
+interface Organizer {
+  name: string;
+}
+
+interface Event {
+  city: string;
+  description: string;
+  image_url: string;
+  id: string;
+  name: string;
+  region: string;
+  price: number;
+  date: string;
+  available: boolean;
+  organizer: Organizer;
+}
+
+interface Location {
+  event_count: number;
+  region: string;
+}
+
+interface ThirdViewProps {
+  events: Event[];
+  locations: Location[];
+}
+
+export function ThirdView({ events, locations }: ThirdViewProps) {
   const islogged = useAppSelector((state) => state.decodedToken.islogged);
+  console.log('events', events);
+  console.log('locations', locations);
 
   const [limitEvents, setLimitEvents] = useState(10);
 

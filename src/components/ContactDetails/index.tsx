@@ -13,12 +13,11 @@ export default function ContactDetails({
   zip_code,
   city,
   address,
-  role,
   idSettings,
   rolelogin,
 }: ContactDetailsProps) {
-  console.log('zip_code', zip_code);
-  console.log('city', city);
+  // console.log('zip_code', zip_code);
+  // console.log('city', city);
 
   return (
     <div className="bloc-white">

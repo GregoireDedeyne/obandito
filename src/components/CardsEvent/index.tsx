@@ -1,6 +1,18 @@
 import { Card } from '../Card';
 
-export function CardsEvent({ data }) {
+interface CardData {
+  image_url: string;
+  alt: string;
+  name: string;
+  id: number;
+  style: { name: string };
+}
+
+interface CardsEventData {
+  data: CardData[];
+}
+
+export function CardsEvent({ data }: CardsEventData) {
   return (
     <>
       <div className="flex flex-wrap bg-white py-20 bloc-white pb-5 justify-center">

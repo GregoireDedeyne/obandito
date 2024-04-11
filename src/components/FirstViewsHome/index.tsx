@@ -8,7 +8,7 @@ interface ImageProps {
   className?: string;
 }
 
-const Image: React.FC<ImageProps> = ({ src, alt, className }) => (
+const Image = ({ src, alt, className }: ImageProps) => (
   <img loading="lazy" src={src} alt={alt} className={className} />
 );
 
@@ -17,7 +17,7 @@ interface TextProps {
   className?: string;
 }
 
-const Text: React.FC<TextProps> = ({ children, className }) => (
+const Text = ({ children, className }: TextProps) => (
   <div className={className}>{children}</div>
 );
 
@@ -27,7 +27,7 @@ export function FirstViewHome() {
 
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log('Recherche effectuée:', searchTerm);
   };
