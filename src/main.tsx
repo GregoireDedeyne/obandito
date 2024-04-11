@@ -112,6 +112,7 @@ const router = createBrowserRouter([
       {
         path: 'eventcreation',
         element: <EventFormPage />,
+        loader: RegionSelectLoader,
       },
     ],
   },

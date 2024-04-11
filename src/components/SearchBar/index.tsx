@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 function SearchableTable() {
   const [searchText, setSearchText] = useState('');
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
 

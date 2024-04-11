@@ -1,9 +1,23 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { CREATE_EVENT } from '../../graphQL/actions';
 import { useAppSelector } from '../../store/redux-hook';
+
+interface EventFormData {
+  name: string;
+  image_url: File | null;
+  address: string;
+  city: string;
+  date: string;
+  description: string;
+  price: number;
+  region: string;
+  total_slots: number;
+  zip_code: string;
+  catering: boolean;
+}
 
 export function EventFormPage() {
   const navigate = useNavigate();
@@ -16,7 +30,7 @@ export function EventFormPage() {
     },
   });
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<EventFormData>({
     name: 'test',
     image_url: null,
     address: '',
@@ -24,15 +38,17 @@ export function EventFormPage() {
     date: '2024-05-05',
     description: '',
     price: 1,
-    region: 'test',
+    region: '',
     total_slots: 1,
     zip_code: '17000',
     catering: false,
   });
 
-  const handleChange = (e: {
-    target: { name: any; value: any; type: any; checked: any; files: any };
-  }) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value, type, checked, files } = e.target;
 
     setFormData((prevFormData) => ({
@@ -40,12 +56,11 @@ export function EventFormPage() {
       [name]:
         type === 'file' ? files[0] : type === 'checkbox' ? checked : value,
     }));
-    console.log('formData', formData);
+    // console.log('formData', formData);
   };
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // console.log('formDat', formData);
 
     const isEmptyField = Object.values(formData).some((value) => value === '');
     console.log('isEmptyField', isEmptyField);
@@ -61,7 +76,7 @@ export function EventFormPage() {
       price: Number(formData.price),
       total_slots: Number(formData.total_slots),
     };
-    console.log('input', input);
+    // console.log('input', input);
 
     createEvent({
       variables: { input },
@@ -77,6 +92,8 @@ export function EventFormPage() {
 
   if (error)
     toast.error(`Erreur lors de la création de l'événement: ${error.message}`);
+
+  const data = useLoaderData();
 
   return (
     <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden md:max-w-lg">
@@ -116,24 +133,29 @@ export function EventFormPage() {
             checked={undefined}
             min={undefined}
           />
-          <FormInput
-            label="Ville"
-            name="city"
-            handleChange={handleChange}
-            value={undefined}
-            required={undefined}
-            checked={undefined}
-            min={undefined}
-          />
-          <FormInput
-            label="Région"
-            name="region"
-            value={formData.region}
-            handleChange={handleChange}
-            required
-            checked={undefined}
-            min={undefined}
-          />
+          <FormInput label="Ville" name="city" handleChange={handleChange} />
+
+          <div className="flex flex-col mb-2">
+            <label className="text-black mb-2" htmlFor="region">
+              Région:
+            </label>
+            <select
+              className="select select-bordered w-full max-w-xs bg-slate-100"
+              name="region"
+              value={formData.region}
+              onChange={handleChange}
+            >
+              <option value="" disabled>
+                Choisissez votre région
+              </option>
+              {data.regions.map((region) => (
+                <option key={region.nom} value={region.nom}>
+                  {region.nom}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <FormInput
             label="Date"
             name="date"
@@ -214,6 +236,21 @@ export function EventFormPage() {
   );
 }
 
+interface FormInputProps {
+  label: string;
+  type?: string;
+  name: string;
+  value: string | File | number;
+  handleChange: (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => void;
+  required?: boolean;
+  checked?: boolean;
+  min?: string;
+}
+
 function FormInput({
   label,
   type = 'text',
@@ -223,7 +260,7 @@ function FormInput({
   required,
   checked,
   min,
-}) {
+}: FormInputProps) {
   return (
     <div className="mb-4">
       <label

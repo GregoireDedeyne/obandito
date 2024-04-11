@@ -8,11 +8,13 @@ export function PopupEditSettings({
   // console.log('formData2', formData);
   return (
     <dialog id="settings" className="modal">
-      <div className="modal-box bg-color-primary relative">
+      <div className="modal-box bg-white relative">
         <h3 className="font-bold text-lg mb-8">Modifier mes données</h3>
         <form onSubmit={handleFormSubmit} className="modal-backdrop">
-          <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-            Image
+          <label className="form-control flex flex-col mb-5">
+            <div className="label">
+              <span className="label-text">Image</span>
+            </div>
             <input
               type="file"
               accept="image/*"
@@ -20,11 +22,14 @@ export function PopupEditSettings({
                 const file = e.target.files[0];
                 setFormData({ ...formData, image_url: file });
               }}
+              className="input input-bordered input-black bg-white text-black"
             />
           </label>
 
-          <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-            <span>Nom</span>
+          <label className="form-control flex flex-col mb-5">
+            <div className="label">
+              <span className="label-text">Nom</span>
+            </div>
             <input
               type="text"
               value={formData.name}
@@ -32,14 +37,16 @@ export function PopupEditSettings({
                 setFormData({ ...formData, name: e.target.value })
               }
               placeholder="Votre nom"
+              className="input input-bordered input-black bg-white text-black"
             />
           </label>
 
-          <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-            <span>Région</span>
+          <label className="form-control w-full max-w-xs">
+            <div className="label">
+              <span className="label-text">Région</span>
+            </div>
             <select
-              className="select select-bordered w-full max-w-xsflex items-center my-2  bg-slate-100 w-[80%]"
-              name="region"
+              className="select select-bordered select-black bg-white text-black"
               value={formData.region}
               onChange={(e) =>
                 setFormData({ ...formData, region: e.target.value })
@@ -56,11 +63,13 @@ export function PopupEditSettings({
             </select>
           </label>
 
-          <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-            Description
+          <label className="form-control">
+            <div className="label">
+              <span className="label-text">Description</span>
+            </div>
             <textarea
-              className="input input-bordered flex items-center gap-2 bg-white w-full pr-0"
-              type="text"
+              className="textarea textarea-bordered h-24 textarea-black bg-white text-black"
+              placeholder="Description"
               value={formData.description}
               onChange={(e) =>
                 setFormData({
@@ -68,91 +77,97 @@ export function PopupEditSettings({
                   description: e.target.value,
                 })
               }
-              placeholder="Description"
-            />
+            ></textarea>
           </label>
 
-          <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-            Adresse
+          <label className="form-control flex flex-col mb-5">
+            <div className="label">
+              <span className="label-text">Adresse</span>
+            </div>
             <input
               type="text"
               value={formData.address}
               onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  address: e.target.value,
-                })
+                setFormData({ ...formData, address: e.target.value })
               }
+              placeholder="Votre address"
+              className="input input-bordered input-black bg-white text-black"
             />
           </label>
 
-          <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-            code postal
+          <label className="form-control flex flex-col mb-5">
+            <div className="label">
+              <span className="label-text">code postal</span>
+            </div>
             <input
-              type="texte"
+              type="text"
               value={formData.zip_code}
               onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  zip_code: parseInt(e.target.value, 10),
-                })
+                setFormData({ ...formData, zip_code: e.target.value })
               }
+              placeholder="Votre code postal"
+              className="input input-bordered input-black bg-white text-black"
             />
           </label>
 
-          <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-            ville
+          <label className="form-control flex flex-col mb-5">
+            <div className="label">
+              <span className="label-text">ville</span>
+            </div>
             <input
               type="text"
               value={formData.city}
               onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  city: e.target.value,
-                })
+                setFormData({ ...formData, city: e.target.value })
               }
+              placeholder="Votre ville"
+              className="input input-bordered input-black bg-white text-black"
             />
           </label>
 
           {role === 'Artiste' && (
             <>
-              <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-                Lien spotify
+              <label className="form-control flex flex-col mb-5">
+                <div className="label">
+                  <span className="label-text">Lien spotify</span>
+                </div>
                 <input
                   type="url"
                   value={formData.spotify_link}
                   onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      spotify_link: e.target.value,
-                    })
+                    setFormData({ ...formData, spotify_link: e.target.value })
                   }
+                  placeholder="Votre lien spotify"
+                  className="input input-bordered input-black bg-white text-black"
                 />
               </label>
 
-              <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
-                Lien Youtube
+              <label className="form-control flex flex-col mb-5">
+                <div className="label">
+                  <span className="label-text">Lien Youtube</span>
+                </div>
                 <input
                   type="url"
                   value={formData.youtube_link}
                   onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      youtube_link: e.target.value,
-                    })
+                    setFormData({ ...formData, youtube_link: e.target.value })
                   }
+                  placeholder="Votre lien Youtube"
+                  className="input input-bordered input-black bg-white text-black"
                 />
               </label>
             </>
           )}
 
-          <button className="text-right w-full text-white" type="submit">
+          <button className="btn btn-outline" type="submit">
             Enregistrer
           </button>
         </form>
 
         <form method="dialog" className="modal-backdrop">
-          <button className="text-white absolute top-7 right-7">Fermer</button>
+          <button className="text-white bg-red-500 rounded-full w-7 h-7 flex items-center justify-center absolute top-7 right-7">
+            X
+          </button>
         </form>
       </div>
     </dialog>
