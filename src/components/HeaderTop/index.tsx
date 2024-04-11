@@ -4,6 +4,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/redux-hook';
 import { logout } from '../../store/actions';
+import { handleImg } from '../../utils/handleImg';
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
@@ -88,7 +89,7 @@ export function Header({ genres }) {
                           <span className="sr-only">Open user menu</span>
                           <img
                             className="h-10 w-10 rounded-full"
-                            src={`${import.meta.env.VITE_BACK_URL}${image_url}`}
+                            src={handleImg(image_url)}
                             alt="image profil"
                           />
                         </Menu.Button>
@@ -233,7 +234,7 @@ export function Header({ genres }) {
                     <div className="flex-shrink-0">
                       <img
                         className="h-10 w-10 rounded-full"
-                        src={`${import.meta.env.VITE_BACK_URL}${image_url}`}
+                        src={handleImg(image_url)}
                         alt="image profil"
                       />
                     </div>
