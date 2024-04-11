@@ -4,6 +4,8 @@ import PopupEditDeals from '../PopupEditDeals';
 import { HANDLEPOSTULATIONEVENT } from '../../graphQL/actions';
 import { useMutation } from '@apollo/client';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { setSelectedTab } from '../../store/actions';
+import { useDispatch } from 'react-redux';
 
 interface Artist {
   id: string;
@@ -27,6 +29,7 @@ interface ArrayHandleArtistEventProps {
 export function ArrayHandleArtistEvent({
   events,
   radioStatus,
+  selectedTab,
 }: ArrayHandleArtistEventProps) {
   const token = useAppSelector((state) => state.decodedToken.token);
 
@@ -59,8 +62,8 @@ export function ArrayHandleArtistEvent({
           },
         },
       });
-      document.getElementById('deals').close();
 
+      document.getElementById('deals').close();
       window.location.href = location.pathname;
 
       console.log('Status à jour avec succès:', data);

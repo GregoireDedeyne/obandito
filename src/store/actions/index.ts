@@ -1,5 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
 const LOGOUT = 'LOGOUT';
+export const SET_SELECTED_TAB = 'SET_SELECTED_TAB';
 
 export const logout = createAction(LOGOUT);
 
@@ -10,3 +11,7 @@ export const setDecodedToken = createAction(
     payload: { token, decodedToken },
   })
 );
+
+export const setSelectedTab = createAction(SET_SELECTED_TAB, (selectedTab) => ({
+  payload: selectedTab,
+}));

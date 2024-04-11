@@ -1,9 +1,12 @@
 import ContactDetails from '../ContactDetails';
 import { ArrayHandleArtistEvent } from '../ArrayHandleArtistEvent';
 import ProfilContentBlock from '../ProfilContentBlock';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { EventCard } from '../InfoHomeCard/EventsCards';
 import SocialMediaGroup from '../SocialMediaGroup';
+import { setSelectedTab } from '../../store/actions';
+import { useAppDispatch, useAppSelector } from '../../store/redux-hook';
+import { useDispatch } from 'react-redux';
 
 interface Event {
   id: number;
@@ -37,14 +40,22 @@ export function TabsContent({
   role,
   rolelogin,
 }: TabsContentProps) {
-  const [selectedTab, setSelectedTab] = useState<number>(0);
+  // const [selectedTab, setSelectedTab] = useState<number>(0);
+  // selectedTab;
+  setSelectedTab;
   const [radioStatus, setRadioStatus] = useState<string>('tous');
 
+  const dispatch = useAppDispatch();
+
   const handleTabClick = (i: number) => {
-    setSelectedTab(i);
+    dispatch(setSelectedTab(i));
   };
 
-  // console.log(data.events);
+  const selectedTab = useAppSelector((state) => state.decodedToken.selectedTab);
+
+  // useEffect(() => {
+  //   dispatch(setSelectedTab(3));
+  // }, [data]);
 
   return (
     <>
@@ -58,6 +69,17 @@ export function TabsContent({
           checked={selectedTab === 0}
           onChange={() => handleTabClick(0)}
         />
+
+        <input
+          type="radio"
+          name="my_tabs_1"
+          role="tab"
+          className="tab"
+          aria-label="Evaluation"
+          checked={selectedTab === 1}
+          onChange={() => handleTabClick(1)}
+        />
+
         {data.events && data.events.length > 0 && (
           <input
             type="radio"
@@ -65,8 +87,8 @@ export function TabsContent({
             role="tab"
             className="tab"
             aria-label="Evènements"
-            checked={selectedTab === 1}
-            onChange={() => handleTabClick(1)}
+            checked={selectedTab === 2}
+            onChange={() => handleTabClick(2)}
           />
         )}
 
@@ -77,8 +99,8 @@ export function TabsContent({
             role="tab"
             className="tab"
             aria-label="Deals"
-            checked={selectedTab === 2}
-            onChange={() => handleTabClick(2)}
+            checked={selectedTab === 3}
+            onChange={() => handleTabClick(3)}
           />
         )}
       </div>
@@ -108,7 +130,7 @@ export function TabsContent({
               </>
             )}
 
-            {selectedTab === 1 && (
+            {selectedTab === 2 && (
               <>
                 {role === 'Organisateur' && (
                   <div className="bloc-white">
@@ -252,7 +274,7 @@ export function TabsContent({
               </>
             )}
 
-            {selectedTab === 2 && (
+            {selectedTab === 3 && (
               <>
                 <div className="flex space-x-4 items-center mb-2">
                   <input
@@ -322,6 +344,8 @@ export function TabsContent({
                 <ArrayHandleArtistEvent
                   events={data.events}
                   radioStatus={radioStatus}
+                  setSelectedTab={setSelectedTab}
+                  selectedTab={3}
                 />
               </>
             )}

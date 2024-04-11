@@ -12,6 +12,9 @@ import { useEffect } from 'react';
 
 export function HomeNotLogPage() {
   const islogged = useAppSelector((state) => state.decodedToken.islogged);
+
+  console.log('islogged', islogged);
+
   const role = useAppSelector((state) => state.decodedToken.decodedData.role);
   const data = useLoaderData();
   const location = useLocation();
