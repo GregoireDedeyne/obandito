@@ -13,14 +13,11 @@ import imgSide from '../../assets/images/curved6.jpg';
 
 export function LoginPage() {
   const dispatch = useDispatch();
-  const [loginMutation, { data, loading, error }] = useMutation(
-    LOGIN_MUTATION,
-    {
-      onError: (error) => {
-        toast.warn(error.message); // Afficher l'erreur avec react-toastify
-      },
-    }
-  );
+  const [loginMutation] = useMutation(LOGIN_MUTATION, {
+    onError: (error) => {
+      toast.warn(error.message); // Afficher l'erreur avec react-toastify
+    },
+  });
   const [formData, setFormData] = useState({ mail: '', password: '' });
 
   const handleChange = (e: { target: { value: any } }, fieldName: string) => {

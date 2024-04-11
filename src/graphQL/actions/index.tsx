@@ -461,6 +461,12 @@ export const RESETPASSWORD = gql`
   }
 `;
 
+export const REQUESTNEWPASSWORD = gql`
+  mutation Mutation($token: String!, $password: String!) {
+    resetPassword(token: $token, password: $password)
+  }
+`;
+
 export const HANDLEPOSTULATIONEVENT = gql`
   mutation HandlePostulationEvent(
     $artistId: Int!

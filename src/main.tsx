@@ -61,6 +61,10 @@ const router = createBrowserRouter([
         element: <ForgotPasswordPage />,
       },
       {
+        path: '/reset-password/:token',
+        element: <ForgotPasswordPage />,
+      },
+      {
         path: 'events/search/:searchTerm',
         element: <HomeNotLogPage />,
         loader: EventsSearch,
