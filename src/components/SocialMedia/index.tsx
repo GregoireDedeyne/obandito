@@ -1,4 +1,10 @@
-export default function SocialMedia({ logo, link, alt }) {
+interface SocialMediaProps {
+  logo: string;
+  link: string;
+  alt: string;
+}
+
+export default function SocialMedia({ logo, link, alt }: SocialMediaProps) {
   return (
     <div className="flex justify-center">
       <span className="mx-2 text-2xl">

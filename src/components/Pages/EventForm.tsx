@@ -5,6 +5,20 @@ import { toast, ToastContainer } from 'react-toastify';
 import { CREATE_EVENT } from '../../graphQL/actions';
 import { useAppSelector } from '../../store/redux-hook';
 
+interface EventFormData {
+  name: string;
+  image_url: File | null;
+  address: string;
+  city: string;
+  date: string;
+  description: string;
+  price: number;
+  region: string;
+  total_slots: number;
+  zip_code: string;
+  catering: boolean;
+}
+
 export function EventFormPage() {
   const navigate = useNavigate();
   const token = useAppSelector((state) => state.decodedToken.token);
@@ -16,7 +30,7 @@ export function EventFormPage() {
     },
   });
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<EventFormData>({
     name: 'test',
     image_url: null,
     address: '',
@@ -30,7 +44,11 @@ export function EventFormPage() {
     catering: false,
   });
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value, type, checked, files } = e.target;
 
     setFormData((prevFormData) => ({
@@ -38,12 +56,11 @@ export function EventFormPage() {
       [name]:
         type === 'file' ? files[0] : type === 'checkbox' ? checked : value,
     }));
-    console.log('formData', formData);
+    // console.log('formData', formData);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // console.log('formDat', formData);
 
     const isEmptyField = Object.values(formData).some((value) => value === '');
     console.log('isEmptyField', isEmptyField);
@@ -59,7 +76,7 @@ export function EventFormPage() {
       price: Number(formData.price),
       total_slots: Number(formData.total_slots),
     };
-    console.log('input', input);
+    // console.log('input', input);
 
     createEvent({
       variables: { input },
@@ -196,6 +213,21 @@ export function EventFormPage() {
   );
 }
 
+interface FormInputProps {
+  label: string;
+  type?: string;
+  name: string;
+  value: string | File | number;
+  handleChange: (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => void;
+  required?: boolean;
+  checked?: boolean;
+  min?: string;
+}
+
 function FormInput({
   label,
   type = 'text',
@@ -205,7 +237,7 @@ function FormInput({
   required,
   checked,
   min,
-}) {
+}: FormInputProps) {
   return (
     <div className="mb-4">
       <label
