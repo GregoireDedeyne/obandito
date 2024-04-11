@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { logout, setDecodedToken } from '../actions';
+import { logout, setDecodedToken, updateToken } from '../actions';
 
 const initialState = {
   decodedData: {
@@ -32,6 +32,9 @@ const decodedTokenReducer = createReducer(initialState, (builder) => {
       state.islogged = false;
       state.decodedData = initialState.decodedData;
       state.token = '';
+    })
+    .addCase(updateToken, (state, action) => {
+      state.decodedData.image_url = action.payload.newImg;
     });
 });
 
