@@ -33,9 +33,11 @@ interface ThirdViewProps {
 }
 
 export function ThirdView({ events, locations }: ThirdViewProps) {
-  const islogged = useAppSelector((state) => state.decodedToken.islogged);
-  console.log('events', events);
-  console.log('locations', locations);
+  const islogged: boolean = useAppSelector(
+    (state) => state.decodedToken.islogged
+  );
+  // console.log('events', events);
+  // console.log('locations', locations);
 
   const [limitEvents, setLimitEvents] = useState(10);
 

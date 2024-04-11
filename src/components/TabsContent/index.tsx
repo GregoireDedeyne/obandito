@@ -53,7 +53,9 @@ export function TabsContent({
     dispatch(setSelectedTab(i));
   };
 
-  const selectedTab = useAppSelector((state) => state.decodedToken.selectedTab);
+  const selectedTab: number = useAppSelector(
+    (state) => state.decodedToken.selectedTab
+  );
 
   return (
     <>
@@ -136,17 +138,17 @@ export function TabsContent({
                     <div>
                       {data.events.map((event, index) => (
                         <EventCard
-                          image_url={''}
-                          description={''}
-                          city={''}
-                          date={''}
-                          region={''}
+                          image_url=""
+                          description=""
+                          city=""
+                          date=""
+                          region=""
                           price={0}
                           organizer={{
                             name: '',
                           }}
                           available={false}
-                          validated={''}
+                          validated=""
                           key={index}
                           {...event}
                         />
@@ -238,11 +240,11 @@ export function TabsContent({
                               (radioStatus === 'refused' &&
                                 event.validation === 'refused') ? (
                                 <EventCard
-                                  image_url={''}
-                                  description={''}
-                                  city={''}
-                                  date={''}
-                                  region={''}
+                                  image_url=""
+                                  description=""
+                                  city=""
+                                  date=""
+                                  region=""
                                   price={0}
                                   organizer={{
                                     name: '',
@@ -264,11 +266,11 @@ export function TabsContent({
                               event.validation === 'validated' ? (
                                 <div key={index} className="flex items-center">
                                   <EventCard
-                                    image_url={''}
-                                    description={''}
-                                    city={''}
-                                    date={''}
-                                    region={''}
+                                    image_url=""
+                                    description=""
+                                    city=""
+                                    date=""
+                                    region=""
                                     price={0}
                                     organizer={{
                                       name: '',

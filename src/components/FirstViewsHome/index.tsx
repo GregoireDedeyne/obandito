@@ -22,8 +22,12 @@ const Text = ({ children, className }: TextProps) => (
 );
 
 export function FirstViewHome() {
-  const islogged = useAppSelector((state) => state.decodedToken.islogged);
-  const role = useAppSelector((state) => state.decodedToken.decodedData.role);
+  const islogged: boolean = useAppSelector(
+    (state) => state.decodedToken.islogged
+  );
+  const role: string = useAppSelector(
+    (state) => state.decodedToken.decodedData.role
+  );
 
   const [searchTerm, setSearchTerm] = useState('');
 
