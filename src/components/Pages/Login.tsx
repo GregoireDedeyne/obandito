@@ -23,12 +23,12 @@ export function LoginPage() {
   );
   const [formData, setFormData] = useState({ mail: '', password: '' });
 
-  const handleChange = (e, fieldName) => {
+  const handleChange = (e: { target: { value: any } }, fieldName: string) => {
     const updatedFormData = { ...formData, [fieldName]: e.target.value };
     setFormData(updatedFormData);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const { mail, password } = formData;
 
@@ -75,7 +75,7 @@ export function LoginPage() {
                   <InputField
                     inputName="email"
                     value={formData.mail}
-                    onChange={(e) => handleChange(e, 'mail')}
+                    onChange={(e: any) => handleChange(e, 'mail')}
                   />
                   <label className="mb-2 ml-1 font-bold text-xs text-slate-700">
                     Password
@@ -83,7 +83,7 @@ export function LoginPage() {
                   <InputField
                     inputName="password"
                     value={formData.password}
-                    onChange={(e) => handleChange(e, 'password')}
+                    onChange={(e: any) => handleChange(e, 'password')}
                   />
                   {/* <div className="min-h-6 mb-0.5 block pl-12">
                               <input
@@ -118,6 +118,16 @@ export function LoginPage() {
                     className="relative z-10 font-semibold text-transparent bg-gradient-to-tl from-blue-600 to-cyan-400 bg-clip-text ml-4"
                   >
                     Inscrit-toi
+                  </NavLink>
+                </p>
+              </div>
+              <div className="p-6 px-1 pt-0 text-center bg-transparent border-t-0 border-t-solid rounded-b-2xl lg:px-2">
+                <p className="mx-auto mb-6 leading-normal text-sm">
+                  <NavLink
+                    to="/reset-password"
+                    className="relative z-10 font-semibold text-transparent bg-gradient-to-tl from-blue-600 to-cyan-400 bg-clip-text ml-4"
+                  >
+                    Mot de passe oublié{' '}
                   </NavLink>
                 </p>
               </div>

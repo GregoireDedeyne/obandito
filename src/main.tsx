@@ -28,6 +28,7 @@ import {
 } from './loader/index.tsx';
 
 import { PersistGate } from 'redux-persist/integration/react';
+import { ForgotPasswordPage } from './components/Pages/ForgotPassword.tsx';
 
 const uploadLink = createUploadLink({
   uri: `${import.meta.env.VITE_BACK_URL}graphql`,
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
         path: '/home/:limitEvents',
         element: <HomeNotLogPage />,
         loader: MoreHomeLoader,
+      },
+      {
+        path: '/reset-password',
+        element: <ForgotPasswordPage />,
       },
       {
         path: 'events/search/:searchTerm',
