@@ -38,6 +38,8 @@ export default function ProfileBis() {
         idSettings={idSettings}
         role={role}
         rolelogin={rolelogin}
+        id={0}
+        userId={0}
       />
     </div>
   );
