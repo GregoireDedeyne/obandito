@@ -58,7 +58,7 @@ export function TabsContent({
     { data: addReviewData, loading: addReviewLoading, error: addReviewError },
   ] = useMutation(ADD_REVIEW);
 
-  console.log('data', data);
+  // console.log('data', data);
   const dispatch = useAppDispatch();
 
   const handleTabClick = (i: number) => {
@@ -71,12 +71,14 @@ export function TabsContent({
 
   const [formData, setFormData] = useState({
     event_id: 21,
-    rating: 5,
     receiver_id: 51,
-    review: 'zzzzzzzzzzzzz',
+    rating: 5,
+    review: '',
   });
 
-  const handleFormSubmit = async (e: { preventDefault: () => void }) => {
+  console.log('formData', formData);
+
+  const handleFormSubmit = async (e: { preventDefault: () => void }, event) => {
     e.preventDefault();
 
     try {
@@ -84,6 +86,16 @@ export function TabsContent({
       const filteredData = Object.fromEntries(
         Object.entries(formData).filter(([key, value]) => value !== null)
       );
+
+      setFormData({
+        ...formData,
+        // event_id: parseInt(event.id),
+        rating: formData.rating,
+        // receiver_id: event.organizer_id,
+        review: formData.review,
+      });
+
+      console.log('formData---------------------', formData);
 
       const { data } = await addReviewMutation({
         variables: { input: { ...filteredData } },
@@ -323,7 +335,6 @@ export function TabsContent({
                             {data.events.map((event, index) =>
                               event.validation === 'validated' ? (
                                 <div key={index} className="flex items-center">
-                                  {/* add date on conditions */}
                                   {event.organizer_id === userId && (
                                     <span
                                       onClick={() => {
@@ -338,15 +349,25 @@ export function TabsContent({
                                             "L'élément avec l'ID \"addReview\" n'a pas été trouvé."
                                           );
                                         }
+                                        console.log('event.id', event.id);
+                                        setFormData({
+                                          ...formData,
+                                          event_id: parseInt(event.id),
+                                          // rating: formData.rating,
+                                          receiver_id: event.organizer_id,
+                                          // review: formData.review,
+                                        });
                                       }}
                                     >
                                       Laisser un avis
                                     </span>
                                   )}
+                                  {/* {console.log('Données de la data :', data)}
                                   {console.log(
                                     "Données de l'événement :",
                                     event
-                                  )}
+                                  )} */}
+
                                   <EventCard
                                     image_url=""
                                     description=""
@@ -362,16 +383,20 @@ export function TabsContent({
                                     {...event}
                                     validated={event.validation}
                                   />
+                                  <PopupAddReview
+                                    handleFormSubmit={(e) => {
+                                      // console.log('e', e);
+                                      // console.log('eventeventevent', event);
+                                      handleFormSubmit(e, event);
+                                    }}
+                                    formData={formData}
+                                    setFormData={setFormData}
+                                  />
                                 </div>
                               ) : (
                                 ''
                               )
                             )}
-                            <PopupAddReview
-                              handleFormSubmit={handleFormSubmit}
-                              formData={formData}
-                              setFormData={setFormData}
-                            />
                           </div>
                         )}
                       </div>

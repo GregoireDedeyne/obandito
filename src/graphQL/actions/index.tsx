@@ -521,7 +521,6 @@ export const UPDATE_EVENT = gql`
 export const ADD_REVIEW = gql`
   mutation AddReview($input: InputReview!) {
     addReview(input: $input) {
-      id
       event_id
       sender_id
       receiver_id
@@ -534,7 +533,6 @@ export const ADD_REVIEW = gql`
 export const UPDATE_REVIEW = gql`
   mutation UpdateReview($input: InputModifyReview!) {
     updateReview(input: $input) {
-      id
       event_id
       sender_id
       receiver_id

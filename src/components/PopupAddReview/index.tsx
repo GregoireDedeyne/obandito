@@ -10,17 +10,35 @@ export default function PopupAddReview({
         <form onSubmit={handleFormSubmit} className="modal-backdrop">
           <label
             className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5"
-            htmlFor="name"
+            htmlFor="avis"
           >
-            <span>review</span>
+            <span>Avis</span>
             <input
-              name="name"
+              name="avis"
               type="text"
               value={formData.review}
               onChange={(e) =>
                 setFormData({ ...formData, review: e.target.value })
               }
-              placeholder="Votre nom"
+              placeholder="Votre avis"
+            />
+          </label>
+
+          <label
+            className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5"
+            htmlFor="rating"
+          >
+            <span>Rating</span>
+            <input
+              name="rating"
+              type="number"
+              min="0"
+              max="5"
+              value={formData.rating}
+              onChange={(e) =>
+                setFormData({ ...formData, rating: parseInt(e.target.value) })
+              }
+              placeholder="Votre rating (entre 0 et 5)"
             />
           </label>
 
