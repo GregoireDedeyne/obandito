@@ -374,6 +374,19 @@ export const GET_STYLES = gql`
   }
 `;
 
+// export const GET_REVIEW = gql`
+//   query Query($idReceiver: Int) {
+//     reviews(id_receiver: $idReceiver) {
+//       id
+//       event_id
+//       sender_id
+//       receiver_id
+//       rating
+//       review
+//     }
+//   }
+// `;
+
 // Mutation
 export const CREATE_ACCOUNT = gql`
   mutation CreateAccount($input: RegisterUserInput!) {
@@ -501,6 +514,32 @@ export const UPDATE_EVENT = gql`
       validation
       available
       finished
+    }
+  }
+`;
+
+export const ADD_REVIEW = gql`
+  mutation AddReview($input: InputReview!) {
+    addReview(input: $input) {
+      id
+      event_id
+      sender_id
+      receiver_id
+      rating
+      review
+    }
+  }
+`;
+
+export const UPDATE_REVIEW = gql`
+  mutation UpdateReview($input: InputModifyReview!) {
+    updateReview(input: $input) {
+      id
+      event_id
+      sender_id
+      receiver_id
+      rating
+      review
     }
   }
 `;

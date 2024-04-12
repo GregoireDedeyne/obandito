@@ -6,6 +6,10 @@ import { EventCard } from '../InfoHomeCard/EventsCards';
 import SocialMediaGroup from '../SocialMediaGroup';
 import { setSelectedTab } from '../../store/actions';
 import { useAppDispatch, useAppSelector } from '../../store/redux-hook';
+import { Rating } from '../Rating';
+import { useMutation } from '@apollo/client';
+import { ADD_REVIEW } from '../../graphQL/actions';
+import PopupAddReview from '../PopupAddReview';
 
 interface Event {
   validation: string;
@@ -43,10 +47,18 @@ export function TabsContent({
   idSettings,
   role,
   rolelogin,
+  userId,
+  token,
 }: TabsContentProps) {
   setSelectedTab;
   const [radioStatus, setRadioStatus] = useState<string>('tous');
 
+  const [
+    addReviewMutation,
+    { data: addReviewData, loading: addReviewLoading, error: addReviewError },
+  ] = useMutation(ADD_REVIEW);
+
+  console.log('data', data);
   const dispatch = useAppDispatch();
 
   const handleTabClick = (i: number) => {
@@ -56,6 +68,46 @@ export function TabsContent({
   const selectedTab: number = useAppSelector(
     (state) => state.decodedToken.selectedTab
   );
+
+  const [formData, setFormData] = useState({
+    event_id: 21,
+    rating: 5,
+    receiver_id: 51,
+    review: 'zzzzzzzzzzzzz',
+  });
+
+  const handleFormSubmit = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+
+    try {
+      // Filtrer les propriétés null dans formData
+      const filteredData = Object.fromEntries(
+        Object.entries(formData).filter(([key, value]) => value !== null)
+      );
+
+      const { data } = await addReviewMutation({
+        variables: { input: { ...filteredData } },
+        context: { headers: { Authorization: `Bearer ${token}` } },
+      });
+
+      // console.log('Données mises à jour avec succès:', data);
+      // const settingsModal = document.getElementById(
+      //   'addReview'
+      // ) as HTMLDialogElement | null;
+      // if (settingsModal) {
+      //   settingsModal.close();
+      // } else {
+      //   console.error("L'élément avec l'ID \"settings\" n'a pas été trouvé.");
+      // }
+      window.location.href = location.pathname;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        console.error("Une erreur inattendue s'est produite");
+      }
+    }
+  };
 
   return (
     <>
@@ -129,6 +181,12 @@ export function TabsContent({
                 )}
               </>
             )}
+
+            {/* ================================================ */}
+
+            {selectedTab === 1 && <Rating />}
+
+            {/* ================================================ */}
 
             {selectedTab === 2 && (
               <>
@@ -265,6 +323,30 @@ export function TabsContent({
                             {data.events.map((event, index) =>
                               event.validation === 'validated' ? (
                                 <div key={index} className="flex items-center">
+                                  {/* add date on conditions */}
+                                  {event.organizer_id === userId && (
+                                    <span
+                                      onClick={() => {
+                                        const dealsModal =
+                                          document.getElementById(
+                                            'addReview'
+                                          ) as HTMLDialogElement | null;
+                                        if (dealsModal) {
+                                          dealsModal.showModal();
+                                        } else {
+                                          console.error(
+                                            "L'élément avec l'ID \"addReview\" n'a pas été trouvé."
+                                          );
+                                        }
+                                      }}
+                                    >
+                                      Laisser un avis
+                                    </span>
+                                  )}
+                                  {console.log(
+                                    "Données de l'événement :",
+                                    event
+                                  )}
                                   <EventCard
                                     image_url=""
                                     description=""
@@ -285,6 +367,11 @@ export function TabsContent({
                                 ''
                               )
                             )}
+                            <PopupAddReview
+                              handleFormSubmit={handleFormSubmit}
+                              formData={formData}
+                              setFormData={setFormData}
+                            />
                           </div>
                         )}
                       </div>

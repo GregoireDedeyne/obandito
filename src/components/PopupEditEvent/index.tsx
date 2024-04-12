@@ -1,6 +1,3 @@
-import { useMutation } from '@apollo/client';
-import { useState } from 'react';
-
 interface Region {
   nom: string;
 }

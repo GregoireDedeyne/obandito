@@ -71,7 +71,7 @@ export function ProfilBanner({
       });
       dispatch(updateToken(data.updateUser.image_url));
 
-      console.log('Données mises à jour avec succès:', data);
+      // console.log('Données mises à jour avec succès:', data);
       const settingsModal = document.getElementById(
         'settings'
       ) as HTMLDialogElement | null;

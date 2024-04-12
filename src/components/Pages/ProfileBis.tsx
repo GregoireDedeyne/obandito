@@ -5,7 +5,7 @@ import { useLoaderData, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../store/redux-hook';
 
 export default function ProfileBis() {
-  const [data, setData] = useState(useLoaderData());
+  const data = useLoaderData();
 
   const token = useAppSelector((state) => state.decodedToken.token);
 
@@ -23,6 +23,8 @@ export default function ProfileBis() {
 
   // console.log('regions : ', regions);
 
+  console.log('data', data);
+
   return (
     <div className="w-full flex flex-col">
       <ProfilBanner
@@ -38,6 +40,8 @@ export default function ProfileBis() {
         idSettings={idSettings}
         role={role}
         rolelogin={rolelogin}
+        userId={userId}
+        token={token}
       />
     </div>
   );
