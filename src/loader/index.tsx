@@ -189,6 +189,7 @@ export const ProfileBandLoader: any = async ({
     query: GET_ARTISTE,
     variables: {
       artistId: artistId,
+      idReceiver: artistId,
     },
     context: {
       headers: {
@@ -211,12 +212,13 @@ export const ProfileOrganizerLoader: any = async ({
 }) => {
   const { id } = params;
   const organizerId = parseInt(id);
-  console.log('je reload');
+  // console.log('je reload');
 
   const { data } = await client.query({
     query: GET_ORGANIZER,
     variables: {
       organizerId: organizerId,
+      idReceiver: organizerId,
     },
     context: {
       headers: {

@@ -2,93 +2,79 @@ import { StarIcon } from '@heroicons/react/20/solid';
 import { Stars } from '../Stars';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
-
-const reviews = [
-  {
-    id: 1,
-    rating: 5,
-    content: `
-      <p>This icon pack is just what I need for my latest project. There's an icon for just about anything I could ever need. Love the playful look!</p>
-    `,
-    date: 'July 16, 2021',
-    datetime: '2021-07-16',
-    author: 'Emily Selman',
-    avatarSrc:
-      'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80',
-  },
-  {
-    id: 2,
-    rating: 5,
-    content: `
-      <p>Blown away by how polished this icon pack is. Everything looks so consistent and each SVG is optimized out of the box so I can use it directly with confidence. It would take me several hours to create a single icon this good, so it's a steal at this price.</p>
-    `,
-    date: 'July 12, 2021',
-    datetime: '2021-07-12',
-    author: 'Hector Gibbons',
-    avatarSrc:
-      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80',
-  },
-];
+import { handleImg } from '../../utils/handleImg';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export function Rating() {
+export function Rating({ reviews, data }) {
+  console.log('data', data);
+  console.log('data events', data.events);
+  console.log('reviews.lenght', reviews.length);
+  console.log('reviews', reviews);
+
   return (
     <div className="bg-white p-10">
       <div>
         <div className="flex justify-between">
-          <h2 className="mb-5">Evaluations Vérifiées</h2>
+          <h2 className="">Evaluations Vérifiées</h2>
           <div>
             <Stars />
-            <span>46 évaluation</span>
+            <span> {reviews.length} évaluation</span>
           </div>
         </div>
 
-        <div className="-my-10">
+        <div className="">
           {reviews.map((review, reviewIdx) => (
             <div
               key={review.id}
-              className="flex space-x-4 text-sm text-gray-500"
+              className={classNames(
+                reviewIdx === 0 ? '' : 'border-t border-gray-200',
+                'flex-1 space-x-4 text-sm text-gray-500 mt-5'
+              )}
             >
-              <div className="flex-none py-10">
-                <img
-                  src={review.avatarSrc}
-                  alt=""
-                  className="h-10 w-10 rounded-full bg-gray-100"
-                />
-              </div>
-              <div
-                className={classNames(
-                  reviewIdx === 0 ? '' : 'border-t border-gray-200',
-                  'flex-1 py-10'
-                )}
-              >
-                <div className="flex">
-                  <h3 className="font-medium text-gray-900">{review.author}</h3>
-                  <span>
-                    <FontAwesomeIcon
-                      icon={faPencilAlt}
-                      className="ml-3 cursor-pointer"
-                      onClick={() => {
-                        const settingsModal = document.getElementById(
-                          'settings'
-                        ) as HTMLDialogElement | null;
-                        if (settingsModal) {
-                          settingsModal.showModal();
-                        } else {
-                          console.error(
-                            "L'élément avec l'ID \"settings\" n'a pas été trouvé."
-                          );
-                        }
-                      }}
-                    />
-                  </span>
-                </div>
+              <div className="flex-none">
+                {data.events.map((event) => {
+                  if (event.id == review.event_id) {
+                    return event.artists.map((artist) => (
+                      <div className="flex items-center py-3">
+                        <img
+                          key={artist.id}
+                          src={handleImg(artist?.image_url)}
+                          alt={artist?.image}
+                          className="h-10 w-10 rounded-full bg-gray-100"
+                        />
 
+                        <h3 className="font-medium text-gray-900 px-3">
+                          {artist.name}
+                        </h3>
+                        <span>
+                          <FontAwesomeIcon
+                            icon={faPencilAlt}
+                            className=" cursor-pointer"
+                            onClick={() => {
+                              const settingsModal = document.getElementById(
+                                'settings'
+                              ) as HTMLDialogElement | null;
+                              if (settingsModal) {
+                                settingsModal.showModal();
+                              } else {
+                                console.error(
+                                  "L'élément avec l'ID \"settings\" n'a pas été trouvé."
+                                );
+                              }
+                            }}
+                          />
+                        </span>
+                      </div>
+                    ));
+                  }
+                })}
+              </div>
+              <div>
                 <p>
-                  <time dateTime={review.datetime}>{review.date}</time>
+                  {/* <time dateTime={review.datetime}>{review.date}</time> */}
                 </p>
 
                 <div className="mt-4 flex items-center">
@@ -109,7 +95,7 @@ export function Rating() {
 
                 <div
                   className="prose prose-sm mt-4 max-w-none text-gray-500"
-                  dangerouslySetInnerHTML={{ __html: review.content }}
+                  dangerouslySetInnerHTML={{ __html: review.review }}
                 />
               </div>
             </div>

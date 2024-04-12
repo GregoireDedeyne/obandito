@@ -20,6 +20,7 @@ export default function ProfileBis() {
 
   const info = data?.artist || data?.organizer;
   const regions = data?.regions;
+  const reviews = data?.reviews;
 
   // console.log('regions : ', regions);
 
@@ -42,6 +43,7 @@ export default function ProfileBis() {
         rolelogin={rolelogin}
         userId={userId}
         token={token}
+        reviews={reviews}
       />
     </div>
   );

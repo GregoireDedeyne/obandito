@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 // Query
 export const GET_ORGANIZER = gql`
-  query Organizer($organizerId: Int!) {
+  query Organizer($organizerId: Int!, $idReceiver: Int) {
     regions {
       nom
     }
@@ -53,11 +53,18 @@ export const GET_ORGANIZER = gql`
         finished
       }
     }
+    reviews(id_receiver: $idReceiver) {
+      event_id
+      sender_id
+      receiver_id
+      rating
+      review
+    }
   }
 `;
 
 export const GET_ARTISTE = gql`
-  query Artist($artistId: Int!) {
+  query Artist($artistId: Int!, $idReceiver: Int) {
     regions {
       nom
     }
@@ -111,6 +118,14 @@ export const GET_ARTISTE = gql`
           validation
         }
       }
+    }
+
+    reviews(id_receiver: $idReceiver) {
+      event_id
+      sender_id
+      receiver_id
+      rating
+      review
     }
   }
 `;
@@ -374,18 +389,18 @@ export const GET_STYLES = gql`
   }
 `;
 
-// export const GET_REVIEW = gql`
-//   query Query($idReceiver: Int) {
-//     reviews(id_receiver: $idReceiver) {
-//       id
-//       event_id
-//       sender_id
-//       receiver_id
-//       rating
-//       review
-//     }
-//   }
-// `;
+export const GET_REVIEW = gql`
+  query Query($idReceiver: Int) {
+    reviews(id_receiver: $idReceiver) {
+      id
+      event_id
+      sender_id
+      receiver_id
+      rating
+      review
+    }
+  }
+`;
 
 // Mutation
 export const CREATE_ACCOUNT = gql`

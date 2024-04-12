@@ -49,6 +49,7 @@ export function TabsContent({
   rolelogin,
   userId,
   token,
+  reviews,
 }: TabsContentProps) {
   setSelectedTab;
   const [radioStatus, setRadioStatus] = useState<string>('tous');
@@ -76,7 +77,7 @@ export function TabsContent({
     review: '',
   });
 
-  console.log('formData', formData);
+  // console.log('formData', formData);
 
   const handleFormSubmit = async (e: { preventDefault: () => void }, event) => {
     e.preventDefault();
@@ -195,8 +196,7 @@ export function TabsContent({
             )}
 
             {/* ================================================ */}
-
-            {selectedTab === 1 && <Rating />}
+            {selectedTab === 1 && <Rating reviews={reviews} data={data} />}
 
             {/* ================================================ */}
 

@@ -30,7 +30,7 @@ export function CardsWithout({ data, title, subtitle }: CardsWithoutProps) {
 
       <div className="flex flex-wrap bg-white py-20 bloc-white pb-5 w-full justify-center">
         {data.map((card) => (
-          <div className="p-10">
+          <div className="p-10" key={card?.id}>
             <Card
               image={card?.image_url}
               alt={card?.alt}
