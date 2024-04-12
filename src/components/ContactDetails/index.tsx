@@ -38,7 +38,7 @@ export default function ContactDetails({
 
       {!idSettings && rolelogin === 'Organisateur' && (
         <>
-          <NavLink className="btn-secondary block text-center" to="/">
+          <NavLink className="btn-secondary block text-center" to="/chat">
             Envoyer un message privé
           </NavLink>
           <div className="my-1">
