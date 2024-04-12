@@ -53,10 +53,15 @@ export function ChatPage() {
   };
 
   useEffect(() => {
+    console.log('useEffect');
+
     socket.emit('join-conversation', idrecever);
     socket.on('previous-messages', (messages: MessagesI) => {
       setMessages(messages);
     });
+    return () => {
+      socket.off('previous-messages');
+    };
   }, []);
 
   const handleSubmit = (e) => {

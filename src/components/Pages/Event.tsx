@@ -35,6 +35,8 @@ export function EventPage(): EventProps {
     setSelectedTab(index);
   };
 
+  console.log('je me monte');
+
   const location = useLocation();
   const token = useAppSelector((state) => state.decodedToken.token);
   const role = useAppSelector((state) => state.decodedToken.decodedData.role);
