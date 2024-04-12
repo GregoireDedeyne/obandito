@@ -1,19 +1,109 @@
+import { useParams } from 'react-router-dom';
+import { useAppSelector } from '../../store/redux-hook';
 import { Chat } from '../Chat';
+import socketIO from 'socket.io-client';
+import { useEffect, useState } from 'react';
 
 export function ChatPage() {
+  interface MessageI {
+    id: number;
+    content: string;
+    sender_id: number;
+    read: boolean;
+    conversation_id: number;
+    image_url: string;
+    name: string;
+    updated_at: string;
+    created_at: string;
+  }
+
+  interface MessagesI {
+    messages: [MessageI];
+  }
+  // old msg state
+  const [messages, setMessages] = useState([]);
+
+  // ID receiver from params
+  const { idrecever } = useParams();
+
+  //   const userId = useAppSelector((state) => state.decodedToken.decodedData.id);
+
+  //  New msg state
+  const [message, setNewMessage] = useState({
+    user_info_receiver: +idrecever,
+    message: '',
+  });
+  console.log(message);
+
+  // Token from state
+  const token = useAppSelector((state) => state.decodedToken.token);
+  // Add connexion for io serveur
+  const socket = socketIO.connect('http://localhost:4000/chat', {
+    query: {
+      token: token,
+    },
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setNewMessage((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  useEffect(() => {
+    socket.emit('join-conversation', idrecever);
+    socket.on('previous-messages', (messages: MessagesI) => {
+      setMessages(messages);
+    });
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    socket.emit('send-message', message, (response) => {
+      if (response.status === 'error') {
+        console.log(response.message);
+      } else {
+        console.log(response.message);
+      }
+    });
+    console.log('bien envoyé');
+  };
+
   return (
     <div className="container mx-auto w-3/5	mt-10  flex-col">
       <div className="border-solid border-slate-400 border-2 h-2/3">
-        <Chat />
+        <Chat messages={messages} />
       </div>
-      <div className="border-solid  mt-2 flex justify-center">
+      <form onSubmit={handleSubmit} className="relative flex">
         <input
+          id="message_input"
+          name="message"
+          onChange={handleChange}
           type="text"
-          placeholder="Type here"
-          className="input input-bordered w-full max-w-xs bg-white mr-10"
+          value={message.content}
+          placeholder="Write your message!"
+          className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-md py-3"
         />
-        <button className="btn btn-outline">Envoyer</button>
-      </div>
+        <div className="absolute right-0 items-center inset-y-0 sm:flex">
+          <button
+            type="submit"
+            className="inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none"
+          >
+            <span className="font-bold">Envoyer</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="h-6 w-6 ml-2 transform rotate-90"
+            >
+              <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
+            </svg>
+          </button>
+        </div>
+      </form>
     </div>
   );
 }

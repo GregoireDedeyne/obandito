@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
+import { useAppSelector } from '../../store/redux-hook';
 
 interface ContactDetailsProps {
   zip_code: string;
@@ -18,6 +19,8 @@ export default function ContactDetails({
 }: ContactDetailsProps) {
   // console.log('zip_code', zip_code);
   // console.log('city', city);
+  const userId = useAppSelector((state) => state.decodedToken.decodedData.id);
+  const { id } = useParams();
 
   return (
     <div className="bloc-white">
@@ -38,7 +41,10 @@ export default function ContactDetails({
 
       {!idSettings && rolelogin === 'Organisateur' && (
         <>
-          <NavLink className="btn-secondary block text-center" to="/chat">
+          <NavLink
+            className="btn-secondary block text-center"
+            to={`/chat/room/${userId}/${id}`}
+          >
             Envoyer un message privé
           </NavLink>
           <div className="my-1">

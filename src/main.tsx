@@ -26,7 +26,6 @@ import {
   RegionLoader,
   RegionSelectLoader,
 } from './loader/index.tsx';
-
 import { PersistGate } from 'redux-persist/integration/react';
 import { ForgotPasswordPage } from './components/Pages/ForgotPassword.tsx';
 import { ChatPage } from './components/Pages/Chat.tsx';
@@ -58,7 +57,7 @@ const router = createBrowserRouter([
         loader: MoreHomeLoader,
       },
       {
-        path: '/chat',
+        path: '/chat/room/:idsender/:idrecever',
         element: <ChatPage />,
       },
       {

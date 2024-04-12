@@ -33,6 +33,7 @@
     "react-toastify": "^10.0.5",
     "redux-persist": "^6.0.0",
     "sass": "^1.72.0",
+    "socket.io-client": "^4.7.5",
     "swiper": "^11.0.7",
     "tailwind-merge": "^2.2.2",
     "text-encoding": "^0.7.0"

@@ -1,4 +1,4 @@
-export const handleImg = (url: any) => {
+export const handleImg = (url: string) => {
   if (url.includes('http')) {
     return url;
   } else {
