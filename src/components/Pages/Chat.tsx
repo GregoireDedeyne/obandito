@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../store/redux-hook';
 import { Chat } from '../Chat';
 import socketIO from 'socket.io-client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 export function ChatPage() {
   interface MessageI {
@@ -27,7 +27,7 @@ export function ChatPage() {
   const { idrecever } = useParams();
 
   //   const userId = useAppSelector((state) => state.decodedToken.decodedData.id);
-
+  const containerElement = useRef<HTMLDivElement>(null);
   // Token from state
   const token = useAppSelector((state) => state.decodedToken.token);
   // Add connexion for io serveur
@@ -36,6 +36,13 @@ export function ChatPage() {
       token: token,
     },
   });
+
+  useEffect(() => {
+    //A chaque rerender, la hauteur de l'élément change, on vient récupérer la taille de notre élément référencé;
+    //Puis on scroll tout en bas de cet élément
+    const scrollY = containerElement.current!.scrollHeight;
+    containerElement.current!.scrollTo(0, scrollY);
+  }, [messages]);
 
   useEffect(() => {
     socket.emit('join-conversation', idrecever);
@@ -75,7 +82,10 @@ export function ChatPage() {
 
   return (
     <div className="container mx-auto w-3/5	mt-10  flex-col ">
-      <div className="border-solid border-slate-400 border-2 h-2/3 overflow-auto">
+      <div
+        ref={containerElement}
+        className="border-solid border-slate-400 border-2 h-2/3 overflow-auto "
+      >
         <Chat messages={messages} />
       </div>
       <form onSubmit={handleSubmit} className="relative flex">

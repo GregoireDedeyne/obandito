@@ -39,21 +39,21 @@ export default function ContactDetails({
         <a href="https://www.youtube.com/">https://www.youtube.com/</a>
       </div>
 
-      {!idSettings && rolelogin === 'Organisateur' && (
-        <>
-          <NavLink
-            className="btn-secondary block text-center"
-            to={`/chat/room/${userId}/${id}`}
-          >
-            Envoyer un message privé
-          </NavLink>
+      <>
+        <NavLink
+          className="btn-secondary block text-center"
+          to={`/chat/room/${userId}/${id}`}
+        >
+          Envoyer un message privé
+        </NavLink>
+        {!idSettings && rolelogin === 'Organisateur' && (
           <div className="my-1">
             <NavLink className="btn-primary block text-center" to="/">
               Proposer un deal
             </NavLink>
           </div>
-        </>
-      )}
+        )}
+      </>
     </div>
   );
 }
