@@ -69,11 +69,13 @@ export function ChatPage() {
       }
     );
   };
-  socket.on('new-message', (message) => {});
+  socket.on('new-message', (message) => {
+    setMessages((prevMessages) => [...prevMessages, message]);
+  });
 
   return (
-    <div className="container mx-auto w-3/5	mt-10  flex-col">
-      <div className="border-solid border-slate-400 border-2 h-2/3">
+    <div className="container mx-auto w-3/5	mt-10  flex-col ">
+      <div className="border-solid border-slate-400 border-2 h-2/3 overflow-auto">
         <Chat messages={messages} />
       </div>
       <form onSubmit={handleSubmit} className="relative flex">
