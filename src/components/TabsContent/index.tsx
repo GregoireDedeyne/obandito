@@ -50,6 +50,7 @@ export function TabsContent({
   userId,
   token,
   reviews,
+  id,
 }: TabsContentProps) {
   setSelectedTab;
   const [radioStatus, setRadioStatus] = useState<string>('tous');
@@ -354,7 +355,8 @@ export function TabsContent({
                                           ...formData,
                                           event_id: parseInt(event.id),
                                           // rating: formData.rating,
-                                          receiver_id: event.organizer_id,
+                                          // receiver_id: id,
+                                          receiver_id: parseInt(id),
                                           // review: formData.review,
                                         });
                                       }}

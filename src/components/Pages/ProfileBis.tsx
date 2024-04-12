@@ -44,6 +44,7 @@ export default function ProfileBis() {
         userId={userId}
         token={token}
         reviews={reviews}
+        id={id}
       />
     </div>
   );
