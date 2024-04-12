@@ -28,13 +28,6 @@ export function ChatPage() {
 
   //   const userId = useAppSelector((state) => state.decodedToken.decodedData.id);
 
-  //  New msg state
-  const [message, setNewMessage] = useState({
-    user_info_receiver: +idrecever,
-    message: '',
-  });
-  console.log(message);
-
   // Token from state
   const token = useAppSelector((state) => state.decodedToken.token);
   // Add connexion for io serveur
@@ -44,17 +37,7 @@ export function ChatPage() {
     },
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setNewMessage((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
   useEffect(() => {
-    console.log('useEffect');
-
     socket.emit('join-conversation', idrecever);
     socket.on('previous-messages', (messages: MessagesI) => {
       setMessages(messages);
@@ -64,18 +47,29 @@ export function ChatPage() {
     };
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: {
+    preventDefault: () => void;
+    target: { firstElementChild: { value: string } };
+  }) => {
     e.preventDefault();
-
-    socket.emit('send-message', message, (response) => {
-      if (response.status === 'error') {
-        console.log(response.message);
-      } else {
-        console.log(response.message);
+    const message = {
+      message: e.target.firstElementChild.value,
+      user_info_receiver: idrecever,
+    };
+    socket.emit(
+      'send-message',
+      message,
+      (response: { status: string; message: any }) => {
+        if (response.status === 'error') {
+          console.log(response.message);
+        } else {
+          console.log(response.message);
+          e.target.firstElementChild.value = '';
+        }
       }
-    });
-    console.log('bien envoyé');
+    );
   };
+  socket.on('new-message', (message) => {});
 
   return (
     <div className="container mx-auto w-3/5	mt-10  flex-col">
@@ -86,9 +80,7 @@ export function ChatPage() {
         <input
           id="message_input"
           name="message"
-          onChange={handleChange}
           type="text"
-          value={message.content}
           placeholder="Write your message!"
           className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-md py-3"
         />
