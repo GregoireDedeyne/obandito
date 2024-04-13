@@ -14,7 +14,6 @@ import { Navigation, Scrollbar } from 'swiper/modules';
 // =========================================================
 
 export function Cards({ data, title, subtitle }) {
-  // console.log('datadata', data);
   return (
     <div className="flex flex-col bg-white py-20">
       <div className="flex gap-5 justify-start px-5 w-full max-md:max-w-full my-8 lg:ml-20 sm:ml-0">

@@ -15,7 +15,7 @@ export function HomeNotLogPage() {
 
   // console.log('islogged', islogged);
 
-  const role = useAppSelector((state) => state.decodedToken.decodedData.role);
+  const role = useSelector((state) => state.decodedToken.decodedData.role);
   const data = useLoaderData();
   const location = useLocation();
 
@@ -48,7 +48,7 @@ export function HomeNotLogPage() {
             <div className="container mx-auto" id="bands">
               {data?.artists.length > 0 ? (
                 <Cards
-                  data={data.artists}
+                  data={data.artists ?? []}
                   title={'Les derniers Artistes disponibles'}
                   subtitle={''}
                 />
@@ -67,7 +67,7 @@ export function HomeNotLogPage() {
           <div className="container mx-auto" id="bands">
             {data?.artists.length > 0 ? (
               <CardsWithout
-                data={data.artists}
+                data={data?.artists ?? []}
                 title={'Les derniers Artistes disponibles'}
                 subtitle={''}
               />
@@ -78,8 +78,8 @@ export function HomeNotLogPage() {
         ) : islogged === true && role === 'Artiste' ? (
           <div className="container mx-auto my-20" id="events">
             <ThirdView
-              events={data?.events}
-              locations={data?.getCountNameEventsByRegion}
+              events={data?.events ?? []}
+              locations={data?.getCountNameEventsByRegion ?? []}
             />
           </div>
         ) : null}
@@ -111,9 +111,7 @@ export function HomeNotLogPage() {
               </div>
             </div>
           </>
-        ) : (
-          ''
-        )}
+        ) : null}
       </div>
     </>
   );

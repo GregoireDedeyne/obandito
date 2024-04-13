@@ -14,7 +14,7 @@ const Step = ({ imageSrc, stepNumber, description, isHighlighted = false }) => (
       <div
         className={`mt-4 text-base leading-6 ${isHighlighted ? 'text-rose-500' : 'text-neutral-600'} max-md:max-w-full`}
       >
-        {description}
+        <span> {description} </span>
       </div>
     </div>
   </div>
