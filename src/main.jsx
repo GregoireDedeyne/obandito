@@ -32,7 +32,7 @@ import { ForgotPasswordPage } from './components/Pages/ForgotPassword.jsx';
 import { ChatPage } from './components/Pages/Chat.jsx';
 
 const uploadLink = createUploadLink({
-  uri: `${import.meta.env.VITE_BACK_URL}graphql`,
+  uri: `${process.env.VITE_BACK_URL}graphql`,
 });
 
 // Ajouter ApolloClient
