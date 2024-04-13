@@ -3,7 +3,7 @@ import { useAppSelector } from '../../store/redux-hook';
 import PopupEditDeals from '../PopupEditDeals';
 import { HANDLEPOSTULATIONEVENT } from '../../graphQL/actions';
 import { useMutation } from '@apollo/client';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { handleImg } from '../../utils/handleImg';
 
 interface Artist {

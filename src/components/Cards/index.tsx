@@ -72,7 +72,7 @@ export function Cards({ data, title, subtitle }: CardsProps) {
             <div className="max-w-[302px]">
               <Card
                 image={card?.image_url}
-                alt={card?.alt}
+                alt={card?.name}
                 name={card?.name}
                 style={card?.style?.name}
                 id={card?.id}
