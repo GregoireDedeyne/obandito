@@ -17,7 +17,7 @@ const token = localStorage.getItem('token');
 console.log(token);
 
 const uploadLink = createUploadLink({
-  uri: `${process.env.VITE_BACK_URL}graphql`,
+  uri: `${import.meta.env.VITE_BACK_URL}graphql`,
 });
 
 // Ajouter ApolloClient
