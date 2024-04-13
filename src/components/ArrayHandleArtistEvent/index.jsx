@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { useAppSelector } from '../../store/redux-hook';
 import PopupEditDeals from '../PopupEditDeals';
 import { HANDLEPOSTULATIONEVENT } from '../../graphQL/actions';
 import { useMutation } from '@apollo/client';
 import { useLocation } from 'react-router-dom';
 import { handleImg } from '../../utils/handleImg';
+import { useSelector } from 'react-redux';
 
 export function ArrayHandleArtistEvent({ events, radioStatus }) {
-  const token = useAppSelector((state) => state.decodedToken.token);
+  const token = useSelector((state) => state.decodedToken.token);
 
   const [selectedStatus, setSelectedStatus] = useState('pending');
   const [idUserStatus, setIdUserStatus] = useState(undefined);
