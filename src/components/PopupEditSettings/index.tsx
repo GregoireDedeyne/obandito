@@ -9,7 +9,7 @@ interface FormData {
   description: string;
   address: string;
   city: string;
-  zip_code: number;
+  zip_code: string;
   spotify_link?: string;
   youtube_link?: string;
 }
@@ -43,8 +43,11 @@ export function PopupEditSettings({
               type="file"
               accept="image/*"
               onChange={(e) => {
-                const file = e.target.files[0];
-                setFormData({ ...formData, image_url: file });
+                const files = e.target.files;
+                if (files !== null && files.length > 0) {
+                  const file = files[0];
+                  setFormData({ ...formData, image_url: file });
+                }
               }}
               className="input input-bordered input-black bg-white text-black"
             />

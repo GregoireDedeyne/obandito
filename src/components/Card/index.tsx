@@ -3,7 +3,7 @@ import { useAppSelector } from '../../store/redux-hook';
 import { handleImg } from '../../utils/handleImg';
 
 interface CardProps {
-  image: URL | string;
+  image: string;
   alt: string;
   name: string;
   style: string;

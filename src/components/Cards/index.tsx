@@ -14,9 +14,10 @@ import { Navigation, Scrollbar } from 'swiper/modules';
 // =========================================================
 
 interface CardData {
+  alt: string;
   image_url: string;
   name: string;
-  id: string;
+  id: number;
   style: {
     name: string;
   };

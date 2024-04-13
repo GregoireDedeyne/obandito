@@ -43,7 +43,7 @@ export function CreateAccountForm() {
   });
 
   // Suivie d'état dans un state pour savoir si un rôle a été selectionné
-  const [selectedRole, setSelectedRole] = useState(null);
+  const [selectedRole, setSelectedRole] = useState<string | null>(null);
 
   // Met à jour l'état du state avec le rôle
   const handleRoleSelect = (role: string) => {
@@ -140,7 +140,6 @@ export function CreateAccountForm() {
 
             <select
               className="select select-bordered w-full max-w-xsflex items-center my-2  bg-slate-100"
-              inputName="region"
               value={formData.region}
               onChange={(e) => handleChange(e, 'region')}
             >

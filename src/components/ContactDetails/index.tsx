@@ -39,7 +39,7 @@ export default function ContactDetails({
         <a href="https://www.youtube.com/">https://www.youtube.com/</a>
       </div>
 
-      {!idSettings && rolelogin === 'Organisateur' && (
+      {!idSettings && (
         <>
           <NavLink
             className="btn-secondary block text-center"
