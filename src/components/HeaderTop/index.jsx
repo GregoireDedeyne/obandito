@@ -7,7 +7,7 @@ import { handleImg } from '../../utils/handleImg';
 import { useSelector, useDispatch } from 'react-redux';
 
 function classNames(...classes) {
-  return classes.filter().join(' ');
+  return classes.filter(Boolean).join(' ');
 }
 
 const GenreItem = ({ genre }) => {

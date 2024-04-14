@@ -20,7 +20,7 @@ export function LoginPage() {
   });
   const [formData, setFormData] = useState({ mail: '', password: '' });
 
-  const handleChange = (e) => {
+  const handleChange = (e, fieldName) => {
     const updatedFormData = { ...formData, [fieldName]: e.target.value };
     setFormData(updatedFormData);
   };

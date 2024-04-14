@@ -8,7 +8,7 @@ import { setSelectedTab } from '../../store/actions';
 import { useSelector, useDispatch } from 'react-redux';
 export function TabsContent({ data, idSettings, role, rolelogin }) {
   setSelectedTab;
-  const [radioStatus, setRadioStatus] = useState < string > 'tous';
+  const [radioStatus, setRadioStatus] = useState('tous');
 
   const dispatch = useDispatch();
 

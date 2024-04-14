@@ -14,7 +14,6 @@ import {
 import createUploadLink from 'apollo-upload-client/createUploadLink.mjs';
 
 const token = localStorage.getItem('token');
-console.log(token);
 
 const uploadLink = createUploadLink({
   uri: `${import.meta.env.VITE_BACK_URL}graphql`,
@@ -117,7 +116,6 @@ export const GenreLoader = async ({ params }) => {
 export const EventLoader = async ({ params }) => {
   const { id } = params;
   const eventId = parseInt(id);
-  console.log(id);
 
   const { data } = await client.query({
     query: GET_ONE_EVENT,
@@ -159,7 +157,6 @@ export const ProfileBandLoader = async ({ params }) => {
     },
     fetchPolicy: 'no-cache',
   });
-  console.log("j'ai reload");
 
   return data;
 };
