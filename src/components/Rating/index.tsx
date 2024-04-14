@@ -9,10 +9,10 @@ function classNames(...classes) {
 }
 
 export function Rating({ reviews, data }) {
-  console.log('data', data);
-  console.log('data events', data.events);
-  console.log('reviews.lenght', reviews.length);
-  console.log('reviews', reviews);
+  // console.log('data', data);
+  // console.log('data events', data.events);
+  // console.log('reviews.lenght', reviews.length);
+  // console.log('reviews', reviews);
 
   return (
     <div className="bg-white p-10">

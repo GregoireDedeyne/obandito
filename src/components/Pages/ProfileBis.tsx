@@ -24,7 +24,7 @@ export default function ProfileBis() {
 
   // console.log('regions : ', regions);
 
-  console.log('data', data);
+  // console.log('data', data);
 
   return (
     <div className="w-full flex flex-col">
