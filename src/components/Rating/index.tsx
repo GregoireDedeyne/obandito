@@ -66,6 +66,8 @@ export function Rating({ reviews, data, formData, setFormData }) {
     }
   };
 
+  console.log('reviews', reviews);
+
   return (
     <div className="bg-white p-10">
       <div>

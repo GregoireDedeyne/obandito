@@ -260,71 +260,45 @@ export function TabsContent({
 
                       {!idSettings && (
                         <div>
-                          {data.events.map((event, index) => (
-                            <div key={index} className="flex items-center">
-                              {event.artists.map((artist, artistIndex) => {
-                                // console.log('event:', event);
-                                // console.log('artist.id:', artist.id);
-                                // console.log('userId:', userId);
-                                if (artist.id == userId) {
-                                  return (
-                                    <div key={artistIndex}>
-                                      <span
-                                        onClick={() => {
-                                          const dealsModal =
-                                            document.getElementById(
-                                              'addReview'
-                                            ) as HTMLDialogElement | null;
-                                          if (dealsModal) {
-                                            dealsModal.showModal();
-                                          } else {
-                                            console.error(
-                                              "L'élément avec l'ID \"addReview\" n'a pas été trouvé."
-                                            );
-                                          }
-                                          console.log('event.id', event.id);
-                                          setFormData({
-                                            ...formData,
-                                            event_id: parseInt(event.id),
-                                            receiver_id: parseInt(
-                                              event.organizer_id
-                                            ),
-                                          });
-                                        }}
-                                      >
-                                        Laisser un avis
-                                      </span>
-                                    </div>
-                                  );
-                                }
-                                return null;
-                              })}
-                              <EventCard
-                                image_url=""
-                                description=""
-                                city=""
-                                date=""
-                                region=""
-                                price={0}
-                                organizer={{
-                                  name: '',
-                                }}
-                                available={false}
-                                key={index}
-                                {...event}
-                                validated={event.validation}
-                              />
-                              <PopupAddReview
-                                handleFormSubmit={(e) => {
-                                  // console.log('e', e);
-                                  // console.log('eventeventevent', event);
-                                  handleFormSubmit(e, event);
-                                }}
-                                formData={formData}
-                                setFormData={setFormData}
-                              />
-                            </div>
-                          ))}
+                          {data.events.map((event, index) => {
+                            const isArtist = event.artists.some(
+                              (artist) => artist.id == userId
+                            );
+
+                            console.log('isArtist', isArtist);
+
+                            return (
+                              <div key={index} className="flex items-center">
+                                <EventCard
+                                  image_url=""
+                                  description=""
+                                  city=""
+                                  date=""
+                                  region=""
+                                  price={0}
+                                  organizer={{
+                                    name: '',
+                                  }}
+                                  available={false}
+                                  key={index}
+                                  {...event}
+                                  validated={event.validation}
+                                  isArtist={isArtist}
+                                  setFormData={setFormData}
+                                  formData={formData}
+                                  event={event}
+                                />
+
+                                <PopupAddReview
+                                  handleFormSubmit={(e) => {
+                                    handleFormSubmit(e, event);
+                                  }}
+                                  formData={formData}
+                                  setFormData={setFormData}
+                                />
+                              </div>
+                            );
+                          })}
                         </div>
                       )}
                     </div>
@@ -453,25 +427,16 @@ export function TabsContent({
                                             "L'élément avec l'ID \"addReview\" n'a pas été trouvé."
                                           );
                                         }
-                                        // console.log('event.id', event.id);
                                         setFormData({
                                           ...formData,
                                           event_id: parseInt(event.id),
-                                          // rating: formData.rating,
-                                          // receiver_id: id,
                                           receiver_id: parseInt(id),
-                                          // review: formData.review,
                                         });
                                       }}
                                     >
                                       Laisser un avis
                                     </span>
                                   )}
-                                  {/* {console.log('Données de la data :', data)}
-                                  {console.log(
-                                    "Données de l'événement :",
-                                    event
-                                  )} */}
 
                                   <EventCard
                                     image_url=""
@@ -490,8 +455,6 @@ export function TabsContent({
                                   />
                                   <PopupAddReview
                                     handleFormSubmit={(e) => {
-                                      // console.log('e', e);
-                                      // console.log('eventeventevent', event);
                                       handleFormSubmit(e, event);
                                     }}
                                     formData={formData}
