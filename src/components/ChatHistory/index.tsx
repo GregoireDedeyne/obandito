@@ -25,7 +25,13 @@ export function ChatHistory() {
   const [messages, setMessages] = useState<MessagesI[] | []>([]);
 
   // ID receiver from params
-  const { idrecever } = useParams();
+  const { idrecever, idsender } = useParams();
+  const tokenID = useAppSelector((state) => state.decodedToken.decodedData.id);
+  console.log(tokenID);
+
+  const newReceiverID = idrecever === tokenID ? idsender : idrecever;
+
+  console.log(newReceiverID);
 
   //   const userId = useAppSelector((state) => state.decodedToken.decodedData.id);
 
@@ -37,6 +43,7 @@ export function ChatHistory() {
       token: token,
     },
   });
+
   const containerElement = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -47,7 +54,7 @@ export function ChatHistory() {
   }, [messages]);
 
   useEffect(() => {
-    socket.emit('join-conversation', idrecever);
+    socket.emit('join-conversation', newReceiverID);
     socket.on('previous-messages', (messages: MessagesI) => {
       setMessages(messages);
     });
@@ -96,8 +103,11 @@ export function ChatHistory() {
               aria-labelledby="message-heading"
               className="flex h-full min-w-0 border flex-1 flex-col border-r overflow-hidden xl:order-last"
             >
-              <div className="min-h-0 flex-1 overflow-y-auto">
-                <div className=" max-h-[1024px] " ref={containerElement}>
+              <div
+                className="min-h-0 flex-1 overflow-y-auto "
+                ref={containerElement}
+              >
+                <div className=" max-h-[1024px] ">
                   <div className="overflow-auto">
                     <Chat messages={messages} />
                   </div>

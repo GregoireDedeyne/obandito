@@ -497,6 +497,12 @@ export const HANDLEPOSTULATIONEVENT = gql`
   }
 `;
 
+export const DELETE_EVENT = gql`
+  mutation Mutation($deleteEventId: ID!) {
+    deleteEvent(id: $deleteEventId)
+  }
+`;
+
 export const UPDATE_EVENT = gql`
   mutation UpdateEvent($input: InputModifyEvent!) {
     updateEvent(input: $input) {

@@ -6,6 +6,9 @@ import { EventCard } from '../InfoHomeCard/EventsCards';
 import SocialMediaGroup from '../SocialMediaGroup';
 import { setSelectedTab } from '../../store/actions';
 import { useAppDispatch, useAppSelector } from '../../store/redux-hook';
+import { DELETE_EVENT } from '../../graphQL/actions';
+import { useMutation } from '@apollo/client';
+import { toast } from 'react-toastify';
 
 interface Event {
   validation: string;
@@ -57,6 +60,17 @@ export function TabsContent({
     (state) => state.decodedToken.selectedTab
   );
 
+  const [deleteMutation] = useMutation(DELETE_EVENT, {
+    onError: (error) => {
+      toast.warn(error.message); // Afficher l'erreur avec react-toastify
+    },
+  });
+
+  const HandleDelete = async (id) => {
+    console.log(id);
+
+    const { data } = await deleteMutation({ variables: { deleteEventId: id } });
+  };
   return (
     <>
       <div role="tablist" className="tabs-bordered container mx-auto">
@@ -137,21 +151,26 @@ export function TabsContent({
                     <h2>Mes Evènements</h2>
                     <div>
                       {data.events.map((event, index) => (
-                        <EventCard
-                          image_url=""
-                          description=""
-                          city=""
-                          date=""
-                          region=""
-                          price={0}
-                          organizer={{
-                            name: '',
-                          }}
-                          available={false}
-                          validated=""
-                          key={index}
-                          {...event}
-                        />
+                        <div className="flex items-center">
+                          <EventCard
+                            image_url=""
+                            description=""
+                            city=""
+                            date=""
+                            region=""
+                            price={0}
+                            organizer={{
+                              name: '',
+                            }}
+                            available={false}
+                            validated=""
+                            key={index}
+                            {...event}
+                          />
+                          <button onClick={() => HandleDelete(event.id)}>
+                            Supprimer l'évènement
+                          </button>
+                        </div>
                       ))}
                     </div>
                   </div>
