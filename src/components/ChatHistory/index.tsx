@@ -27,11 +27,8 @@ export function ChatHistory() {
   // ID receiver from params
   const { idrecever, idsender } = useParams();
   const tokenID = useAppSelector((state) => state.decodedToken.decodedData.id);
-  console.log(tokenID);
 
-  const newReceiverID = idrecever === tokenID ? idsender : idrecever;
-
-  console.log(newReceiverID);
+  const newReceiverID = +idrecever == +tokenID ? +idsender : +idrecever;
 
   //   const userId = useAppSelector((state) => state.decodedToken.decodedData.id);
 
@@ -70,7 +67,7 @@ export function ChatHistory() {
     e.preventDefault();
     const message = {
       message: e.target.firstElementChild.value,
-      user_info_receiver: idrecever,
+      user_info_receiver: newReceiverID,
     };
     socket.emit(
       'send-message',
@@ -163,37 +160,49 @@ export function ChatHistory() {
                     role="list"
                     className="divide-y divide-gray-200 border-b border-gray-200"
                   >
-                    {Allmessages.map((message) => (
-                      <li
-                        key={message.id}
-                        className="relative bg-white px-6 py-5 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 hover:bg-gray-50"
-                      >
-                        <div className="flex justify-between items-center space-x-3">
-                          <div className="min-w-0 flex-1">
-                            <a
-                              href={`/chat/room/${message.user_id_2}/${message.user_id_1}`}
-                              className="block focus:outline-none flex gap-2 items-center flex-row-reverse justify-end"
+                    {Allmessages.map((message) => {
+                      return (
+                        <li
+                          key={message.id}
+                          className="relative bg-white px-6 py-5 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600 hover:bg-gray-50"
+                        >
+                          <div className="flex justify-between items-center space-x-3">
+                            <div className="min-w-0 flex-1">
+                              <a
+                                href={`/chat/room/${message.user_id_2}/${message.user_id_1}`}
+                                className="block focus:outline-none flex gap-2 items-center flex-row-reverse justify-end"
+                              >
+                                <p className="truncate text-sm font-medium text-gray-900 capitalize">
+                                  {tokenID != message.user_id_1
+                                    ? message.user_name_1
+                                    : message.user_name_2}
+                                </p>
+                                <img
+                                  loading="lazy"
+                                  src={handleImg(
+                                    tokenID != message.user_id_1
+                                      ? message.user_image_1
+                                      : message.user_image_2
+                                  )}
+                                  alt={
+                                    tokenID == message.user_id_1
+                                      ? message.user_name_1
+                                      : message.user_name_2
+                                  }
+                                  className="h-10 w-10 rounded-full"
+                                />
+                              </a>
+                            </div>
+                            <time
+                              dateTime={message.created_at}
+                              className="flex-shrink-0 whitespace-nowrap text-sm text-gray-500"
                             >
-                              <p className="truncate text-sm font-medium text-gray-900 capitalize">
-                                {message.user_name_2}
-                              </p>
-                              <img
-                                loading="lazy"
-                                src={handleImg(message.user_image_2)}
-                                alt={message.user_name_2}
-                                className="h-10 w-10 rounded-full"
-                              />
-                            </a>
+                              {message.created_at}
+                            </time>
                           </div>
-                          <time
-                            dateTime={message.created_at}
-                            className="flex-shrink-0 whitespace-nowrap text-sm text-gray-500"
-                          >
-                            {message.created_at}
-                          </time>
-                        </div>
-                      </li>
-                    ))}
+                        </li>
+                      );
+                    })}
                   </ul>
                 </nav>
               </div>
