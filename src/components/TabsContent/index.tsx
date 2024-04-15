@@ -196,10 +196,14 @@ export function TabsContent({
               </>
             )}
 
-            {/* ================================================ */}
-            {selectedTab === 1 && <Rating reviews={reviews} data={data} />}
-
-            {/* ================================================ */}
+            {selectedTab === 1 && (
+              <Rating
+                reviews={reviews}
+                data={data}
+                formData={formData}
+                setFormData={setFormData}
+              />
+            )}
 
             {selectedTab === 2 && (
               <>
@@ -259,9 +263,9 @@ export function TabsContent({
                           {data.events.map((event, index) => (
                             <div key={index} className="flex items-center">
                               {event.artists.map((artist, artistIndex) => {
-                                console.log('event:', event);
-                                console.log('artist.id:', artist.id);
-                                console.log('userId:', userId);
+                                // console.log('event:', event);
+                                // console.log('artist.id:', artist.id);
+                                // console.log('userId:', userId);
                                 if (artist.id == userId) {
                                   return (
                                     <div key={artistIndex}>
