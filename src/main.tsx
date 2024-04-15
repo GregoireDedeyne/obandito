@@ -20,6 +20,7 @@ import {
   GenreLoader,
   HomeLoader,
   MoreHomeLoader,
+  MsgData,
   ProfileBandLoader,
   ProfileOrganizerLoader,
   RegionLoader,
@@ -28,6 +29,8 @@ import {
 import { PersistGate } from 'redux-persist/integration/react';
 import { ForgotPasswordPage } from './components/Pages/ForgotPassword.tsx';
 import { ChatPage } from './components/Pages/Chat.tsx';
+import { ChatAllPage } from './components/Pages/ChatPage.tsx';
+import { LeftMsg } from './components/MyMessages/index.tsx';
 
 const uploadLink = createUploadLink({
   uri: `${import.meta.env.VITE_BACK_URL}graphql`,
@@ -57,7 +60,13 @@ const router = createBrowserRouter([
       },
       {
         path: '/chat/room/:idsender/:idrecever',
-        element: <ChatPage />,
+        element: <ChatAllPage />,
+        loader: MsgData,
+      },
+      {
+        path: '/my-messages',
+        element: <LeftMsg />,
+        loader: MsgData,
       },
       {
         path: '/reset-password',

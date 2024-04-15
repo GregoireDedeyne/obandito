@@ -4,6 +4,7 @@ import {
   GET_HOMEDATA,
   GET_HOMEGENREDATA,
   GET_HOMEREGIONDATA,
+  GET_MESSAGES,
   GET_MOREHOMEDATA,
   GET_ONE_EVENT,
   GET_ORGANIZER,
@@ -140,6 +141,19 @@ export const GenreLoader: any = async ({
   return data;
 };
 
+export const MsgData = async () => {
+  const { data } = await client.query({
+    query: GET_MESSAGES,
+    context: {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+    fetchPolicy: 'no-cache',
+  });
+
+  return data;
+};
 export const EventLoader: any = async ({
   params,
 }: {

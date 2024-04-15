@@ -132,6 +132,20 @@ export function Header({ genres }: { genres: [] }) {
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
+                              <NavLink
+                                reloadDocument
+                                to="/my-messages"
+                                className={classNames(
+                                  active ? 'bg-gray-100' : '',
+                                  'block px-4 py-2 text-sm text-black cursor-pointer'
+                                )}
+                              >
+                                Mes messages
+                              </NavLink>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
                               <a
                                 onClick={handleLogout}
                                 className={classNames(

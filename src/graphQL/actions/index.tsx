@@ -56,6 +56,22 @@ export const GET_ORGANIZER = gql`
   }
 `;
 
+export const GET_MESSAGES = gql`
+  query Query {
+    getConversationsByMyId {
+      created_at
+      id
+      updated_at
+      user_id_2
+      user_image_1
+      user_id_1
+      user_image_2
+      user_name_1
+      user_name_2
+    }
+  }
+`;
+
 export const GET_ARTISTE = gql`
   query Artist($artistId: Int!) {
     regions {
