@@ -43,10 +43,10 @@ export function Header({ genres }: { genres: [] }) {
   );
 
   const handleLogout = () => {
+    navigate('/', { replace: true });
+
     dispatch(logout());
     localStorage.removeItem('token');
-
-    navigate('/', { replace: true });
   };
   return (
     <>
