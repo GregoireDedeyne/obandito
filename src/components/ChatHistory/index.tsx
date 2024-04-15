@@ -94,7 +94,7 @@ export function ChatHistory() {
           <main className="min-w-0 flex-1 border-t border-gray-200 xl:flex">
             <section
               aria-labelledby="message-heading"
-              className="flex h-full min-w-0 flex-1 flex-col border-r overflow-hidden xl:order-last"
+              className="flex h-full min-w-0 border flex-1 flex-col border-r overflow-hidden xl:order-last"
             >
               <div className="min-h-0 flex-1 overflow-y-auto">
                 <div className=" max-h-[1024px] " ref={containerElement}>
