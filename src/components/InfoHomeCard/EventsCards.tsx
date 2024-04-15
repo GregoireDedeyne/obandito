@@ -32,6 +32,8 @@ export function EventCard({
   setFormData,
   formData,
   event,
+  isOrganizer,
+  onLeaveReviewClick,
 }: EventCardProps) {
   const islogged: boolean = useAppSelector(
     (state) => state.decodedToken.islogged
@@ -83,6 +85,16 @@ export function EventCard({
                     event_id: parseInt(event.id),
                     receiver_id: parseInt(event.organizer_id),
                   });
+                }}
+                className="cursor-pointer text-sm text-blue-500"
+              >
+                Laisser un avis
+              </span>
+            )}
+            {isOrganizer && (
+              <span
+                onClick={() => {
+                  onLeaveReviewClick();
                 }}
                 className="cursor-pointer text-sm text-blue-500"
               >
