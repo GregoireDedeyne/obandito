@@ -56,33 +56,32 @@ export function EventCard({
 
   const location = useLocation();
   const token = useAppSelector((state) => state.decodedToken.token);
+  const role = useAppSelector((state) => state.decodedToken.decodedData.role);
 
   const HandleDelete = async (id) => {
     const idN = parseInt(id);
-
-    const { data } = await deleteMutation({
-      context: {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    if (role.toLowerCase() === 'artiste') {
+      await deleteMutation({
+        context: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      },
-      variables: { eventId: idN },
-    });
-
-    window.location.href = location.pathname;
-  };
-
-  const HandleDeleteEvent = async (id) => {
-    const idN = parseInt(id);
-    const { data } = await deleteMutationEvent({
-      context: {
-        headers: {
-          Authorization: `Bearer ${token}`,
+        variables: { eventId: idN },
+      });
+      window.location.href = location.pathname;
+    } else {
+      await deleteMutationEvent({
+        context: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      },
-      variables: { deleteEventId: idN },
-    });
-    window.location.href = location.pathname;
+        variables: { deleteEventId: idN },
+      });
+
+      window.location.href = location.pathname;
+    }
   };
 
   return (
@@ -102,7 +101,10 @@ export function EventCard({
               className="object-cover w-full h-full rounded-xl"
             />
           </NavLink>
-          <div className="flex flex-col justify-between ml-0 lg:ml-5 mt-4 lg:mt-0 w-full">
+          <NavLink
+            to={islogged === false ? '/login' : `/event/${id}`}
+            className="flex flex-col justify-between ml-0 lg:ml-5 mt-4 lg:mt-0 w-full"
+          >
             <div className="text-xl leading-6 text-slate-900">{name}</div>
             {validated && (
               <div className="mt-1.5 text-sm text-neutral-600 ">
@@ -111,14 +113,6 @@ export function EventCard({
                 >
                   {validated}
                 </span>
-                {validated === 'pending' && (
-                  <button
-                    className="z-40 bg-red-700 text-black rounded-xl ml-5 p-1 relative "
-                    onClick={() => HandleDelete(id)}
-                  >
-                    Supprimer ma postulation
-                  </button>
-                )}
               </div>
             )}
 
@@ -184,10 +178,10 @@ export function EventCard({
               <div>{organizer?.name}</div>
             </div>
             <div className="mt-1.5 text-zinc-500">{date}</div>
-          </div>
+          </NavLink>
           <button
             className="text-red-700 text-sm flex w-fit"
-            onClick={() => HandleDeleteEvent(id)}
+            onClick={() => HandleDelete(id)}
           >
             Supprimer
           </button>
