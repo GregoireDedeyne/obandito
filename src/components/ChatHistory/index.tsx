@@ -44,6 +44,7 @@ export function ChatHistory() {
   useEffect(() => {
     compareMessages();
   }, [Readmessages]);
+
   // ID receiver from params
   const { idrecever, idsender } = useParams();
   const tokenID = useAppSelector((state) => state.decodedToken.decodedData.id);
@@ -78,6 +79,7 @@ export function ChatHistory() {
 
     return () => {
       socket.off('previous-messages');
+      socket.disconnect();
     };
   }, []);
 
