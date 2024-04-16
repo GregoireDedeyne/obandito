@@ -186,7 +186,7 @@ export function EventCard({
             className={
               window.location.pathname === '/' || !isMyProfil()
                 ? 'hidden'
-                : 'text-red-700 text-sm flex w-fit'
+                : 'text-red-700 text-sm flex w-fit h-fit border border-red-700 px-3 rounded-xl hover:bg-red-700 hover:text-white'
             }
             onClick={() => HandleDelete(id)}
           >
