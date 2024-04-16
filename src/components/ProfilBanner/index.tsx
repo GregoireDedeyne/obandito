@@ -38,6 +38,7 @@ export function ProfilBanner({
   idSettings,
   regions,
   rolelogin,
+  reviews,
 }: ProfilBannerProps) {
   const [UpdateUser] = useMutation(UPDATE_USER);
 
@@ -138,7 +139,7 @@ export function ProfilBanner({
               />
             </div>
 
-            <Stars />
+            <Stars reviews={reviews} />
 
             <span>
               <div className="flex items-center">

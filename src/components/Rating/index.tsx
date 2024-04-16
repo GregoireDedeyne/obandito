@@ -13,7 +13,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export function Rating({ reviews, data, formData, setFormData }) {
+export function Rating({ reviews, data, formData, setFormData, userId }) {
   const dispatch = useAppDispatch();
   const [UpdateReview, { loading, error }] = useMutation(UPDATE_REVIEW);
   const token = useAppSelector((state) => state.decodedToken.token);
@@ -36,7 +36,7 @@ export function Rating({ reviews, data, formData, setFormData }) {
       };
 
       // console.log('UpdateReview', UpdateReview);
-      console.log('ReviewIdInSubmit', ReviewId);
+      // console.log('ReviewIdInSubmit', ReviewId);
 
       await UpdateReview({
         variables: {
@@ -66,16 +66,16 @@ export function Rating({ reviews, data, formData, setFormData }) {
     }
   };
 
-  console.log('reviews', reviews);
+  // console.log('reviews', reviews);
 
   return (
     <div className="bg-white p-10">
       <div>
         <div className="flex justify-between">
           <h2 className="">Evaluations Vérifiées</h2>
-          <div>
-            <Stars />
-            <span> {reviews.length} évaluation</span>
+          <div className="flex items-center">
+            <Stars reviews={reviews} />
+            <span> {reviews.length} évaluations</span>
           </div>
         </div>
 
@@ -101,25 +101,28 @@ export function Rating({ reviews, data, formData, setFormData }) {
                         <h3 className="font-medium text-gray-900 px-3">
                           {artist.name}
                         </h3>
-                        <span>
-                          <FontAwesomeIcon
-                            icon={faPencilAlt}
-                            className="cursor-pointer"
-                            onClick={() => {
-                              setReviewId(review.id);
-                              const settingsModal = document.getElementById(
-                                'editReview'
-                              ) as HTMLDialogElement | null;
-                              if (settingsModal) {
-                                settingsModal.showModal();
-                              } else {
-                                console.error(
-                                  "L'élément avec l'ID \"settings\" n'a pas été trouvé."
-                                );
-                              }
-                            }}
-                          />
-                        </span>
+
+                        {artist.id == userId && (
+                          <span>
+                            <FontAwesomeIcon
+                              icon={faPencilAlt}
+                              className="cursor-pointer"
+                              onClick={() => {
+                                setReviewId(review.id);
+                                const settingsModal = document.getElementById(
+                                  'editReview'
+                                ) as HTMLDialogElement | null;
+                                if (settingsModal) {
+                                  settingsModal.showModal();
+                                } else {
+                                  console.error(
+                                    "L'élément avec l'ID \"settings\" n'a pas été trouvé."
+                                  );
+                                }
+                              }}
+                            />
+                          </span>
+                        )}
                       </div>
                     ));
                   }
@@ -144,7 +147,7 @@ export function Rating({ reviews, data, formData, setFormData }) {
                   className="prose prose-sm mt-4 max-w-none text-gray-500"
                   dangerouslySetInnerHTML={{ __html: review.review }}
                 />
-                <p>Review ID: {review.id}</p>
+                {/* <p>Review ID: {review.id}</p> */}
               </div>
             </div>
           ))}

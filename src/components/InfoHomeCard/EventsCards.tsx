@@ -34,6 +34,7 @@ export function EventCard({
   event,
   isOrganizer,
   onLeaveReviewClick,
+  finished,
 }: EventCardProps) {
   const islogged: boolean = useAppSelector(
     (state) => state.decodedToken.islogged
@@ -67,7 +68,7 @@ export function EventCard({
               </div>
             )}
 
-            {isArtist && (
+            {isArtist && finished && (
               <span
                 onClick={() => {
                   const dealsModal = document.getElementById(
@@ -91,7 +92,7 @@ export function EventCard({
                 Laisser un avis
               </span>
             )}
-            {isOrganizer && (
+            {isOrganizer && finished && (
               <span
                 onClick={() => {
                   onLeaveReviewClick();

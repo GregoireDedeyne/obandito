@@ -35,6 +35,7 @@ export default function ProfileBis() {
         regions={regions}
         idSettings={idSettings}
         rolelogin={rolelogin}
+        reviews={reviews}
       />
       <TabsContent
         data={info}

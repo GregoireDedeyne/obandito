@@ -34,6 +34,7 @@ export const GET_ORGANIZER = gql`
         organizer_id
         total_slots
         occupied_slots
+        finished
         artists {
           id
           mail
@@ -50,7 +51,6 @@ export const GET_ORGANIZER = gql`
           }
         }
         available
-        finished
       }
     }
     reviews(id_receiver: $idReceiver) {
@@ -104,6 +104,7 @@ export const GET_ARTISTE = gql`
         organizer_id
         validation
         available
+        finished
         artists {
           id
           mail
