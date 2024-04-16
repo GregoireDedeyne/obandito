@@ -89,7 +89,12 @@ export function EventCard({
       window.location.href = location.pathname;
     }
   };
-  const openReviewModal = () => {
+  const openReviewModal = (eventId, organizerId) => {
+    setFormData({
+      ...formData,
+      event_id: parseInt(eventId),
+      receiver_id: parseInt(organizerId),
+    });
     const ReviewModal = document.getElementById(
       'addReview'
     ) as HTMLDialogElement | null;
@@ -98,6 +103,7 @@ export function EventCard({
     } else {
       console.error("L'élément avec l'ID \"addReview\" n'a pas été trouvé.");
     }
+    console.log(eventId);
   };
   return (
     <div className="w-full relative">
@@ -178,13 +184,12 @@ export function EventCard({
                 : 'text-yellow-500 text-sm w-60 h-fit border border-yellow-500 px-3 rounded-xl hover:bg-yellow-500 hover:text-white'
             }
             onClick={() => {
-              openReviewModal();
-              console.log(eventId, id, organizerId);
+              openReviewModal(+eventId, +organizerId);
             }}
           >
             Laisser un avis
           </button>
-          <PopupAddReview idEvent={+eventId} organizerId={+organizerId} />
+          {/* <PopupAddReview idEvent={+eventId} organizerId={+organizerId} /> */}
         </div>
       </div>
     </div>

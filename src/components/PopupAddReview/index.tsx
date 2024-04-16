@@ -4,15 +4,7 @@ import { useMutation } from '@apollo/client';
 import { toast } from 'react-toastify';
 import { useAppSelector } from '../../store/redux-hook';
 
-export function PopupAddReview({ idEvent, organizerId, artistId }) {
-  console.log(idEvent);
-
-  const [review, setReview] = useState({
-    event_id: +idEvent,
-    receiver_id: +organizerId || +artistId,
-    rating: 0,
-    review: '',
-  });
+export function PopupAddReview({ formData, setFormData }) {
   const token = useAppSelector((state) => state.decodedToken.token);
 
   const [addReview] = useMutation(ADD_REVIEW, {
@@ -22,7 +14,7 @@ export function PopupAddReview({ idEvent, organizerId, artistId }) {
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(review);
+    console.log(formData);
 
     await addReview({
       context: {
@@ -30,7 +22,7 @@ export function PopupAddReview({ idEvent, organizerId, artistId }) {
           Authorization: `Bearer ${token}`,
         },
       },
-      variables: { input: review },
+      variables: { input: formData },
     });
 
     // window.location.href = location.pathname;
@@ -45,14 +37,13 @@ export function PopupAddReview({ idEvent, organizerId, artistId }) {
             className="form-control flex flex-col mb-5 text-black"
             htmlFor="avis"
           >
-            <button onClick={() => console.log(idEvent, organizerId)}>
-              test
-            </button>
             <span>Avis</span>
             <input
               name="avis"
               type="text"
-              onChange={(e) => setReview({ ...review, review: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, review: e.target.value })
+              }
               placeholder="Votre avis"
               className="input input-bordered input-black bg-white text-black"
             />
@@ -69,7 +60,7 @@ export function PopupAddReview({ idEvent, organizerId, artistId }) {
               min="0"
               max="5"
               onChange={(e) =>
-                setReview({ ...review, rating: +e.target.value })
+                setFormData({ ...formData, rating: +e.target.value })
               }
               placeholder="Votre rating (entre 0 et 5)"
               className="input input-bordered input-black bg-white text-black"
