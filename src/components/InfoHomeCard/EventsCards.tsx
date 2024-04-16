@@ -86,7 +86,6 @@ export function EventCard({
       window.location.href = location.pathname;
     }
   };
-  console.log(finished);
 
   return (
     <div className="w-full">
@@ -195,7 +194,10 @@ export function EventCard({
           </button>
           <button
             className={
-              window.location.pathname === '/' || !isMyProfil() || !finished
+              window.location.pathname === '/' ||
+              !isMyProfil() ||
+              !finished ||
+              role.toLowerCase() === 'organisateur'
                 ? 'hidden'
                 : 'text-yellow-500 text-sm w-60 h-fit border border-yellow-500 px-3 rounded-xl hover:bg-yellow-500 hover:text-white'
             }
