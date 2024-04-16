@@ -8,7 +8,8 @@ import { setSelectedTab } from '../../store/actions';
 import { useAppDispatch, useAppSelector } from '../../store/redux-hook';
 import { DELETE_EVENT } from '../../graphQL/actions';
 import { useMutation } from '@apollo/client';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+import { useLocation } from 'react-router-dom';
 
 interface Event {
   validation: string;
@@ -49,9 +50,10 @@ export function TabsContent({
 }: TabsContentProps) {
   setSelectedTab;
   const [radioStatus, setRadioStatus] = useState<string>('tous');
+  const location = useLocation();
 
   const dispatch = useAppDispatch();
-
+  const token = useAppSelector((state) => state.decodedToken.token);
   const handleTabClick = (i: number) => {
     dispatch(setSelectedTab(i));
   };
@@ -67,12 +69,22 @@ export function TabsContent({
   });
 
   const HandleDelete = async (id) => {
-    console.log(id);
-
-    const { data } = await deleteMutation({ variables: { deleteEventId: id } });
+    const idN = parseInt(id);
+    const { data } = await deleteMutation({
+      context: {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+      variables: { deleteEventId: idN },
+    });
+    window.location.href = location.pathname;
   };
+
   return (
     <>
+      <ToastContainer />
+
       <div role="tablist" className="tabs-bordered container mx-auto">
         <input
           type="radio"

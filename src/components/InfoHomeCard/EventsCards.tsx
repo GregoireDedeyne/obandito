@@ -1,6 +1,9 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useAppSelector } from '../../store/redux-hook';
 import { handleImg } from '../../utils/handleImg';
+import { DELETE_POSTULATION } from '../../graphQL/actions';
+import { useMutation } from '@apollo/client';
+import { toast, ToastContainer } from 'react-toastify';
 
 interface EventCardProps {
   image_url: string;
@@ -33,31 +36,64 @@ export function EventCard({
     (state) => state.decodedToken.islogged
   );
 
+  const [deleteMutation] = useMutation(DELETE_POSTULATION, {
+    onError: (error) => {
+      toast.warn(error.message); // Afficher l'erreur avec react-toastify
+    },
+  });
+
+  const location = useLocation();
+  const token = useAppSelector((state) => state.decodedToken.token);
+  const HandleDelete = async (id) => {
+    const idN = parseInt(id);
+
+    const { data } = await deleteMutation({
+      context: {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+      variables: { eventId: idN },
+    });
+    window.location.href = location.pathname;
+  };
+
   return (
-    <NavLink
-      to={islogged === false ? '/login' : `/event/${id}`}
-      className="w-full"
-    >
+    <div className="w-full">
+      <ToastContainer />
+
       <div className="px-6 py-4 my-2 w-full bg-white rounded-xl shadow-lg hover:border-purple-800 border-2 border-solid border-transparent">
         <div className="flex flex-col lg:flex-row items-center">
-          <div className="overflow-hidden relative flex-shrink-0 w-full lg:w-72 aspect-w-16 aspect-h-9 lg:w-80">
+          <NavLink
+            to={islogged === false ? '/login' : `/event/${id}`}
+            className="overflow-hidden relative flex-shrink-0 w-full lg:w-72 aspect-w-16 aspect-h-9 lg:w-80"
+          >
             <img
               loading="lazy"
               src={handleImg(image_url)}
               alt=""
               className="object-cover w-full h-full rounded-xl"
             />
-          </div>
+          </NavLink>
           <div className="flex flex-col ml-0 lg:ml-5 mt-4 lg:mt-0 w-full">
             <div className="text-xl leading-6 text-slate-900">{name}</div>
 
             {validated && (
               <div className="mt-1.5 text-sm text-neutral-600 ">
                 <span
-                  className={`px-2 rounded-full text-black ${validated === 'validated' ? 'bg-green-500' : validated === 'pending' ? 'bg-orange-500' : 'bg-red-500'}`}
+                  className={`px-2 p-1 rounded-full text-black ${validated === 'validated' ? 'bg-green-500' : validated === 'pending' ? 'bg-orange-500' : 'bg-red-500'}`}
                 >
                   {validated}
                 </span>
+                {validated === 'pending' && (
+                  <button
+                    className="z-40 bg-red-700 text-black rounded-xl ml-5 p-1 relative "
+                    onClick={() => HandleDelete(id)}
+                  >
+                    {' '}
+                    Supprimer ma postulation{' '}
+                  </button>
+                )}
               </div>
             )}
 
@@ -91,6 +127,6 @@ export function EventCard({
           </div>
         </div>
       </div>
-    </NavLink>
+    </div>
   );
 }

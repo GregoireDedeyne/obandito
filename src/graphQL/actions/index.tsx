@@ -503,6 +503,12 @@ export const DELETE_EVENT = gql`
   }
 `;
 
+export const DELETE_POSTULATION = gql`
+  mutation Mutation($eventId: Int!) {
+    deletePostulation(eventId: $eventId)
+  }
+`;
+
 export const UPDATE_EVENT = gql`
   mutation UpdateEvent($input: InputModifyEvent!) {
     updateEvent(input: $input) {

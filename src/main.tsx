@@ -28,7 +28,6 @@ import {
 } from './loader/index.tsx';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ForgotPasswordPage } from './components/Pages/ForgotPassword.tsx';
-import { ChatPage } from './components/Pages/Chat.tsx';
 import { ChatAllPage } from './components/Pages/ChatPage.tsx';
 import { LeftMsg } from './components/MyMessages/index.tsx';
 

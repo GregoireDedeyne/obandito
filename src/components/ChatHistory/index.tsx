@@ -23,6 +23,22 @@ export function ChatHistory() {
   }
   // old msg state
   const [messages, setMessages] = useState<MessagesI[] | []>([]);
+  const [Readmessages, setReadMessages] = useState<MessagesI[] | []>([]);
+  console.log(Readmessages);
+
+  // const compareMessages = () => {
+  //   const updatedMessages = messages.map((message) => {
+  //     const isMessageRead = Readmessages.some(
+  //       (readMessage) => readMessage.id === message.id
+  //     );
+  //     if (isMessageRead) {
+  //       return { ...message, read: true };
+  //     } else {
+  //       return message;
+  //     }
+  //   });
+  //   setMessages(updatedMessages);
+  // };
 
   // ID receiver from params
   const { idrecever, idsender } = useParams();
@@ -55,11 +71,14 @@ export function ChatHistory() {
     socket.on('previous-messages', (messages: MessagesI) => {
       setMessages(messages);
     });
+
     return () => {
       socket.off('previous-messages');
     };
   }, []);
-
+  socket.on('update-status', (readOrNotMessages) => {
+    setReadMessages(readOrNotMessages);
+  });
   const handleSubmit = (e: {
     preventDefault: () => void;
     target: { firstElementChild: { value: string } };
