@@ -71,6 +71,20 @@ export function TabsContent({
     (state) => state.decodedToken.selectedTab
   );
 
+  // const reviewData = reviews.map((review) => ({
+  //   event_id: review.event_id,
+  //   receiver_id: review.receiver_id,
+  //   rating: review.rating,
+  //   review: review.review,
+  // }));
+
+  // const [formData, setFormData] = useState({
+  //   event_id: reviewData[reviewData.length - 1].event_id,
+  //   receiver_id: reviewData[reviewData.length - 1].receiver_id,
+  //   rating: reviewData[reviewData.length - 1].rating,
+  //   review: reviewData[reviewData.length - 1].review,
+  // });
+
   const [formData, setFormData] = useState({
     event_id: 21,
     receiver_id: 51,
@@ -79,7 +93,7 @@ export function TabsContent({
   });
 
   console.log('reviews', reviews);
-  console.log('= formData', formData);
+  // console.log('= formData', formData);
 
   const handleFormSubmit = async (e: { preventDefault: () => void }, event) => {
     e.preventDefault();
@@ -92,13 +106,11 @@ export function TabsContent({
 
       setFormData({
         ...formData,
-        // event_id: parseInt(event.id),
         rating: formData.rating,
-        // receiver_id: event.organizer_id,
         review: formData.review,
       });
 
-      console.log('formData---------------------', formData);
+      // console.log('formData---------------------', formData);
 
       const { data } = await addReviewMutation({
         variables: { input: { ...filteredData } },

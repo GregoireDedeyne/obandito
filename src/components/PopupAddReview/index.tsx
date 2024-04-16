@@ -5,11 +5,11 @@ export default function PopupAddReview({
 }) {
   return (
     <dialog id="addReview" className="modal">
-      <div className="modal-box bg-color-primary relative">
+      <div className="modal-box bg-white relative">
         <h3 className="font-bold text-lg mb-8">Ajouter un avis</h3>
         <form onSubmit={handleFormSubmit} className="modal-backdrop">
           <label
-            className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5"
+            className="form-control flex flex-col mb-5 text-black"
             htmlFor="avis"
           >
             <span>Avis</span>
@@ -21,11 +21,12 @@ export default function PopupAddReview({
                 setFormData({ ...formData, review: e.target.value })
               }
               placeholder="Votre avis"
+              className="input input-bordered input-black bg-white text-black"
             />
           </label>
 
           <label
-            className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5"
+            className="form-control flex flex-col mb-5 text-black"
             htmlFor="rating"
           >
             <span>Rating</span>
@@ -39,16 +40,19 @@ export default function PopupAddReview({
                 setFormData({ ...formData, rating: parseInt(e.target.value) })
               }
               placeholder="Votre rating (entre 0 et 5)"
+              className="input input-bordered input-black bg-white text-black"
             />
           </label>
 
-          <button className="text-right w-full text-white" type="submit">
+          <button className="btn btn-outline" type="submit">
             Enregistrer
           </button>
         </form>
 
         <form method="dialog" className="modal-backdrop">
-          <button className="text-white absolute top-7 right-7">Fermer</button>
+          <button className="text-white bg-red-500 rounded-full w-7 h-7 flex items-center justify-center absolute top-7 right-7">
+            X
+          </button>
         </form>
       </div>
     </dialog>
