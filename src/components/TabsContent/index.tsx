@@ -12,7 +12,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
 import { Rating } from '../Rating';
 import { ADD_REVIEW } from '../../graphQL/actions';
-import PopupAddReview from '../PopupAddReview';
+import { PopupAddReview } from '../PopupAddReview';
 
 interface Event {
   validation: string;
@@ -233,33 +233,36 @@ export function TabsContent({
                       <h2>Mes Evènements</h2>
                       {idSettings && (
                         <div>
-                          {data.events.map((event, index) => (
-                            <div className="flex" key={index}>
-                              <EventCard
-                                image_url=""
-                                description=""
-                                city=""
-                                date=""
-                                region=""
-                                price={0}
-                                organizer={{
-                                  name: '',
-                                }}
-                                available={false}
-                                validated={event.validation}
-                                key={index}
-                                {...event}
-                              />
-                            </div>
-                          ))}
+                          {data.events.map((event, index) => {
+                            return (
+                              <div className="flex" key={index}>
+                                <EventCard
+                                  image_url=""
+                                  description=""
+                                  city=""
+                                  date=""
+                                  region=""
+                                  price={0}
+                                  organizer={{
+                                    name: '',
+                                  }}
+                                  available={false}
+                                  validated={event.validation}
+                                  key={index}
+                                  {...event}
+                                />
+                              </div>
+                            );
+                          })}
                         </div>
                       )}
 
                       {!idSettings && (
                         <div>
                           {data.events.map((event, index) => {
+                            // savoir si je suis un artiste
                             const isArtist = event.artists.some(
-                              (artist) => artist.id == userId
+                              (artist) => +artist.id === +userId
                             );
 
                             return (
@@ -284,14 +287,6 @@ export function TabsContent({
                                   event={event}
                                   finished={event.finished}
                                   idSettings={idSettings}
-                                />
-
-                                <PopupAddReview
-                                  handleFormSubmit={(e) => {
-                                    handleFormSubmit(e, event);
-                                  }}
-                                  formData={formData}
-                                  setFormData={setFormData}
                                 />
                               </div>
                             );
@@ -375,35 +370,35 @@ export function TabsContent({
                       <h2>Evènements remportés</h2>
                       <div>
                         {idSettings &&
-                          data.events.map((event, index) => (
-                            <div key={index} className="flex items-center">
-                              {radioStatus === 'tous' ||
-                              (radioStatus === 'pending' &&
-                                event.validation === 'pending') ||
-                              (radioStatus === 'validated' &&
-                                event.validation === 'validated') ||
-                              (radioStatus === 'refused' &&
-                                event.validation === 'refused') ? (
-                                <EventCard
-                                  image_url=""
-                                  description=""
-                                  city=""
-                                  date=""
-                                  region=""
-                                  price={0}
-                                  organizer={{
-                                    name: '',
-                                  }}
-                                  available={false}
-                                  key={index}
-                                  {...event}
-                                  validated={event.validation}
-                                />
-                              ) : (
-                                ''
-                              )}
-                            </div>
-                          ))}
+                          data.events.map((event, index) => {
+                            return (
+                              <div key={index} className="flex items-center">
+                                {radioStatus === 'tous' ||
+                                (radioStatus === 'pending' &&
+                                  event.validation === 'pending') ||
+                                (radioStatus === 'validated' &&
+                                  event.validation === 'validated') ||
+                                (radioStatus === 'refused' &&
+                                  event.validation === 'refused') ? (
+                                  <EventCard
+                                    image_url=""
+                                    description=""
+                                    city=""
+                                    date=""
+                                    region=""
+                                    price={0}
+                                    organizerId={event.organizer_id}
+                                    available={false}
+                                    key={index}
+                                    {...event}
+                                    validated={event.validation}
+                                  />
+                                ) : (
+                                  ''
+                                )}
+                              </div>
+                            );
+                          })}
 
                         {!idSettings && (
                           <div>

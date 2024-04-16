@@ -4,6 +4,8 @@ import { handleImg } from '../../utils/handleImg';
 import { DELETE_EVENT, DELETE_POSTULATION } from '../../graphQL/actions';
 import { useMutation } from '@apollo/client';
 import { toast, ToastContainer } from 'react-toastify';
+import { useState } from 'react';
+import { PopupAddReview } from '../PopupAddReview';
 
 interface EventCardProps {
   image_url: string;
@@ -26,7 +28,7 @@ export function EventCard({
   city,
   date,
   region,
-  organizer,
+  organizerId,
   price,
   id,
   available,
@@ -53,6 +55,8 @@ export function EventCard({
       toast.warn(error.message); // Afficher l'erreur avec react-toastify
     },
   });
+
+  const [openModalReview, setOpenModalReview] = useState(false);
 
   const location = useLocation();
   const token = useAppSelector((state) => state.decodedToken.token);
@@ -88,8 +92,15 @@ export function EventCard({
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full relative">
       <ToastContainer />
+      {openModalReview && (
+        <PopupAddReview
+          setOpenModal={setOpenModalReview}
+          idEvent={id}
+          organizerId={organizerId}
+        />
+      )}
 
       <div className="px-6 py-4 my-2 w-full bg-white rounded-xl shadow-lg hover:border-purple-800 border-2 border-solid border-transparent">
         <div className="flex flex-col lg:flex-row ">
@@ -118,42 +129,6 @@ export function EventCard({
                 </span>
               </div>
             )}
-
-            {isArtist && finished && (
-              <span
-                onClick={() => {
-                  const dealsModal = document.getElementById(
-                    'addReview'
-                  ) as HTMLDialogElement | null;
-                  if (dealsModal) {
-                    dealsModal.showModal();
-                  } else {
-                    console.error(
-                      "L'élément avec l'ID \"addReview\" n'a pas été trouvé."
-                    );
-                  }
-                  setFormData({
-                    ...formData,
-                    event_id: parseInt(event.id),
-                    receiver_id: parseInt(event.organizer_id),
-                  });
-                }}
-                className="cursor-pointer text-sm text-blue-500"
-              >
-                Laisser un avis
-              </span>
-            )}
-            {isOrganizer && finished && (
-              <span
-                onClick={() => {
-                  onLeaveReviewClick();
-                }}
-                className="cursor-pointer text-sm text-blue-500"
-              >
-                Laisser un avis
-              </span>
-            )}
-
             <div className="flex gap-1.5 mt-1.5 text-neutral-600 items-center">
               {available === true ? (
                 <>
@@ -178,7 +153,7 @@ export function EventCard({
             <div className="flex gap-1.5 mt-1.5 text-neutral-600">
               <div>Recherche sur la région de : {region}</div>
               <div className="text-neutral-600">·</div>
-              <div>{organizer?.name}</div>
+              <div>{name}</div>
             </div>
             <div className="mt-1.5 text-zinc-500">{date}</div>
           </NavLink>
@@ -201,7 +176,7 @@ export function EventCard({
                 ? 'hidden'
                 : 'text-yellow-500 text-sm w-60 h-fit border border-yellow-500 px-3 rounded-xl hover:bg-yellow-500 hover:text-white'
             }
-            onClick={() => HandleDelete(id)}
+            onClick={() => setOpenModalReview(!openModalReview)}
           >
             Laisser un avis
           </button>
