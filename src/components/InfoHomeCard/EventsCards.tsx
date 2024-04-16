@@ -86,6 +86,7 @@ export function EventCard({
       window.location.href = location.pathname;
     }
   };
+  console.log(finished);
 
   return (
     <div className="w-full">
@@ -182,7 +183,7 @@ export function EventCard({
             </div>
             <div className="mt-1.5 text-zinc-500">{date}</div>
           </NavLink>
-          <button
+          {/* <button
             className={
               window.location.pathname === '/' || !isMyProfil()
                 ? 'hidden'
@@ -191,6 +192,16 @@ export function EventCard({
             onClick={() => HandleDelete(id)}
           >
             Supprimer
+          </button> */}
+          <button
+            className={
+              window.location.pathname === '/' || !isMyProfil() || !finished
+                ? 'hidden'
+                : 'text-yellow-500 text-sm w-60 h-fit border border-yellow-500 px-3 rounded-xl hover:bg-yellow-500 hover:text-white'
+            }
+            onClick={() => HandleDelete(id)}
+          >
+            Laisser un avis
           </button>
         </div>
       </div>
