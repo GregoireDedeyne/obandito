@@ -183,16 +183,16 @@ export function EventCard({
             </div>
             <div className="mt-1.5 text-zinc-500">{date}</div>
           </NavLink>
-          {/* <button
+          <button
             className={
-              window.location.pathname === '/' || !isMyProfil()
+              window.location.pathname === '/' || !isMyProfil() || finished
                 ? 'hidden'
                 : 'text-red-700 text-sm flex w-fit h-fit border border-red-700 px-3 rounded-xl hover:bg-red-700 hover:text-white'
             }
             onClick={() => HandleDelete(id)}
           >
             Supprimer
-          </button> */}
+          </button>
           <button
             className={
               window.location.pathname === '/' || !isMyProfil() || !finished
