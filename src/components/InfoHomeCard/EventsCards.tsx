@@ -31,6 +31,13 @@ export function EventCard({
   id,
   available,
   validated,
+  isArtist,
+  setFormData,
+  formData,
+  event,
+  isOrganizer,
+  onLeaveReviewClick,
+  finished,
 }: EventCardProps) {
   const islogged: boolean = useAppSelector(
     (state) => state.decodedToken.islogged
@@ -95,6 +102,41 @@ export function EventCard({
                   </button>
                 )}
               </div>
+            )}
+
+            {isArtist && finished && (
+              <span
+                onClick={() => {
+                  const dealsModal = document.getElementById(
+                    'addReview'
+                  ) as HTMLDialogElement | null;
+                  if (dealsModal) {
+                    dealsModal.showModal();
+                  } else {
+                    console.error(
+                      "L'élément avec l'ID \"addReview\" n'a pas été trouvé."
+                    );
+                  }
+                  setFormData({
+                    ...formData,
+                    event_id: parseInt(event.id),
+                    receiver_id: parseInt(event.organizer_id),
+                  });
+                }}
+                className="cursor-pointer text-sm text-blue-500"
+              >
+                Laisser un avis
+              </span>
+            )}
+            {isOrganizer && finished && (
+              <span
+                onClick={() => {
+                  onLeaveReviewClick();
+                }}
+                className="cursor-pointer text-sm text-blue-500"
+              >
+                Laisser un avis
+              </span>
             )}
 
             <div className="flex gap-1.5 mt-1.5 text-neutral-600 items-center">

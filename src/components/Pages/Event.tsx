@@ -141,7 +141,7 @@ export function EventPage(): EventProps {
         context: { headers: { Authorization: `Bearer ${token}` } },
       });
 
-      console.log('Données mises à jour avec succès:', data);
+      // console.log('Données mises à jour avec succès:', data);
       document.getElementById('event').close();
       window.location.href = location.pathname;
       toast.warn("Vous avez bien modifié à l'évènement");

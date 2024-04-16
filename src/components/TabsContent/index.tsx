@@ -10,6 +10,9 @@ import { DELETE_EVENT } from '../../graphQL/actions';
 import { useMutation } from '@apollo/client';
 import { toast, ToastContainer } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
+import { Rating } from '../Rating';
+import { ADD_REVIEW } from '../../graphQL/actions';
+import PopupAddReview from '../PopupAddReview';
 
 interface Event {
   validation: string;
@@ -47,13 +50,23 @@ export function TabsContent({
   idSettings,
   role,
   rolelogin,
+  userId,
+  token,
+  reviews,
+  id,
 }: TabsContentProps) {
   setSelectedTab;
   const [radioStatus, setRadioStatus] = useState<string>('tous');
   const location = useLocation();
 
+  const [
+    addReviewMutation,
+    { data: addReviewData, loading: addReviewLoading, error: addReviewError },
+  ] = useMutation(ADD_REVIEW);
+
+  // console.log('data', data);
   const dispatch = useAppDispatch();
-  const token = useAppSelector((state) => state.decodedToken.token);
+
   const handleTabClick = (i: number) => {
     dispatch(setSelectedTab(i));
   };
@@ -79,6 +92,71 @@ export function TabsContent({
       variables: { deleteEventId: idN },
     });
     window.location.href = location.pathname;
+  };
+
+  // const reviewData = reviews.map((review) => ({
+  //   event_id: review.event_id,
+  //   receiver_id: review.receiver_id,
+  //   rating: review.rating,
+  //   review: review.review,
+  // }));
+
+  // const [formData, setFormData] = useState({
+  //   event_id: reviewData[reviewData.length - 1].event_id,
+  //   receiver_id: reviewData[reviewData.length - 1].receiver_id,
+  //   rating: reviewData[reviewData.length - 1].rating,
+  //   review: reviewData[reviewData.length - 1].review,
+  // });
+
+  const [formData, setFormData] = useState({
+    event_id: 21,
+    receiver_id: 51,
+    rating: 5,
+    review: 'ma',
+  });
+
+  console.log('reviews', reviews);
+  // console.log('= formData', formData);
+
+  const handleFormSubmit = async (e: { preventDefault: () => void }, event) => {
+    e.preventDefault();
+
+    try {
+      // Filtrer les propriétés null dans formData
+      const filteredData = Object.fromEntries(
+        Object.entries(formData).filter(([key, value]) => value !== null)
+      );
+
+      setFormData({
+        ...formData,
+        rating: formData.rating,
+        review: formData.review,
+      });
+
+      // console.log('formData---------------------', formData);
+
+      const { data } = await addReviewMutation({
+        variables: { input: { ...filteredData } },
+        context: { headers: { Authorization: `Bearer ${token}` } },
+      });
+
+      // console.log('Données mises à jour avec succès:', data);
+      // const settingsModal = document.getElementById(
+      //   'addReview'
+      // ) as HTMLDialogElement | null;
+      // if (settingsModal) {
+      //   settingsModal.close();
+      // } else {
+      //   console.error("L'élément avec l'ID \"settings\" n'a pas été trouvé.");
+      // }
+      window.location.href = location.pathname;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      } else {
+        console.error("Une erreur inattendue s'est produite");
+      }
+    }
   };
 
   return (
@@ -156,36 +234,120 @@ export function TabsContent({
               </>
             )}
 
+            {selectedTab === 1 && (
+              <Rating
+                reviews={reviews}
+                data={data}
+                formData={formData}
+                setFormData={setFormData}
+                userId={userId}
+              />
+            )}
+
             {selectedTab === 2 && (
               <>
                 {role === 'Organisateur' && (
-                  <div className="bloc-white">
-                    <h2>Mes Evènements</h2>
-                    <div>
-                      {data.events.map((event, index) => (
-                        <div className="flex items-center">
-                          <EventCard
-                            image_url=""
-                            description=""
-                            city=""
-                            date=""
-                            region=""
-                            price={0}
-                            organizer={{
-                              name: '',
-                            }}
-                            available={false}
-                            validated=""
-                            key={index}
-                            {...event}
-                          />
-                          <button onClick={() => HandleDelete(event.id)}>
-                            Supprimer l'évènement
-                          </button>
+                  <>
+                    {/* {idSettings && (
+                      <div className="bloc-white">
+                        <h2>Mes Evènements</h2>
+                        <div>
+                          {data.events.map((event, index) => (
+                            <EventCard
+                              image_url=""
+                              description=""
+                              city=""
+                              date=""
+                              region=""
+                              price={0}
+                              organizer={{
+                                name: '',
+                              }}
+                              available={false}
+                              validated=""
+                              key={index}
+                              {...event}
+                            />
+                          ))}
                         </div>
-                      ))}
+                      </div>
+                    )} */}
+
+                    <div className="bloc-white">
+                      <h2>Mes Evènements</h2>
+                      {idSettings && (
+                        <div>
+                          {data.events.map((event, index) => (
+                            <div className="flex">
+                              <EventCard
+                                image_url=""
+                                description=""
+                                city=""
+                                date=""
+                                region=""
+                                price={0}
+                                organizer={{
+                                  name: '',
+                                }}
+                                available={false}
+                                validated={event.validation}
+                                key={index}
+                                {...event}
+                              />
+                              <button onClick={() => HandleDelete(event.id)}>
+                                Supprimer l'évènement
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {!idSettings && (
+                        <div>
+                          {data.events.map((event, index) => {
+                            const isArtist = event.artists.some(
+                              (artist) => artist.id == userId
+                            );
+
+                            // console.log('isArtist', isArtist);
+
+                            return (
+                              <div key={index} className="flex items-center">
+                                <EventCard
+                                  image_url=""
+                                  description=""
+                                  city=""
+                                  date=""
+                                  region=""
+                                  price={0}
+                                  organizer={{
+                                    name: '',
+                                  }}
+                                  available={false}
+                                  key={index}
+                                  {...event}
+                                  validated={event.validation}
+                                  isArtist={isArtist}
+                                  setFormData={setFormData}
+                                  formData={formData}
+                                  event={event}
+                                  finished={event.finished}
+                                />
+
+                                <PopupAddReview
+                                  handleFormSubmit={(e) => {
+                                    handleFormSubmit(e, event);
+                                  }}
+                                  formData={formData}
+                                  setFormData={setFormData}
+                                />
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
                     </div>
-                  </div>
+                  </>
                 )}
 
                 {role === 'Artiste' && (
@@ -291,11 +453,36 @@ export function TabsContent({
                             </div>
                           ))}
 
-                        {!idSettings && (
+                        {/* {!idSettings && (
                           <div>
                             {data.events.map((event, index) =>
                               event.validation === 'validated' ? (
                                 <div key={index} className="flex items-center">
+                                  {event.organizer_id === userId && (
+                                    <span
+                                      onClick={() => {
+                                        const dealsModal =
+                                          document.getElementById(
+                                            'addReview'
+                                          ) as HTMLDialogElement | null;
+                                        if (dealsModal) {
+                                          dealsModal.showModal();
+                                        } else {
+                                          console.error(
+                                            "L'élément avec l'ID \"addReview\" n'a pas été trouvé."
+                                          );
+                                        }
+                                        setFormData({
+                                          ...formData,
+                                          event_id: parseInt(event.id),
+                                          receiver_id: parseInt(id),
+                                        });
+                                      }}
+                                    >
+                                      Laisser un avis
+                                    </span>
+                                  )}
+
                                   <EventCard
                                     image_url=""
                                     description=""
@@ -310,11 +497,80 @@ export function TabsContent({
                                     key={index}
                                     {...event}
                                     validated={event.validation}
+                                    idReceiver={id}
+                                  />
+                                  <PopupAddReview
+                                    handleFormSubmit={(e) => {
+                                      handleFormSubmit(e, event);
+                                    }}
+                                    formData={formData}
+                                    setFormData={setFormData}
                                   />
                                 </div>
                               ) : (
                                 ''
                               )
+                            )}
+                          </div>
+                        )} */}
+
+                        {!idSettings && (
+                          <div>
+                            {data.events.map((event, index) =>
+                              event.validation === 'validated'
+                                ? (console.log('data', data),
+                                  console.log('events', data.events),
+                                  console.log('eventtt', event),
+                                  (
+                                    <div
+                                      key={index}
+                                      className="flex items-center"
+                                    >
+                                      <EventCard
+                                        image_url=""
+                                        description=""
+                                        city=""
+                                        date=""
+                                        region=""
+                                        price={0}
+                                        organizer={{ name: '' }}
+                                        available={false}
+                                        key={index}
+                                        {...event}
+                                        validated={event.validation}
+                                        isOrganizer={
+                                          event.organizer_id == userId
+                                        }
+                                        finished={event.finished}
+                                        onLeaveReviewClick={() => {
+                                          const dealsModal =
+                                            document.getElementById(
+                                              'addReview'
+                                            ) as HTMLDialogElement | null;
+                                          if (dealsModal) {
+                                            dealsModal.showModal();
+                                          } else {
+                                            console.error(
+                                              "L'élément avec l'ID \"addReview\" n'a pas été trouvé."
+                                            );
+                                          }
+                                          setFormData({
+                                            ...formData,
+                                            event_id: parseInt(event.id),
+                                            receiver_id: parseInt(id),
+                                          });
+                                        }}
+                                      />
+                                      <PopupAddReview
+                                        handleFormSubmit={(e) => {
+                                          handleFormSubmit(e, event);
+                                        }}
+                                        formData={formData}
+                                        setFormData={setFormData}
+                                      />
+                                    </div>
+                                  ))
+                                : ''
                             )}
                           </div>
                         )}

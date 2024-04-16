@@ -5,7 +5,7 @@ import { useLoaderData, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../store/redux-hook';
 
 export default function ProfileBis() {
-  const [data, setData] = useState(useLoaderData());
+  const data = useLoaderData();
 
   const token = useAppSelector((state) => state.decodedToken.token);
 
@@ -20,8 +20,11 @@ export default function ProfileBis() {
 
   const info = data?.artist || data?.organizer;
   const regions = data?.regions;
+  const reviews = data?.reviews;
 
   // console.log('regions : ', regions);
+
+  // console.log('data', data);
 
   return (
     <div className="w-full flex flex-col">
@@ -32,14 +35,17 @@ export default function ProfileBis() {
         regions={regions}
         idSettings={idSettings}
         rolelogin={rolelogin}
+        reviews={reviews}
       />
       <TabsContent
         data={info}
         idSettings={idSettings}
         role={role}
         rolelogin={rolelogin}
-        id={0}
-        userId={0}
+        userId={userId}
+        token={token}
+        reviews={reviews}
+        id={id}
       />
     </div>
   );

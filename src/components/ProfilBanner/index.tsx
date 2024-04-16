@@ -38,6 +38,7 @@ export function ProfilBanner({
   idSettings,
   regions,
   rolelogin,
+  reviews,
 }: ProfilBannerProps) {
   const [UpdateUser] = useMutation(UPDATE_USER);
 
@@ -71,7 +72,7 @@ export function ProfilBanner({
       });
       dispatch(updateToken(data.updateUser.image_url));
 
-      console.log('Données mises à jour avec succès:', data);
+      // console.log('Données mises à jour avec succès:', data);
       const settingsModal = document.getElementById(
         'settings'
       ) as HTMLDialogElement | null;
@@ -138,7 +139,7 @@ export function ProfilBanner({
               />
             </div>
 
-            <Stars />
+            <Stars reviews={reviews} />
 
             <span>
               <div className="flex items-center">
