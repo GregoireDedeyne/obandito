@@ -4,12 +4,9 @@ import { useMutation } from '@apollo/client';
 import { toast } from 'react-toastify';
 import { useAppSelector } from '../../store/redux-hook';
 
-export function PopupAddReview({
-  setOpenModal,
-  idEvent,
-  organizerId,
-  artistId,
-}) {
+export function PopupAddReview({ idEvent, organizerId, artistId }) {
+  console.log(idEvent);
+
   const [review, setReview] = useState({
     event_id: +idEvent,
     receiver_id: +organizerId || +artistId,
@@ -25,6 +22,7 @@ export function PopupAddReview({
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(review);
 
     await addReview({
       context: {
@@ -39,12 +37,18 @@ export function PopupAddReview({
   };
 
   return (
-    <div className=" z-50  absolute -top-1/2 left-1/2 translate-x-1/2 -translate-y-1/2">
-      <div className=" bg-white relative">
+    <dialog id="addReview" className="modal">
+      <div className="modal-box bg-white relative">
         <h3 className="font-bold text-lg mb-8">Ajouter un avis</h3>
-        <form onSubmit={handleSubmit} className="">
-          <label className="form-control flex flex-col mb-5 text-black">
-            <span>Laisser un avis</span>
+        <form onSubmit={handleSubmit} className="modal-backdrop">
+          <label
+            className="form-control flex flex-col mb-5 text-black"
+            htmlFor="avis"
+          >
+            <button onClick={() => console.log(idEvent, organizerId)}>
+              test
+            </button>
+            <span>Avis</span>
             <input
               name="avis"
               type="text"
@@ -73,21 +77,16 @@ export function PopupAddReview({
           </label>
 
           <button className="btn btn-outline" type="submit">
-            Envoyé
+            Enregistrer
           </button>
         </form>
 
-        <form onSubmit={handleSubmit} className="modal-backdrop">
-          <button
-            onClick={() => {
-              setOpenModal(false);
-            }}
-            className="text-white bg-red-500 rounded-full w-7 h-7 flex items-center justify-center absolute top-7 right-7"
-          >
+        <form method="dialog" className="modal-backdrop">
+          <button className="text-white bg-red-500 rounded-full w-7 h-7 flex items-center justify-center absolute top-7 right-7">
             X
           </button>
         </form>
       </div>
-    </div>
+    </dialog>
   );
 }

@@ -40,6 +40,7 @@ export function EventCard({
   isOrganizer,
   onLeaveReviewClick,
   finished,
+  eventId,
 }: EventCardProps) {
   const islogged: boolean = useAppSelector(
     (state) => state.decodedToken.islogged
@@ -55,8 +56,6 @@ export function EventCard({
       toast.warn(error.message); // Afficher l'erreur avec react-toastify
     },
   });
-
-  const [openModalReview, setOpenModalReview] = useState(false);
 
   const location = useLocation();
   const token = useAppSelector((state) => state.decodedToken.token);
@@ -90,17 +89,19 @@ export function EventCard({
       window.location.href = location.pathname;
     }
   };
-
+  const openReviewModal = () => {
+    const ReviewModal = document.getElementById(
+      'addReview'
+    ) as HTMLDialogElement | null;
+    if (ReviewModal) {
+      ReviewModal.showModal();
+    } else {
+      console.error("L'élément avec l'ID \"addReview\" n'a pas été trouvé.");
+    }
+  };
   return (
     <div className="w-full relative">
       <ToastContainer />
-      {openModalReview && (
-        <PopupAddReview
-          setOpenModal={setOpenModalReview}
-          idEvent={id}
-          organizerId={organizerId}
-        />
-      )}
 
       <div className="px-6 py-4 my-2 w-full bg-white rounded-xl shadow-lg hover:border-purple-800 border-2 border-solid border-transparent">
         <div className="flex flex-col lg:flex-row ">
@@ -176,10 +177,14 @@ export function EventCard({
                 ? 'hidden'
                 : 'text-yellow-500 text-sm w-60 h-fit border border-yellow-500 px-3 rounded-xl hover:bg-yellow-500 hover:text-white'
             }
-            onClick={() => setOpenModalReview(!openModalReview)}
+            onClick={() => {
+              openReviewModal();
+              console.log(eventId, id, organizerId);
+            }}
           >
             Laisser un avis
           </button>
+          <PopupAddReview idEvent={+eventId} organizerId={+organizerId} />
         </div>
       </div>
     </div>

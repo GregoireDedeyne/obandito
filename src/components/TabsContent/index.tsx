@@ -214,6 +214,7 @@ export function TabsContent({
                             return (
                               <div className="flex" key={index}>
                                 <EventCard
+                                  eventId={event.id}
                                   image_url=""
                                   description=""
                                   city=""
@@ -245,6 +246,7 @@ export function TabsContent({
                             return (
                               <div key={index} className="flex items-center">
                                 <EventCard
+                                  eventId={event.id}
                                   image_url=""
                                   description=""
                                   city=""
@@ -356,6 +358,7 @@ export function TabsContent({
                                 (radioStatus === 'refused' &&
                                   event.validation === 'refused') ? (
                                   <EventCard
+                                    eventId={event.id}
                                     image_url=""
                                     description=""
                                     city=""
@@ -388,6 +391,7 @@ export function TabsContent({
                                       className="flex items-center"
                                     >
                                       <EventCard
+                                        eventId={event.id}
                                         image_url=""
                                         description=""
                                         city=""
@@ -510,6 +514,7 @@ export function TabsContent({
                   setFormData={setFormData}
                   formData={formData}
                 />
+
                 <PopupAddReview
                   handleFormSubmit={(e) => {
                     handleFormSubmit(e, event);
