@@ -21,15 +21,12 @@ interface Event {
   artists: Artist[];
 }
 
-interface ArrayHandleArtistEventProps {
-  events: Event[];
-  radioStatus: string;
-}
-
 export function ArrayHandleArtistEvent({
   events,
   radioStatus,
-}: ArrayHandleArtistEventProps) {
+  setFormData,
+  formData,
+}) {
   const token = useAppSelector((state) => state.decodedToken.token);
 
   const [selectedStatus, setSelectedStatus] = useState('pending');
@@ -43,6 +40,7 @@ export function ArrayHandleArtistEvent({
   const [HandlePostulationEvent] = useMutation(HANDLEPOSTULATIONEVENT);
   const location = useLocation();
 
+  // Form submit after status change
   const handleFormSubmitStatus = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
@@ -80,6 +78,37 @@ export function ArrayHandleArtistEvent({
         console.error("Une erreur inattendue s'est produite");
       }
     }
+  };
+  // function openreviewmodal with event and artist param
+  const openReviewModal = (event, artist) => {
+    const ReviewModal = document.getElementById(
+      'addReview'
+    ) as HTMLDialogElement | null;
+    if (ReviewModal) {
+      ReviewModal.showModal();
+    } else {
+      console.error("L'élément avec l'ID \"addReview\" n'a pas été trouvé.");
+    }
+    setFormData({
+      ...formData,
+      event_id: parseInt(event.id),
+      receiver_id: parseInt(artist.id),
+    });
+  };
+
+  // function opendealsmodal with event and artist param
+
+  const openDealsModal = (artist, event) => {
+    const dealsModal = document.getElementById(
+      'deals'
+    ) as HTMLDialogElement | null;
+    if (dealsModal) {
+      dealsModal.showModal();
+    } else {
+      console.error("L'élément avec l'ID \"deals\" n'a pas été trouvé.");
+    }
+    setIdUserStatus(parseInt(artist.id));
+    setIdEventStatus(parseInt(event.id));
   };
 
   return (
@@ -154,25 +183,21 @@ export function ArrayHandleArtistEvent({
                       </div>
                     </td>
                     <td className="px-6 py-4 text-center">
-                      <span
-                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"
-                        onClick={() => {
-                          const dealsModal = document.getElementById(
-                            'deals'
-                          ) as HTMLDialogElement | null;
-                          if (dealsModal) {
-                            dealsModal.showModal();
-                          } else {
-                            console.error(
-                              "L'élément avec l'ID \"deals\" n'a pas été trouvé."
-                            );
-                          }
-                          setIdUserStatus(parseInt(artist.id));
-                          setIdEventStatus(parseInt(event.id));
-                        }}
-                      >
-                        Edit
-                      </span>
+                      {event.finished ? (
+                        <span
+                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"
+                          onClick={() => openReviewModal(event, artist)}
+                        >
+                          Laisser un avis
+                        </span>
+                      ) : (
+                        <span
+                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"
+                          onClick={() => openDealsModal(artist, event)}
+                        >
+                          Edit
+                        </span>
+                      )}
                     </td>
                   </tr>
                 );

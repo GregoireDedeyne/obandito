@@ -75,20 +75,6 @@ export function TabsContent({
     (state) => state.decodedToken.selectedTab
   );
 
-  // const reviewData = reviews.map((review) => ({
-  //   event_id: review.event_id,
-  //   receiver_id: review.receiver_id,
-  //   rating: review.rating,
-  //   review: review.review,
-  // }));
-
-  // const [formData, setFormData] = useState({
-  //   event_id: reviewData[reviewData.length - 1].event_id,
-  //   receiver_id: reviewData[reviewData.length - 1].receiver_id,
-  //   rating: reviewData[reviewData.length - 1].rating,
-  //   review: reviewData[reviewData.length - 1].review,
-  // });
-
   const [formData, setFormData] = useState({
     event_id: 21,
     receiver_id: 51,
@@ -121,15 +107,6 @@ export function TabsContent({
         context: { headers: { Authorization: `Bearer ${token}` } },
       });
 
-      // console.log('Données mises à jour avec succès:', data);
-      // const settingsModal = document.getElementById(
-      //   'addReview'
-      // ) as HTMLDialogElement | null;
-      // if (settingsModal) {
-      //   settingsModal.close();
-      // } else {
-      //   console.error("L'élément avec l'ID \"settings\" n'a pas été trouvé.");
-      // }
       window.location.href = location.pathname;
     } catch (error) {
       if (error instanceof Error) {
@@ -282,8 +259,6 @@ export function TabsContent({
                                   {...event}
                                   validated={event.validation}
                                   isArtist={isArtist}
-                                  setFormData={setFormData}
-                                  formData={formData}
                                   event={event}
                                   finished={event.finished}
                                   idSettings={idSettings}
@@ -447,13 +422,6 @@ export function TabsContent({
                                           });
                                         }}
                                       />
-                                      <PopupAddReview
-                                        handleFormSubmit={(e) => {
-                                          handleFormSubmit(e, event);
-                                        }}
-                                        formData={formData}
-                                        setFormData={setFormData}
-                                      />
                                     </div>
                                   ))
                                 : ''
@@ -539,6 +507,15 @@ export function TabsContent({
                   radioStatus={radioStatus}
                   setSelectedTab={setSelectedTab}
                   selectedTab={3}
+                  setFormData={setFormData}
+                  formData={formData}
+                />
+                <PopupAddReview
+                  handleFormSubmit={(e) => {
+                    handleFormSubmit(e, event);
+                  }}
+                  formData={formData}
+                  setFormData={setFormData}
                 />
               </>
             )}
