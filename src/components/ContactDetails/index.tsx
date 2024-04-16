@@ -21,6 +21,9 @@ export default function ContactDetails({
   // console.log('city', city);
   const userId = useAppSelector((state) => state.decodedToken.decodedData.id);
   const { id } = useParams();
+  const idSetting = useParams();
+
+  const isMyProfil = () => (idSetting.id == userId ? true : false);
 
   return (
     <div className="bloc-white">
@@ -40,12 +43,14 @@ export default function ContactDetails({
       </div>
 
       <>
-        <NavLink
-          className="btn-secondary block text-center"
-          to={`/chat/room/${userId}/${id}`}
-        >
-          Envoyer un message privé
-        </NavLink>
+        {!isMyProfil() && (
+          <NavLink
+            className="btn-secondary block text-center"
+            to={`/chat/room/${userId}/${id}`}
+          >
+            Envoyer un message privé
+          </NavLink>
+        )}
         {!idSettings && rolelogin === 'Organisateur' && (
           <div className="my-1">
             <NavLink className="btn-primary block text-center" to="/">

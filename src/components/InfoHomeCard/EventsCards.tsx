@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../store/redux-hook';
 import { handleImg } from '../../utils/handleImg';
 import { DELETE_EVENT, DELETE_POSTULATION } from '../../graphQL/actions';
@@ -57,6 +57,9 @@ export function EventCard({
   const location = useLocation();
   const token = useAppSelector((state) => state.decodedToken.token);
   const role = useAppSelector((state) => state.decodedToken.decodedData.role);
+  const idUser = useAppSelector((state) => state.decodedToken.decodedData.id);
+  const idSetting = useParams();
+  const isMyProfil = () => (idSetting.id == idUser ? true : false);
 
   const HandleDelete = async (id) => {
     const idN = parseInt(id);
@@ -180,7 +183,11 @@ export function EventCard({
             <div className="mt-1.5 text-zinc-500">{date}</div>
           </NavLink>
           <button
-            className="text-red-700 text-sm flex w-fit"
+            className={
+              window.location.pathname === '/' || !isMyProfil()
+                ? 'hidden'
+                : 'text-red-700 text-sm flex w-fit'
+            }
             onClick={() => HandleDelete(id)}
           >
             Supprimer

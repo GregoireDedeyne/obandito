@@ -229,31 +229,6 @@ export function TabsContent({
               <>
                 {role === 'Organisateur' && (
                   <>
-                    {/* {idSettings && (
-                      <div className="bloc-white">
-                        <h2>Mes Evènements</h2>
-                        <div>
-                          {data.events.map((event, index) => (
-                            <EventCard
-                              image_url=""
-                              description=""
-                              city=""
-                              date=""
-                              region=""
-                              price={0}
-                              organizer={{
-                                name: '',
-                              }}
-                              available={false}
-                              validated=""
-                              key={index}
-                              {...event}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    )} */}
-
                     <div className="bloc-white">
                       <h2>Mes Evènements</h2>
                       {idSettings && (
@@ -287,8 +262,6 @@ export function TabsContent({
                               (artist) => artist.id == userId
                             );
 
-                            // console.log('isArtist', isArtist);
-
                             return (
                               <div key={index} className="flex items-center">
                                 <EventCard
@@ -310,6 +283,7 @@ export function TabsContent({
                                   formData={formData}
                                   event={event}
                                   finished={event.finished}
+                                  idSettings={idSettings}
                                 />
 
                                 <PopupAddReview
@@ -430,67 +404,6 @@ export function TabsContent({
                               )}
                             </div>
                           ))}
-
-                        {/* {!idSettings && (
-                          <div>
-                            {data.events.map((event, index) =>
-                              event.validation === 'validated' ? (
-                                <div key={index} className="flex items-center">
-                                  {event.organizer_id === userId && (
-                                    <span
-                                      onClick={() => {
-                                        const dealsModal =
-                                          document.getElementById(
-                                            'addReview'
-                                          ) as HTMLDialogElement | null;
-                                        if (dealsModal) {
-                                          dealsModal.showModal();
-                                        } else {
-                                          console.error(
-                                            "L'élément avec l'ID \"addReview\" n'a pas été trouvé."
-                                          );
-                                        }
-                                        setFormData({
-                                          ...formData,
-                                          event_id: parseInt(event.id),
-                                          receiver_id: parseInt(id),
-                                        });
-                                      }}
-                                    >
-                                      Laisser un avis
-                                    </span>
-                                  )}
-
-                                  <EventCard
-                                    image_url=""
-                                    description=""
-                                    city=""
-                                    date=""
-                                    region=""
-                                    price={0}
-                                    organizer={{
-                                      name: '',
-                                    }}
-                                    available={false}
-                                    key={index}
-                                    {...event}
-                                    validated={event.validation}
-                                    idReceiver={id}
-                                  />
-                                  <PopupAddReview
-                                    handleFormSubmit={(e) => {
-                                      handleFormSubmit(e, event);
-                                    }}
-                                    formData={formData}
-                                    setFormData={setFormData}
-                                  />
-                                </div>
-                              ) : (
-                                ''
-                              )
-                            )}
-                          </div>
-                        )} */}
 
                         {!idSettings && (
                           <div>
