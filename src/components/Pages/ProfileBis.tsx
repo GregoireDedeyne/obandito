@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { ProfilBanner } from '../ProfilBanner';
 import { TabsContent } from '../TabsContent';
 import { useLoaderData, useParams } from 'react-router-dom';
@@ -10,6 +9,7 @@ export default function ProfileBis() {
   const token = useAppSelector((state) => state.decodedToken.token);
 
   const { id } = useParams();
+
   const userId = useAppSelector((state) => state.decodedToken.decodedData.id);
   const rolelogin = useAppSelector(
     (state) => state.decodedToken.decodedData.role
