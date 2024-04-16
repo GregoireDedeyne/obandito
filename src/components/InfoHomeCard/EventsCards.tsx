@@ -184,13 +184,26 @@ export function EventCard({
           </NavLink>
           <button
             className={
-              window.location.pathname === '/' || !isMyProfil()
+              window.location.pathname === '/' || !isMyProfil() || finished
                 ? 'hidden'
                 : 'text-red-700 text-sm flex w-fit h-fit border border-red-700 px-3 rounded-xl hover:bg-red-700 hover:text-white'
             }
             onClick={() => HandleDelete(id)}
           >
             Supprimer
+          </button>
+          <button
+            className={
+              window.location.pathname === '/' ||
+              !isMyProfil() ||
+              !finished ||
+              role.toLowerCase() === 'organisateur'
+                ? 'hidden'
+                : 'text-yellow-500 text-sm w-60 h-fit border border-yellow-500 px-3 rounded-xl hover:bg-yellow-500 hover:text-white'
+            }
+            onClick={() => HandleDelete(id)}
+          >
+            Laisser un avis
           </button>
         </div>
       </div>
