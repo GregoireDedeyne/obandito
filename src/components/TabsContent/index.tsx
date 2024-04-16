@@ -75,25 +75,6 @@ export function TabsContent({
     (state) => state.decodedToken.selectedTab
   );
 
-  const [deleteMutation] = useMutation(DELETE_EVENT, {
-    onError: (error) => {
-      toast.warn(error.message); // Afficher l'erreur avec react-toastify
-    },
-  });
-
-  const HandleDelete = async (id) => {
-    const idN = parseInt(id);
-    const { data } = await deleteMutation({
-      context: {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-      variables: { deleteEventId: idN },
-    });
-    window.location.href = location.pathname;
-  };
-
   // const reviewData = reviews.map((review) => ({
   //   event_id: review.event_id,
   //   receiver_id: review.receiver_id,
@@ -278,7 +259,7 @@ export function TabsContent({
                       {idSettings && (
                         <div>
                           {data.events.map((event, index) => (
-                            <div className="flex">
+                            <div className="flex" key={index}>
                               <EventCard
                                 image_url=""
                                 description=""
@@ -294,9 +275,6 @@ export function TabsContent({
                                 key={index}
                                 {...event}
                               />
-                              <button onClick={() => HandleDelete(event.id)}>
-                                Supprimer l'évènement
-                              </button>
                             </div>
                           ))}
                         </div>

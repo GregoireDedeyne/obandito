@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAppSelector } from '../../store/redux-hook';
 import { handleImg } from '../../utils/handleImg';
-import { DELETE_POSTULATION } from '../../graphQL/actions';
+import { DELETE_EVENT, DELETE_POSTULATION } from '../../graphQL/actions';
 import { useMutation } from '@apollo/client';
 import { toast, ToastContainer } from 'react-toastify';
 
@@ -48,9 +48,15 @@ export function EventCard({
       toast.warn(error.message); // Afficher l'erreur avec react-toastify
     },
   });
+  const [deleteMutationEvent] = useMutation(DELETE_EVENT, {
+    onError: (error) => {
+      toast.warn(error.message); // Afficher l'erreur avec react-toastify
+    },
+  });
 
   const location = useLocation();
   const token = useAppSelector((state) => state.decodedToken.token);
+
   const HandleDelete = async (id) => {
     const idN = parseInt(id);
 
@@ -62,6 +68,20 @@ export function EventCard({
       },
       variables: { eventId: idN },
     });
+
+    window.location.href = location.pathname;
+  };
+
+  const HandleDeleteEvent = async (id) => {
+    const idN = parseInt(id);
+    const { data } = await deleteMutationEvent({
+      context: {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+      variables: { deleteEventId: idN },
+    });
     window.location.href = location.pathname;
   };
 
@@ -70,10 +90,10 @@ export function EventCard({
       <ToastContainer />
 
       <div className="px-6 py-4 my-2 w-full bg-white rounded-xl shadow-lg hover:border-purple-800 border-2 border-solid border-transparent">
-        <div className="flex flex-col lg:flex-row items-center">
+        <div className="flex flex-col lg:flex-row ">
           <NavLink
             to={islogged === false ? '/login' : `/event/${id}`}
-            className="overflow-hidden relative flex-shrink-0 w-full lg:w-72 aspect-w-16 aspect-h-9 lg:w-80"
+            className="overflow-hidden relative flex-shrink-0 w-full aspect-w-16 aspect-h-9 lg:w-80"
           >
             <img
               loading="lazy"
@@ -82,9 +102,8 @@ export function EventCard({
               className="object-cover w-full h-full rounded-xl"
             />
           </NavLink>
-          <div className="flex flex-col ml-0 lg:ml-5 mt-4 lg:mt-0 w-full">
+          <div className="flex flex-col justify-between ml-0 lg:ml-5 mt-4 lg:mt-0 w-full">
             <div className="text-xl leading-6 text-slate-900">{name}</div>
-
             {validated && (
               <div className="mt-1.5 text-sm text-neutral-600 ">
                 <span
@@ -97,8 +116,7 @@ export function EventCard({
                     className="z-40 bg-red-700 text-black rounded-xl ml-5 p-1 relative "
                     onClick={() => HandleDelete(id)}
                   >
-                    {' '}
-                    Supprimer ma postulation{' '}
+                    Supprimer ma postulation
                   </button>
                 )}
               </div>
@@ -167,6 +185,12 @@ export function EventCard({
             </div>
             <div className="mt-1.5 text-zinc-500">{date}</div>
           </div>
+          <button
+            className="text-red-700 text-sm flex w-fit"
+            onClick={() => HandleDeleteEvent(id)}
+          >
+            Supprimer
+          </button>
         </div>
       </div>
     </div>
