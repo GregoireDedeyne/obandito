@@ -174,6 +174,7 @@ export function EventCard({
           >
             Supprimer
           </button>
+
           <button
             className={
               window.location.pathname === '/' ||
