@@ -165,6 +165,7 @@ export function TabsContent({
                 formData={formData}
                 setFormData={setFormData}
                 userId={userId}
+                role={role}
               />
             )}
 
