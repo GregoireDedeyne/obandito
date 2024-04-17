@@ -37,8 +37,8 @@ export function TabsContent({
 
   const dispatch = useDispatch();
 
-  const handleTabClick = (i) => {
-    dispatch(setSelectedTab(i));
+  const handleTabClick = (name) => {
+    dispatch(setSelectedTab(name));
   };
 
   const selectedTab = useSelector((state) => state.decodedToken.selectedTab);
@@ -101,11 +101,11 @@ export function TabsContent({
         indexInput: 0,
       },
       {
-        ariaLabel: 'Evaluation',
+        ariaLabel: 'Évaluation',
         indexInput: 1,
       },
       {
-        ariaLabel: 'Evènements',
+        ariaLabel: 'Évènements',
         indexInput: 2,
       },
       {
@@ -186,7 +186,7 @@ export function TabsContent({
               className="tab"
               aria-label={inputTab.ariaLabel}
               checked={selectedTab === inputTab.indexInput}
-              onChange={() => handleTabClick(inputTab.indexInput)}
+              onChange={() => handleTabClick(inputTab.ariaLabel)}
             />
           );
         })}
@@ -196,7 +196,7 @@ export function TabsContent({
         <div className="grid grid-cols-12 md:gap-8 container mx-auto">
           {/* grid left */}
           <div className="col-span-12 md:col-span-8 my-10">
-            {selectedTab === 0 && (
+            {selectedTab === 'Présentation' && (
               <>
                 <ProfilContentBlock
                   title="Présentation"
@@ -217,7 +217,7 @@ export function TabsContent({
               </>
             )}
 
-            {selectedTab === 1 && (
+            {selectedTab === 'Évaluation' && (
               <Rating
                 reviews={reviews}
                 dataArtistOrOrganize={dataArtistOrOrganize}
@@ -228,7 +228,7 @@ export function TabsContent({
               />
             )}
 
-            {selectedTab === 2 && (
+            {selectedTab === 'Évènements' && (
               <>
                 {role === 'Artiste' && myProfile && (
                   <div className="flex space-x-4 items-center mb-2">
@@ -288,7 +288,7 @@ export function TabsContent({
               </>
             )}
 
-            {selectedTab === 3 && (
+            {selectedTab === 'Deals' && (
               <>
                 <div className="flex space-x-4 items-center mb-2">
                   {inputTabData.sortDealsOrganizer.map((dealsInput) => {
