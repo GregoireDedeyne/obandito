@@ -5,16 +5,13 @@ export default function ContactDetails({
   zip_code,
   city,
   address,
-  idSettings,
-  rolelogin,
+  myProfile,
+  myRole,
 }) {
-  // console.log('zip_code', zip_code);
-  // console.log('city', city);
   const userId = useSelector((state) => state.decodedToken.decodedData.id);
   const { id } = useParams();
-  const idSetting = useParams();
 
-  const isMyProfil = () => (idSetting.id == userId ? true : false);
+  const isMyProfil = () => (id === userId ? true : false);
 
   return (
     <div className="bloc-white">
@@ -42,7 +39,7 @@ export default function ContactDetails({
             Envoyer un message privé
           </NavLink>
         )}
-        {!idSettings && rolelogin === 'Organisateur' && (
+        {!myProfile && myRole === 'Organisateur' && (
           <div className="my-1">
             <NavLink className="btn-primary block text-center" to="/">
               Proposer un deal

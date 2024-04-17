@@ -11,12 +11,12 @@ export default function ProfileBis() {
   const { id } = useParams();
 
   const userId = useSelector((state) => state.decodedToken.decodedData.id);
-  const rolelogin = useSelector((state) => state.decodedToken.decodedData.role);
-  const idSettings = parseInt(id) === userId;
+  const myRole = useSelector((state) => state.decodedToken.decodedData.role);
+  const myProfile = parseInt(id) === userId;
 
   const role = data.artist?.role?.name || data.organizer?.role?.name;
 
-  const info = data?.artist || data?.organizer;
+  const dataArtistOrOrganize = data?.artist || data?.organizer;
   const regions = data?.regions;
   const reviews = data?.reviews;
 
@@ -24,18 +24,18 @@ export default function ProfileBis() {
     <div className="w-full flex flex-col">
       <ProfilBanner
         role={role}
-        info={info}
+        dataArtistOrOrganize={dataArtistOrOrganize}
         token={token}
         regions={regions}
-        idSettings={idSettings}
-        rolelogin={rolelogin}
+        myProfile={myProfile}
+        myRole={myRole}
         reviews={reviews}
       />
       <TabsContent
-        data={info}
-        idSettings={idSettings}
+        dataArtistOrOrganize={dataArtistOrOrganize}
+        myProfile={myProfile}
         role={role}
-        rolelogin={rolelogin}
+        myRole={myRole}
         userId={userId}
         token={token}
         reviews={reviews}

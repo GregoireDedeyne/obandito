@@ -14,10 +14,10 @@ import { ADD_REVIEW } from '../../graphQL/actions';
 import { PopupAddReview } from '../PopupAddReview';
 
 export function TabsContent({
-  data,
-  idSettings,
+  dataArtistOrOrganize,
+  myProfile,
   role,
-  rolelogin,
+  myRole,
   userId,
   token,
   reviews,
@@ -25,7 +25,9 @@ export function TabsContent({
 }) {
   setSelectedTab;
   const [radioStatus, setRadioStatus] = useState('tous');
-  const [eventFiltered, setEventFiltered] = useState(data.events);
+  const [eventFiltered, setEventFiltered] = useState(
+    dataArtistOrOrganize.events
+  );
   const location = useLocation();
 
   const [
@@ -81,9 +83,9 @@ export function TabsContent({
   const handleFilterEvents = (filter) => {
     setRadioStatus(filter);
     if (filter === 'tous') {
-      setEventFiltered(data.events);
+      setEventFiltered(dataArtistOrOrganize.events);
     } else {
-      const filtered = data.events.filter((event) => {
+      const filtered = dataArtistOrOrganize.events.filter((event) => {
         if (event.validation.toLowerCase() === filter.toLowerCase()) {
           return event;
         }
@@ -133,6 +135,28 @@ export function TabsContent({
         name: 'Deals refusés',
       },
     ],
+    sortDealsOrganizer: [
+      {
+        id: 1,
+        value: 'tous',
+        name: 'Tous',
+      },
+      {
+        id: 2,
+        value: 'pending',
+        name: 'Demandes en attente',
+      },
+      {
+        id: 3,
+        value: 'validated',
+        name: 'Demandes validées',
+      },
+      {
+        id: 4,
+        value: 'refused',
+        name: 'Demandes refusées',
+      },
+    ],
   };
 
   return (
@@ -149,7 +173,7 @@ export function TabsContent({
         {inputTabData.tabs.map((inputTab) => {
           if (
             inputTab.ariaLabel === 'Deals' &&
-            (!idSettings || role !== 'Organisateur')
+            (!myProfile || role !== 'Organisateur')
           ) {
             return null;
           }
@@ -178,13 +202,13 @@ export function TabsContent({
                   title="Présentation"
                   spotify=""
                   youtube=""
-                  description={data.description}
+                  description={dataArtistOrOrganize.description}
                 />
                 {role === 'Artiste' ? (
                   <ProfilContentBlock
                     title="Musiques & clips"
-                    spotify={data.spotify_link}
-                    youtube={data.youtube_link}
+                    spotify={dataArtistOrOrganize.spotify_link}
+                    youtube={dataArtistOrOrganize.youtube_link}
                     description=""
                   />
                 ) : (
@@ -196,7 +220,7 @@ export function TabsContent({
             {selectedTab === 1 && (
               <Rating
                 reviews={reviews}
-                data={data}
+                dataArtistOrOrganize={dataArtistOrOrganize}
                 formData={formData}
                 setFormData={setFormData}
                 userId={userId}
@@ -206,71 +230,29 @@ export function TabsContent({
 
             {selectedTab === 2 && (
               <>
-                {role === 'Artiste' && idSettings && (
+                {role === 'Artiste' && myProfile && (
                   <div className="flex space-x-4 items-center mb-2">
-                    <input
-                      type="radio"
-                      id="option1"
-                      name="options"
-                      value="tous"
-                      className="cursor-pointer h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
-                      checked={radioStatus === 'tous'}
-                      onChange={(e) => handleFilterEvents(e.target.value)}
-                    />
-                    <label
-                      htmlFor="option1"
-                      className="text-gray-700 cursor-pointer"
-                    >
-                      Tous
-                    </label>
-
-                    <input
-                      type="radio"
-                      id="option2"
-                      name="options"
-                      value="pending"
-                      className="cursor-pointer h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
-                      checked={radioStatus === 'pending'}
-                      onChange={(e) => handleFilterEvents(e.target.value)}
-                    />
-                    <label
-                      htmlFor="option2"
-                      className="text-gray-700 cursor-pointer"
-                    >
-                      Demandes en attente
-                    </label>
-
-                    <input
-                      type="radio"
-                      id="option3"
-                      name="options"
-                      value="validated"
-                      className="cursor-pointer h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
-                      checked={radioStatus === 'validated'}
-                      onChange={(e) => handleFilterEvents(e.target.value)}
-                    />
-                    <label
-                      htmlFor="option3"
-                      className="text-gray-700 cursor-pointer"
-                    >
-                      Demandes validées
-                    </label>
-
-                    <input
-                      type="radio"
-                      id="option4"
-                      name="options"
-                      value="refused"
-                      className="cursor-pointer h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
-                      checked={radioStatus === 'refused'}
-                      onChange={(e) => handleFilterEvents(e.target.value)}
-                    />
-                    <label
-                      htmlFor="option4"
-                      className="text-gray-700 cursor-pointer"
-                    >
-                      Demandes refusées
-                    </label>
+                    {inputTabData.sortDeals.map((dealsInput) => {
+                      return (
+                        <>
+                          <input
+                            type="radio"
+                            id={dealsInput.id}
+                            name="options"
+                            className="cursor-pointer h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                            value={dealsInput.value}
+                            checked={radioStatus === dealsInput.value}
+                            onChange={(e) => handleFilterEvents(e.target.value)}
+                          />
+                          <label
+                            htmlFor={dealsInput.id}
+                            className="text-gray-700 cursor-pointer"
+                          >
+                            {dealsInput.name}
+                          </label>
+                        </>
+                      );
+                    })}
                   </div>
                 )}
 
@@ -284,8 +266,8 @@ export function TabsContent({
 
                     return (
                       <div className="flex" key={index}>
-                        {(!idSettings && event.validation === 'validated') ||
-                        idSettings ? (
+                        {(!myProfile && event.validation === 'validated') ||
+                        myProfile ? (
                           <EventCard
                             eventId={event.id}
                             available={false}
@@ -296,7 +278,6 @@ export function TabsContent({
                             isArtist={isArtist}
                             event={event}
                             finished={event.finished}
-                            idSettings={idSettings}
                             organizerId={event.organizer_id}
                           />
                         ) : null}
@@ -310,7 +291,7 @@ export function TabsContent({
             {selectedTab === 3 && (
               <>
                 <div className="flex space-x-4 items-center mb-2">
-                  {inputTabData.sortDeals.map((dealsInput) => {
+                  {inputTabData.sortDealsOrganizer.map((dealsInput) => {
                     return (
                       <>
                         <input
@@ -333,7 +314,7 @@ export function TabsContent({
                   })}
                 </div>
                 <ArrayHandleArtistEvent
-                  events={data.events}
+                  events={dataArtistOrOrganize.events}
                   radioStatus={radioStatus}
                   setSelectedTab={setSelectedTab}
                   selectedTab={3}
@@ -348,12 +329,12 @@ export function TabsContent({
           <div className="col-span-12 md:col-span-4 my-10">
             <div>
               <ContactDetails
-                zip_code={data?.zip_code}
-                city={data.city}
-                address={data.address}
-                role={data.role}
-                idSettings={idSettings}
-                rolelogin={rolelogin}
+                zip_code={dataArtistOrOrganize?.zip_code}
+                city={dataArtistOrOrganize.city}
+                address={dataArtistOrOrganize.address}
+                role={dataArtistOrOrganize.role}
+                myProfile={myProfile}
+                myRole={myRole}
               />
 
               <div className="bloc-white my-10">

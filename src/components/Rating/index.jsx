@@ -13,7 +13,14 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export function Rating({ reviews, data, formData, setFormData, userId, role }) {
+export function Rating({
+  reviews,
+  dataArtistOrOrganize,
+  formData,
+  setFormData,
+  userId,
+  role,
+}) {
   const [UpdateReview, { loading, error }] = useMutation(UPDATE_REVIEW);
   const token = useSelector((state) => state.decodedToken.token);
   const [ReviewId, setReviewId] = useState();
@@ -69,7 +76,7 @@ export function Rating({ reviews, data, formData, setFormData, userId, role }) {
               )}
             >
               <div className="flex-none">
-                {data.events.map((event) => {
+                {dataArtistOrOrganize.events.map((event) => {
                   if (parseInt(event.id) === review.event_id) {
                     return role === 'Organisateur' ? (
                       event.artists.map((artist) => (

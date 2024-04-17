@@ -20,9 +20,6 @@ export function EventCard({
   isArtist,
   setFormData,
   formData,
-  event,
-  isOrganizer,
-  onLeaveReviewClick,
   finished,
   eventId,
 }) {

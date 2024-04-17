@@ -13,24 +13,24 @@ import { handleImg } from '../../utils/handleImg';
 
 export function ProfilBanner({
   role,
-  info,
+  dataArtistOrOrganize,
   token,
-  idSettings,
+  myProfile,
   regions,
-  rolelogin,
+  myRole,
   reviews,
 }) {
   const [UpdateUser] = useMutation(UPDATE_USER);
 
   const [formData, setFormData] = useState({
-    name: info.name,
-    region: info.region,
-    description: info.description,
-    address: info.address,
-    zip_code: info.zip_code,
-    city: info.city,
-    spotify_link: info.spotify_link,
-    youtube_link: info.youtube_link,
+    name: dataArtistOrOrganize.name,
+    region: dataArtistOrOrganize.region,
+    description: dataArtistOrOrganize.description,
+    address: dataArtistOrOrganize.address,
+    zip_code: dataArtistOrOrganize.zip_code,
+    city: dataArtistOrOrganize.city,
+    spotify_link: dataArtistOrOrganize.spotify_link,
+    youtube_link: dataArtistOrOrganize.youtube_link,
     image_url: null,
   });
   const location = useLocation();
@@ -52,7 +52,6 @@ export function ProfilBanner({
       });
       dispatch(updateToken(data.updateUser.image_url));
 
-      // console.log('Données mises à jour avec succès:', data);
       const settingsModal = document.getElementById('settings');
       if (settingsModal) {
         settingsModal.close();
@@ -74,7 +73,7 @@ export function ProfilBanner({
         <div className="avatar mt-[-50px]">
           <div className="w-24 rounded-full ring ring-white ring-offset-base-100 ring-offset-2">
             <img
-              src={handleImg(info.image_url)}
+              src={handleImg(dataArtistOrOrganize.image_url)}
               alt="Image"
               className="object-fit"
             />
@@ -84,8 +83,8 @@ export function ProfilBanner({
         <div className="flex flex-col md:flex-row justify-between my-5">
           <div className="flex flex-col">
             <div className="flex items-center">
-              <h1 className="text-black">{info.name}</h1>
-              {idSettings && (
+              <h1 className="text-black">{dataArtistOrOrganize.name}</h1>
+              {myProfile && (
                 <FontAwesomeIcon
                   icon={faPencilAlt}
                   className="ml-3 cursor-pointer"
@@ -116,14 +115,14 @@ export function ProfilBanner({
             <span>
               <div className="flex items-center">
                 <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-1" />
-                <span> {info.region}, France</span>
+                <span> {dataArtistOrOrganize.region}, France</span>
               </div>
             </span>
           </div>
 
           <div className="flex flex-col">
             <div className="flex justify-between items-center">
-              {role === 'Artiste' && rolelogin !== 'Artiste' && !idSettings && (
+              {role === 'Artiste' && myRole !== 'Artiste' && !myProfile && (
                 <NavLink className="btn-primary ml-0 md:ml-5" to="/">
                   Proposer un deal
                 </NavLink>
@@ -131,7 +130,9 @@ export function ProfilBanner({
 
               {role === 'Organisateur' && (
                 <div className="flex flex-col text-right">
-                  <span className="text-3xl">{info.events.length}</span>
+                  <span className="text-3xl">
+                    {dataArtistOrOrganize.events.length}
+                  </span>
                   <span>évènements</span>
                 </div>
               )}
