@@ -92,6 +92,49 @@ export function TabsContent({
     }
   };
 
+  const inputTabData = {
+    tabs: [
+      {
+        ariaLabel: 'Présentation',
+        indexInput: 0,
+      },
+      {
+        ariaLabel: 'Evaluation',
+        indexInput: 1,
+      },
+      {
+        ariaLabel: 'Evènements',
+        indexInput: 2,
+      },
+      {
+        ariaLabel: 'Deals',
+        indexInput: 3,
+      },
+    ],
+    sortDeals: [
+      {
+        id: 1,
+        value: 'tous',
+        name: 'Tous',
+      },
+      {
+        id: 2,
+        value: 'pending',
+        name: 'Deals en attentes',
+      },
+      {
+        id: 3,
+        value: 'validated',
+        name: 'Deals validés',
+      },
+      {
+        id: 4,
+        value: 'refused',
+        name: 'Deals refusés',
+      },
+    ],
+  };
+
   return (
     <>
       <ToastContainer />
@@ -103,49 +146,26 @@ export function TabsContent({
         setFormData={setFormData}
       />
       <div role="tablist" className="tabs-bordered container mx-auto">
-        <input
-          type="radio"
-          name="my_tabs_1"
-          role="tab"
-          className="tab"
-          aria-label="Présentation"
-          checked={selectedTab === 0}
-          onChange={() => handleTabClick(0)}
-        />
-
-        <input
-          type="radio"
-          name="my_tabs_1"
-          role="tab"
-          className="tab"
-          aria-label="Evaluation"
-          checked={selectedTab === 1}
-          onChange={() => handleTabClick(1)}
-        />
-
-        {data.events && data.events.length > 0 && (
-          <input
-            type="radio"
-            name="my_tabs_1"
-            role="tab"
-            className="tab"
-            aria-label="Evènements"
-            checked={selectedTab === 2}
-            onChange={() => handleTabClick(2)}
-          />
-        )}
-
-        {idSettings && role === 'Organisateur' && (
-          <input
-            type="radio"
-            name="my_tabs_1"
-            role="tab"
-            className="tab"
-            aria-label="Deals"
-            checked={selectedTab === 3}
-            onChange={() => handleTabClick(3)}
-          />
-        )}
+        {inputTabData.tabs.map((inputTab) => {
+          if (
+            inputTab.ariaLabel === 'Deals' &&
+            (!idSettings || role !== 'Organisateur')
+          ) {
+            return null;
+          }
+          return (
+            <input
+              key={inputTab.indexInput}
+              type="radio"
+              name="my_tabs_1"
+              role="tab"
+              className="tab"
+              aria-label={inputTab.ariaLabel}
+              checked={selectedTab === inputTab.indexInput}
+              onChange={() => handleTabClick(inputTab.indexInput)}
+            />
+          );
+        })}
       </div>
 
       <div className="bg-color-gray_light flex-1">
@@ -290,68 +310,27 @@ export function TabsContent({
             {selectedTab === 3 && (
               <>
                 <div className="flex space-x-4 items-center mb-2">
-                  <input
-                    type="radio"
-                    id="option1"
-                    name="options"
-                    className="cursor-pointer h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
-                    value="tous"
-                    checked={radioStatus === 'tous'}
-                    onChange={(e) => setRadioStatus(e.target.value)}
-                  />
-                  <label
-                    htmlFor="option1"
-                    className="text-gray-700 cursor-pointer"
-                  >
-                    Tous
-                  </label>
-
-                  <input
-                    type="radio"
-                    id="option2"
-                    name="options"
-                    className="cursor-pointer h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
-                    value="pending"
-                    checked={radioStatus === 'pending'}
-                    onChange={(e) => setRadioStatus(e.target.value)}
-                  />
-                  <label
-                    htmlFor="option2"
-                    className="text-gray-700 cursor-pointer"
-                  >
-                    Deals en attentes
-                  </label>
-
-                  <input
-                    type="radio"
-                    id="option3"
-                    name="options"
-                    className="cursor-pointer h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
-                    value="validated"
-                    checked={radioStatus === 'validated'}
-                    onChange={(e) => setRadioStatus(e.target.value)}
-                  />
-                  <label
-                    htmlFor="option3"
-                    className="text-gray-700 cursor-pointer"
-                  >
-                    Deals validés
-                  </label>
-                  <input
-                    type="radio"
-                    id="option4"
-                    name="options"
-                    className="cursor-pointer h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
-                    value="refused"
-                    checked={radioStatus === 'refused'}
-                    onChange={(e) => setRadioStatus(e.target.value)}
-                  />
-                  <label
-                    htmlFor="option4"
-                    className="text-gray-700 cursor-pointer"
-                  >
-                    Deals refusés
-                  </label>
+                  {inputTabData.sortDeals.map((dealsInput) => {
+                    return (
+                      <>
+                        <input
+                          type="radio"
+                          id={dealsInput.id}
+                          name="options"
+                          className="cursor-pointer h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
+                          value={dealsInput.value}
+                          checked={radioStatus === dealsInput.value}
+                          onChange={(e) => setRadioStatus(e.target.value)}
+                        />
+                        <label
+                          htmlFor={dealsInput.id}
+                          className="text-gray-700 cursor-pointer"
+                        >
+                          {dealsInput.name}
+                        </label>
+                      </>
+                    );
+                  })}
                 </div>
                 <ArrayHandleArtistEvent
                   events={data.events}
