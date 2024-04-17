@@ -192,7 +192,7 @@ export function TabsContent({
         })}
       </div>
 
-      <div className="bg-color-gray_light flex-1">
+      <div className="bg-color-gray_light flex-1  px-5">
         <div className="grid grid-cols-12 md:gap-8 container mx-auto">
           {/* grid left */}
           <div className="col-span-12 md:col-span-8 my-10">
@@ -234,7 +234,7 @@ export function TabsContent({
                   <div className="flex space-x-4 items-center mb-2">
                     {inputTabData.sortDeals.map((dealsInput) => {
                       return (
-                        <>
+                        <div key={dealsInput.id}>
                           <input
                             type="radio"
                             id={dealsInput.id}
@@ -250,7 +250,7 @@ export function TabsContent({
                           >
                             {dealsInput.name}
                           </label>
-                        </>
+                        </div>
                       );
                     })}
                   </div>
@@ -259,13 +259,13 @@ export function TabsContent({
                 <div className="bloc-white">
                   <h2>Evènements</h2>
 
-                  {eventFiltered.map((event, index) => {
+                  {eventFiltered.map((event) => {
                     const isArtist = event.artists.some(
                       (artist) => +artist.id === +userId
                     );
 
                     return (
-                      <div className="flex" key={index}>
+                      <div className="flex" key={event.id}>
                         {(!myProfile && event.validation === 'validated') ||
                         myProfile ? (
                           <EventCard
@@ -293,7 +293,7 @@ export function TabsContent({
                 <div className="flex space-x-4 items-center mb-2">
                   {inputTabData.sortDealsOrganizer.map((dealsInput) => {
                     return (
-                      <>
+                      <div key={dealsInput.id}>
                         <input
                           type="radio"
                           id={dealsInput.id}
@@ -309,7 +309,7 @@ export function TabsContent({
                         >
                           {dealsInput.name}
                         </label>
-                      </>
+                      </div>
                     );
                   })}
                 </div>

@@ -68,7 +68,6 @@ export function ArrayHandleArtistEvent({
   };
 
   // function opendealsmodal with event and artist param
-
   const openDealsModal = (artist, event) => {
     const dealsModal = document.getElementById('deals');
     if (dealsModal) {
