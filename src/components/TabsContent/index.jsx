@@ -25,6 +25,7 @@ export function TabsContent({
 }) {
   setSelectedTab;
   const [radioStatus, setRadioStatus] = useState('tous');
+  const [eventFiltered, setEventFiltered] = useState(data.events);
   const location = useLocation();
 
   const [
@@ -41,10 +42,10 @@ export function TabsContent({
   const selectedTab = useSelector((state) => state.decodedToken.selectedTab);
 
   const [formData, setFormData] = useState({
-    event_id: 21,
-    receiver_id: 51,
-    rating: 5,
-    review: 'ma',
+    event_id: 0,
+    receiver_id: 0,
+    rating: 0,
+    review: '',
   });
 
   const handleFormSubmit = async (e) => {
@@ -74,6 +75,20 @@ export function TabsContent({
       } else {
         console.error("Une erreur inattendue s'est produite");
       }
+    }
+  };
+
+  const handleFilterEvents = (filter) => {
+    setRadioStatus(filter);
+    if (filter === 'tous') {
+      setEventFiltered(data.events);
+    } else {
+      const filtered = data.events.filter((event) => {
+        if (event.validation.toLowerCase() === filter.toLowerCase()) {
+          return event;
+        }
+      });
+      setEventFiltered(filtered);
     }
   };
 
@@ -169,170 +184,6 @@ export function TabsContent({
               />
             )}
 
-            {/* {selectedTab === 2 && (
-              <>
-                {role === 'Organisateur' && (
-                  <>
-                    <div className="bloc-white">
-                      <h2>Mes Evènements</h2>
-                      {idSettings && (
-                        <div>
-                          {data.events.map((event, index) => {
-                            return (
-                              <div className="flex" key={index}>
-                                <EventCard
-                                  eventId={event.id}
-                                  image_url=""
-                                  description=""
-                                  city=""
-                                  date=""
-                                  region=""
-                                  price={0}
-                                  organizer={{
-                                    name: '',
-                                  }}
-                                  setFormData={setFormData}
-                                  available={false}
-                                  validated={event.validation}
-                                  key={index}
-                                  {...event}
-                                />
-                              </div>
-                            );
-                          })}
-                        </div>
-                      )}
-
-                      {!idSettings && (
-                        <div>
-                          {data.events.map((event, index) => {
-                            // savoir si je suis un artiste
-                            const isArtist = event.artists.some(
-                              (artist) => +artist.id === +userId
-                            );
-
-                            return (
-                              <div key={index} className="flex items-center">
-                                <EventCard
-                                  eventId={event.id}
-                                  image_url=""
-                                  description=""
-                                  city=""
-                                  date=""
-                                  region=""
-                                  price={0}
-                                  organizer={{
-                                    name: '',
-                                  }}
-                                  available={false}
-                                  key={index}
-                                  {...event}
-                                  setFormData={setFormData}
-                                  validated={event.validation}
-                                  isArtist={isArtist}
-                                  event={event}
-                                  finished={event.finished}
-                                  idSettings={idSettings}
-                                />
-                              </div>
-                            );
-                          })}
-                        </div>
-                      )}
-                    </div>
-                  </>
-                )}
-
-                {role === 'Artiste' && (
-                  <>
-                    <div className="bloc-white">
-                      <h2>Evènements remportés</h2>
-                      <div>
-                        {idSettings &&
-                          data.events.map((event, index) => {
-                            return (
-                              <div key={index} className="flex items-center">
-                                {radioStatus === 'tous' ||
-                                (radioStatus === 'pending' &&
-                                  event.validation === 'pending') ||
-                                (radioStatus === 'validated' &&
-                                  event.validation === 'validated') ||
-                                (radioStatus === 'refused' &&
-                                  event.validation === 'refused') ? (
-                                  <EventCard
-                                    eventId={event.id}
-                                    image_url=""
-                                    description=""
-                                    city=""
-                                    date=""
-                                    region=""
-                                    price={0}
-                                    setFormData={setFormData}
-                                    organizerId={event.organizer_id}
-                                    available={false}
-                                    key={index}
-                                    {...event}
-                                    validated={event.validation}
-                                  />
-                                ) : (
-                                  ''
-                                )}
-                              </div>
-                            );
-                          })}
-
-                        {!idSettings && (
-                          <div>
-                            {data.events.map((event, index) =>
-                              event.validation === 'validated' ? (
-                                <div key={index} className="flex items-center">
-                                  <EventCard
-                                    eventId={event.id}
-                                    image_url=""
-                                    description=""
-                                    city=""
-                                    date=""
-                                    region=""
-                                    price={0}
-                                    organizer={{ name: '' }}
-                                    available={false}
-                                    key={index}
-                                    {...event}
-                                    setFormData={setFormData}
-                                    validated={event.validation}
-                                    isOrganizer={event.organizer_id == userId}
-                                    finished={event.finished}
-                                    onLeaveReviewClick={() => {
-                                      const dealsModal =
-                                        document.getElementById('addReview');
-                                      if (dealsModal) {
-                                        dealsModal.showModal();
-                                      } else {
-                                        console.error(
-                                          "L'élément avec l'ID \"addReview\" n'a pas été trouvé."
-                                        );
-                                      }
-                                      setFormData({
-                                        ...formData,
-                                        event_id: parseInt(event.id),
-                                        receiver_id: parseInt(id),
-                                      });
-                                    }}
-                                  />
-                                </div>
-                              ) : (
-                                ''
-                              )
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </>
-                )}
-              </>
-            )} */}
-
             {selectedTab === 2 && (
               <>
                 {role === 'Artiste' && idSettings && (
@@ -344,7 +195,7 @@ export function TabsContent({
                       value="tous"
                       className="cursor-pointer h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
                       checked={radioStatus === 'tous'}
-                      onChange={(e) => setRadioStatus(e.target.value)}
+                      onChange={(e) => handleFilterEvents(e.target.value)}
                     />
                     <label
                       htmlFor="option1"
@@ -360,7 +211,7 @@ export function TabsContent({
                       value="pending"
                       className="cursor-pointer h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
                       checked={radioStatus === 'pending'}
-                      onChange={(e) => setRadioStatus(e.target.value)}
+                      onChange={(e) => handleFilterEvents(e.target.value)}
                     />
                     <label
                       htmlFor="option2"
@@ -376,7 +227,7 @@ export function TabsContent({
                       value="validated"
                       className="cursor-pointer h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
                       checked={radioStatus === 'validated'}
-                      onChange={(e) => setRadioStatus(e.target.value)}
+                      onChange={(e) => handleFilterEvents(e.target.value)}
                     />
                     <label
                       htmlFor="option3"
@@ -392,7 +243,7 @@ export function TabsContent({
                       value="refused"
                       className="cursor-pointer h-4 w-4 rounded-full border border-gray-300 appearance-none checked:border-color-primary focus:ring-2 focus:ring-color-primary"
                       checked={radioStatus === 'refused'}
-                      onChange={(e) => setRadioStatus(e.target.value)}
+                      onChange={(e) => handleFilterEvents(e.target.value)}
                     />
                     <label
                       htmlFor="option4"
@@ -406,21 +257,15 @@ export function TabsContent({
                 <div className="bloc-white">
                   <h2>Evènements</h2>
 
-                  {data.events.map((event, index) => {
+                  {eventFiltered.map((event, index) => {
                     const isArtist = event.artists.some(
                       (artist) => +artist.id === +userId
                     );
+
                     return (
                       <div className="flex" key={index}>
-                        {(idSettings &&
-                          (radioStatus === 'tous' ||
-                            (radioStatus === 'pending' &&
-                              event.validation === 'pending') ||
-                            (radioStatus === 'validated' &&
-                              event.validation === 'validated') ||
-                            (radioStatus === 'refused' &&
-                              event.validation === 'refused'))) ||
-                        (!idSettings && event.validation === 'validated') ? (
+                        {(!idSettings && event.validation === 'validated') ||
+                        idSettings ? (
                           <EventCard
                             eventId={event.id}
                             available={false}
@@ -428,7 +273,6 @@ export function TabsContent({
                             {...event}
                             setFormData={setFormData}
                             formData={formData}
-                            validated={event.validation}
                             isArtist={isArtist}
                             event={event}
                             finished={event.finished}

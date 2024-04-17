@@ -160,6 +160,7 @@ export function EventCard({
               window.location.pathname === '/' ||
               !isMyProfil() ||
               !finished ||
+              !isArtist ||
               role.toLowerCase() === 'organisateur'
                 ? 'hidden'
                 : 'text-yellow-500 text-sm w-60 h-fit border border-yellow-500 px-3 rounded-xl hover:bg-yellow-500 hover:text-white'

@@ -24,7 +24,7 @@ export function PopupAddReview({ formData, setFormData }) {
       variables: { input: formData },
     });
 
-    // window.location.href = location.pathname;
+    window.location.href = location.pathname;
   };
 
   return (
