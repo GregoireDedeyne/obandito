@@ -1,3 +1,11 @@
+/**
+ * Component for a popup to edit an event.
+ * @param {function} handleFormSubmit - Function to handle form submission.
+ * @param {object} formData - Form data for the event.
+ * @param {function} setFormData - Function to set the form data.
+ * @param {array} regions - Array of regions for the event.
+ */
+
 export function PopupEditEvent({
   handleFormSubmit,
   formData,
@@ -40,7 +48,7 @@ export function PopupEditEvent({
           <label className="input input-bordered flex items-center gap-2 bg-white text-black w-full mb-5">
             <span>Région</span>
             <select
-              className="select select-bordered w-full max-w-xsflex items-center my-2  bg-slate-100 w-[80%]"
+              className="select select-bordered  max-w-xsflex items-center my-2  bg-slate-100 w-[80%]"
               name="region"
               value={formData.region}
               onChange={(e) =>

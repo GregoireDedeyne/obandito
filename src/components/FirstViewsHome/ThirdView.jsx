@@ -5,13 +5,20 @@ import { Localisation } from '../InfoHomeCard/Localisation';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 
-export function ThirdView({ events, locations }) {
-  const islogged = useSelector((state) => state.decodedToken.islogged);
-  // console.log('events', events);
-  // console.log('locations', locations);
+/**
+ * Component representing the third view.
+ * @param {Array} events - An array of events data.
+ * @param {Array} locations - An array of locations data.
+ */
 
+export function ThirdView({ events, locations }) {
+  // check if user is logged or not
+  const islogged = useSelector((state) => state.decodedToken.islogged);
+
+  // state to definie limitEvents
   const [limitEvents, setLimitEvents] = useState(10);
 
+  // function to incrementLimitEvents
   const incrementLimitEvents = () => {
     setLimitEvents((prevLimit) => prevLimit + 5);
     window.scrollBy(0, -window.innerHeight);

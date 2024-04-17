@@ -1,5 +1,10 @@
 import { StarIcon } from '@heroicons/react/20/solid';
 
+/**
+ * Component for displaying star ratings based on reviews.
+ * @param {Array} reviews - An array of review objects.
+ */
+
 export function Stars({ reviews }) {
   // Function to calculate the average rating
   const calculateAverageRating = (reviews) => {

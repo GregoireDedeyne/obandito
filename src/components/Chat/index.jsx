@@ -1,6 +1,13 @@
 import { useSelector } from 'react-redux';
 import { handleImg } from '../../utils/handleImg';
 
+/**
+ * A component for rendering a list of messages.
+ *
+ * @param {Array} messages - The array of messages to render as messages.
+ * @returns {JSX.Element} The cards JSX element.
+ */
+
 export function Chat({ messages }) {
   //   ID from decodedtoken state
   const id = useSelector((state) => state.decodedToken.decodedData.id);

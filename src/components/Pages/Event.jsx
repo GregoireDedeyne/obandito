@@ -13,13 +13,13 @@ import { useState } from 'react';
 import { CardsEvent } from '../CardsEvent';
 import SocialMediaGroup from '../SocialMediaGroup';
 import { PopupEditEvent } from '../PopupEditEvent';
-
 import { toast, ToastContainer } from 'react-toastify';
 import { handleImg } from '../../utils/handleImg';
 
 export function EventPage() {
+  // check selectedTab
   const [selectedTab, setSelectedTab] = useState(0);
-
+  // set the selectedTab
   const handleTabClick = (index) => {
     setSelectedTab(index);
   };
@@ -48,6 +48,8 @@ export function EventPage() {
   const regions = eventdata.regions;
   const postulation = eventdata.event.artist_postulation;
   const result = postulation.includes(id.toString());
+  const img = handleImg(eventdata.event.image_url);
+  const artists = eventdata.event.artists;
 
   const [formData, setFormData] = useState({
     name: eventdata.event.name,
@@ -128,7 +130,6 @@ export function EventPage() {
         context: { headers: { Authorization: `Bearer ${token}` } },
       });
 
-      // console.log('Données mises à jour avec succès:', data);
       document.getElementById('event').close();
       window.location.href = location.pathname;
       toast.warn("Vous avez bien modifié à l'évènement");
@@ -137,9 +138,6 @@ export function EventPage() {
       toast.error(`Une erreur s'est produite. ${error.message}`);
     }
   };
-
-  const img = handleImg(eventdata.event.image_url);
-  const artists = eventdata.event.artists;
 
   return (
     <>

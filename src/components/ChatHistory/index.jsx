@@ -9,8 +9,8 @@ export function ChatHistory() {
   // old msg state
   const [messages, setMessages] = useState([]);
 
+  // readmessage state
   const [Readmessages, setReadMessages] = useState([]);
-  // console.log(Readmessages);
 
   const compareMessages = () => {
     const updatedMessages = messages.map((message) => {
@@ -26,17 +26,17 @@ export function ChatHistory() {
     setMessages(updatedMessages);
   };
 
+  // reload the component when readmessage change
   useEffect(() => {
     compareMessages();
   }, [Readmessages]);
 
   // ID receiver from params
   const { idrecever, idsender } = useParams();
+  // id sender token
   const tokenID = useSelector((state) => state.decodedToken.decodedData.id);
-
+  // compare id and sender id
   const newReceiverID = +idrecever == +tokenID ? +idsender : +idrecever;
-
-  //   const userId = useAppSelector((state) => state.decodedToken.decodedData.id);
 
   // Token from state
   const token = useSelector((state) => state.decodedToken.token);
@@ -47,15 +47,17 @@ export function ChatHistory() {
     },
   });
 
+  // ref the container
   const containerElement = useRef(null);
 
   useEffect(() => {
-    //A chaque rerender, la hauteur de l'élément change, on vient récupérer la taille de notre élément référencé;
-    //Puis on scroll tout en bas de cet élément
+    // On each rerender, the height of the element changes, so we retrieve the size of our referenced element;
+    // Then we scroll to the bottom of this element.
     const scrollY = containerElement.current.scrollHeight;
     containerElement.current.scrollTo(0, scrollY);
   }, [messages]);
 
+  // useEffect to load at component mounting and connect with socketIO, he will disconnect socketIO at unmounting
   useEffect(() => {
     socket.emit('join-conversation', newReceiverID);
     socket.on('previous-messages', (messages) => {
@@ -74,6 +76,7 @@ export function ChatHistory() {
     setReadMessages(readOrNotMessages);
   });
 
+  // submit new msg
   const handleSubmit = (e) => {
     e.preventDefault();
     const message = {
@@ -82,9 +85,7 @@ export function ChatHistory() {
     };
     socket.emit('send-message', message, (response) => {
       if (response.status === 'error') {
-        console.log(response.message);
       } else {
-        console.log(response.message);
         e.target.firstElementChild.value = '';
       }
     });
@@ -92,8 +93,9 @@ export function ChatHistory() {
   socket.on('new-message', (message) => {
     setMessages((prevMessages) => [...prevMessages, message]);
   });
-
+  // use loading data
   const data = useLoaderData();
+  // take msg from loading data
   const Allmessages = data.getConversationsByMyId;
 
   return (

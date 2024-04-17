@@ -11,6 +11,17 @@ import { useDispatch } from 'react-redux';
 import { updateToken } from '../../store/actions';
 import { handleImg } from '../../utils/handleImg';
 
+/**
+ * Component for the profile banner.
+ * @param {string} role - Role of the user.
+ * @param {object} info - Information about the user.
+ * @param {string} token - User token.
+ * @param {string} idSettings - ID settings.
+ * @param {array} regions - Regions data.
+ * @param {string} rolelogin - Role login.
+ * @param {array} reviews - User reviews.
+ */
+
 export function ProfilBanner({
   role,
   info,
@@ -41,7 +52,7 @@ export function ProfilBanner({
     e.preventDefault();
 
     try {
-      // Filtrer les propriétés null dans formData
+      // Filter null entries
       const filteredData = Object.fromEntries(
         Object.entries(formData).filter(([key, value]) => value !== null)
       );

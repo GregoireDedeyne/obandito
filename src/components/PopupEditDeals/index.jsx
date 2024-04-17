@@ -1,3 +1,10 @@
+/**
+ * Component for a popup to edit deals.
+ * @param {function} handleFormSubmitStatus - Function to handle form submission for status.
+ * @param {string} selectedStatus - Currently selected status.
+ * @param {function} setSelectedStatus - Function to set the selected status.
+ */
+
 export default function PopupEditDeals({
   handleFormSubmitStatus,
   selectedStatus,

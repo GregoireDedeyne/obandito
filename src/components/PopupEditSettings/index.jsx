@@ -1,3 +1,12 @@
+/**
+ * Component for a popup to edit settings.
+ * @param {function} handleFormSubmit - Function to handle form submission.
+ * @param {object} formData - Form data.
+ * @param {function} setFormData - Function to set the form data.
+ * @param {string} role - Role of the user.
+ * @param {array} regions - Regions data.
+ */
+
 export function PopupEditSettings({
   handleFormSubmit,
   formData,

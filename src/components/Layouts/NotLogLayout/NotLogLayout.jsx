@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/client';
 import { GET_STYLES } from '../../../graphQL/actions';
 
 export function NotLogLayout() {
+  // apollo query for styles
   const { data, loading, error } = useQuery(GET_STYLES);
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;

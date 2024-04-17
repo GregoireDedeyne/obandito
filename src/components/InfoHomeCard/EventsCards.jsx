@@ -17,33 +17,34 @@ export function EventCard({
   id,
   available,
   validated,
-  isArtist,
   setFormData,
   formData,
-  event,
-  isOrganizer,
-  onLeaveReviewClick,
   finished,
   eventId,
 }) {
+  // check if user is logged
   const islogged = useSelector((state) => state.decodedToken.islogged);
 
   const [deleteMutation] = useMutation(DELETE_POSTULATION, {
     onError: (error) => {
-      toast.warn(error.message); // Afficher l'erreur avec react-toastify
+      toast.warn(error.message);
     },
   });
+
   const [deleteMutationEvent] = useMutation(DELETE_EVENT, {
     onError: (error) => {
-      toast.warn(error.message); // Afficher l'erreur avec react-toastify
+      toast.warn(error.message);
     },
   });
 
   const location = useLocation();
+
   const token = useSelector((state) => state.decodedToken.token);
   const role = useSelector((state) => state.decodedToken.decodedData.role);
   const idUser = useSelector((state) => state.decodedToken.decodedData.id);
+
   const idSetting = useParams();
+  // function to check if it's userpage
   const isMyProfil = () => (idSetting.id == idUser ? true : false);
 
   const HandleDelete = async (id) => {
@@ -71,6 +72,7 @@ export function EventCard({
       window.location.href = location.pathname;
     }
   };
+
   const openReviewModal = (eventId, organizerId) => {
     setFormData({
       ...formData,

@@ -2,6 +2,7 @@ import { useLoaderData } from 'react-router-dom';
 import { handleImg } from '../../utils/handleImg';
 
 export function LeftMsg() {
+  // data from loader
   const data = useLoaderData();
   const Allmessages = data.getConversationsByMyId;
 
@@ -22,7 +23,7 @@ export function LeftMsg() {
         </div>
         <nav
           aria-label="Message list"
-          className="min-h-full bg-gray-100  flex-1 overflow-y-auto"
+          className=" bg-gray-100  flex-1 overflow-y-auto"
         >
           <ul
             role="list"
@@ -37,7 +38,7 @@ export function LeftMsg() {
                   <div className="min-w-0 flex-1">
                     <a
                       href={`/chat/room/${message.user_id_2}/${message.user_id_1}`}
-                      className="block focus:outline-none flex gap-2 items-center flex-row-reverse justify-end"
+                      className="block focus:outline-none  gap-2 items-center flex-row-reverse justify-end"
                     >
                       <p className="truncate text-sm font-medium text-gray-900 capitalize">
                         {message.user_name_2}

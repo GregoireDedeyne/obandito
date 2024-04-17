@@ -1,3 +1,10 @@
+/**
+ * Component for a popup to edit a review.
+ * @param {function} handleFormSubmitReview - Function to handle form submission for the review.
+ * @param {object} formData - Form data for the review.
+ * @param {function} setFormData - Function to set the form data.
+ */
+
 export function PopupEditReview({
   handleFormSubmitReview,
   formData,

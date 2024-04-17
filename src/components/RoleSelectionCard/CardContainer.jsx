@@ -84,7 +84,7 @@ export const CardItem = ({
   rotateZ = 0,
   ...rest
 }) => {
-  const ref = useRef < HTMLDivElement > null;
+  const ref = useRef(null);
   const [isMouseEntered] = useMouseEnter();
 
   useEffect(() => {

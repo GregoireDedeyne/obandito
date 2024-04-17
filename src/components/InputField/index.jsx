@@ -6,6 +6,13 @@ import {
   faGlobe,
 } from '@fortawesome/free-solid-svg-icons';
 
+/**
+ * Component representing an input field.
+ * @param {string} inputName - The name of the input field.
+ * @param {string} value - The value of the input field.
+ * @param {function} onChange - Function to handle input change.
+ */
+
 export function InputField({ inputName, value, onChange }) {
   return (
     <>

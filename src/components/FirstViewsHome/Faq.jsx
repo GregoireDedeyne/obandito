@@ -1,3 +1,10 @@
+/**
+ * AccordionItem component represents an item in an accordion.
+ * @param {string} title - The title of the accordion item.
+ * @param {string} answer - The answer or content of the accordion item.
+ * @returns {JSX.Element} AccordionItem component.
+ */
+
 const AccordionItem = ({ title, answer }) => {
   return (
     <div className="flex flex-col flex-1 grow shrink-0 justify-center p-px bg-white rounded-xl border border-solid basis-0 border-black border-opacity-10 w-fit max-md:max-w-full">
@@ -10,7 +17,7 @@ const AccordionItem = ({ title, answer }) => {
 };
 
 export function Faq() {
-  const accordionData = [
+  const QuestionDatas = [
     {
       title: 'Est-ce que les organisateurs/artistes sont vérifiés ?',
       answer: 'Oui, tous les comptes sont soumis à une vérification',
@@ -52,7 +59,7 @@ export function Faq() {
       </h1>
       <div className="flex flex-col mt-8 text-xl font-medium text-zinc-500 max-md:max-w-full">
         <div className="flex gap-5 leading-[140%] max-md:flex-wrap">
-          {accordionData.slice(0, 2).map((item, index) => (
+          {QuestionDatas.slice(0, 2).map((item, index) => (
             <AccordionItem
               key={index}
               title={item.title}
@@ -61,7 +68,7 @@ export function Faq() {
           ))}
         </div>
         <div className="flex gap-5 mt-6 max-md:flex-wrap">
-          {accordionData.slice(2, 4).map((item, index) => (
+          {QuestionDatas.slice(2, 4).map((item, index) => (
             <AccordionItem
               key={index}
               title={item.title}
@@ -71,7 +78,7 @@ export function Faq() {
         </div>
 
         <div className="flex gap-5 mt-6 max-md:flex-wrap">
-          {accordionData.slice(3, 5).map((item, index) => (
+          {QuestionDatas.slice(3, 5).map((item, index) => (
             <AccordionItem
               key={index}
               title={item.title}

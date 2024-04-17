@@ -1,5 +1,12 @@
 import { Card } from '../Card';
 
+/**
+ * A component for rendering a list of cardsEvents.
+ *
+ * @param {Array} data - The array of data to render as cards.
+ * @returns {JSX.Element} The cards JSX element.
+ */
+
 export function CardsEvent({ data }) {
   return (
     <>

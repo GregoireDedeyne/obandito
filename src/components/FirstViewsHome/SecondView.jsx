@@ -1,5 +1,13 @@
 import { NavLink } from 'react-router-dom';
 
+/**
+ * Component representing a step in a process.
+ * @param {string} imageSrc - The source URL of the image for the step.
+ * @param {number} stepNumber - The number of the step.
+ * @param {string} description - The description of the step.
+ * @param {boolean} [isHighlighted=false] - Whether the step is highlighted or not. Defaults to false.
+ */
+
 const Step = ({ imageSrc, stepNumber, description, isHighlighted = false }) => (
   <div className="flex gap-4 mt-5 max-md:flex-wrap mb-10">
     <img

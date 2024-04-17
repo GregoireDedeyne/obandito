@@ -1,5 +1,14 @@
 import { Card } from '../Card';
 
+/**
+ * A component for rendering a list of cards without slipper.
+ *
+ * @param {Array} data - The array of data to render as cards.
+ * @param {string} title - The title of the card section.
+ * @param {string} subtitle - The subtitle of the card section.
+ * @returns {JSX.Element} The cards JSX element.
+ */
+
 export function CardsWithout({ data, title, subtitle }) {
   return (
     <>

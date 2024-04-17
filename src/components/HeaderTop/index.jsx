@@ -10,6 +10,11 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
+/**
+ * Component representing the genreItem.
+ * @param {string} genre - Genre data.
+ */
+
 const GenreItem = ({ genre }) => {
   return (
     <NavLink to={`/genre/${genre}`}>
@@ -28,14 +33,22 @@ const GenreItem = ({ genre }) => {
   );
 };
 
+/**
+ * Component representing the header.
+ * @param {Array} genres - An array of genre data.
+ */
+
 export function Header({ genres }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // check if user is logged or not
   const islogged = useSelector((state) => state.decodedToken.islogged);
+  // call data from redux
   const { id, image_url, name, role, mail } = useSelector(
     (state) => state.decodedToken.decodedData
   );
-
+  // disconnect function and remove token from localstorage
   const handleLogout = () => {
     navigate('/', { replace: true });
 

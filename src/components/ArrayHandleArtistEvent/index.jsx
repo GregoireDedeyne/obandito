@@ -6,6 +6,15 @@ import { useLocation } from 'react-router-dom';
 import { handleImg } from '../../utils/handleImg';
 import { useSelector } from 'react-redux';
 
+/**
+ * Function to handle an array of artists and events.
+ *
+ * @param {Object[]} events - The array of events to process.
+ * @param {string} radioStatus - The status of the radio button.
+ * @param {function} setFormData - The function to set form data.
+ * @param {Object} formData -The form data to set.
+ */
+
 export function ArrayHandleArtistEvent({
   events,
   radioStatus,
@@ -14,14 +23,22 @@ export function ArrayHandleArtistEvent({
 }) {
   const token = useSelector((state) => state.decodedToken.token);
 
+  // first state for validation status
   const [selectedStatus, setSelectedStatus] = useState('pending');
+
+  // second state for setuserID after opening deals modals
   const [idUserStatus, setIdUserStatus] = useState(undefined);
+
+  // third state for eventID after opening deals modals
   const [idEventStatus, setIdEventStatus] = useState(undefined);
 
+  // call to apollo client
   const [HandlePostulationEvent] = useMutation(HANDLEPOSTULATIONEVENT);
+
+  // check location for redirect
   const location = useLocation();
 
-  // Form submit after status change
+  // Form submit after validation status change
   const handleFormSubmitStatus = async (e) => {
     e.preventDefault();
 
@@ -38,7 +55,7 @@ export function ArrayHandleArtistEvent({
           },
         },
       });
-
+      // close modal system
       const dealsModal = document.getElementById('deals');
       if (dealsModal) {
         dealsModal.close();
@@ -52,6 +69,7 @@ export function ArrayHandleArtistEvent({
       console.error("Une erreur inattendue s'est produite");
     }
   };
+
   // function openreviewmodal with event and artist param
   const openReviewModal = (event, artist) => {
     const ReviewModal = document.getElementById('addReview');
@@ -67,8 +85,7 @@ export function ArrayHandleArtistEvent({
     });
   };
 
-  // function opendealsmodal with event and artist param
-
+  // function opendealsmodal to validate/refused artist with event and artist param
   const openDealsModal = (artist, event) => {
     const dealsModal = document.getElementById('deals');
     if (dealsModal) {
@@ -76,6 +93,7 @@ export function ArrayHandleArtistEvent({
     } else {
       console.error("L'élément avec l'ID \"deals\" n'a pas été trouvé.");
     }
+    // update state value
     setIdUserStatus(parseInt(artist.id));
     setIdEventStatus(parseInt(event.id));
   };

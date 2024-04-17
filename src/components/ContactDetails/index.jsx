@@ -1,6 +1,16 @@
 import { NavLink, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+/**
+ * ContactDetails component displays the contact details including zip code, city, address, etc.
+ * @param {string} zip_code - The zip code of the contact.
+ * @param {string} city - The city of the contact.
+ * @param {string} address - The address of the contact.
+ * @param {boolean} idSettings - Check if we are in our page or not.
+ * @param {string} rolelogin - The role login of the contact.
+ * @returns {JSX.Element} ContactDetails component.
+ */
+
 export default function ContactDetails({
   zip_code,
   city,
@@ -8,12 +18,13 @@ export default function ContactDetails({
   idSettings,
   rolelogin,
 }) {
-  // console.log('zip_code', zip_code);
-  // console.log('city', city);
+  // userID from redux token
   const userId = useSelector((state) => state.decodedToken.decodedData.id);
+  // id from URL
   const { id } = useParams();
+  // id from URL
   const idSetting = useParams();
-
+  // function to check if we are in user page
   const isMyProfil = () => (idSetting.id == userId ? true : false);
 
   return (

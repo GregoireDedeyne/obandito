@@ -3,17 +3,22 @@ import { useMutation } from '@apollo/client';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 
+/**
+ * Component for a popup to add a review.
+ * @param {Object} formData - Form data for the review.
+ * @param {function} setFormData - Function to update the form data.
+ */
+
 export function PopupAddReview({ formData, setFormData }) {
   const token = useSelector((state) => state.decodedToken.token);
 
   const [addReview] = useMutation(ADD_REVIEW, {
     onError: (error) => {
-      toast.warn(error.message); // Afficher l'erreur avec react-toastify
+      toast.warn(error.message);
     },
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
 
     await addReview({
       context: {
@@ -23,7 +28,9 @@ export function PopupAddReview({ formData, setFormData }) {
       },
       variables: { input: formData },
     });
+    const settingsModal = document.getElementById('editReview');
 
+    settingsModal.close();
     // window.location.href = location.pathname;
   };
 

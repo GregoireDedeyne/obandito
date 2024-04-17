@@ -13,6 +13,18 @@ import { Rating } from '../Rating';
 import { ADD_REVIEW } from '../../graphQL/actions';
 import { PopupAddReview } from '../PopupAddReview';
 
+/**
+ * Component for displaying content within tabs.
+ * @param {Array} data - An array of data to be displayed within the tabs.
+ * @param {string} idSettings - The ID settings for the tabs.
+ * @param {string} role - The role of the user.
+ * @param {string} rolelogin - The login role of the user.
+ * @param {string} userId - The ID of the user.
+ * @param {string} token - The authentication token of the user.
+ * @param {Array} reviews - An array of reviews.
+ * @param {string} id - The ID of the component.
+ */
+
 export function TabsContent({
   data,
   idSettings,
@@ -205,7 +217,7 @@ export function TabsContent({
                       {!idSettings && (
                         <div>
                           {data.events.map((event, index) => {
-                            // savoir si je suis un artiste
+                            // Check if i'am an artist
                             const isArtist = event.artists.some(
                               (artist) => +artist.id === +userId
                             );

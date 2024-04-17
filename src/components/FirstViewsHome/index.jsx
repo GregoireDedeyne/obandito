@@ -3,25 +3,41 @@ import bandPict from '../../assets/images/bandPict.jpg';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 
+/**
+ * Image component displays an image with the specified source and alternative text.
+ * @param {string} src - The URL of the image.
+ * @param {string} alt - The alternative text for the image.
+ * @param {string} className - Additional CSS classes to apply to the image.
+ * @returns {JSX.Element} Image component.
+ */
+
 const Image = ({ src, alt, className }) => (
   <img loading="lazy" src={src} alt={alt} className={className} />
 );
+
+/**
+ * Text component renders text content with optional additional CSS classes.
+ * @param {React.ReactNode} children - The text content to render.
+ * @param {string} className - Additional CSS classes to apply to the text.
+ * @returns {JSX.Element} Text component.
+ */
 
 const Text = ({ children, className }) => (
   <div className={className}>{children}</div>
 );
 
 export function FirstViewHome() {
+  // check if user islogged or not
   const islogged = useSelector((state) => state.decodedToken.islogged);
+  // check role of user
   const role = useSelector((state) => state.decodedToken.decodedData.role);
-
+  // state to stock searchTerm
   const [searchTerm, setSearchTerm] = useState('');
-
+  // submit of research
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('Recherche effectuée:', searchTerm);
   };
-
+  // handlechange of search value and setSearchTerm
   const handleSearch = () => {
     setSearchTerm('');
   };
@@ -89,65 +105,61 @@ export function FirstViewHome() {
                 </p>
               ) : null}
             </div>
-            <form
-              className="flex flex-col ml-5 w-[45%] max-md:ml-0 max-md:w-full "
-              onSubmit={handleSubmit}
-            >
-              <div className="flex relative grow gap-5  text-base text-center max-md:flex-wrap max-md:mt-10 justify-center md:justify-end 	">
-                {islogged === false ? (
-                  <NavLink
-                    to={'/login'}
+
+            <div className="flex relative grow gap-5  text-base text-center max-md:flex-wrap max-md:mt-10 justify-center md:justify-end 	">
+              {islogged === false ? (
+                <NavLink
+                  to={'/login'}
+                  className={`justify-center px-9 py-5 text-white bg-rose-500 border border-rose-500 border-solid leading-[100%] rounded-[48px] max-md:px-5 hover:bg-purple-800 hover:border-purple-800`}
+                >
+                  {' '}
+                  Trouver un artiste{' '}
+                </NavLink>
+              ) : islogged === true && role === 'Organisateur' ? (
+                <NavLink to={`/artists/search/${searchTerm}`}>
+                  <button
+                    onClick={handleSearch}
                     className={`justify-center px-9 py-5 text-white bg-rose-500 border border-rose-500 border-solid leading-[100%] rounded-[48px] max-md:px-5 hover:bg-purple-800 hover:border-purple-800`}
                   >
                     {' '}
                     Trouver un artiste{' '}
+                  </button>
+                </NavLink>
+              ) : islogged === true && role === 'Artiste' ? (
+                <NavLink to={`/events/search/${searchTerm}`}>
+                  <button
+                    onClick={handleSearch}
+                    className={`justify-center px-9 py-5 text-white bg-rose-500 border border-rose-500 border-solid leading-[100%] rounded-[48px] max-md:px-5 hover:bg-purple-800 hover:border-purple-800`}
+                  >
+                    {' '}
+                    Trouver un évènement{' '}
+                  </button>
+                </NavLink>
+              ) : null}
+
+              <div className="flex gap-5 justify-end self-start mt-2">
+                {islogged === false ? (
+                  <Text className="my-auto text-neutral-600">ou</Text>
+                ) : islogged === true && role === 'Organisateur' ? (
+                  <Text className="my-auto text-neutral-600">ou</Text>
+                ) : null}
+                {islogged === false ? (
+                  <NavLink
+                    to={'/login'}
+                    className="justify-center px-2.5 py-1.5 mt-1 font-bold text-purple-800 border-b-2 border-transparent hover:border-b-2 hover:border-purple-800 border-solid leading-[128%] hover:text-rose-500"
+                  >
+                    Déposer un événement
                   </NavLink>
                 ) : islogged === true && role === 'Organisateur' ? (
-                  <NavLink to={`/artists/search/${searchTerm}`}>
-                    <button
-                      onClick={handleSearch}
-                      className={`justify-center px-9 py-5 text-white bg-rose-500 border border-rose-500 border-solid leading-[100%] rounded-[48px] max-md:px-5 hover:bg-purple-800 hover:border-purple-800`}
-                    >
-                      {' '}
-                      Trouver un artiste{' '}
-                    </button>
-                  </NavLink>
-                ) : islogged === true && role === 'Artiste' ? (
-                  <NavLink to={`/events/search/${searchTerm}`}>
-                    <button
-                      onClick={handleSearch}
-                      className={`justify-center px-9 py-5 text-white bg-rose-500 border border-rose-500 border-solid leading-[100%] rounded-[48px] max-md:px-5 hover:bg-purple-800 hover:border-purple-800`}
-                    >
-                      {' '}
-                      Trouver un évènement{' '}
-                    </button>
+                  <NavLink
+                    to={'/eventcreation'}
+                    className="justify-center px-2.5 py-1.5 mt-1 font-bold text-purple-800 border-b-2 border-transparent hover:border-b-2 hover:border-purple-800 border-solid leading-[128%] hover:text-rose-500"
+                  >
+                    Déposer un événement
                   </NavLink>
                 ) : null}
-
-                <div className="flex gap-5 justify-end self-start mt-2">
-                  {islogged === false ? (
-                    <Text className="my-auto text-neutral-600">ou</Text>
-                  ) : islogged === true && role === 'Organisateur' ? (
-                    <Text className="my-auto text-neutral-600">ou</Text>
-                  ) : null}
-                  {islogged === false ? (
-                    <NavLink
-                      to={'/login'}
-                      className="justify-center px-2.5 py-1.5 mt-1 font-bold text-purple-800 border-b-2 border-transparent hover:border-b-2 hover:border-purple-800 border-solid leading-[128%] hover:text-rose-500"
-                    >
-                      Déposer un événement
-                    </NavLink>
-                  ) : islogged === true && role === 'Organisateur' ? (
-                    <NavLink
-                      to={'/eventcreation'}
-                      className="justify-center px-2.5 py-1.5 mt-1 font-bold text-purple-800 border-b-2 border-transparent hover:border-b-2 hover:border-purple-800 border-solid leading-[128%] hover:text-rose-500"
-                    >
-                      Déposer un événement
-                    </NavLink>
-                  ) : null}
-                </div>
               </div>
-            </form>
+            </div>
           </div>
         </form>
       </header>

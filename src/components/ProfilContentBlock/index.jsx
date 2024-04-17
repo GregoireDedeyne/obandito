@@ -1,6 +1,14 @@
 import ReactPlayer from 'react-player';
 import SpotifyPlayer from 'react-spotify-player';
 
+/**
+ * Component for the profile content block.
+ * @param {string} title - Title of the content block.
+ * @param {string} spotify - Spotify link.
+ * @param {string} youtube - YouTube link.
+ * @param {string} description - Description of the content block.
+ */
+
 export default function ProfilContentBlock({
   title,
   spotify,

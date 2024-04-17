@@ -31,11 +31,12 @@ import { ForgotPasswordPage } from './components/Pages/ForgotPassword.jsx';
 import { ChatAllPage } from './components/Pages/ChatPage.jsx';
 import { LeftMsg } from './components/MyMessages/index.jsx';
 
+// create uploadLink for pict
 const uploadLink = createUploadLink({
   uri: `${import.meta.env.VITE_BACK_URL}graphql`,
 });
 
-// Ajouter ApolloClient
+// Add apollo client
 const client = new ApolloClient({
   link: uploadLink,
   cache: new InMemoryCache(),

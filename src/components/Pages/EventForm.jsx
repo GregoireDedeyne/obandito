@@ -6,9 +6,11 @@ import { CREATE_EVENT } from '../../graphQL/actions';
 import { useSelector } from 'react-redux';
 
 export function EventFormPage() {
+  const data = useLoaderData();
   const navigate = useNavigate();
   const token = useSelector((state) => state.decodedToken.token);
 
+  // apollo client mutation to createEvent
   const [createEvent, { loading, error }] = useMutation(CREATE_EVENT, {
     onCompleted: () => {
       toast.success('Événement créé avec succès !');
@@ -58,7 +60,6 @@ export function EventFormPage() {
       price: Number(formData.price),
       total_slots: Number(formData.total_slots),
     };
-    // console.log('input', input);
 
     createEvent({
       variables: { input },
@@ -74,8 +75,6 @@ export function EventFormPage() {
 
   if (error)
     toast.error(`Erreur lors de la création de l'événement: ${error.message}`);
-
-  const data = useLoaderData();
 
   return (
     <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden md:max-w-lg">

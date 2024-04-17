@@ -4,6 +4,11 @@ import { InputField } from '../InputField';
 import { PrimaryButton } from '../Buttons/PrimaryButton';
 import CardsLogIn from '../CardsLogIn';
 
+/**
+ * Component for user profile settings.
+ * @param {function} onSubmit - Function to handle form submission.
+ */
+
 export function SettingProfile({ onSubmit }) {
   const [formData, setFormData] = useState({});
   const role = useSelector(

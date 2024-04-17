@@ -13,6 +13,15 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
+/**
+ * Component for displaying ratings and reviews.
+ * @param {Array} reviews - Array of review objects.
+ * @param {Object} data - Data object containing information about events.
+ * @param {Object} formData - Form data for submitting new reviews.
+ * @param {Function} setFormData - Function to update form data.
+ * @param {string} userId - ID of the current user.
+ */
+
 export function Rating({ reviews, data, formData, setFormData, userId }) {
   const [UpdateReview, { loading, error }] = useMutation(UPDATE_REVIEW);
   const token = useSelector((state) => state.decodedToken.token);

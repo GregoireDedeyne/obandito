@@ -38,10 +38,10 @@ export function SubscribePage() {
     role: '',
   });
 
-  // Suivie d'état dans un state pour savoir si un rôle a été selectionné
+  // Checking role
   const [selectedRole, setSelectedRole] = useState(null);
 
-  // Met à jour l'état du state avec le rôle
+  // update state
   const handleRoleSelect = (role) => {
     setSelectedRole(role);
     setFormData((prevState) => ({
@@ -65,7 +65,7 @@ export function SubscribePage() {
     console.log('envoie');
     console.log(formData);
 
-    // Vérifie si des champs obligatoires sont vides
+    // check requiredField
     const requiredFields = [
       'mail',
       'name',
