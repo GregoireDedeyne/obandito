@@ -80,7 +80,7 @@ export function ProfilBanner({
       <div className="flex flex-col py-px w-full h-[300px] bg-cover">
         <img src={banner} alt="banner" className="object-cover w-full h-full" />
       </div>
-      <div className="container mx-auto  px-5">
+      <div className="container mx-auto px-5">
         <div className="avatar mt-[-50px]">
           <div className="w-24 rounded-full ring ring-white ring-offset-base-100 ring-offset-2">
             <img
@@ -91,7 +91,7 @@ export function ProfilBanner({
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between my-5">
+        <div className="flex  justify-between my-5">
           <div className="flex flex-col">
             <div className="flex items-center">
               <h1 className="text-black">{dataArtistOrOrganize.name}</h1>
@@ -134,7 +134,10 @@ export function ProfilBanner({
           <div className="flex flex-col">
             <div className="flex justify-between items-center">
               {role === 'Artiste' && myRole !== 'Artiste' && !myProfile && (
-                <NavLink className="btn-primary ml-0 md:ml-5" to="/">
+                <NavLink
+                  className="btn-primary ml-0 md:ml-5 text-center"
+                  to="/"
+                >
                   Proposer un deal
                 </NavLink>
               )}

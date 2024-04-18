@@ -74,14 +74,14 @@ export function FirstViewHome() {
           className="relative px-10 py-8 mt-1.5 bg-white shadow-lg rounded-[66px] max-md:px-5 max-md:max-w-full"
         >
           <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-            <div className="flex w-[55%] max-md:ml-0 max-md:w-full">
+            <div className="flex w-[55%] flex-col lg:flex-row max-md:ml-0 max-md:w-full">
               <div className="flex relative grow gap-5 justify-center max-md:flex-wrap max-md:mt-10 items-center	">
                 <label className="input input-bordered flex items-center gap-2 w-3/5 bg-white ">
                   <input
                     value={searchTerm}
                     onChange={(event) => setSearchTerm(event.target.value)}
                     type="text"
-                    className="grow"
+                    className="grow w-full"
                     placeholder="Search"
                   />
                   <svg

@@ -67,11 +67,11 @@ export function Rating({
   return (
     <div className="bg-white p-10">
       <div>
-        <div className="flex justify-between">
+        <div className="flex flex-col sm:flex-row  sm:justify-between">
           <h2 className="">Evaluations Vérifiées</h2>
-          <div className="flex items-center">
+          <div className="flex flex-col">
+            <span>{`${reviews.length} `}évaluations</span>
             <Stars reviews={reviews} />
-            <span> {reviews.length} évaluations</span>
           </div>
         </div>
 
@@ -93,7 +93,7 @@ export function Rating({
                           <img
                             src={handleImg(artist?.image_url)}
                             alt={artist?.image}
-                            className="h-10 w-10 rounded-full bg-gray-100"
+                            className="h-10 w-10 rounded-full bg-gray-100 object-cover"
                           />
                           <h3 className="font-medium text-gray-900 px-3">
                             {artist.name}
@@ -126,7 +126,7 @@ export function Rating({
                         <img
                           src={handleImg(event.organizer?.image_url)}
                           alt={event.organizer?.image}
-                          className="h-10 w-10 rounded-full bg-gray-100"
+                          className="h-10 w-10 rounded-full bg-gray-100 object-cover"
                         />
                         <h3 className="font-medium text-gray-900 px-3">
                           {event.organizer.name}
