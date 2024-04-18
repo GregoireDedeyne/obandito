@@ -15,8 +15,8 @@ export default function ContactDetails({
   zip_code,
   city,
   address,
-  idSettings,
-  rolelogin,
+  myProfile,
+  myRole,
 }) {
   // userID from redux token
   const userId = useSelector((state) => state.decodedToken.decodedData.id);
@@ -53,7 +53,7 @@ export default function ContactDetails({
             Envoyer un message privé
           </NavLink>
         )}
-        {!idSettings && rolelogin === 'Organisateur' && (
+        {!myProfile && myRole === 'Organisateur' && (
           <div className="my-1">
             <NavLink className="btn-primary block text-center" to="/">
               Proposer un deal

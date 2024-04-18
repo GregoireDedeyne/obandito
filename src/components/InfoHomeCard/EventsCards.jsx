@@ -5,6 +5,25 @@ import { DELETE_EVENT, DELETE_POSTULATION } from '../../graphQL/actions';
 import { useMutation } from '@apollo/client';
 import { toast, ToastContainer } from 'react-toastify';
 
+/**
+ * Component representing an event card.
+ * @param {string} image_url - The URL of the event image.
+ * @param {string} name - The name of the event.
+ * @param {string} description - The description of the event.
+ * @param {string} city - The city where the event takes place.
+ * @param {string} date - The date of the event.
+ * @param {string} region - The region where the event takes place.
+ * @param {string} organizerId - The ID of the event organizer.
+ * @param {number} price - The price of the event.
+ * @param {string} id - The ID of the event.
+ * @param {boolean} available - Whether the event is available.
+ * @param {boolean} validated - Whether the event is validated.
+ * @param {function} setFormData - Function to set form data.
+ * @param {object} formData - The form data.
+ * @param {boolean} finished - Whether the event is finished.
+ * @param {string} eventId - The ID of the event.
+ */
+
 export function EventCard({
   image_url,
   name,
@@ -20,6 +39,7 @@ export function EventCard({
   setFormData,
   formData,
   finished,
+  isArtist,
   eventId,
 }) {
   // check if user is logged
@@ -161,6 +181,7 @@ export function EventCard({
               window.location.pathname === '/' ||
               !isMyProfil() ||
               !finished ||
+              !isArtist ||
               role.toLowerCase() === 'organisateur'
                 ? 'hidden'
                 : 'text-yellow-500 text-sm w-60 h-fit border border-yellow-500 px-3 rounded-xl hover:bg-yellow-500 hover:text-white'

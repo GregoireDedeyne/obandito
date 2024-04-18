@@ -63,12 +63,12 @@ export function PopupAddReview({ formData, setFormData }) {
             <input
               name="rating"
               type="number"
-              min="0"
+              min="1"
               max="5"
               onChange={(e) =>
                 setFormData({ ...formData, rating: +e.target.value })
               }
-              placeholder="Votre rating (entre 0 et 5)"
+              placeholder="Votre rating (entre 1 et 5)"
               className="input input-bordered input-black bg-white text-black"
             />
           </label>

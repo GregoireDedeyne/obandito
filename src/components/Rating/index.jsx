@@ -22,7 +22,14 @@ function classNames(...classes) {
  * @param {string} userId - ID of the current user.
  */
 
-export function Rating({ reviews, data, formData, setFormData, userId }) {
+export function Rating({
+  reviews,
+  dataArtistOrOrganize,
+  formData,
+  setFormData,
+  userId,
+  role,
+}) {
   const [UpdateReview, { loading, error }] = useMutation(UPDATE_REVIEW);
   const token = useSelector((state) => state.decodedToken.token);
   const [ReviewId, setReviewId] = useState();
@@ -78,44 +85,58 @@ export function Rating({ reviews, data, formData, setFormData, userId }) {
               )}
             >
               <div className="flex-none">
-                {data.events.map((event) => {
+                {dataArtistOrOrganize.events.map((event) => {
                   if (parseInt(event.id) === review.event_id) {
-                    return event.artists.map((artist) => (
-                      <div className="flex items-center py-3" key={artist.id}>
+                    return role === 'Organisateur' ? (
+                      event.artists.map((artist) => (
+                        <div className="flex items-center py-3" key={artist.id}>
+                          <img
+                            src={handleImg(artist?.image_url)}
+                            alt={artist?.image}
+                            className="h-10 w-10 rounded-full bg-gray-100"
+                          />
+                          <h3 className="font-medium text-gray-900 px-3">
+                            {artist.name}
+                          </h3>
+
+                          {artist.id == userId && (
+                            <span>
+                              <FontAwesomeIcon
+                                icon={faPencilAlt}
+                                className="cursor-pointer"
+                                onClick={() => {
+                                  setReviewId(review.id);
+                                  const settingsModal =
+                                    document.getElementById('editReview');
+                                  if (settingsModal) {
+                                    settingsModal.showModal();
+                                  } else {
+                                    console.error(
+                                      "L'élément avec l'ID \"settings\" n'a pas été trouvé."
+                                    );
+                                  }
+                                }}
+                              />
+                            </span>
+                          )}
+                        </div>
+                      ))
+                    ) : (
+                      <div className="flex items-center py-3">
                         <img
-                          src={handleImg(artist?.image_url)}
-                          alt={artist?.image}
+                          src={handleImg(event.organizer?.image_url)}
+                          alt={event.organizer?.image}
                           className="h-10 w-10 rounded-full bg-gray-100"
                         />
                         <h3 className="font-medium text-gray-900 px-3">
-                          {artist.name}
+                          {event.organizer.name}
                         </h3>
-
-                        {artist.id == userId && (
-                          <span>
-                            <FontAwesomeIcon
-                              icon={faPencilAlt}
-                              className="cursor-pointer"
-                              onClick={() => {
-                                setReviewId(review.id);
-                                const settingsModal =
-                                  document.getElementById('editReview');
-                                if (settingsModal) {
-                                  settingsModal.showModal();
-                                } else {
-                                  console.error(
-                                    "L'élément avec l'ID \"settings\" n'a pas été trouvé."
-                                  );
-                                }
-                              }}
-                            />
-                          </span>
-                        )}
                       </div>
-                    ));
+                    );
                   }
                 })}
               </div>
+
               <div>
                 <div className="mt-4 flex items-center">
                   {[0, 1, 2, 3, 4].map((rating) => (

@@ -135,6 +135,20 @@ export const GET_ARTISTE = gql`
           spotify_link
           validation
         }
+        organizer {
+          id
+          mail
+          name
+          image_url
+          address
+          city
+          region
+          zip_code
+          description
+          youtube_link
+          spotify_link
+          validation
+        }
       }
     }
 
