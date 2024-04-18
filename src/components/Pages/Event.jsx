@@ -188,7 +188,7 @@ export function EventPage() {
                   />
                   <div>{eventdata?.event?.city}</div>
                 </div>
-                <div className={`flex gap-1.5 w-96`}>
+                <div className={`flex gap-1.5`}>
                   <FontAwesomeIcon
                     icon={faUser}
                     className="shrink-0 my-auto w-4 aspect-square"
@@ -221,7 +221,7 @@ export function EventPage() {
             />
             <div
               role="tabpanel"
-              className="tab-content px-10 bg-color-gray_light"
+              className="tab-content px-5 bg-color-gray_light"
             >
               <div className="grid grid-cols-12 md:gap-8">
                 <div className="col-span-12 md:col-span-8 my-10">
