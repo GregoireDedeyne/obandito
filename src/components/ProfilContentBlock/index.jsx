@@ -38,7 +38,7 @@ export default function ProfilContentBlock({
   } else if (title === 'Musiques & clips') {
     if (spotify || youtube) {
       return (
-        <div className="bloc-white mb-[50px]">
+        <div className="bloc-white md:mb-[50px]">
           <div className="flex items-center">
             <h2 className="text-black">{title}</h2>
           </div>

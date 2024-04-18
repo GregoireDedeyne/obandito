@@ -120,6 +120,8 @@ export function ArrayHandleArtistEvent({
         <tbody>
           {events?.map((event) =>
             event?.artists.map((artist) => {
+              console.log('event', event);
+              console.log('artist', artist);
               if (
                 radioStatus === 'tous' ||
                 (radioStatus === 'pending' &&
@@ -170,7 +172,7 @@ export function ArrayHandleArtistEvent({
                       </div>
                     </td>
                     <td className="px-6 py-4 text-center">
-                      {event.finished ? (
+                      {event.finished && artist.validation === 'validated' ? (
                         <span
                           className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"
                           onClick={() => openReviewModal(event, artist)}

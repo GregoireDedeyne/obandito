@@ -156,17 +156,17 @@ export function TabsContent({
       {
         id: 2,
         value: 'pending',
-        name: 'Demandes en attente',
+        name: 'En attente',
       },
       {
         id: 3,
         value: 'validated',
-        name: 'Demandes validées',
+        name: 'Validées',
       },
       {
         id: 4,
         value: 'refused',
-        name: 'Demandes refusées',
+        name: 'Refusées',
       },
     ],
   };
@@ -207,7 +207,7 @@ export function TabsContent({
       <div className="bg-color-gray_light flex-1  px-5">
         <div className="grid grid-cols-12 md:gap-8 container mx-auto">
           {/* grid left */}
-          <div className="col-span-12 md:col-span-8 my-10">
+          <div className="col-span-12 md:col-span-8 mt-10">
             {selectedTab === 'Présentation' && (
               <>
                 <ProfilContentBlock
@@ -243,10 +243,13 @@ export function TabsContent({
             {selectedTab === 'Évènements' && (
               <>
                 {role === 'Artiste' && myProfile && (
-                  <div className="flex space-x-4 items-center mb-2">
+                  <div className="flex space-x-4 items-center mb-2 items-baseline">
                     {inputTabData.sortDeals.map((dealsInput) => {
                       return (
-                        <div key={dealsInput.id}>
+                        <div
+                          key={dealsInput.id}
+                          className="flex flex-col items-center sm:flex-row"
+                        >
                           <input
                             type="radio"
                             id={dealsInput.id}
@@ -258,7 +261,7 @@ export function TabsContent({
                           />
                           <label
                             htmlFor={dealsInput.id}
-                            className="text-gray-700 cursor-pointer"
+                            className="text-gray-700 cursor-pointer text-center sm:pl-1"
                           >
                             {dealsInput.name}
                           </label>
@@ -302,10 +305,13 @@ export function TabsContent({
 
             {selectedTab === 'Deals' && (
               <>
-                <div className="flex space-x-4 items-center mb-2">
+                <div className="flex space-x-4 items-center mb-2 items-baseline">
                   {inputTabData.sortDealsOrganizer.map((dealsInput) => {
                     return (
-                      <div key={dealsInput.id}>
+                      <div
+                        key={dealsInput.id}
+                        className="flex flex-col items-center sm:flex-row"
+                      >
                         <input
                           type="radio"
                           id={dealsInput.id}
@@ -317,7 +323,7 @@ export function TabsContent({
                         />
                         <label
                           htmlFor={dealsInput.id}
-                          className="text-gray-700 cursor-pointer"
+                          className="text-gray-700 cursor-pointer text-center sm:pl-1"
                         >
                           {dealsInput.name}
                         </label>
