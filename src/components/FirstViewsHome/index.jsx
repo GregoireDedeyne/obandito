@@ -116,25 +116,43 @@ export function FirstViewHome() {
                   Trouver un artiste{' '}
                 </NavLink>
               ) : islogged === true && role === 'Organisateur' ? (
-                <NavLink to={`/artists/search/${searchTerm}`}>
-                  <button
-                    onClick={handleSearch}
+                searchTerm !== '' ? (
+                  <NavLink to={`/artists/search/${searchTerm}`}>
+                    <button
+                      onClick={handleSearch}
+                      className={`justify-center px-9 py-5 text-white bg-rose-500 border border-rose-500 border-solid leading-[100%] rounded-[48px] max-md:px-5 hover:bg-purple-800 hover:border-purple-800`}
+                    >
+                      {' '}
+                      Trouver un artiste{' '}
+                    </button>
+                  </NavLink>
+                ) : (
+                  <div
                     className={`justify-center px-9 py-5 text-white bg-rose-500 border border-rose-500 border-solid leading-[100%] rounded-[48px] max-md:px-5 hover:bg-purple-800 hover:border-purple-800`}
                   >
                     {' '}
                     Trouver un artiste{' '}
-                  </button>
-                </NavLink>
+                  </div>
+                )
               ) : islogged === true && role === 'Artiste' ? (
-                <NavLink to={`/events/search/${searchTerm}`}>
-                  <button
-                    onClick={handleSearch}
+                searchTerm !== '' ? (
+                  <NavLink to={`/events/search/${searchTerm}`}>
+                    <button
+                      onClick={handleSearch}
+                      className={`justify-center px-9 py-5 text-white bg-rose-500 border border-rose-500 border-solid leading-[100%] rounded-[48px] max-md:px-5 hover:bg-purple-800 hover:border-purple-800`}
+                    >
+                      {' '}
+                      Trouver un évènement{' '}
+                    </button>
+                  </NavLink>
+                ) : (
+                  <div
                     className={`justify-center px-9 py-5 text-white bg-rose-500 border border-rose-500 border-solid leading-[100%] rounded-[48px] max-md:px-5 hover:bg-purple-800 hover:border-purple-800`}
                   >
                     {' '}
                     Trouver un évènement{' '}
-                  </button>
-                </NavLink>
+                  </div>
+                )
               ) : null}
 
               <div className="flex gap-5 justify-end self-start mt-2">
