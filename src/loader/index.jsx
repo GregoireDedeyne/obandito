@@ -15,7 +15,6 @@ import {
 import createUploadLink from 'apollo-upload-client/createUploadLink.mjs';
 
 const token = localStorage.getItem('token');
-console.log(token);
 
 const uploadLink = createUploadLink({
   uri: `${import.meta.env.VITE_BACK_URL}graphql`,
@@ -42,7 +41,6 @@ export const HomeLoader = async () => {
 
 export const EventsSearch = async ({ params }) => {
   const { searchTerm } = params;
-  console.log(searchTerm);
 
   const { data } = await client.query({
     query: GET_SEARCH_EVENTSHOMEDATA,
@@ -57,7 +55,6 @@ export const EventsSearch = async ({ params }) => {
 
 export const ArtistsSearch = async ({ params }) => {
   const { searchTerm } = params;
-  console.log(searchTerm);
 
   const { data } = await client.query({
     query: GET_SEARCH_ARTISTSHOMEDATA,
@@ -131,7 +128,6 @@ export const MsgData = async () => {
 export const EventLoader = async ({ params }) => {
   const { id } = params;
   const eventId = parseInt(id);
-  console.log(id);
 
   const { data } = await client.query({
     query: GET_ONE_EVENT,
@@ -145,7 +141,6 @@ export const EventLoader = async ({ params }) => {
     },
     fetchPolicy: 'no-cache',
   });
-  console.log('dataloader :', data);
   return data;
 };
 
@@ -174,7 +169,6 @@ export const ProfileBandLoader = async ({ params }) => {
     },
     fetchPolicy: 'no-cache',
   });
-  console.log("j'ai reload");
 
   return data;
 };
@@ -182,7 +176,6 @@ export const ProfileBandLoader = async ({ params }) => {
 export const ProfileOrganizerLoader = async ({ params }) => {
   const { id } = params;
   const organizerId = parseInt(id);
-  // console.log('je reload');
 
   const { data } = await client.query({
     query: GET_ORGANIZER,

@@ -33,7 +33,6 @@ export function TabsContent({
   userId,
   token,
   reviews,
-  id,
 }) {
   setSelectedTab;
   const [radioStatus, setRadioStatus] = useState('tous');
@@ -49,6 +48,7 @@ export function TabsContent({
 
   const dispatch = useDispatch();
 
+  // dispatch selectedTab on click to switch case
   const handleTabClick = (name) => {
     dispatch(setSelectedTab(name));
   };
@@ -66,7 +66,7 @@ export function TabsContent({
     e.preventDefault();
 
     try {
-      // Filtrer les propriétés null dans formData
+      // filter null entries from data
       const filteredData = Object.fromEntries(
         Object.entries(formData).filter(([key, value]) => value !== null)
       );

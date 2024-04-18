@@ -71,8 +71,6 @@ export function ChatHistory() {
   }, []);
 
   socket.on('update-status', (readOrNotMessages) => {
-    console.log(readOrNotMessages);
-
     setReadMessages(readOrNotMessages);
   });
 

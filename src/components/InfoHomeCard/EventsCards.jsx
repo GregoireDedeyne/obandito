@@ -21,6 +21,7 @@ import { toast, ToastContainer } from 'react-toastify';
  * @param {function} setFormData - Function to set form data.
  * @param {object} formData - The form data.
  * @param {boolean} finished - Whether the event is finished.
+ * @param {boolean} isArtist - Comparaison of artistid and param ID.
  * @param {string} eventId - The ID of the event.
  */
 
