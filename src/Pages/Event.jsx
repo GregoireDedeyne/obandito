@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { POSTULATION_EVENT, UPDATE_EVENT } from '../../graphQL/actions';
+import { POSTULATION_EVENT, UPDATE_EVENT } from '../graphQL/actions';
 import { NavLink, useLoaderData, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,15 +10,15 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
-import { CardsEvent } from '../CardsEvent';
-import SocialMediaGroup from '../SocialMediaGroup';
-import { PopupEditEvent } from '../PopupEditEvent';
-
+import { CardsEvent } from '../components/CardsEvent';
+import { PopupEditEvent } from '../components/PopupEditEvent';
 import { toast, ToastContainer } from 'react-toastify';
-import { handleImg } from '../../utils/handleImg';
+import { handleImg } from '../utils/handleImg';
 
 export function EventPage() {
+  // check selectedTab
   const [selectedTab, setSelectedTab] = useState(0);
+  // set the selectedTab
 
   const handleTabClick = (index) => {
     setSelectedTab(index);
@@ -48,24 +48,21 @@ export function EventPage() {
   const regions = eventdata.regions;
   const postulation = eventdata.event.artist_postulation;
   const result = postulation.includes(id.toString());
+  const img = handleImg(eventdata.event.image_url);
+  const artists = eventdata.event.artists;
 
-  const [formData, setFormData] =
-    useState <
-    FormData >
-    {
-      name: eventdata.event.name,
-      description: eventdata.event.description,
-      region: eventdata.event.region,
-      address: eventdata.event.address,
-      zip_code: eventdata.event.zip_code,
-      city: eventdata.event.city,
-      date: eventdata.event.date,
-      total_slots: eventdata.event.total_slots,
-      price: eventdata.event.price,
-      image_url: null,
-    };
-
-  console.log('formData:', formData);
+  const [formData, setFormData] = useState({
+    name: eventdata.event.name,
+    description: eventdata.event.description,
+    region: eventdata.event.region,
+    address: eventdata.event.address,
+    zip_code: eventdata.event.zip_code,
+    city: eventdata.event.city,
+    date: eventdata.event.date,
+    total_slots: eventdata.event.total_slots,
+    price: eventdata.event.price,
+    image_url: null,
+  });
 
   const handleSubmit = async () => {
     try {
@@ -133,7 +130,6 @@ export function EventPage() {
         context: { headers: { Authorization: `Bearer ${token}` } },
       });
 
-      console.log('Données mises à jour avec succès:', data);
       document.getElementById('event').close();
       window.location.href = location.pathname;
       toast.warn("Vous avez bien modifié à l'évènement");
@@ -142,9 +138,6 @@ export function EventPage() {
       toast.error(`Une erreur s'est produite. ${error.message}`);
     }
   };
-
-  const img = handleImg(eventdata.event.image_url);
-  const artists = eventdata.event.artists;
 
   return (
     <>

@@ -1,46 +1,60 @@
 import { faMapMarkerAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useParams } from 'react-router-dom';
 import { Stars } from '../Stars';
 import { PopupEditSettings } from '../PopupEditSettings';
 import { useState } from 'react';
 import { UPDATE_USER } from '../../graphQL/actions';
 import { useMutation } from '@apollo/client';
 import banner from '../../assets/images/banner-profile.svg';
+import { useDispatch } from 'react-redux';
 import { updateToken } from '../../store/actions';
 import { handleImg } from '../../utils/handleImg';
-import { useDispatch } from 'react-redux';
+
+/**
+ * Component for the profile banner.
+ * @param {string} role - Role of the user.
+ * @param {object} info - Information about the user.
+ * @param {string} token - User token.
+ * @param {string} idSettings - ID settings.
+ * @param {array} regions - Regions data.
+ * @param {string} rolelogin - Role login.
+ * @param {array} reviews - User reviews.
+ */
 
 export function ProfilBanner({
   role,
-  info,
+  dataArtistOrOrganize,
   token,
-  idSettings,
+  myProfile,
   regions,
-  rolelogin,
+  myRole,
+  reviews,
+  userId,
 }) {
   const [UpdateUser] = useMutation(UPDATE_USER);
 
   const [formData, setFormData] = useState({
-    name: info.name,
-    region: info.region,
-    description: info.description,
-    address: info.address,
-    zip_code: info.zip_code,
-    city: info.city,
-    spotify_link: info.spotify_link,
-    youtube_link: info.youtube_link,
+    name: dataArtistOrOrganize.name,
+    region: dataArtistOrOrganize.region,
+    description: dataArtistOrOrganize.description,
+    address: dataArtistOrOrganize.address,
+    zip_code: dataArtistOrOrganize.zip_code,
+    city: dataArtistOrOrganize.city,
+    spotify_link: dataArtistOrOrganize.spotify_link,
+    youtube_link: dataArtistOrOrganize.youtube_link,
     image_url: null,
   });
   const location = useLocation();
 
   const dispatch = useDispatch();
 
+  const { id } = useParams();
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Filtrer les propriétés null dans formData
+      // Filter null entries
       const filteredData = Object.fromEntries(
         Object.entries(formData).filter(([key, value]) => value !== null)
       );
@@ -51,7 +65,6 @@ export function ProfilBanner({
       });
       dispatch(updateToken(data.updateUser.image_url));
 
-      console.log('Données mises à jour avec succès:', data);
       const settingsModal = document.getElementById('settings');
       if (settingsModal) {
         settingsModal.close();
@@ -60,35 +73,31 @@ export function ProfilBanner({
       }
       window.location.href = location.pathname;
     } catch (error) {
-      if (error instanceof Error) {
-        console.error(error.message);
-      } else {
-        console.error("Une erreur inattendue s'est produite");
-      }
+      console.error("Une erreur inattendue s'est produite");
     }
   };
 
   return (
     <div className="bg-white">
-      <div className="flex flex-col py-px w-full h-[300px] bg-cover">
+      <div className="flex flex-col w-full h-[300px] bg-cover">
         <img src={banner} alt="banner" className="object-cover w-full h-full" />
       </div>
-      <div className="container mx-auto">
+      <div className="container mx-auto px-5">
         <div className="avatar mt-[-50px]">
           <div className="w-24 rounded-full ring ring-white ring-offset-base-100 ring-offset-2">
             <img
-              src={handleImg(info.image_url)}
+              src={handleImg(dataArtistOrOrganize.image_url)}
               alt="Image"
               className="object-fit"
             />
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between my-5">
+        <div className="flex  justify-between my-5">
           <div className="flex flex-col">
             <div className="flex items-center">
-              <h1 className="text-black">{info.name}</h1>
-              {idSettings && (
+              <h1 className="text-black">{dataArtistOrOrganize.name}</h1>
+              {myProfile && (
                 <FontAwesomeIcon
                   icon={faPencilAlt}
                   className="ml-3 cursor-pointer"
@@ -114,27 +123,32 @@ export function ProfilBanner({
               />
             </div>
 
-            <Stars />
+            <Stars reviews={reviews} />
 
             <span>
               <div className="flex items-center">
                 <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-1" />
-                <span> {info.region}, France</span>
+                <span> {dataArtistOrOrganize.region}, France</span>
               </div>
             </span>
           </div>
 
           <div className="flex flex-col">
             <div className="flex justify-between items-center">
-              {role === 'Artiste' && rolelogin !== 'Artiste' && !idSettings && (
-                <NavLink className="btn-primary ml-0 md:ml-5" to="/">
+              {role === 'Artiste' && myRole !== 'Artiste' && !myProfile && (
+                <NavLink
+                  className="btn-primary ml-0 md:ml-5 text-center"
+                  to={`/chat/room/${userId}/${id}`}
+                >
                   Proposer un deal
                 </NavLink>
               )}
 
               {role === 'Organisateur' && (
                 <div className="flex flex-col text-right">
-                  <span className="text-3xl">{info.events.length}</span>
+                  <span className="text-3xl">
+                    {dataArtistOrOrganize.events.length}
+                  </span>
                   <span>évènements</span>
                 </div>
               )}

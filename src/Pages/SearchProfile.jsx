@@ -1,5 +1,5 @@
-import CardsLogIn from '../CardsLogIn';
-import SearchBar from '../SearchBar';
+import CardsLogIn from './components/CardsLogIn';
+import SearchBar from './SearchBar';
 
 export function SearchProfile() {
   return (

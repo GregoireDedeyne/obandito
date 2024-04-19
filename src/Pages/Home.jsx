@@ -1,23 +1,27 @@
-import { Cards } from '../Cards';
-import { FirstViewHome } from '../FirstViewsHome';
-import { HeroSection } from '../FirstViewsHome/HeroSection';
-import { SecondView } from '../FirstViewsHome/SecondView';
-import { PreFooter } from '../FirstViewsHome/PreFooter';
-import { Faq } from '../FirstViewsHome/Faq';
-import { ThirdView } from '../FirstViewsHome/ThirdView';
+import { Cards } from '../components/Cards';
+import { FirstViewHome } from '../components/FirstViewsHome';
+import { HeroSection } from '../components/FirstViewsHome/HeroSection';
+import { SecondView } from '../components/FirstViewsHome/SecondView';
+import { PreFooter } from '../components/FirstViewsHome/PreFooter';
+import { Faq } from '../components/FirstViewsHome/Faq';
+import { ThirdView } from '../components/FirstViewsHome/ThirdView';
 import { useLoaderData, useLocation } from 'react-router-dom';
-import { CardsWithout } from '../CardsWithout';
+import { useSelector, useDispatch } from 'react-redux';
+import { CardsWithout } from '../components/CardsWithout';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { setSelectedTab } from '../store/actions';
 
 export function HomeNotLogPage() {
+  // check if user is logged or not
   const islogged = useSelector((state) => state.decodedToken.islogged);
-
-  // console.log('islogged', islogged);
-
+  // check role of user
   const role = useSelector((state) => state.decodedToken.decodedData.role);
+  // load data for loader
   const data = useLoaderData();
   const location = useLocation();
+  const dispatch = useDispatch();
+  // Reset of selectedTab
+  dispatch(setSelectedTab('Présentation'));
 
   useEffect(() => {
     if (location.hash) {
@@ -28,6 +32,7 @@ export function HomeNotLogPage() {
       }
     }
   }, [location]);
+
   return (
     <>
       <div className="bg-white w-full" id="bands">
@@ -38,9 +43,7 @@ export function HomeNotLogPage() {
               "url('https://cdn.builder.io/api/v1/image/assets/TEMP/f78fd4dbe073ea1a52fe2d59039f35efc38106dbb881a1d301e9ddd960269c08?apiKey=877605d91b494696bd5bbaa7fb33442f&')",
           }}
         >
-          {/* <div className="container mx-auto"> */}
           <FirstViewHome />
-          {/* </div> */}
         </div>
 
         {islogged === false ? (
@@ -48,7 +51,7 @@ export function HomeNotLogPage() {
             <div className="container mx-auto" id="bands">
               {data?.artists.length > 0 ? (
                 <Cards
-                  data={data.artists ?? []}
+                  data={data.artists}
                   title={'Les derniers Artistes disponibles'}
                   subtitle={''}
                 />
@@ -67,7 +70,7 @@ export function HomeNotLogPage() {
           <div className="container mx-auto" id="bands">
             {data?.artists.length > 0 ? (
               <CardsWithout
-                data={data?.artists ?? []}
+                data={data.artists}
                 title={'Les derniers Artistes disponibles'}
                 subtitle={''}
               />
@@ -78,8 +81,8 @@ export function HomeNotLogPage() {
         ) : islogged === true && role === 'Artiste' ? (
           <div className="container mx-auto my-20" id="events">
             <ThirdView
-              events={data?.events ?? []}
-              locations={data?.getCountNameEventsByRegion ?? []}
+              events={data?.events}
+              locations={data?.getCountNameEventsByRegion}
             />
           </div>
         ) : null}
@@ -111,7 +114,9 @@ export function HomeNotLogPage() {
               </div>
             </div>
           </>
-        ) : null}
+        ) : (
+          ''
+        )}
       </div>
     </>
   );

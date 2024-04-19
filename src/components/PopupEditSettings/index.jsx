@@ -1,3 +1,12 @@
+/**
+ * Component for a popup to edit settings.
+ * @param {function} handleFormSubmit - Function to handle form submission.
+ * @param {object} formData - Form data.
+ * @param {function} setFormData - Function to set the form data.
+ * @param {string} role - Role of the user.
+ * @param {array} regions - Regions data.
+ */
+
 export function PopupEditSettings({
   handleFormSubmit,
   formData,
@@ -5,7 +14,6 @@ export function PopupEditSettings({
   role,
   regions,
 }) {
-  // console.log('formData2', formData);
   return (
     <dialog id="settings" className="modal">
       <div className="modal-box bg-white relative">
@@ -19,10 +27,13 @@ export function PopupEditSettings({
               type="file"
               accept="image/*"
               onChange={(e) => {
-                const file = e.target.files[0];
-                setFormData({ ...formData, image_url: file });
+                const files = e.target.files;
+                if (files !== null && files.length > 0) {
+                  const file = files[0];
+                  setFormData({ ...formData, image_url: file });
+                }
               }}
-              className="input input-bordered input-black bg-white text-black"
+              className="input input-bordered input-black bg-white text-black w-full"
             />
           </label>
 
@@ -37,7 +48,7 @@ export function PopupEditSettings({
                 setFormData({ ...formData, name: e.target.value })
               }
               placeholder="Votre nom"
-              className="input input-bordered input-black bg-white text-black"
+              className="input input-bordered input-black bg-white text-black w-full"
             />
           </label>
 
@@ -46,7 +57,7 @@ export function PopupEditSettings({
               <span className="label-text">Région</span>
             </div>
             <select
-              className="select select-bordered select-black bg-white text-black"
+              className="select select-bordered select-black bg-white text-black w-full"
               value={formData.region}
               onChange={(e) =>
                 setFormData({ ...formData, region: e.target.value })
@@ -68,7 +79,7 @@ export function PopupEditSettings({
               <span className="label-text">Description</span>
             </div>
             <textarea
-              className="textarea textarea-bordered h-24 textarea-black bg-white text-black"
+              className="textarea textarea-bordered h-24 textarea-black bg-white text-black w-full"
               placeholder="Description"
               value={formData.description}
               onChange={(e) =>
@@ -91,7 +102,7 @@ export function PopupEditSettings({
                 setFormData({ ...formData, address: e.target.value })
               }
               placeholder="Votre address"
-              className="input input-bordered input-black bg-white text-black"
+              className="input input-bordered input-black bg-white text-black w-full"
             />
           </label>
 
@@ -106,7 +117,7 @@ export function PopupEditSettings({
                 setFormData({ ...formData, zip_code: e.target.value })
               }
               placeholder="Votre code postal"
-              className="input input-bordered input-black bg-white text-black"
+              className="input input-bordered input-black bg-white text-black w-full"
             />
           </label>
 
@@ -121,7 +132,7 @@ export function PopupEditSettings({
                 setFormData({ ...formData, city: e.target.value })
               }
               placeholder="Votre ville"
-              className="input input-bordered input-black bg-white text-black"
+              className="input input-bordered input-black bg-white text-black w-full"
             />
           </label>
 
@@ -138,7 +149,7 @@ export function PopupEditSettings({
                     setFormData({ ...formData, spotify_link: e.target.value })
                   }
                   placeholder="Votre lien spotify"
-                  className="input input-bordered input-black bg-white text-black"
+                  className="input input-bordered input-black bg-white text-black w-full"
                 />
               </label>
 
@@ -153,7 +164,7 @@ export function PopupEditSettings({
                     setFormData({ ...formData, youtube_link: e.target.value })
                   }
                   placeholder="Votre lien Youtube"
-                  className="input input-bordered input-black bg-white text-black"
+                  className="input input-bordered input-black bg-white text-black w-full"
                 />
               </label>
             </>

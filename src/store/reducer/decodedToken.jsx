@@ -21,7 +21,7 @@ const initialState = {
   },
   token: '',
   islogged: false,
-  selectedTab: 0,
+  selectedTab: 'Présentation',
 };
 
 const decodedTokenReducer = createReducer(initialState, (builder) => {

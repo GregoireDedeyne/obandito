@@ -9,8 +9,17 @@ import 'swiper/css/navigation';
 // import required modules
 import { Navigation, Scrollbar } from 'swiper/modules';
 
+/**
+ * A component for rendering a list of cards.
+ *
+ * @param {Array} data - The array of data to render as cards.
+ * @param {string} title - The title of the card section.
+ * @param {string} subtitle - The subtitle of the card section.
+ * @returns {JSX.Element} The cards JSX element.
+ */
+
 // =========================================================
-//ATTENTION L ID EST UN STRING !!!!!!!!!!!!!!!!!!!!!!!
+//WARNING ID is a STRING !!!!!!!!!!!!!!!!!!!!!!!
 // =========================================================
 
 export function Cards({ data, title, subtitle }) {
@@ -30,7 +39,6 @@ export function Cards({ data, title, subtitle }) {
       <Swiper
         spaceBetween={20}
         centeredSlides={false}
-        // slidesPerView={'3'}
         scrollbar={{ hide: true }}
         navigation={false}
         breakpoints={{
@@ -55,7 +63,7 @@ export function Cards({ data, title, subtitle }) {
             <div className="max-w-[302px]">
               <Card
                 image={card?.image_url}
-                alt={card?.alt}
+                alt={card?.name}
                 name={card?.name}
                 style={card?.style?.name}
                 id={card?.id}

@@ -1,12 +1,12 @@
 import { Outlet } from 'react-router-dom';
-import { Header } from '../../HeaderTop';
-import { Footer } from '../../Footer';
+import { Header } from '../components/HeaderTop';
+import { Footer } from '../components/Footer';
 import { useQuery } from '@apollo/client';
-import { GET_STYLES } from '../../../graphQL/actions';
+import { GET_STYLES } from '../graphQL/actions';
 
 export function NotLogLayout() {
+  // apollo query for styles
   const { data, loading, error } = useQuery(GET_STYLES);
-
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store, persistor } from './store/index.js';
@@ -6,14 +5,15 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './styles/index.css';
 import ErrorPage from './components/Error/index.jsx';
-import { NotLogLayout } from './components/Layouts/NotLogLayout/NotLogLayout.jsx';
-import { HomeNotLogPage } from './components/Pages/Home.jsx';
-import { SubscribePage } from './components/Pages/Subscribe.jsx';
-import { LoginPage } from './components/Pages/Login.jsx';
-import { EventPage } from './components/Pages/Event.jsx';
-import { EventFormPage } from './components/Pages/EventForm.jsx';
+import { NotLogLayout } from './NotLogLayout/NotLogLayout.jsx';
+import { HomeNotLogPage } from './Pages/Home.jsx';
+import { SubscribePage } from './Pages/Subscribe.jsx';
+import { LoginPage } from './Pages/Login.jsx';
+import { EventPage } from './Pages/Event.jsx';
+import { EventFormPage } from './Pages/EventForm.jsx';
 import createUploadLink from 'apollo-upload-client/createUploadLink.mjs';
-import ProfileBis from './components/Pages/ProfileBis.jsx';
+import ProfileBis from './Pages/ProfileBis.jsx';
+
 import {
   ArtistsSearch,
   EventLoader,
@@ -21,21 +21,22 @@ import {
   GenreLoader,
   HomeLoader,
   MoreHomeLoader,
+  MsgData,
   ProfileBandLoader,
   ProfileOrganizerLoader,
   RegionLoader,
   RegionSelectLoader,
 } from './loader/index.jsx';
-
 import { PersistGate } from 'redux-persist/integration/react';
-import { ForgotPasswordPage } from './components/Pages/ForgotPassword.jsx';
-import { ChatPage } from './components/Pages/Chat.jsx';
+import { ForgotPasswordPage } from './Pages/ForgotPassword.jsx';
+import { ChatAllPage } from './Pages/ChatPage.jsx';
+import { LeftMsg } from './components/MyMessages/index.jsx';
 
+// create uploadLink for pict
 const uploadLink = createUploadLink({
   uri: `${import.meta.env.VITE_BACK_URL}graphql`,
 });
-
-// Ajouter ApolloClient
+// Add apollo client
 const client = new ApolloClient({
   link: uploadLink,
   cache: new InMemoryCache(),
@@ -58,8 +59,14 @@ const router = createBrowserRouter([
         loader: MoreHomeLoader,
       },
       {
-        path: '/chat',
-        element: <ChatPage />,
+        path: '/chat/room/:idsender/:idrecever',
+        element: <ChatAllPage />,
+        loader: MsgData,
+      },
+      {
+        path: '/my-messages',
+        element: <LeftMsg />,
+        loader: MsgData,
       },
       {
         path: '/reset-password',

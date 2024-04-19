@@ -6,16 +6,39 @@ import { useLocation } from 'react-router-dom';
 import { handleImg } from '../../utils/handleImg';
 import { useSelector } from 'react-redux';
 
-export function ArrayHandleArtistEvent({ events, radioStatus }) {
+/**
+ * Function to handle an array of artists and events.
+ *
+ * @param {Object[]} events - The array of events to process.
+ * @param {string} radioStatus - The status of the radio button.
+ * @param {function} setFormData - The function to set form data.
+ * @param {Object} formData -The form data to set.
+ */
+
+export function ArrayHandleArtistEvent({
+  events,
+  radioStatus,
+  setFormData,
+  formData,
+}) {
   const token = useSelector((state) => state.decodedToken.token);
 
+  // first state for validation status
   const [selectedStatus, setSelectedStatus] = useState('pending');
+
+  // second state for setuserID after opening deals modals
   const [idUserStatus, setIdUserStatus] = useState(undefined);
+
+  // third state for eventID after opening deals modals
   const [idEventStatus, setIdEventStatus] = useState(undefined);
 
+  // call to apollo client
   const [HandlePostulationEvent] = useMutation(HANDLEPOSTULATIONEVENT);
+
+  // check location for redirect
   const location = useLocation();
 
+  // Form submit after validation status change
   const handleFormSubmitStatus = async (e) => {
     e.preventDefault();
 
@@ -32,7 +55,7 @@ export function ArrayHandleArtistEvent({ events, radioStatus }) {
           },
         },
       });
-
+      // close modal system
       const dealsModal = document.getElementById('deals');
       if (dealsModal) {
         dealsModal.close();
@@ -40,15 +63,37 @@ export function ArrayHandleArtistEvent({ events, radioStatus }) {
         console.error("L'élément avec l'ID \"deals\" n'a pas été trouvé.");
       }
       window.location.href = location.pathname;
-
-      console.log('Status à jour avec succès:', data);
     } catch (error) {
-      if (error instanceof Error) {
-        console.error(error.message);
-      } else {
-        console.error("Une erreur inattendue s'est produite");
-      }
+      console.error("Une erreur inattendue s'est produite");
     }
+  };
+
+  // function openreviewmodal with event and artist param
+  const openReviewModal = (event, artist) => {
+    const ReviewModal = document.getElementById('addReview');
+    if (ReviewModal) {
+      ReviewModal.showModal();
+    } else {
+      console.error("L'élément avec l'ID \"addReview\" n'a pas été trouvé.");
+    }
+    setFormData({
+      ...formData,
+      event_id: parseInt(event.id),
+      receiver_id: parseInt(artist.id),
+    });
+  };
+
+  // function opendealsmodal to validate/refused artist with event and artist param
+  const openDealsModal = (artist, event) => {
+    const dealsModal = document.getElementById('deals');
+    if (dealsModal) {
+      dealsModal.showModal();
+    } else {
+      console.error("L'élément avec l'ID \"deals\" n'a pas été trouvé.");
+    }
+    // update state value
+    setIdUserStatus(parseInt(artist.id));
+    setIdEventStatus(parseInt(event.id));
   };
 
   return (
@@ -123,23 +168,21 @@ export function ArrayHandleArtistEvent({ events, radioStatus }) {
                       </div>
                     </td>
                     <td className="px-6 py-4 text-center">
-                      <span
-                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"
-                        onClick={() => {
-                          const dealsModal = document.getElementById('deals');
-                          if (dealsModal) {
-                            dealsModal.showModal();
-                          } else {
-                            console.error(
-                              "L'élément avec l'ID \"deals\" n'a pas été trouvé."
-                            );
-                          }
-                          setIdUserStatus(parseInt(artist.id));
-                          setIdEventStatus(parseInt(event.id));
-                        }}
-                      >
-                        Edit
-                      </span>
+                      {event.finished && artist.validation === 'validated' ? (
+                        <span
+                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"
+                          onClick={() => openReviewModal(event, artist)}
+                        >
+                          Laisser un avis
+                        </span>
+                      ) : (
+                        <span
+                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"
+                          onClick={() => openDealsModal(artist, event)}
+                        >
+                          Edit
+                        </span>
+                      )}
                     </td>
                   </tr>
                 );

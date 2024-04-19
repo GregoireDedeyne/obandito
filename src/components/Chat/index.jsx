@@ -1,39 +1,44 @@
-export function Chat() {
+import { useSelector } from 'react-redux';
+import { handleImg } from '../../utils/handleImg';
+
+/**
+ * A component for rendering a list of messages.
+ *
+ * @param {Array} messages - The array of messages to render as messages.
+ * @returns {JSX.Element} The cards JSX element.
+ */
+
+export function Chat({ messages }) {
+  //   ID from decodedtoken state
+  const id = useSelector((state) => state.decodedToken.decodedData.id);
+
   return (
     <>
-      {' '}
-      <div className="chat chat-start m-2">
-        <div className="chat-image avatar">
-          <div className="w-10 rounded-full">
-            <img
-              alt="Tailwind CSS chat bubble component"
-              src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-            />
+      {messages.map((message) => {
+        return (
+          <div
+            className={`${message.sender_id !== id ? 'chat-start' : 'chat-end'} chat  m-2`}
+          >
+            <div className="chat-image avatar">
+              <div className="w-10 rounded-full">
+                <img
+                  alt="Tailwind CSS chat bubble component"
+                  src={handleImg(message.image_url)}
+                />
+              </div>
+            </div>
+            <div className="chat-header">{message.name}</div>
+            <div
+              className={` ${message.sender_id === id ? 'bg-blue-700' : 'bg-slate-600'} chat-bubble text-white font-semibold`}
+            >
+              {message.content}
+            </div>
+            <div className="chat-footer opacity-50">
+              {message.read ? 'lu' : 'non lu'}
+            </div>
           </div>
-        </div>
-        <div className="chat-header">
-          Obi-Wan Kenobi
-          <time className="text-xs opacity-50">12:45</time>
-        </div>
-        <div className="chat-bubble">You were the Chosen One!</div>
-        <div className="chat-footer opacity-50">Delivered</div>
-      </div>
-      <div className="chat chat-end m-2">
-        <div className="chat-image avatar">
-          <div className="w-10 rounded-full">
-            <img
-              alt="Tailwind CSS chat bubble component"
-              src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-            />
-          </div>
-        </div>
-        <div className="chat-header">
-          Anakin
-          <time className="text-xs opacity-50">12:46</time>
-        </div>
-        <div className="chat-bubble">I hate you!</div>
-        <div className="chat-footer opacity-50">Seen at 12:46</div>
-      </div>
+        );
+      })}
     </>
   );
 }

@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
-import { REQUESTNEWPASSWORD, RESETPASSWORD } from '../../graphQL/actions';
+import { REQUESTNEWPASSWORD, RESETPASSWORD } from '../graphQL/actions';
 import { useState } from 'react';
-import { InputField } from '../InputField';
+import { InputField } from '../components/InputField';
 import { useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 

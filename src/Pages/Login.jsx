@@ -1,34 +1,40 @@
 import { ToastContainer } from 'react-toastify';
 import { useState } from 'react';
-import { InputField } from '../InputField';
+import { InputField } from '../components/InputField';
 import { NavLink } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { LOGIN_MUTATION } from '../../graphQL/actions';
+import { LOGIN_MUTATION } from '../graphQL/actions';
 import * as jose from 'jose';
 import { TextEncoder } from 'text-encoding';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { setDecodedToken } from '../../store/actions';
-import imgSide from '../../assets/images/curved6.jpg';
+import { setDecodedToken } from '../store/actions';
+import imgSide from '../assets/images/curved6.jpg';
 
 export function LoginPage() {
   const dispatch = useDispatch();
+
+  // mutation for login
   const [loginMutation] = useMutation(LOGIN_MUTATION, {
     onError: (error) => {
       toast.warn(error.message); // Afficher l'erreur avec react-toastify
     },
   });
-  const [formData, setFormData] = useState({ mail: '', password: '' });
+  // state for loginFormData
+  const [loginFormData, setLoginFormData] = useState({
+    mail: '',
+    password: '',
+  });
 
   const handleChange = (e, fieldName) => {
-    const updatedFormData = { ...formData, [fieldName]: e.target.value };
-    setFormData(updatedFormData);
+    const updatedFormData = { ...loginFormData, [fieldName]: e.target.value };
+    setLoginFormData(updatedFormData);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { mail, password } = formData;
-
+    const { mail, password } = loginFormData;
+    // check if we got mail and password
     if (!mail || !password) {
       toast.warn('Veuillez remplir les informations de connexion.');
       return;
@@ -42,8 +48,11 @@ export function LoginPage() {
       const key = encoder.encode(secret);
 
       try {
+        // decode token with jose
         const decodedToken = await jose.jwtVerify(token, key);
+        // dispatch into redux
         dispatch(setDecodedToken(token, decodedToken.payload.user));
+        // put token into local storage
         localStorage.setItem('token', token);
 
         window.location.href = `/home/${decodedToken.payload.user.id}`;
@@ -71,7 +80,7 @@ export function LoginPage() {
                   </label>
                   <InputField
                     inputName="email"
-                    value={formData.mail}
+                    value={loginFormData.mail}
                     onChange={(e) => handleChange(e, 'mail')}
                   />
                   <label className="mb-2 ml-1 font-bold text-xs text-slate-700">
@@ -79,23 +88,10 @@ export function LoginPage() {
                   </label>
                   <InputField
                     inputName="password"
-                    value={formData.password}
+                    value={loginFormData.password}
                     onChange={(e) => handleChange(e, 'password')}
                   />
-                  {/* <div className="min-h-6 mb-0.5 block pl-12">
-                              <input
-                                id="rememberMe"
-                                className="mt-0.54 rounded-10 duration-250 ease-soft-in-out after:rounded-circle after:shadow-soft-2xl after:duration-250 checked:after:translate-x-5.25 h-5 relative float-left -ml-12 w-10 cursor-pointer appearance-none border border-solid border-gray-200 bg-slate-800/10 bg-none bg-contain bg-left bg-no-repeat align-top transition-all after:absolute after:top-px after:h-4 after:w-4 after:translate-x-px after:bg-white after:content-[''] checked:border-slate-800/95 checked:bg-slate-800/95 checked:bg-none checked:bg-right"
-                                type="checkbox"
-                                checked={false}
-                              />
-                              <label
-                                className="mb-2 ml-1 font-normal cursor-pointer select-none text-sm text-slate-700"
-                                htmlFor="rememberMe"
-                              >
-                                Remember me
-                              </label>
-                            </div> */}
+
                   <div className="text-center">
                     <button
                       onClick={handleSubmit}

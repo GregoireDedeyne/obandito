@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 // Query
 export const GET_ORGANIZER = gql`
-  query Organizer($organizerId: Int!) {
+  query Organizer($organizerId: Int!, $idReceiver: Int) {
     regions {
       nom
     }
@@ -34,6 +34,7 @@ export const GET_ORGANIZER = gql`
         organizer_id
         total_slots
         occupied_slots
+        finished
         artists {
           id
           mail
@@ -50,14 +51,37 @@ export const GET_ORGANIZER = gql`
           }
         }
         available
-        finished
       }
+    }
+    reviews(id_receiver: $idReceiver) {
+      id
+      event_id
+      sender_id
+      receiver_id
+      rating
+      review
+    }
+  }
+`;
+
+export const GET_MESSAGES = gql`
+  query Query {
+    getConversationsByMyId {
+      created_at
+      id
+      updated_at
+      user_id_2
+      user_image_1
+      user_id_1
+      user_image_2
+      user_name_1
+      user_name_2
     }
   }
 `;
 
 export const GET_ARTISTE = gql`
-  query Artist($artistId: Int!) {
+  query Artist($artistId: Int!, $idReceiver: Int) {
     regions {
       nom
     }
@@ -96,6 +120,7 @@ export const GET_ARTISTE = gql`
         organizer_id
         validation
         available
+        finished
         artists {
           id
           mail
@@ -110,7 +135,30 @@ export const GET_ARTISTE = gql`
           spotify_link
           validation
         }
+        organizer {
+          id
+          mail
+          name
+          image_url
+          address
+          city
+          region
+          zip_code
+          description
+          youtube_link
+          spotify_link
+          validation
+        }
       }
+    }
+
+    reviews(id_receiver: $idReceiver) {
+      id
+      event_id
+      sender_id
+      receiver_id
+      rating
+      review
     }
   }
 `;
@@ -374,6 +422,19 @@ export const GET_STYLES = gql`
   }
 `;
 
+export const GET_REVIEW = gql`
+  query Query($idReceiver: Int) {
+    reviews(id_receiver: $idReceiver) {
+      id
+      event_id
+      sender_id
+      receiver_id
+      rating
+      review
+    }
+  }
+`;
+
 // Mutation
 export const CREATE_ACCOUNT = gql`
   mutation CreateAccount($input: RegisterUserInput!) {
@@ -481,6 +542,18 @@ export const HANDLEPOSTULATIONEVENT = gql`
   }
 `;
 
+export const DELETE_EVENT = gql`
+  mutation Mutation($deleteEventId: ID!) {
+    deleteEvent(id: $deleteEventId)
+  }
+`;
+
+export const DELETE_POSTULATION = gql`
+  mutation Mutation($eventId: Int!) {
+    deletePostulation(eventId: $eventId)
+  }
+`;
+
 export const UPDATE_EVENT = gql`
   mutation UpdateEvent($input: InputModifyEvent!) {
     updateEvent(input: $input) {
@@ -501,6 +574,32 @@ export const UPDATE_EVENT = gql`
       validation
       available
       finished
+    }
+  }
+`;
+
+export const ADD_REVIEW = gql`
+  mutation AddReview($input: InputReview!) {
+    addReview(input: $input) {
+      id
+      event_id
+      sender_id
+      receiver_id
+      rating
+      review
+    }
+  }
+`;
+
+export const UPDATE_REVIEW = gql`
+  mutation UpdateReview($input: InputModifyReview!) {
+    updateReview(input: $input) {
+      id
+      event_id
+      sender_id
+      receiver_id
+      rating
+      review
     }
   }
 `;

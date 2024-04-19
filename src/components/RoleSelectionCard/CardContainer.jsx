@@ -1,5 +1,3 @@
-'use client';
-
 import { cn } from '../../utils/cn';
 // import Image from 'next/image';
 
@@ -86,7 +84,7 @@ export const CardItem = ({
   rotateZ = 0,
   ...rest
 }) => {
-  const ref = useRef();
+  const ref = useRef(null);
   const [isMouseEntered] = useMouseEnter();
 
   useEffect(() => {

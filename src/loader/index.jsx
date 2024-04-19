@@ -4,6 +4,7 @@ import {
   GET_HOMEDATA,
   GET_HOMEGENREDATA,
   GET_HOMEREGIONDATA,
+  GET_MESSAGES,
   GET_MOREHOMEDATA,
   GET_ONE_EVENT,
   GET_ORGANIZER,
@@ -40,7 +41,6 @@ export const HomeLoader = async () => {
 
 export const EventsSearch = async ({ params }) => {
   const { searchTerm } = params;
-  console.log(searchTerm);
 
   const { data } = await client.query({
     query: GET_SEARCH_EVENTSHOMEDATA,
@@ -55,7 +55,6 @@ export const EventsSearch = async ({ params }) => {
 
 export const ArtistsSearch = async ({ params }) => {
   const { searchTerm } = params;
-  console.log(searchTerm);
 
   const { data } = await client.query({
     query: GET_SEARCH_ARTISTSHOMEDATA,
@@ -113,6 +112,19 @@ export const GenreLoader = async ({ params }) => {
   return data;
 };
 
+export const MsgData = async () => {
+  const { data } = await client.query({
+    query: GET_MESSAGES,
+    context: {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+    fetchPolicy: 'no-cache',
+  });
+
+  return data;
+};
 export const EventLoader = async ({ params }) => {
   const { id } = params;
   const eventId = parseInt(id);
@@ -129,7 +141,6 @@ export const EventLoader = async ({ params }) => {
     },
     fetchPolicy: 'no-cache',
   });
-  console.log('dataloader :', data);
   return data;
 };
 
@@ -149,6 +160,7 @@ export const ProfileBandLoader = async ({ params }) => {
     query: GET_ARTISTE,
     variables: {
       artistId: artistId,
+      idReceiver: artistId,
     },
     context: {
       headers: {
@@ -164,12 +176,12 @@ export const ProfileBandLoader = async ({ params }) => {
 export const ProfileOrganizerLoader = async ({ params }) => {
   const { id } = params;
   const organizerId = parseInt(id);
-  console.log('je reload');
 
   const { data } = await client.query({
     query: GET_ORGANIZER,
     variables: {
       organizerId: organizerId,
+      idReceiver: organizerId,
     },
     context: {
       headers: {

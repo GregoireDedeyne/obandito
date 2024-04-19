@@ -24,7 +24,13 @@ export default {
         'fond-two': "url('/src/assets/images/fondTwo.png')",
         'fond-three': "url('/src/assets/images/bandPict.jpg')",
       },
+      screens: {
+        'width-500': '500px',
+      },
     },
   },
-  plugins: [require('daisyui')],
+  plugins: [
+    require('daisyui', '@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+  ],
 };

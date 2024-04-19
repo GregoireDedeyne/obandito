@@ -2,13 +2,18 @@ import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../store/actions';
 import { handleImg } from '../../utils/handleImg';
-import { useSelector, useDispatch } from 'react-redux';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
+
+/**
+ * Component representing the genreItem.
+ * @param {string} genre - Genre data.
+ */
 
 const GenreItem = ({ genre }) => {
   return (
@@ -28,20 +33,27 @@ const GenreItem = ({ genre }) => {
   );
 };
 
+/**
+ * Component representing the header.
+ * @param {Array} genres - An array of genre data.
+ */
+
 export function Header({ genres }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // check if user is logged or not
   const islogged = useSelector((state) => state.decodedToken.islogged);
+  // call data from redux
   const { id, image_url, name, role, mail } = useSelector(
     (state) => state.decodedToken.decodedData
   );
-
+  // disconnect function and remove token from localstorage
   const handleLogout = () => {
+    navigate('/', { replace: true });
+
     dispatch(logout());
     localStorage.removeItem('token');
-
-    navigate('/', { replace: true });
   };
   return (
     <>
@@ -60,27 +72,29 @@ export function Header({ genres }) {
                       Bandito
                     </NavLink>
                   </div>
-                  <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                    {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
-                    <NavLink
-                      to={'/#events'}
-                      className="inline-flex items-center h-fit hover:bg-rose-500 rounded-md p-3 py-2 text-sm font-medium cursor-pointer hover:text-white text-gray-900"
-                    >
-                      Évenements
-                    </NavLink>
-                    <NavLink
-                      to={'/#bands'}
-                      className="inline-flex items-center h-fit hover:bg-rose-500 rounded-md px-3 py-2 text-sm font-medium cursor-pointer hover:text-white text-gray-900"
-                    >
-                      Groupes
-                    </NavLink>
-                    <NavLink
-                      to={'/#propos'}
-                      className="inline-flex items-center h-fit hover:bg-rose-500 rounded-md p-3 py-2 text-sm font-medium cursor-pointer hover:text-white text-gray-900"
-                    >
-                      À propos
-                    </NavLink>
-                  </div>
+                  {islogged === false ? (
+                    <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+                      {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
+                      <NavLink
+                        to={'/#events'}
+                        className="inline-flex items-center h-fit hover:bg-rose-500 rounded-md p-3 py-2 text-sm font-medium cursor-pointer hover:text-white text-gray-900"
+                      >
+                        Évènements
+                      </NavLink>
+                      <NavLink
+                        to={'/#bands'}
+                        className="inline-flex items-center h-fit hover:bg-rose-500 rounded-md px-3 py-2 text-sm font-medium cursor-pointer hover:text-white text-gray-900"
+                      >
+                        Groupes
+                      </NavLink>
+                      <NavLink
+                        to={'/#propos'}
+                        className="inline-flex items-center h-fit hover:bg-rose-500 rounded-md p-3 py-2 text-sm font-medium cursor-pointer hover:text-white text-gray-900"
+                      >
+                        À propos
+                      </NavLink>
+                    </div>
+                  ) : null}
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:items-center">
                   {/* Profile dropdown */}
@@ -122,6 +136,20 @@ export function Header({ genres }) {
                                 )}
                               >
                                 Mon Profil
+                              </NavLink>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <NavLink
+                                reloadDocument
+                                to="/my-messages"
+                                className={classNames(
+                                  active ? 'bg-gray-100' : '',
+                                  'block px-4 py-2 text-sm text-black cursor-pointer'
+                                )}
+                              >
+                                Mes messages
                               </NavLink>
                             )}
                           </Menu.Item>
@@ -188,7 +216,7 @@ export function Header({ genres }) {
                   }}
                   className=" border-l-4 w-full flex hover:border-l-rose-500 hover:rose-indigo-500 hover:bg-rose-50 py-2 pl-3 pr-4 text-base font-medium hover:text-rose-700"
                 >
-                  Évenements
+                  Évènements
                 </Disclosure.Button>
                 <Disclosure.Button
                   onClick={() => {

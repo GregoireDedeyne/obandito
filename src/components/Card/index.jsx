@@ -1,7 +1,20 @@
 import { NavLink } from 'react-router-dom';
 import { handleImg } from '../../utils/handleImg';
 import { useSelector } from 'react-redux';
+
+/**
+ * A reusable card component.
+ *
+ * @param {string} image - The URL of the image for the card.
+ * @param {string} alt - The alternate text for the image.
+ * @param {string} name - The name to display on the card.
+ * @param {Object} style - The band style for the card.
+ * @param {string} id - The unique identifier for the card.
+ * @returns {JSX.Element} The card JSX element.
+ */
+
 export function Card({ image, alt, name, style, id }) {
+  // call to redux and check if user islogged or not
   const islogged = useSelector((state) => state.decodedToken.islogged);
 
   return (
@@ -9,7 +22,7 @@ export function Card({ image, alt, name, style, id }) {
       className=""
       to={islogged === false ? '/login' : `/profile/band/${id}`}
     >
-      <div className="flex-col justify-center bg-white rounded-xl shadow-lg min-w-[302px] border-2 border-solid border-transparent hover:border-purple-800">
+      <div className="flex-col justify-center bg-white rounded-xl shadow-lg min-w-full md:min-w-[302px] border-2 border-solid border-transparent hover:border-purple-800">
         <div className="flex justify-end overflow-hidden relative flex-col px-5 pt-20 pb-5 w-full h-4/5 aspect-[0.74] ">
           <img
             loading="lazy"

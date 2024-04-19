@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+
 const LocationItem = ({ region, event_count }) => (
   <NavLink to={`/region/${region}`}>
     <div className="flex gap-3.5 mt-2.5 hover:bg-zinc-300">

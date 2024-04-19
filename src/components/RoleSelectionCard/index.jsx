@@ -1,5 +1,3 @@
-'use client';
-
 import { CardBody, CardContainer, CardItem } from './CardContainer';
 
 export function RoleSelectionCard({ genre, onClick, src }) {

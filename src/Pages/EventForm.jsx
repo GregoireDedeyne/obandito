@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import { CREATE_EVENT } from '../../graphQL/actions';
+import { CREATE_EVENT } from '../graphQL/actions';
 import { useSelector } from 'react-redux';
+
 export function EventFormPage() {
+  const data = useLoaderData();
   const navigate = useNavigate();
   const token = useSelector((state) => state.decodedToken.token);
 
+  // apollo client mutation to createEvent
   const [createEvent, { loading, error }] = useMutation(CREATE_EVENT, {
     onCompleted: () => {
       toast.success('Événement créé avec succès !');
@@ -57,7 +60,6 @@ export function EventFormPage() {
       price: Number(formData.price),
       total_slots: Number(formData.total_slots),
     };
-    // console.log('input', input);
 
     createEvent({
       variables: { input },
@@ -73,8 +75,6 @@ export function EventFormPage() {
 
   if (error)
     toast.error(`Erreur lors de la création de l'événement: ${error.message}`);
-
-  const data = useLoaderData();
 
   return (
     <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden md:max-w-lg">
@@ -92,27 +92,17 @@ export function EventFormPage() {
             value={formData.name}
             handleChange={handleChange}
             required
-            checked={undefined}
-            min={undefined}
           />
           <FormInput
             label="URL de l'image"
             name="image_url"
             type="file"
             handleChange={handleChange}
-            value={undefined}
-            required={undefined}
-            checked={undefined}
-            min={undefined}
           />
           <FormInput
             label="Adresse"
             name="address"
             handleChange={handleChange}
-            value={undefined}
-            required={undefined}
-            checked={undefined}
-            min={undefined}
           />
           <FormInput label="Ville" name="city" handleChange={handleChange} />
 
@@ -144,27 +134,17 @@ export function EventFormPage() {
             value={formData.date}
             handleChange={handleChange}
             required
-            checked={undefined}
-            min={undefined}
           />
           <FormInput
             label="Code Postal"
             name="zip_code"
             handleChange={handleChange}
-            value={undefined}
-            required={undefined}
-            checked={undefined}
-            min={undefined}
           />
           <FormInput
             label="Description"
             name="description"
             type="textarea"
             handleChange={handleChange}
-            value={undefined}
-            required={undefined}
-            checked={undefined}
-            min={undefined}
           />
 
           <div className="form-control">
@@ -188,8 +168,6 @@ export function EventFormPage() {
             min="0"
             value={formData.price.toString()}
             handleChange={handleChange}
-            required={undefined}
-            checked={undefined}
           />
           <FormInput
             label="Nombre total de places"
@@ -199,7 +177,6 @@ export function EventFormPage() {
             value={formData.total_slots.toString()}
             handleChange={handleChange}
             required
-            checked={undefined}
           />
 
           <div className="flex items-center justify-between">

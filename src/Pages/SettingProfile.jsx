@@ -1,8 +1,13 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { InputField } from '../InputField';
+import { InputField } from './components/InputField';
 import { PrimaryButton } from '../Buttons/PrimaryButton';
-import CardsLogIn from '../CardsLogIn';
+import CardsLogIn from './components/CardsLogIn';
+
+/**
+ * Component for user profile settings.
+ * @param {function} onSubmit - Function to handle form submission.
+ */
 
 export function SettingProfile({ onSubmit }) {
   const [formData, setFormData] = useState({});

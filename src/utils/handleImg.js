@@ -1,3 +1,5 @@
+// function to charge img from data
+
 export const handleImg = (url) => {
   if (url.includes('http')) {
     return url;

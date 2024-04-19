@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 
 export function PreFooter() {
   return (
-    <section className="flex overflow-hidden py-10 relative flex-col justify-center items-center px-16 py-20 text-center text-white min-h-[309px] max-md:px-5">
+    <section className="flex overflow-hidden  relative flex-col justify-center items-center px-16 py-20 text-center text-white min-h-[309px] max-md:px-5">
       <div className="flex relative flex-col items-center max-w-full w-[503px]">
         <h2 className="self-stretch text-2xl font-bold leading-8 max-md:max-w-full">
           Plus de 250 000 artistes disponibles <br /> pour mettre de la musique
