@@ -124,7 +124,6 @@ export function Header({ genres }) {
                           <Menu.Item>
                             {({ active }) => (
                               <NavLink
-                                reloadDocument
                                 to={
                                   role === 'Artiste'
                                     ? `/profile/band/${id}`
@@ -142,7 +141,6 @@ export function Header({ genres }) {
                           <Menu.Item>
                             {({ active }) => (
                               <NavLink
-                                reloadDocument
                                 to="/my-messages"
                                 className={classNames(
                                   active ? 'bg-gray-100' : '',
@@ -280,7 +278,6 @@ export function Header({ genres }) {
                   </div>
                   <div className="mt-3 space-y-1">
                     <NavLink
-                      reloadDocument
                       to={
                         role === 'Artiste'
                           ? `/profile/band/${id}`
