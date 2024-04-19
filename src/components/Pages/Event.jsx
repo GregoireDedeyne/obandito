@@ -11,7 +11,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { CardsEvent } from '../CardsEvent';
-import SocialMediaGroup from '../SocialMediaGroup';
 import { PopupEditEvent } from '../PopupEditEvent';
 import { toast, ToastContainer } from 'react-toastify';
 import { handleImg } from '../../utils/handleImg';
@@ -227,7 +226,7 @@ export function EventPage() {
                 <div className="col-span-12 md:col-span-8 my-10">
                   <div>
                     <div className="bloc-white mb-[50px]">
-                      <h2 className="text-black">Présentation</h2>
+                      <h2>Présentation</h2>
                       <p> {eventdata?.event?.description}</p>
                     </div>
 
@@ -264,11 +263,6 @@ export function EventPage() {
                         </li>
                         <li>Deal : {eventdata?.event?.price} €</li>
                       </div>
-                      <div className="website">
-                        <a href="https://www.youtube.com/">
-                          https://www.youtube.com/
-                        </a>
-                      </div>
 
                       {role === 'Artiste' && result === false ? (
                         <div className="my-5">
@@ -289,13 +283,6 @@ export function EventPage() {
                           </button>
                         </div>
                       ) : null}
-                    </div>
-
-                    <div className="bloc-white my-10">
-                      <h2 className="text-center text-black mb-3">
-                        En savoir plus
-                      </h2>
-                      <SocialMediaGroup />
                     </div>
                   </div>
                 </div>

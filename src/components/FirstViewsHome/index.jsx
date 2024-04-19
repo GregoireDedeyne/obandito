@@ -43,7 +43,7 @@ export function FirstViewHome() {
   };
   return (
     <div className="flex flex-col py-px max-md:max-w-full bg-cover container mx-auto">
-      <header className="flex overflow-hidden relative flex-col justify-end pt-16 pb-5 w-full min-h-[575px] max-md:px-5 max-md:max-w-full">
+      <header className="flex overflow-hidden relative flex-col justify-end pb-5 w-full min-h-[575px] max-md:px-5 max-md:max-w-full md:pt-16">
         <div className="relative pb-8 max-md:max-w-full">
           <div className="flex gap-5 max-md:flex-col max-md:gap-0">
             <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">

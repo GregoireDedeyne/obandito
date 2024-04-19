@@ -77,7 +77,7 @@ export function ProfilBanner({
 
   return (
     <div className="bg-white">
-      <div className="flex flex-col py-px w-full h-[300px] bg-cover">
+      <div className="flex flex-col w-full h-[300px] bg-cover">
         <img src={banner} alt="banner" className="object-cover w-full h-full" />
       </div>
       <div className="container mx-auto px-5">

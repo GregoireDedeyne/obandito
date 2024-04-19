@@ -65,15 +65,21 @@ export function Rating({
   };
 
   return (
-    <div className="bg-white p-10">
+    <div className="bloc-white p-10">
       <div>
         <div className="flex flex-col sm:flex-row  sm:justify-between">
-          <h2 className="">Evaluations Vérifiées</h2>
-          <div className="flex flex-col">
-            <span>{`${reviews.length} `}évaluations</span>
-            <Stars reviews={reviews} />
-          </div>
+          <h2>Évaluations vérifiées</h2>
+          {reviews.length === 0 ? (
+            ''
+          ) : (
+            <div className="flex flex-col">
+              <span>{`${reviews.length} `}évaluations</span>
+              <Stars reviews={reviews} />
+            </div>
+          )}
         </div>
+
+        {reviews.length === 0 && <span>Il n'y a aucune évalution</span>}
 
         <div className="">
           {reviews.map((review, reviewIdx) => (

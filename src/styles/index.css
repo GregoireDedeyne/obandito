@@ -23,7 +23,7 @@ h1 {
 }
 
 h2 {
-  @apply text-2xl mb-1;
+  @apply text-2xl mb-1 text-black;
 }
 
 .youtube iframe {

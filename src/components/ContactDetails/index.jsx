@@ -29,19 +29,19 @@ export default function ContactDetails({
 
   return (
     <div className="bloc-white">
-      <h2 className="text-black">Coordonnées</h2>
-      <div className="adress flex flex-col">
+      <h2>Coordonnées</h2>
+      <div className="adress flex flex-col mb-5">
         {address ? <span> {address}</span> : ''}
 
-        {zip_code !== null && city !== null && (
+        {zip_code !== null && city !== null ? (
           <span>{`${zip_code}, ${city}`}</span>
+        ) : (
+          <span>
+            L'utilisateur n'a pas fourni plus d'informations sur son adresse.
+          </span>
         )}
 
         <span>France</span>
-      </div>
-      <div className="flex flex-col my-5">
-        <span>SITE WEB</span>
-        <a href="https://www.youtube.com/">https://www.youtube.com/</a>
       </div>
 
       <>
