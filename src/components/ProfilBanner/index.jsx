@@ -1,6 +1,6 @@
 import { faMapMarkerAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useParams } from 'react-router-dom';
 import { Stars } from '../Stars';
 import { PopupEditSettings } from '../PopupEditSettings';
 import { useState } from 'react';
@@ -30,6 +30,7 @@ export function ProfilBanner({
   regions,
   myRole,
   reviews,
+  userId,
 }) {
   const [UpdateUser] = useMutation(UPDATE_USER);
 
@@ -48,6 +49,7 @@ export function ProfilBanner({
 
   const dispatch = useDispatch();
 
+  const { id } = useParams();
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
@@ -136,7 +138,7 @@ export function ProfilBanner({
               {role === 'Artiste' && myRole !== 'Artiste' && !myProfile && (
                 <NavLink
                   className="btn-primary ml-0 md:ml-5 text-center"
-                  to="/"
+                  to={`/chat/room/${userId}/${id}`}
                 >
                   Proposer un deal
                 </NavLink>

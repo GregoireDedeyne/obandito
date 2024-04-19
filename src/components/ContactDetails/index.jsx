@@ -55,7 +55,10 @@ export default function ContactDetails({
         )}
         {!myProfile && myRole === 'Organisateur' && (
           <div className="my-1">
-            <NavLink className="btn-primary block text-center" to="/">
+            <NavLink
+              className="btn-primary block text-center"
+              to={`/chat/room/${userId}/${id}`}
+            >
               Proposer un deal
             </NavLink>
           </div>

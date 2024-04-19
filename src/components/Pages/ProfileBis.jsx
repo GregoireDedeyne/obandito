@@ -30,6 +30,7 @@ export default function ProfileBis() {
         myProfile={myProfile}
         myRole={myRole}
         reviews={reviews}
+        userId={userId}
       />
       <TabsContent
         dataArtistOrOrganize={dataArtistOrOrganize}

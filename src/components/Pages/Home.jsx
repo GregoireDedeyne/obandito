@@ -20,7 +20,7 @@ export function HomeNotLogPage() {
   const data = useLoaderData();
   const location = useLocation();
   const dispatch = useDispatch();
-
+  // Reset of selectedTab
   dispatch(setSelectedTab('Présentation'));
 
   useEffect(() => {

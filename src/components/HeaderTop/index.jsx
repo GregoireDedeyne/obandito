@@ -72,27 +72,29 @@ export function Header({ genres }) {
                       Bandito
                     </NavLink>
                   </div>
-                  <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                    {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
-                    <NavLink
-                      to={'/#events'}
-                      className="inline-flex items-center h-fit hover:bg-rose-500 rounded-md p-3 py-2 text-sm font-medium cursor-pointer hover:text-white text-gray-900"
-                    >
-                      Évenements
-                    </NavLink>
-                    <NavLink
-                      to={'/#bands'}
-                      className="inline-flex items-center h-fit hover:bg-rose-500 rounded-md px-3 py-2 text-sm font-medium cursor-pointer hover:text-white text-gray-900"
-                    >
-                      Groupes
-                    </NavLink>
-                    <NavLink
-                      to={'/#propos'}
-                      className="inline-flex items-center h-fit hover:bg-rose-500 rounded-md p-3 py-2 text-sm font-medium cursor-pointer hover:text-white text-gray-900"
-                    >
-                      À propos
-                    </NavLink>
-                  </div>
+                  {islogged === false ? (
+                    <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+                      {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
+                      <NavLink
+                        to={'/#events'}
+                        className="inline-flex items-center h-fit hover:bg-rose-500 rounded-md p-3 py-2 text-sm font-medium cursor-pointer hover:text-white text-gray-900"
+                      >
+                        Évenements
+                      </NavLink>
+                      <NavLink
+                        to={'/#bands'}
+                        className="inline-flex items-center h-fit hover:bg-rose-500 rounded-md px-3 py-2 text-sm font-medium cursor-pointer hover:text-white text-gray-900"
+                      >
+                        Groupes
+                      </NavLink>
+                      <NavLink
+                        to={'/#propos'}
+                        className="inline-flex items-center h-fit hover:bg-rose-500 rounded-md p-3 py-2 text-sm font-medium cursor-pointer hover:text-white text-gray-900"
+                      >
+                        À propos
+                      </NavLink>
+                    </div>
+                  ) : null}
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:items-center">
                   {/* Profile dropdown */}

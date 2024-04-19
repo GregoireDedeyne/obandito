@@ -57,12 +57,14 @@ export function EventCard({
       toast.warn(error.message);
     },
   });
-
   const location = useLocation();
 
   const token = useSelector((state) => state.decodedToken.token);
   const role = useSelector((state) => state.decodedToken.decodedData.role);
   const idUser = useSelector((state) => state.decodedToken.decodedData.id);
+
+  console.log(window.location.pathname);
+  console.log(`/region/${region}`);
 
   const idSetting = useParams();
   // function to check if it's userpage
@@ -179,11 +181,15 @@ export function EventCard({
               <div className="mt-1.5 text-zinc-500">{date}</div>
             </NavLink>
             {/* <div> */}
+
             <button
               className={
-                window.location.pathname === '/' || !isMyProfil() || finished
+                window.location.pathname === '/' ||
+                window.location.pathname === `/region/${region}` ||
+                !isMyProfil() ||
+                finished
                   ? 'hidden'
-                  : 'w-auto text-center text-red-700 text-sm w-60 h-fit border border-red-700 px-3 rounded-xl hover:bg-red-700 hover:text-white mt-3 lg:ml-5 lg:mt-0'
+                  : 'text-center text-red-700 text-sm w-60 h-fit border border-red-700 px-3 rounded-xl hover:bg-red-700 hover:text-white mt-3 lg:ml-5 lg:mt-0'
               }
               onClick={() => HandleDelete(id)}
             >
