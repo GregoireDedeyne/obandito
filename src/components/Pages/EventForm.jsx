@@ -40,14 +40,13 @@ export function EventFormPage() {
       [name]:
         type === 'file' ? files[0] : type === 'checkbox' ? checked : value,
     }));
-    // console.log('formData', formData);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const isEmptyField = Object.values(formData).some((value) => value === '');
-    console.log('isEmptyField', isEmptyField);
+
     if (isEmptyField) {
       toast.warn('Veuillez remplir tous les champs requis.');
       return;

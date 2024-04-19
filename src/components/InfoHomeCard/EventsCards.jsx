@@ -106,7 +106,6 @@ export function EventCard({
     } else {
       console.error("L'élément avec l'ID \"addReview\" n'a pas été trouvé.");
     }
-    console.log(eventId);
   };
   return (
     <div className="w-full relative">

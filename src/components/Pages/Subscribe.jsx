@@ -53,7 +53,6 @@ export function SubscribePage() {
   // function to update state data
   const handleChange = (e, fieldName) => {
     const updatedFormData = { ...formData, [fieldName]: e.target.value };
-    console.log(formData);
     setFormData(updatedFormData);
   };
 
@@ -62,8 +61,6 @@ export function SubscribePage() {
   // function to submit the form and push data with grahQL
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('envoie');
-    console.log(formData);
 
     // check requiredField
     const requiredFields = [

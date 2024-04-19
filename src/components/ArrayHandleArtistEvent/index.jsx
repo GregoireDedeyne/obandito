@@ -63,8 +63,6 @@ export function ArrayHandleArtistEvent({
         console.error("L'élément avec l'ID \"deals\" n'a pas été trouvé.");
       }
       window.location.href = location.pathname;
-
-      console.log('Status à jour avec succès:', data);
     } catch (error) {
       console.error("Une erreur inattendue s'est produite");
     }
@@ -120,8 +118,6 @@ export function ArrayHandleArtistEvent({
         <tbody>
           {events?.map((event) =>
             event?.artists.map((artist) => {
-              console.log('event', event);
-              console.log('artist', artist);
               if (
                 radioStatus === 'tous' ||
                 (radioStatus === 'pending' &&
