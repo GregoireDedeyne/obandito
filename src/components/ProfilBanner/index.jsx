@@ -45,6 +45,7 @@ export function ProfilBanner({
     youtube_link: dataArtistOrOrganize.youtube_link,
     image_url: null,
   });
+
   const location = useLocation();
 
   const dispatch = useDispatch();

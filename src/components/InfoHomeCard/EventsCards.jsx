@@ -52,6 +52,7 @@ export function EventCard({
     },
   });
 
+  console.log(window.location.pathname);
   const [deleteMutationEvent] = useMutation(DELETE_EVENT, {
     onError: (error) => {
       toast.warn(error.message);
@@ -181,7 +182,7 @@ export function EventCard({
             <button
               className={
                 window.location.pathname === '/' ||
-                window.location.pathname === `/region/${region}` ||
+                window.location.pathname.includes('/region') ||
                 !isMyProfil() ||
                 finished
                   ? 'hidden'
