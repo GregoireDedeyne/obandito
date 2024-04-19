@@ -55,8 +55,8 @@ export function FirstViewHome() {
                   rencontrer
                 </Text>
                 <Text className="mt-14 text-xl leading-6 text-neutral-600 max-md:mt-10 max-md:max-w-full">
-                  Trouvez le talent parfait pour animer votre événement OU
-                  trouvez l'événement parfait à animer !
+                  Trouvez le talent parfait pour animer votre évènement OU
+                  trouvez l'évènement parfait à animer !
                 </Text>
               </div>
             </div>

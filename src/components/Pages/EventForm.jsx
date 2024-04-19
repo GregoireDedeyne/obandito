@@ -13,7 +13,7 @@ export function EventFormPage() {
   // apollo client mutation to createEvent
   const [createEvent, { loading, error }] = useMutation(CREATE_EVENT, {
     onCompleted: () => {
-      toast.success('Événement créé avec succès !');
+      toast.success('Évènement créé avec succès !');
       navigate('/');
     },
   });
@@ -70,7 +70,7 @@ export function EventFormPage() {
       },
     });
     navigate('/');
-    toast.success('Événement créé avec succès !');
+    toast.success('Évènement créé avec succès !');
   };
 
   if (error)
