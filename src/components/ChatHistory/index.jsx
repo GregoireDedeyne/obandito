@@ -41,7 +41,7 @@ export function ChatHistory() {
   // Token from state
   const token = useSelector((state) => state.decodedToken.token);
   // Add connexion for io serveur
-  const socket = socketIO.connect('http://localhost:4000/chat', {
+  const socket = socketIO.connect(`${import.meta.env.VITE_BACK_URL}chat`, {
     query: {
       token: token,
     },
