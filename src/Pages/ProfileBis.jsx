@@ -9,7 +9,7 @@ export default function ProfileBis() {
   const token = useSelector((state) => state.decodedToken.token);
 
   const { id } = useParams();
-
+  console.log('param', id, 'token =', token, 'data', data);
   const userId = useSelector((state) => state.decodedToken.decodedData.id);
   const myRole = useSelector((state) => state.decodedToken.decodedData.role);
   const myProfile = parseInt(id) === userId;
