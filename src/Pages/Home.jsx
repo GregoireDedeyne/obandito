@@ -1,15 +1,15 @@
-import { Cards } from '../Cards';
-import { FirstViewHome } from '../FirstViewsHome';
-import { HeroSection } from '../FirstViewsHome/HeroSection';
-import { SecondView } from '../FirstViewsHome/SecondView';
-import { PreFooter } from '../FirstViewsHome/PreFooter';
-import { Faq } from '../FirstViewsHome/Faq';
-import { ThirdView } from '../FirstViewsHome/ThirdView';
+import { Cards } from '../components/Cards';
+import { FirstViewHome } from '../components/FirstViewsHome';
+import { HeroSection } from '../components/FirstViewsHome/HeroSection';
+import { SecondView } from '../components/FirstViewsHome/SecondView';
+import { PreFooter } from '../components/FirstViewsHome/PreFooter';
+import { Faq } from '../components/FirstViewsHome/Faq';
+import { ThirdView } from '../components/FirstViewsHome/ThirdView';
 import { useLoaderData, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { CardsWithout } from '../CardsWithout';
+import { CardsWithout } from '../components/CardsWithout';
 import { useEffect } from 'react';
-import { setSelectedTab } from '../../store/actions';
+import { setSelectedTab } from '../store/actions';
 
 export function HomeNotLogPage() {
   // check if user is logged or not

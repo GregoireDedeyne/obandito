@@ -30,8 +30,8 @@ export function PopupAddReview({ formData, setFormData }) {
     });
     const settingsModal = document.getElementById('editReview');
 
-    settingsModal.close();
-    // window.location.href = location.pathname;
+    // settingsModal.close();
+    window.location.href = location.pathname;
   };
 
   return (

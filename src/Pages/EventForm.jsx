@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import { CREATE_EVENT } from '../../graphQL/actions';
+import { CREATE_EVENT } from '../graphQL/actions';
 import { useSelector } from 'react-redux';
 
 export function EventFormPage() {

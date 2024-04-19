@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { POSTULATION_EVENT, UPDATE_EVENT } from '../../graphQL/actions';
+import { POSTULATION_EVENT, UPDATE_EVENT } from '../graphQL/actions';
 import { NavLink, useLoaderData, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,16 +10,16 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
-import { CardsEvent } from '../CardsEvent';
-import SocialMediaGroup from '../SocialMediaGroup';
-import { PopupEditEvent } from '../PopupEditEvent';
+import { CardsEvent } from '../components/CardsEvent';
+import { PopupEditEvent } from '../components/PopupEditEvent';
 import { toast, ToastContainer } from 'react-toastify';
-import { handleImg } from '../../utils/handleImg';
+import { handleImg } from '../utils/handleImg';
 
 export function EventPage() {
   // check selectedTab
   const [selectedTab, setSelectedTab] = useState(0);
   // set the selectedTab
+
   const handleTabClick = (index) => {
     setSelectedTab(index);
   };
@@ -188,7 +188,7 @@ export function EventPage() {
                   />
                   <div>{eventdata?.event?.city}</div>
                 </div>
-                <div className={`flex gap-1.5`}>
+                <div className={`flex gap-1.5 w-96`}>
                   <FontAwesomeIcon
                     icon={faUser}
                     className="shrink-0 my-auto w-4 aspect-square"
@@ -221,7 +221,7 @@ export function EventPage() {
             />
             <div
               role="tabpanel"
-              className="tab-content px-5 bg-color-gray_light"
+              className="tab-content px-10 bg-color-gray_light"
             >
               <div className="grid grid-cols-12 md:gap-8">
                 <div className="col-span-12 md:col-span-8 my-10">

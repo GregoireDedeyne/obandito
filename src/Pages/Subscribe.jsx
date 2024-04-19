@@ -1,14 +1,14 @@
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import imgRegister from '../../assets/images/curved14.jpg';
+import imgRegister from '../assets/images/curved14.jpg';
 import { useState } from 'react';
-import { InputField } from '../InputField';
-import { RoleSelectionCard } from '../RoleSelectionCard';
-import Image2 from '../../assets/images/bandPict2.jpg';
-import Image3 from '../../assets/images/orga.jpg';
+import { InputField } from '../components/InputField';
+import { RoleSelectionCard } from '../components/RoleSelectionCard';
+import Image2 from '../assets/images/bandPict2.jpg';
+import Image3 from '../assets/images/orga.jpg';
 import { NavLink, useLoaderData } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { CREATE_ACCOUNT } from '../../graphQL/actions';
+import { CREATE_ACCOUNT } from '../graphQL/actions';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
@@ -53,7 +53,6 @@ export function SubscribePage() {
   // function to update state data
   const handleChange = (e, fieldName) => {
     const updatedFormData = { ...formData, [fieldName]: e.target.value };
-    console.log(formData);
     setFormData(updatedFormData);
   };
 
@@ -62,8 +61,6 @@ export function SubscribePage() {
   // function to submit the form and push data with grahQL
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('envoie');
-    console.log(formData);
 
     // check requiredField
     const requiredFields = [

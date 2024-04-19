@@ -1,15 +1,15 @@
 import { ToastContainer } from 'react-toastify';
 import { useState } from 'react';
-import { InputField } from '../InputField';
+import { InputField } from '../components/InputField';
 import { NavLink } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { LOGIN_MUTATION } from '../../graphQL/actions';
+import { LOGIN_MUTATION } from '../graphQL/actions';
 import * as jose from 'jose';
 import { TextEncoder } from 'text-encoding';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { setDecodedToken } from '../../store/actions';
-import imgSide from '../../assets/images/curved6.jpg';
+import { setDecodedToken } from '../store/actions';
+import imgSide from '../assets/images/curved6.jpg';
 
 export function LoginPage() {
   const dispatch = useDispatch();

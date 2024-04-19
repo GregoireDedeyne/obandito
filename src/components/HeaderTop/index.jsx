@@ -79,7 +79,7 @@ export function Header({ genres }) {
                         to={'/#events'}
                         className="inline-flex items-center h-fit hover:bg-rose-500 rounded-md p-3 py-2 text-sm font-medium cursor-pointer hover:text-white text-gray-900"
                       >
-                        Évenements
+                        Évènements
                       </NavLink>
                       <NavLink
                         to={'/#bands'}
@@ -216,7 +216,7 @@ export function Header({ genres }) {
                   }}
                   className=" border-l-4 w-full flex hover:border-l-rose-500 hover:rose-indigo-500 hover:bg-rose-50 py-2 pl-3 pr-4 text-base font-medium hover:text-rose-700"
                 >
-                  Évenements
+                  Évènements
                 </Disclosure.Button>
                 <Disclosure.Button
                   onClick={() => {

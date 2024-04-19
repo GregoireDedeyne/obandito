@@ -3,7 +3,6 @@ import { ArrayHandleArtistEvent } from '../ArrayHandleArtistEvent';
 import ProfilContentBlock from '../ProfilContentBlock';
 import { useState } from 'react';
 import { EventCard } from '../InfoHomeCard/EventsCards';
-import SocialMediaGroup from '../SocialMediaGroup';
 import { setSelectedTab } from '../../store/actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { useMutation } from '@apollo/client';
@@ -207,7 +206,7 @@ export function TabsContent({
       <div className="bg-color-gray_light flex-1  px-5">
         <div className="grid grid-cols-12 md:gap-8 container mx-auto">
           {/* grid left */}
-          <div className="col-span-12 md:col-span-8 mt-10">
+          <div className="col-span-12 md:col-span-8 mt-10 mb-5 md:my-10">
             {selectedTab === 'Présentation' && (
               <>
                 <ProfilContentBlock
@@ -272,33 +271,36 @@ export function TabsContent({
                 )}
 
                 <div className="bloc-white">
-                  <h2>Evènements</h2>
+                  <h2>Évènements</h2>
+                  {eventFiltered.length > 0 ? (
+                    eventFiltered.map((event) => {
+                      const isArtist = event.artists.some(
+                        (artist) => +artist.id === +userId
+                      );
 
-                  {eventFiltered.map((event) => {
-                    const isArtist = event.artists.some(
-                      (artist) => +artist.id === +userId
-                    );
-
-                    return (
-                      <div className="flex" key={event.id}>
-                        {(!myProfile && event.validation === 'validated') ||
-                        myProfile ? (
-                          <EventCard
-                            eventId={event.id}
-                            available={false}
-                            validated={event.validation}
-                            {...event}
-                            setFormData={setFormData}
-                            formData={formData}
-                            isArtist={isArtist}
-                            event={event}
-                            finished={event.finished}
-                            organizerId={event.organizer_id}
-                          />
-                        ) : null}
-                      </div>
-                    );
-                  })}
+                      return (
+                        <div className="flex" key={event.id}>
+                          {(!myProfile && event.validation === 'validated') ||
+                          myProfile ? (
+                            <EventCard
+                              eventId={event.id}
+                              available={false}
+                              validated={event.validation}
+                              {...event}
+                              setFormData={setFormData}
+                              formData={formData}
+                              isArtist={isArtist}
+                              event={event}
+                              finished={event.finished}
+                              organizerId={event.organizer_id}
+                            />
+                          ) : null}
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <p>L'artiste n'est rattaché à aucun évènement.</p>
+                  )}
                 </div>
               </>
             )}
@@ -354,11 +356,6 @@ export function TabsContent({
                 myProfile={myProfile}
                 myRole={myRole}
               />
-
-              <div className="bloc-white my-10">
-                <h2 className="text-center text-black mb-3">En savoir plus</h2>
-                <SocialMediaGroup />
-              </div>
             </div>
           </div>
         </div>

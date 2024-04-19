@@ -1,5 +1,5 @@
-import { ProfilBanner } from '../ProfilBanner';
-import { TabsContent } from '../TabsContent';
+import { ProfilBanner } from '../components/ProfilBanner';
+import { TabsContent } from '../components/TabsContent';
 import { useLoaderData, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 

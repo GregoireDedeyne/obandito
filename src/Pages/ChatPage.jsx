@@ -1,4 +1,4 @@
-import { ChatHistory } from '../ChatHistory';
+import { ChatHistory } from '../components/ChatHistory';
 
 export function ChatAllPage() {
   return (
