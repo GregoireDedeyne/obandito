@@ -295,7 +295,6 @@ export function EventPage() {
                       <h2 className="text-center text-black mb-3">
                         En savoir plus
                       </h2>
-                      <SocialMediaGroup />
                     </div>
                   </div>
                 </div>
