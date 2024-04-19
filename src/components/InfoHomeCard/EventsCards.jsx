@@ -63,9 +63,6 @@ export function EventCard({
   const role = useSelector((state) => state.decodedToken.decodedData.role);
   const idUser = useSelector((state) => state.decodedToken.decodedData.id);
 
-  console.log(window.location.pathname);
-  console.log(`/region/${region}`);
-
   const idSetting = useParams();
   // function to check if it's userpage
   const isMyProfil = () => (idSetting.id == idUser ? true : false);
