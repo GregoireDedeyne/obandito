@@ -6,9 +6,10 @@ import { PreFooter } from '../FirstViewsHome/PreFooter';
 import { Faq } from '../FirstViewsHome/Faq';
 import { ThirdView } from '../FirstViewsHome/ThirdView';
 import { useLoaderData, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { CardsWithout } from '../CardsWithout';
 import { useEffect } from 'react';
+import { setSelectedTab } from '../../store/actions';
 
 export function HomeNotLogPage() {
   // check if user is logged or not
@@ -18,6 +19,9 @@ export function HomeNotLogPage() {
   // load data for loader
   const data = useLoaderData();
   const location = useLocation();
+  const dispatch = useDispatch();
+
+  dispatch(setSelectedTab('Présentation'));
 
   useEffect(() => {
     if (location.hash) {
