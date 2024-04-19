@@ -264,11 +264,6 @@ export function EventPage() {
                         </li>
                         <li>Deal : {eventdata?.event?.price} €</li>
                       </div>
-                      <div className="website">
-                        <a href="https://www.youtube.com/">
-                          https://www.youtube.com/
-                        </a>
-                      </div>
 
                       {role === 'Artiste' && result === false ? (
                         <div className="my-5">
@@ -289,12 +284,6 @@ export function EventPage() {
                           </button>
                         </div>
                       ) : null}
-                    </div>
-
-                    <div className="bloc-white my-10">
-                      <h2 className="text-center text-black mb-3">
-                        En savoir plus
-                      </h2>
                     </div>
                   </div>
                 </div>
